@@ -1,0 +1,538 @@
+var Solicitudes = {};
+var tabla;
+//Obtener las solicitudes
+Solicitudes.getSolicitudes = function(){
+  tabla = $('#solicitudes').DataTable( {
+     "bDeferRender": true,
+     "sPaginationType": "full_numbers",
+     "order": [[ 2, "asc" ]],
+     "ajax": {
+       "data": {
+         "webService":"solicitudes",
+         "url":""
+       },
+       "url": "../controllers/control-solicitud.php",
+       "type": "POST"
+     },
+     "columns": [
+       { "data": "folio" },
+       { "data": "programa" },
+       { "data": "alta" },
+       { "data": "estatus" },
+       { "data": "plantel" },
+       { "data": "institucion" },
+       { "data": "acciones" }
+       ],
+     "oLanguage": {
+             "sProcessing":     "Procesando...",
+         "sLengthMenu": 'Mostrar <select>'+
+             '<option value="5">5</option>'+
+             '<option value="10">10</option>'+
+             '<option value="20">20</option>'+
+             '<option value="30">30</option>'+
+             '<option value="40">40</option>'+
+             '<option value="-1">All</option>'+
+             '</select> registros',
+         "sZeroRecords":    "No se encontraron resultados",
+         "sEmptyTable":     "Ningún dato disponible en esta tabla",
+         "sInfo":           "Mostrando del (_START_ al _END_) de un total de _TOTAL_ registros",
+         "sInfoEmpty":      "Mostrando del 0 al 0 de un total de 0 registros",
+         "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+         "sInfoPostFix":    "",
+         "sSearch":         "Filtrar:",
+         "sUrl":            "",
+         "sInfoThousands":  ",",
+         "sLoadingRecords": "Por favor espere - cargando...",
+         "oPaginate": {
+             "sFirst":    "Primero",
+             "sLast":     "Último",
+             "sNext":     "Siguiente",
+             "sPrevious": "Anterior"
+         },
+         "oAria": {
+             "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+             "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+         }
+         }
+   });
+
+};
+//Obtener los niveles educativos
+Solicitudes.getNiveles = function(){
+  Solicitudes.nivelesPromesa= $.ajax({
+       type: "POST",
+       url:"../controllers/control-nivel.php",
+       dataType: "json",
+       data:{webService:"consultarTodos",url:""},
+       success : function(respuesta){
+         var nivelPrograma = $('#nivel_id');
+         for (var i = 0; i < respuesta.data.length-1; i++) {
+           if(i>0){
+             nivelPrograma.append('<option value ="'+respuesta.data[i].id+'">'+respuesta.data[i].descripcion+'</option>');
+           }
+         }
+       },
+       error : function(respuesta,errmsg,err) {
+          console.log(respuesta);
+        }
+     });
+};
+//Obtener las modaliades de los programas
+Solicitudes.getModalidades = function(){
+  Solicitudes.modalidadesPromesa= $.ajax({
+       type: "POST",
+       url:"../controllers/control-modalidad.php",
+       dataType: "json",
+       data:{webService:"consultarTodos",url:""},
+       success : function(respuesta){
+         var modalidadPrograma = $('#modalidad_id');
+         for (var i = 0; i < respuesta.data.length; i++) {
+           modalidadPrograma.append('<option value ="'+respuesta.data[i].id+'">'+respuesta.data[i].nombre+'</option>');
+         }
+       },
+       error : function(respuesta,errmsg,err) {
+          console.log(respuesta);
+        }
+     });
+};
+//Obtener los turnos en los que se imparte un programa
+Solicitudes.getTurnos = function(){
+  Solicitudes.turnosPromesa= $.ajax({
+       type: "POST",
+       url:"../controllers/control-turno.php",
+       dataType: "json",
+       data:{webService:"consultarTodos",url:""},
+       success : function(respuesta){
+         var turnoPrograma = $('#turno_programa');
+         for (var i = 0; i < respuesta.data.length; i++) {
+           turnoPrograma.append('<option value ="'+respuesta.data[i].id+'">'+respuesta.data[i].nombre+'</option>');
+         }
+         turnoPrograma.selectpicker('refresh');
+       },
+       error : function(respuesta,errmsg,err) {
+          console.log(respuesta);
+        }
+     });
+};
+//Obtener los tipos de solictudes que existen
+Solicitudes.getTipos = function () {
+    Solicitudes.tiposPromesa = $.ajax({
+      type: "POST",
+      url:"../controllers/control-tipo-solicitud.php",
+      dataType: "json",
+      data:{webService:"consultarTodos",url:""},
+      success: function (respuesta) {
+          var select = $("#tipo_solicitud");
+          $.each(respuesta.data,function(key, registro){
+              select.append('<option value='+registro.id+'>'+registro.nombre+'</option>');
+          });
+      },
+      fail: function( jqXHR, textStatus, errorThrown ) {
+
+            if (jqXHR.status === 0) {
+
+              alert('Not connect: Verify Network.');
+
+            } else if (jqXHR.status == 404) {
+
+              alert('Requested page not found [404]');
+
+            } else if (jqXHR.status == 500) {
+
+              alert('Internal Server Error [500].');
+
+            } else if (textStatus === 'parsererror') {
+
+              alert('Requested JSON parse failed.');
+
+            } else if (textStatus === 'timeout') {
+
+              alert('Time out error.');
+
+            } else if (textStatus === 'abort') {
+
+              alert('Ajax request aborted.');
+
+            } else {
+
+              alert('Uncaught Error: ' + jqXHR.responseText);
+
+            }
+
+       }
+    });
+};
+
+Solicitudes.tiposControl = {
+  "1":{"dictamenId":"DictamenRVOE",
+      "acuerdoId":"AcuerdoRVOE"
+    },
+  "2":{"dictamenId":"DictamenModificacionRVOE",
+      "acuerdoId":"AcuerdoModificacionRVOE"
+    },
+  "3":{"dictamenId":"DictamenCambioDomicilio",
+      "acuerdoId":"AcuerdoCambioDomicilio"
+    },
+  "4":{"dictamenId":"DictamenCambioRepresentanteLegal",
+      "acuerdoId":"AcuerdoCambioRepresentanteLegal"
+      }
+}
+
+Solicitudes.ESTATUS = {
+  "INSPECCION": 7,
+  "CIMPRESION":9,
+  "EVALUACION":5,
+  "REVISION":8,
+  "RECHAZADA":100
+
+}
+//Obtener los detalles de la solicitud
+Solicitudes.getDetalles = function(){
+    Solicitudes.promesaDetalles = $.ajax({
+      type: "POST",
+      url: "../controllers/control-solicitud.php",
+      dataType: "json",
+      data: { webService:"detallesSolicitud",url:"",id:$("#id_solicitud").val()},
+      success: function(respuesta){
+
+        if(respuesta.data != ""){
+                   console.log(respuesta);
+          respuesta = respuesta.data;
+          var solicitud = respuesta.solicitud;
+          if( solicitud != undefined ){
+            $("#tipo_solicitud").val(solicitud.tipo);
+            $("#alta_solicitud").val(solicitud.alta.substring(0,10));
+            $("#folio").val(solicitud.folio);
+
+
+            if(solicitud.estatus >= Solicitudes.ESTATUS.INSPECCION && solicitud.estatus != Solicitudes.ESTATUS.RECHAZADA ){
+              $("#OrdenInspección").show();
+            }else{
+                $("#OrdenInspección").hide();
+            }
+
+            if(solicitud.estatus >= Solicitudes.ESTATUS.CIMPRESION && solicitud.estatus != Solicitudes.ESTATUS.RECHAZADA ){
+              $("#Notificacion").show();
+              $("#"+Solicitudes.tiposControl[solicitud.tipo].acuerdoId).show();
+            }else{
+              $("#Notificacion").hide();
+              $("#"+Solicitudes.tiposControl[solicitud.tipo].acuerdoId).hide();
+            }
+            if(solicitud.estatus >= Solicitudes.ESTATUS.REVISION  && solicitud.estatus != Solicitudes.ESTATUS.RECHAZADA ){
+              $("#ActaDeInspeccion").show();
+              $("#ActaDeCierre").show();
+              $("#Desistimiento").show();
+              $("#"+Solicitudes.tiposControl[solicitud.tipo].dictamenId).show();
+
+            }else{
+              $("#ActaDeInspeccion").hide();
+              $("#ActaDeCierre").hide();
+              $("#Desistimiento").hide();
+              $("#"+Solicitudes.tiposControl[solicitud.tipo].dictamenId).hide();
+
+            }
+            if(solicitud.estatus >= Solicitudes.ESTATUS.EVALUACION  && solicitud.estatus != Solicitudes.ESTATUS.RECHAZADA ){
+              $("#CartaAceptacion").show();
+              $("#CartaAsignacion").show();
+              $("#CartaImpCon").show();
+              $("#OficioTurnarCIFRHS").show();
+            }else{
+              $("#CartaAceptacion").hide();
+              $("#CartaAsignacion").hide();
+              $("#CartaImpCon").hide();
+              $("#OficioTurnarCIFRHS").hide();
+            }
+            if(respuesta.institucion.es_nombre_autorizado){
+              $("#fda03").on("click",function(e){
+                e.preventDefault();
+                Solicitudes.mostrarMensaje("error","La institución tiene nombre autorizado");
+              });
+              $("#fda03").attr("checked",true);
+              $("#fda03l").on("click",function(e){
+                e.preventDefault();
+                Solicitudes.mostrarMensaje("error","La institución tiene nombre autorizado");
+              });
+
+            }
+
+
+
+
+
+          }
+          var programa = respuesta.programa;
+          if( programa != undefined){
+
+            if(programa.rvoe==""){
+              $("#rvoe").val("En proceso");
+            }else{
+                $("#rvoe").val(programa.rvoe);
+            }
+
+            $("#nivel_id").val(programa.nivel);
+            $("#nombre_programa").val(programa.nombre);
+            $("#modalidad_id").val(programa.modalidad);
+            $("#ciclo_id").val(programa.ciclo);
+          }
+
+          var turnos = respuesta.turno;
+          if( turnos != undefined){
+            var opcionesTurnos =[];
+            for (var m = 0; m < turnos.length; m++) {
+              opcionesTurnos.push(turnos[m].turno_id);
+            }
+            $("#turno_programa").val(opcionesTurnos).selectpicker("refresh");
+          }
+
+          var plantel = respuesta.plantel;
+          if( plantel != undefined ){
+              $("#cct").val(plantel.cct);
+          }
+
+          var domicilio = respuesta.domicilio;
+          if( domicilio != undefined){
+            $("#calle").val(domicilio.calle);
+            $("#numero").val(domicilio.numero_exterior);
+            $("#interior").val(domicilio.numero_interior);
+            $("#colonia").val(domicilio.colonia);
+            $("#cp").val(domicilio.codigo_postal);
+            $("#municipio").val(domicilio.municipio);
+          }
+
+          var institucion = respuesta.institucion;
+          if( institucion != undefined ){
+            $("#institucion_nombre").val(institucion.nombre);
+            $("#alta_institucion").val(institucion.created_at.substr(0,10));
+          }
+
+          var representante = respuesta.representante;
+          if( representante != undefined ){
+            $("#nombre_representante").val(representante.nombre + " " + representante.apellido_paterno + " "+ representante.apellido_materno);
+            $("#email_representante").val(representante.correo);
+            $("#celular_representante").val(representante.celular);
+          }
+
+          var avances = respuesta.avance;
+          if( avances != undefined ){
+            var por;
+            var tam = avances.length;
+            var ultimo = avances[tam-1].estatus_solicitud_id;
+            console.log(ultimo);
+            if( ultimo > 99){
+              ultimo = avances[tam-2].estatus_solicitud_id;
+              if( ultimo < 11){
+                por = ultimo * 9;
+                $("#barra-porcentaje").attr("style","width:"+por+"%");
+                $("#porcentaje-progreso").html(por+"%");
+              }
+            }else{
+              if(ultimo==11)
+              {
+                por = 100;
+                $("#barra-porcentaje").attr("style","width:"+por+"%");
+                $("#porcentaje-progreso").html(por+"%");
+              }else{
+                por = ultimo * 9;
+                $("#barra-porcentaje").attr("style","width:"+por+"%");
+                $("#porcentaje-progreso").html(por+"%");
+              }
+
+            }
+            var observaciones="";
+            for (var i = 0; i < avances.length; i++) {
+              if(avances[i].comentario!=null)
+              {
+                observaciones =  observaciones + avances[i].detalles.nombre + ": "+ avances[i].comentario +"\n";
+              }
+              if(avances[i].estatus_solicitud_id==3)
+              {
+                observaciones =  observaciones  + "USTED DEBE DE ENTREGAR LOS DOCUMENTOS (FA01-FDA06):  "+ solicitud.cita +"\n";
+
+              }
+              // if(avances[i].estatus_solicitud_id == 200 || avances[i].estatus_solicitud_id == 100){
+              //     observaciones =  observaciones + avances[i].comentario +"\n";
+              // }
+
+            }
+
+            if(observaciones.length > 0){
+              $("#observaciones").val(observaciones);
+            }
+
+          }
+
+        }
+
+      },
+      error : function(respuesta,errmsg,err) {
+         console.log(respuesta.status + ": " + respuesta.responseText);
+      }
+    });
+};
+//Obtener los comentarios de la revisión
+Solicitudes.getComentariosRevision = function(){
+  Solicitudes.comentariosRevisionPromesa= $.ajax({
+       type: "POST",
+       url:"../controllers/control-solicitud-estatus.php",
+       dataType: "json",
+       data:{webService:"estatus",url:"",id:$("#idSolicitud").val()},
+       success : function(respuesta){
+
+         if(respuesta.length>0){
+           var comentarios = respuesta[0];
+           $("#comentarios").val(comentarios.comentario);
+         }
+       },
+       error : function(respuesta,errmsg,err) {
+          console.log(respuesta);
+        }
+     });
+};
+//Oculta mensaje al dar click sobre el mismo
+Solicitudes.ocultarMensaje = function(){
+  $("#mensaje").removeClass("alert alert-danger").removeClass("alert alert-success").hide();
+};
+//Muestra el mensaje correspondiene
+Solicitudes.mostrarMensaje = function(tipo,texto){
+  var mensaje = $("#mensaje");
+  if("success"==tipo)
+    mensaje.removeClass("alert alert-danger").addClass("alert alert-success").show();
+  else if("error"==tipo)
+    mensaje.removeClass("alert alert-success").addClass("alert alert-danger").show();
+
+  mensaje.html(texto);
+  $("html, body").animate({ scrollTop: 0 }, "slow");
+};
+//Guardar cambios de la revisión
+Solicitudes.guardarComentarios = function(opcion){
+  $("#opcion-comentarios").val(opcion);
+  if(opcion == 2){
+    if( $("#terminarRevision").val() == "" ){
+      Solicitud.mostrarMensaje("error","Para poder terminar la resivisión debe de responder ¿El llenado es correcto?");
+      $( "#terminarRevision" ).focus();
+    }else{
+      $("#form-comentarios").submit();
+    }
+  }else{
+    $("#form-comentarios").submit();
+  }
+};
+//Guardar revisión de documentación
+Solicitudes.revisarDocumentacion = function(){
+  $("#modalMensaje").modal();
+  $("#tamanoModalMensaje").attr("style","margin-top:20px;");
+  var mensajes = $("#mensajeDocumentacion");
+
+  if ( $('#fda01').prop('checked') && $('#fda02').prop('checked')  && $('#fda03').prop('checked') && $('#fda04').prop('checked') && $('#fda05').prop('checked') && $('#fda06').prop('checked'))
+  {
+    mensajes.removeClass("alert alert-danger");
+    mensajes.addClass("alert alert-info");
+    mensajes.html("<p class='text-left'><strong>¿La documentación fue recibida?</strong></p>");
+
+    var boton = $('<button/>', {
+    'type': 'button',
+    'class': 'btn btn-primary',
+    'text' : 'SI',
+    'onclick': 'Solicitudes.completarCotejamiento()'
+    });
+    $( '#mensaje-footer').append(boton);
+  }else
+  {
+    mensajes.removeClass("alert alert-info");
+    mensajes.addClass("alert alert-danger");
+    mensajes.html("<p class='text-left'><strong>Toda la documentación debe de ser recibida.</strong></p>");
+
+  }
+
+};
+//Confirmar revisión de documentacion
+Solicitudes.completarCotejamiento =function(){
+  $("#form-cotejamiento").submit();
+};
+//Entregar rvoe
+Solicitudes.recogerRVOE=function(obj){
+  Solicitudes.entregar = obj;
+  $("#modalEntregarRVOE").modal();
+  $("#messageRVOE").html(obj.programa);
+};
+Solicitudes.entregarRVOE=function(){
+  $.ajax({
+    type: "POST",
+    url: "../controllers/control-solicitud.php",
+    dataType : "json",
+    data : {webService:"entregarRVOE",solicitud_id:Solicitudes.entregar.solicitud,comentarios:$("#mensajeFinal").val()},
+    success : function(respuesta){
+      tabla.ajax.reload();
+    },
+    error : function(respuesta,errmsg,err) {
+       console.log(respuesta.status + ": " + respuesta.responseText);
+     }
+  });
+};
+//Eliminar solicitud (cambiar a estatus 100)
+Solicitudes.modalEliminar = function(obj){
+  Solicitudes.eliminar = obj;
+  $("#modalEliminar").modal();
+  $("#mensajeEliminacion").html(obj.folio);
+};
+Solicitudes.eliminarSolicitud = function(){
+  if($("#motivoEliminacion").val()!=""){
+    $.ajax({
+      type: "POST",
+      url: "../controllers/control-solicitud.php",
+      dataType : "json",
+      data : {webService:"eliminarSolicitud",solicitud_id:Solicitudes.eliminar.solicitud,comentarios:$("#motivoEliminacion").val()},
+      success : function(respuesta){
+      },
+      error : function(respuesta,errmsg,err) {
+         console.log(respuesta.status + ": " + respuesta.responseText);
+       }
+    });
+    tabla.ajax.reload();
+
+  }
+
+};
+
+
+//Cargar
+$(document).ready(function ($) {
+  $("#mensaje").on('click',Solicitudes.ocultarMensaje);
+  if( $("#opcion").val() == 1 ){
+    Solicitudes.getSolicitudes();
+  }
+  if( $("#opcion").val() == 2 ){
+      Solicitudes.getNiveles();
+      Solicitudes.getModalidades();
+      Solicitudes.getTurnos();
+      Solicitudes.getTipos();
+      $.when(Solicitudes.nivelesPromesa,Solicitudes.modalidadesPromesa,Solicitudes.turnosPromesa,Solicitudes.tiposPromesa)
+        .then(function(){
+          console.log( ' Promesas completadas para alta solicitud' );
+        })
+        .done(function(){
+          console.log('Todo listo para cargar la informacion necesaria');
+          Solicitudes.getDetalles();
+          Solicitudes.promesaDetalles.done(function(){
+            document.getElementById("cargando").style.display = "none";
+
+          });
+        })
+        .fail(function(){
+          console.log("Pero algo fallo");
+
+        });
+  }
+
+  //Cargar los comentarios de la solicitud
+  if ($("#auxRol").val() == 7 ){
+    console.log("debe aparecer la caja de comentarios");
+    Solicitudes.getComentariosRevision();
+    Solicitudes.comentariosRevisionPromesa.done(function(){
+      document.getElementById("apartado-comentarios").style.display = "block";
+    });
+  }
+
+
+
+});
