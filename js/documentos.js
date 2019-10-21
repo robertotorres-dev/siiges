@@ -86,14 +86,14 @@ Documento.showOficio = function(e){
   var enlace = this;
   var solicitudId = this.name
   var documento = this.id
-  console.log(documento);
-  console.log("Roberto");
+
   var ajaxPath='../controllers/control-oficio.php';
   var datos = {};
   datos.webService = "consultarOficio";
   datos.url = "";
   datos.solicitud_id = solicitudId;
   datos.documento = documento;
+
   $.ajax({
        type: "POST",
        url: ajaxPath,

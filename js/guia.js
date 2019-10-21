@@ -127,7 +127,6 @@ Guia.getPreguntas = function(){
                   $("#comentario"+reactivos[l].id).val(respuestaReactivo.comentarios);
                 }
               }
-              //revisar porque no aparecen todos los documentos
                 $("#preguntas"+preguntas[j].apartado_id+categorias[k].id).append("<div><h5>Documentos</h5><div id='documentos"+ preguntas[j].apartado_id+categorias[k].id+"'></div></div>");
             }
 

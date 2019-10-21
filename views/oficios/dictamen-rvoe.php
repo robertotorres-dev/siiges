@@ -181,7 +181,6 @@ $pdf->MultiCell( 0, 5, utf8_decode("5. Con fecha "
 $pdf->Ln(5);
 
 $oficioInspeccion = $pdf->getOficio(["solicitud_id"=>$_GET["id"],"documento"=>"OrdenInspección"]);
-//print_r( $oficioInspeccion);
 $fechaInspeccion = $pdf->convertirFecha($oficioInspeccion["fecha"]);
 $fecha = $pdf->convertirFecha($pdf->inspecciones["fecha"]);
 

@@ -99,7 +99,7 @@ if( $_SESSION["rol_id"] != 6  ){
                       <label>Nombre del testigo 2:</label>
                       <input class="form-control" type="text" name="testigo2" placeholder="Nombre completo del testigo">
                       <br>
-                      <label>INE del testigo 1:</label>
+                      <label>INE del testigo 2:</label>
                       <input class="form-control" type="text" name="ine2" placeholder="INE del testigo">
                     </form>
                   </div>

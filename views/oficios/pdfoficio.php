@@ -303,7 +303,7 @@ function getInspecciones($programa_id = null){
 
 function getOficio($oficio = null ){
   $oficioE = new Oficio();
-  $oficioE = $oficioE->consultarPor("oficios",["solicitud_id"=>$oficio["solicitud_id"],"documento"=>$oficio["documento"],"*");
+  $oficioE = $oficioE->consultarPor("oficios",["solicitud_id"=>$oficio["solicitud_id"],"documento"=>$oficio["documento"]],"*");
   $oficioE =!empty($oficioE["data"])?$oficioE["data"][0]:false;
 
   if($oficioE){

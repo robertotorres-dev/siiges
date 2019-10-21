@@ -8,7 +8,7 @@
   require_once "../utilities/utileria-general.php";
 
 	function retornarWebService( $url, $resultado )
-	{ 
+	{
     if( $url!="" )
 		{
 			header( "Location: $url" );

@@ -132,7 +132,7 @@
                       $consultar_respuesta = "SELECT id,respuesta,comentarios FROM evaluaciones_evaluacion_preguntas WHERE programa_evaluacion_id='$evaluacion_id' AND evaluacion_pregunta_id ='$id_pregunta'";
                       $respuesta_pregunta = $this->mysqli->query($consultar_respuesta );
                       //Comprueba que exista una respuesta para la pregunta
-                      if( $respuesta_pregunta->num_rows == 1)
+                      if( $respuesta_pregunta->num_rows >= 1)
                       {
                          $fila_preguntas["respuesta"] = $respuesta_pregunta->fetch_assoc();
                       }

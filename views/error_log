@@ -376,3 +376,245 @@
 [19-Sep-2019 14:09:55 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
 [20-Sep-2019 12:57:14 America/Mexico_City] PHP Notice:  Undefined index: modalidad in /home/uk55ea5yigkp/public_html/views/curriculum.php on line 379
 [20-Sep-2019 12:57:24 America/Mexico_City] PHP Notice:  Undefined index: modalidad in /home/uk55ea5yigkp/public_html/views/curriculum.php on line 379
+[23-Sep-2019 10:49:54 America/Mexico_City] PHP Fatal error:  Uncaught Error: Class 'ZipArchive' not found in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php:85
+Stack trace:
+#0 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(269): PHPExcel_Reader_Excel2007->canRead('../Classes/eval...')
+#1 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(191): PHPExcel_IOFactory::createReaderForFile('../Classes/eval...')
+#2 /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php(8): PHPExcel_IOFactory::load('../Classes/eval...')
+#3 {main}
+  thrown in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php on line 85
+[23-Sep-2019 10:50:05 America/Mexico_City] PHP Fatal error:  Uncaught Error: Class 'ZipArchive' not found in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php:85
+Stack trace:
+#0 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(269): PHPExcel_Reader_Excel2007->canRead('../Classes/eval...')
+#1 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(191): PHPExcel_IOFactory::createReaderForFile('../Classes/eval...')
+#2 /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php(8): PHPExcel_IOFactory::load('../Classes/eval...')
+#3 {main}
+  thrown in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php on line 85
+[23-Sep-2019 10:51:15 America/Mexico_City] PHP Fatal error:  Uncaught Error: Class 'ZipArchive' not found in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php:85
+Stack trace:
+#0 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(269): PHPExcel_Reader_Excel2007->canRead('../Classes/eval...')
+#1 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(191): PHPExcel_IOFactory::createReaderForFile('../Classes/eval...')
+#2 /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php(8): PHPExcel_IOFactory::load('../Classes/eval...')
+#3 {main}
+  thrown in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php on line 85
+[23-Sep-2019 10:51:56 America/Mexico_City] PHP Fatal error:  Uncaught Error: Class 'ZipArchive' not found in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php:85
+Stack trace:
+#0 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(269): PHPExcel_Reader_Excel2007->canRead('../Classes/eval...')
+#1 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(191): PHPExcel_IOFactory::createReaderForFile('../Classes/eval...')
+#2 /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php(8): PHPExcel_IOFactory::load('../Classes/eval...')
+#3 {main}
+  thrown in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php on line 85
+[23-Sep-2019 10:51:57 America/Mexico_City] PHP Fatal error:  Uncaught Error: Class 'ZipArchive' not found in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php:85
+Stack trace:
+#0 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(269): PHPExcel_Reader_Excel2007->canRead('../Classes/eval...')
+#1 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(191): PHPExcel_IOFactory::createReaderForFile('../Classes/eval...')
+#2 /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php(8): PHPExcel_IOFactory::load('../Classes/eval...')
+#3 {main}
+  thrown in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php on line 85
+[23-Sep-2019 10:51:59 America/Mexico_City] PHP Fatal error:  Uncaught Error: Class 'ZipArchive' not found in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php:85
+Stack trace:
+#0 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(269): PHPExcel_Reader_Excel2007->canRead('../Classes/eval...')
+#1 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(191): PHPExcel_IOFactory::createReaderForFile('../Classes/eval...')
+#2 /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php(8): PHPExcel_IOFactory::load('../Classes/eval...')
+#3 {main}
+  thrown in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php on line 85
+[23-Sep-2019 10:52:16 America/Mexico_City] PHP Fatal error:  Uncaught Error: Class 'ZipArchive' not found in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php:85
+Stack trace:
+#0 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(269): PHPExcel_Reader_Excel2007->canRead('../Classes/eval...')
+#1 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(191): PHPExcel_IOFactory::createReaderForFile('../Classes/eval...')
+#2 /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php(8): PHPExcel_IOFactory::load('../Classes/eval...')
+#3 {main}
+  thrown in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php on line 85
+[23-Sep-2019 10:53:31 America/Mexico_City] PHP Fatal error:  Uncaught Error: Class 'ZipArchive' not found in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php:85
+Stack trace:
+#0 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(269): PHPExcel_Reader_Excel2007->canRead('../Classes/eval...')
+#1 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(191): PHPExcel_IOFactory::createReaderForFile('../Classes/eval...')
+#2 /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php(8): PHPExcel_IOFactory::load('../Classes/eval...')
+#3 {main}
+  thrown in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php on line 85
+[23-Sep-2019 10:53:51 America/Mexico_City] PHP Fatal error:  Uncaught Error: Class 'ZipArchive' not found in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php:85
+Stack trace:
+#0 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(269): PHPExcel_Reader_Excel2007->canRead('../Classes/eval...')
+#1 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(191): PHPExcel_IOFactory::createReaderForFile('../Classes/eval...')
+#2 /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php(8): PHPExcel_IOFactory::load('../Classes/eval...')
+#3 {main}
+  thrown in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php on line 85
+[23-Sep-2019 10:53:56 America/Mexico_City] PHP Fatal error:  Uncaught Error: Class 'ZipArchive' not found in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php:85
+Stack trace:
+#0 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(269): PHPExcel_Reader_Excel2007->canRead('../Classes/eval...')
+#1 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(191): PHPExcel_IOFactory::createReaderForFile('../Classes/eval...')
+#2 /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php(8): PHPExcel_IOFactory::load('../Classes/eval...')
+#3 {main}
+  thrown in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php on line 85
+[23-Sep-2019 10:54:11 America/Mexico_City] PHP Fatal error:  Uncaught Error: Class 'ZipArchive' not found in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php:85
+Stack trace:
+#0 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(269): PHPExcel_Reader_Excel2007->canRead('../Classes/eval...')
+#1 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(191): PHPExcel_IOFactory::createReaderForFile('../Classes/eval...')
+#2 /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php(8): PHPExcel_IOFactory::load('../Classes/eval...')
+#3 {main}
+  thrown in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php on line 85
+[23-Sep-2019 11:08:41 America/Mexico_City] PHP Notice:  Undefined variable: numRows in /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php on line 98
+[23-Sep-2019 11:08:41 America/Mexico_City] PHP Notice:  Undefined variable: numRows in /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php on line 130
+[23-Sep-2019 11:09:28 America/Mexico_City] PHP Fatal error:  Uncaught Error: Class 'ZipArchive' not found in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php:85
+Stack trace:
+#0 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(269): PHPExcel_Reader_Excel2007->canRead('../Classes/eval...')
+#1 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(191): PHPExcel_IOFactory::createReaderForFile('../Classes/eval...')
+#2 /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php(8): PHPExcel_IOFactory::load('../Classes/eval...')
+#3 {main}
+  thrown in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php on line 85
+[23-Sep-2019 11:11:43 America/Mexico_City] PHP Notice:  Undefined variable: numRows in /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php on line 98
+[23-Sep-2019 11:11:43 America/Mexico_City] PHP Notice:  Undefined variable: numRows in /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php on line 130
+[23-Sep-2019 11:17:25 America/Mexico_City] PHP Notice:  Undefined variable: numRows in /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php on line 98
+[23-Sep-2019 11:17:25 America/Mexico_City] PHP Notice:  Undefined variable: numRows in /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php on line 130
+[23-Sep-2019 11:17:40 America/Mexico_City] PHP Fatal error:  Uncaught Error: Class 'ZipArchive' not found in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php:85
+Stack trace:
+#0 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(269): PHPExcel_Reader_Excel2007->canRead('../Classes/eval...')
+#1 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(191): PHPExcel_IOFactory::createReaderForFile('../Classes/eval...')
+#2 /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php(8): PHPExcel_IOFactory::load('../Classes/eval...')
+#3 {main}
+  thrown in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php on line 85
+[23-Sep-2019 11:19:22 America/Mexico_City] PHP Fatal error:  Uncaught Error: Class 'ZipArchive' not found in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php:85
+Stack trace:
+#0 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(269): PHPExcel_Reader_Excel2007->canRead('../Classes/eval...')
+#1 /home/uk55ea5yigkp/public_html/Classes/PHPExcel/IOFactory.php(191): PHPExcel_IOFactory::createReaderForFile('../Classes/eval...')
+#2 /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php(8): PHPExcel_IOFactory::load('../Classes/eval...')
+#3 {main}
+  thrown in /home/uk55ea5yigkp/public_html/Classes/PHPExcel/Reader/Excel2007.php on line 85
+[23-Sep-2019 11:43:17 America/Mexico_City] PHP Notice:  Undefined variable: numRows in /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php on line 98
+[23-Sep-2019 11:43:17 America/Mexico_City] PHP Notice:  Undefined variable: numRows in /home/uk55ea5yigkp/public_html/views/preguntas_evaluacion.php on line 130
+[23-Sep-2019 12:04:04 America/Mexico_City] PHP Notice:  Undefined index: modalidad in /home/uk55ea5yigkp/public_html/views/curriculum.php on line 379
+[23-Sep-2019 14:37:48 America/Mexico_City] PHP Notice:  Undefined index: modalidad in /home/uk55ea5yigkp/public_html/views/curriculum.php on line 379
+[23-Sep-2019 14:38:20 America/Mexico_City] PHP Notice:  Undefined index: modalidad in /home/uk55ea5yigkp/public_html/views/curriculum.php on line 379
+[23-Sep-2019 15:07:58 America/Mexico_City] PHP Notice:  Undefined index: modalidad in /home/uk55ea5yigkp/public_html/views/curriculum.php on line 379
+[24-Sep-2019 14:22:14 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[24-Sep-2019 14:23:50 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[24-Sep-2019 14:52:11 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[25-Sep-2019 10:45:58 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[25-Sep-2019 11:22:09 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[25-Sep-2019 12:08:56 America/Mexico_City] PHP Notice:  Undefined index: modalidad in /home/uk55ea5yigkp/public_html/views/curriculum.php on line 379
+[25-Sep-2019 14:52:48 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[30-Sep-2019 12:14:57 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[30-Sep-2019 15:26:00 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[30-Sep-2019 15:51:14 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[01-Oct-2019 15:40:03 America/Mexico_City] PHP Notice:  Undefined index: modalidad in /home/uk55ea5yigkp/public_html/views/curriculum.php on line 379
+[01-Oct-2019 18:14:17 America/Mexico_City] PHP Notice:  Undefined index: id in /home/uk55ea5yigkp/public_html/views/institucion-planteles.php on line 3
+[01-Oct-2019 18:14:17 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 24
+[01-Oct-2019 18:14:17 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 32
+[01-Oct-2019 18:14:17 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 55
+[01-Oct-2019 18:14:17 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 65
+[01-Oct-2019 18:14:17 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 74
+[01-Oct-2019 18:14:17 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 83
+[01-Oct-2019 18:14:17 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 93
+[01-Oct-2019 18:14:17 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 102
+[01-Oct-2019 18:14:17 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 111
+[01-Oct-2019 18:14:17 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 111
+[01-Oct-2019 18:14:17 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 126
+[01-Oct-2019 18:14:17 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 148
+[01-Oct-2019 18:14:17 America/Mexico_City] PHP Notice:  Undefined index: nombre_rol in /home/uk55ea5yigkp/public_html/views/institucion-planteles.php on line 35
+[01-Oct-2019 18:14:17 America/Mexico_City] PHP Notice:  Undefined index: nombre in /home/uk55ea5yigkp/public_html/views/institucion-planteles.php on line 36
+[01-Oct-2019 18:14:17 America/Mexico_City] PHP Notice:  Undefined index: apellido_paterno in /home/uk55ea5yigkp/public_html/views/institucion-planteles.php on line 36
+[01-Oct-2019 18:14:17 America/Mexico_City] PHP Notice:  Undefined index: apellido_materno in /home/uk55ea5yigkp/public_html/views/institucion-planteles.php on line 36
+[01-Oct-2019 18:14:17 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/institucion-planteles.php on line 52
+[02-Oct-2019 12:09:48 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[03-Oct-2019 10:46:04 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[03-Oct-2019 11:44:27 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[04-Oct-2019 12:50:38 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[08-Oct-2019 15:18:31 America/Mexico_City] PHP Notice:  Undefined index: modalidad in /home/uk55ea5yigkp/public_html/views/curriculum.php on line 379
+[09-Oct-2019 10:12:48 America/Mexico_City] PHP Notice:  Undefined index: id in /home/uk55ea5yigkp/public_html/views/institucion-planteles.php on line 3
+[09-Oct-2019 10:12:48 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 24
+[09-Oct-2019 10:12:48 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 32
+[09-Oct-2019 10:12:48 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 55
+[09-Oct-2019 10:12:48 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 65
+[09-Oct-2019 10:12:48 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 74
+[09-Oct-2019 10:12:48 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 83
+[09-Oct-2019 10:12:48 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 93
+[09-Oct-2019 10:12:48 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 102
+[09-Oct-2019 10:12:48 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 111
+[09-Oct-2019 10:12:48 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 111
+[09-Oct-2019 10:12:48 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 126
+[09-Oct-2019 10:12:48 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/menu.php on line 148
+[09-Oct-2019 10:12:48 America/Mexico_City] PHP Notice:  Undefined index: nombre_rol in /home/uk55ea5yigkp/public_html/views/institucion-planteles.php on line 35
+[09-Oct-2019 10:12:48 America/Mexico_City] PHP Notice:  Undefined index: nombre in /home/uk55ea5yigkp/public_html/views/institucion-planteles.php on line 36
+[09-Oct-2019 10:12:48 America/Mexico_City] PHP Notice:  Undefined index: apellido_paterno in /home/uk55ea5yigkp/public_html/views/institucion-planteles.php on line 36
+[09-Oct-2019 10:12:48 America/Mexico_City] PHP Notice:  Undefined index: apellido_materno in /home/uk55ea5yigkp/public_html/views/institucion-planteles.php on line 36
+[09-Oct-2019 10:12:48 America/Mexico_City] PHP Notice:  Undefined index: rol_id in /home/uk55ea5yigkp/public_html/views/institucion-planteles.php on line 52
+[09-Oct-2019 11:22:18 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[09-Oct-2019 13:11:23 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[10-Oct-2019 12:52:02 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[10-Oct-2019 13:18:29 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[10-Oct-2019 15:52:14 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[10-Oct-2019 16:09:40 America/Mexico_City] PHP Notice:  Undefined variable: resultadoCicloEscolar in /home/uk55ea5yigkp/public_html/views/ce-catalogo-ciclo-escolar.php on line 104
+[10-Oct-2019 16:09:40 America/Mexico_City] PHP Notice:  Undefined variable: resultadoCicloEscolar in /home/uk55ea5yigkp/public_html/views/ce-catalogo-ciclo-escolar.php on line 120
+[10-Oct-2019 16:09:40 America/Mexico_City] PHP Notice:  Undefined variable: resultadoCicloEscolar in /home/uk55ea5yigkp/public_html/views/ce-catalogo-ciclo-escolar.php on line 126
+[10-Oct-2019 16:09:57 America/Mexico_City] PHP Notice:  Undefined variable: resultadoAlumno in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 121
+[10-Oct-2019 16:09:57 America/Mexico_City] PHP Notice:  Undefined variable: resultadoAlumno in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 127
+[10-Oct-2019 16:09:57 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 141
+[10-Oct-2019 16:09:57 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 147
+[10-Oct-2019 16:09:57 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 153
+[10-Oct-2019 16:09:57 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 161
+[10-Oct-2019 16:09:57 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 169
+[10-Oct-2019 16:09:57 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 170
+[10-Oct-2019 16:09:57 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 177
+[10-Oct-2019 16:09:57 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 185
+[10-Oct-2019 16:09:57 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 191
+[10-Oct-2019 16:09:57 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 197
+[10-Oct-2019 16:09:57 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 205
+[10-Oct-2019 16:09:57 America/Mexico_City] PHP Notice:  Undefined variable: resultadoAlumno in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 217
+[10-Oct-2019 16:09:57 America/Mexico_City] PHP Notice:  Undefined variable: resultadoAlumno in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 234
+[10-Oct-2019 16:09:57 America/Mexico_City] PHP Notice:  Undefined variable: resultadoAlumno in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 234
+[10-Oct-2019 16:09:57 America/Mexico_City] PHP Notice:  Undefined variable: resultadoAlumno in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 234
+[10-Oct-2019 16:11:43 America/Mexico_City] PHP Notice:  Undefined variable: resultadoAlumno in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 121
+[10-Oct-2019 16:11:43 America/Mexico_City] PHP Notice:  Undefined variable: resultadoAlumno in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 127
+[10-Oct-2019 16:11:43 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 141
+[10-Oct-2019 16:11:43 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 147
+[10-Oct-2019 16:11:43 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 153
+[10-Oct-2019 16:11:43 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 161
+[10-Oct-2019 16:11:43 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 169
+[10-Oct-2019 16:11:43 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 170
+[10-Oct-2019 16:11:43 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 177
+[10-Oct-2019 16:11:43 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 185
+[10-Oct-2019 16:11:43 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 191
+[10-Oct-2019 16:11:43 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 197
+[10-Oct-2019 16:11:43 America/Mexico_City] PHP Notice:  Undefined variable: resultadoPersona in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 205
+[10-Oct-2019 16:11:43 America/Mexico_City] PHP Notice:  Undefined variable: resultadoAlumno in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 217
+[10-Oct-2019 16:11:43 America/Mexico_City] PHP Notice:  Undefined variable: resultadoAlumno in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 234
+[10-Oct-2019 16:11:43 America/Mexico_City] PHP Notice:  Undefined variable: resultadoAlumno in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 234
+[10-Oct-2019 16:11:43 America/Mexico_City] PHP Notice:  Undefined variable: resultadoAlumno in /home/uk55ea5yigkp/public_html/views/ce-catalogo-alumno.php on line 234
+[10-Oct-2019 17:11:14 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[10-Oct-2019 18:25:22 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[11-Oct-2019 16:32:25 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[11-Oct-2019 17:16:15 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[14-Oct-2019 12:05:30 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[14-Oct-2019 15:10:09 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[15-Oct-2019 10:20:20 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[15-Oct-2019 11:48:05 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[16-Oct-2019 13:49:18 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[17-Oct-2019 13:48:18 America/Mexico_City] PHP Notice:  Undefined index: modalidad in /home/uk55ea5yigkp/public_html/views/curriculum.php on line 379
+[17-Oct-2019 15:02:26 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 79
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 323
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 323
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: dt in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 605
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 619
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 620
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 647
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 647
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 660
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 660
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 690
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 690
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 1421
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 1421
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 1852
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 1852
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 2271
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 2271
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 2357
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 2463
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 2463
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 2553
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 2579
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 2579
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: editar in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 2643
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: solicitud in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 2644
+[17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 2646
