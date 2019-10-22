@@ -495,6 +495,8 @@ EditarSolicitud.getSolicitud = function() {
                   $('#asignaturaDocente').append('<option value="'+asignaturas[n].clave+'">'+asignaturas[n].clave+ " - " +asignaturas[n].nombre+'</option>').selectpicker('refresh');
                   $('#seriacion').attr("disabled",false);
                   $("#seriacion").append('<option value="'+asignaturas[n].clave+'">'+asignaturas[n].clave+'</option>').selectpicker('refresh');
+                  $('#seriacionOptativa').attr("disabled",false);
+                  $("#seriacionOptativa").append('<option value="'+asignaturas[n].clave+'">'+asignaturas[n].clave+'</option>').selectpicker('refresh');
                   $("#asignaturaInfraestructura").append('<option value="'+asignaturas[n].clave+'">'+asignaturas[n].clave+ " - " +asignaturas[n].nombre+'</option>').selectpicker('refresh');
                   $('#materias tr:last').after(filaAsignatura);
                   nfilaM = asignaturas[n].id+1;
@@ -563,6 +565,7 @@ EditarSolicitud.getSolicitud = function() {
                   if( docentes[posicionD].antiguedad == null ){
                     docentes[posicionD].antiguedad = "Ninguna";
                   }
+                  
                   if (docentes[posicionD].experiencias == null) {
                     docentes[posicionD].experiencias = "Ninguna";
                   }
