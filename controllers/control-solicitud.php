@@ -745,12 +745,12 @@ session_start();
                                   }else
                                   {
                                     if(!isset($asignaturaInfraestructura[$asignatura->clave])){
-                                      throw new Exception("ASIGNATURA - $asignatura->clave infraestructura no seleccionada");
+                                      $asignatura->infraestructura_id = 83;
                                     }else{
                                       $asignatura->infraestructura_id = $asignaturaInfraestructura[$asignatura->clave];
                                     }
                                     if(!isset($asignaturaDocentes[$asignatura->clave]) ){
-                                      throw new Exception("ASIGNATURA - $asignatura->clave docente no seleccionado");
+                                      $asignatura->docente_id = 23;
                                     }else{
                                       $asignatura->docente_id = $asignaturaDocentes[$asignatura->clave];
                                     }

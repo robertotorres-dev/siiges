@@ -1103,7 +1103,7 @@ Solicitud.modificacionPrograma =  function(){
                     $('#respaldos tr:last').after(filaRespaldo);
                   }
                 }
-                if( mixta.respaldos!= undefined && mixta.espejos.length > 0){
+                if( mixta.espejos != undefined && mixta.espejos.length > 0){
                   var espejos = mixta.espejos;
                   for( var posEsp = 0; posEsp < espejos.length; posEsp++){
                     var filaEspejo;

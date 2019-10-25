@@ -118,7 +118,7 @@ session_start();
 						    </div>
 								<div class="form-group col-sm-12 col-md-12">
 									<label class="control-label" for="">Redes sociales:</label><br>
-									<textarea class="form-control" name="redes_sociales" rows="8" cols="20" placeholder="Fecebook:&#10;Twitter:&#10;Instagram:"></textarea>
+									<textarea class="form-control" name="redes_sociales" rows="8" cols="20" placeholder="Facebook:&#10;Twitter:&#10;Instagram:"></textarea>
 								</div>
 								<div class="form-group col-sm-12 col-md-12">
 									<label class="control-label" for="">Página web:</label><br>

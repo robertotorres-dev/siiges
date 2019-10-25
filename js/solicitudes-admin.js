@@ -205,13 +205,14 @@ Solicitudes.getDetalles = function(){
             $("#folio").val(solicitud.folio);
 
 
-            if(solicitud.estatus >= Solicitudes.ESTATUS.INSPECCION && solicitud.estatus != Solicitudes.ESTATUS.RECHAZADA ){
+            if(solicitud.estatus >= Solicitudes.ESTATUS.INSPECCION && solicitud.estatus != Solicitudes.ESTATUS.RECHAZADA && solicitud.estatus != 200 ){
               $("#OrdenInspección").show();
             }else{
                 $("#OrdenInspección").hide();
             }
 
-            if(solicitud.estatus >= Solicitudes.ESTATUS.CIMPRESION && solicitud.estatus != Solicitudes.ESTATUS.RECHAZADA ){
+            if(solicitud.estatus >= Solicitudes.ESTATUS.CIMPRESION && solicitud.estatus != Solicitudes.ESTATUS.RECHAZADA && solicitud.estatus != 200 ){
+              console.log(solicitud.estatus);
               $("#Notificacion").show();
               $("#"+Solicitudes.tiposControl[solicitud.tipo].acuerdoId).show();
             }else{

@@ -818,7 +818,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                               <textarea class="form-control" id="perfil_ingreso_habilidades" name="PROGRAMA-perfil_ingreso_habilidades" rows="4" placeholder="Habilidades necesarias"></textarea><br>
                             </div>
                             <div class="col-sm-12 col-md-12">
-                              <p>Aptitudes</p>
+                              <p>Actitudes</p>
                               <textarea class="form-control" id="perfil_ingreso_aptitudes" name="PROGRAMA-perfil_ingreso_aptitudes" rows="4" placeholder="Aptitudes necesarias"></textarea>
                             </div>
                           </div>
@@ -846,7 +846,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                               <textarea class="form-control" id="perfil_egreso_habilidades" name="PROGRAMA-perfil_egreso_habilidades" rows="4" placeholder="Habilidades adquiridas"></textarea><br>
                             </div>
                             <div class="col-sm-12 col-md-12">
-                              <p>Aptitudes</p>
+                              <p>Actitudes</p>
                               <textarea class="form-control" id="perfil_egreso_aptitudes" name="PROGRAMA-perfil_egreso_aptitudes" rows="4" placeholder="Aptitudes adquiridas"></textarea>
                             </div>
                           </div>
@@ -1001,6 +1001,10 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                       <option value="Octavo cuatrimestre">Octavo</option>
                                       <option value="Noveno cuatrimestre">Noveno</option>
                                       <option value="Decimo cuatrimestre">Decimo</option>
+                                    </optgroup>
+                                    <optgroup label="Curriculum Flexible">
+                                      <option value="Flexible Cuatrimestral">Listado Cuatrimestral</option>
+                                      <option value="Flexible Semestral">Listado Semestral</option>
                                     </optgroup>
                                 </select>
                             </div>
@@ -1770,7 +1774,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-12 col-md-8">
                             <label class="control-label" for="">Redes sociales:</label><br>
-                            <textarea class="form-control PLANTEL"  id="redes_sociales" name="PLANTEL-redes_sociales" rows="8" cols="20" placeholder="Fecebook:&#10;Twitter:&#10;Instagram:"></textarea>
+                            <textarea class="form-control PLANTEL"  id="redes_sociales" name="PLANTEL-redes_sociales" rows="8" cols="20" placeholder="Facebook:&#10;Twitter:&#10;Instagram:"></textarea>
                           </div>
                           <div class="col-sm-12 col-md-8">
                             <label class="control-label" for="">Página web:</label><br>

@@ -251,3 +251,19 @@ fieldset.border {
 .sub-navbar {
     background: #eaeaea;
 }
+
+/*Colo de encabezado de pestañas*/
+
+li[class='active'] > a[data-toggle='tab'] {
+  background-color: #FFFFFF !important;
+  color: #545454 !important;
+}
+
+a[data-toggle='tab']{
+  background-color: #4D92DF !important;
+  color: white !important;
+}
+
+hr.red::before {
+  background-color: #4D92DF;
+}

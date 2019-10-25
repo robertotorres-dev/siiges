@@ -154,7 +154,7 @@
   $pdf->Ln(15);
   }
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 0, 5, utf8_decode("Aptitudes:"), 1, 1, "L", true );
+  $pdf->Cell( 0, 5, utf8_decode("Actitudes:"), 1, 1, "L", true );
   $pdf->SetFont( "Arial", "", 9 );
   $pdf->MultiCell( 0, 5, utf8_decode($ingresoAptitudes), 1, "J");
   if($pdf->checkNewPage()){
@@ -190,7 +190,7 @@
   $pdf->Ln(15);
   }
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 0, 5, utf8_decode("Aptitudes:"), 1, 1, "L", true );
+  $pdf->Cell( 0, 5, utf8_decode("Actitudes:"), 1, 1, "L", true );
   $pdf->SetFont( "Arial", "", 9 );
   $pdf->MultiCell( 0, 5, utf8_decode($egresoAptitudes), 1, "J");
   if($pdf->checkNewPage()){

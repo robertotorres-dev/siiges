@@ -618,3 +618,16 @@ Stack trace:
 [17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: editar in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 2643
 [17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: solicitud in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 2644
 [17-Oct-2019 15:06:43 America/Mexico_City] PHP Notice:  Undefined index: tps in /home/uk55ea5yigkp/public_html/views/editar-solicitudes.php on line 2646
+[22-Oct-2019 09:42:12 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[22-Oct-2019 10:45:21 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[22-Oct-2019 11:59:14 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[23-Oct-2019 12:21:52 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[23-Oct-2019 15:20:53 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[24-Oct-2019 12:42:57 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[24-Oct-2019 14:33:13 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[24-Oct-2019 14:54:59 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[24-Oct-2019 15:46:59 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[24-Oct-2019 16:06:55 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[24-Oct-2019 16:07:17 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[24-Oct-2019 16:24:06 America/Mexico_City] PHP Notice:  Undefined index: odt in /home/uk55ea5yigkp/public_html/views/alta-solicitudes.php on line 2486
+[25-Oct-2019 14:56:34 America/Mexico_City] PHP Notice:  Undefined index: modalidad in /home/uk55ea5yigkp/public_html/views/curriculum.php on line 379

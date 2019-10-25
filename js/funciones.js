@@ -152,6 +152,7 @@ function agregarOptativa(){
     var nombre = __('nombreOptativa').value;
     var clave = __('claveOptativa').value;
     var seriacion = $('#seriacionOptativa').val();
+    seriacion = seriacion.join(', ');
     var docente = __('docenteOptativa').value;
     var independiente = __('independienteOptativa').value;
     var credito = __('creditoOptativa').value;
