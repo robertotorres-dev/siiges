@@ -565,7 +565,7 @@ EditarSolicitud.getSolicitud = function() {
                   if( docentes[posicionD].antiguedad == null ){
                     docentes[posicionD].antiguedad = "Ninguna";
                   }
-                  
+
                   if (docentes[posicionD].experiencias == null) {
                     docentes[posicionD].experiencias = "Ninguna";
                   }
@@ -602,6 +602,9 @@ EditarSolicitud.getSolicitud = function() {
               var infAsignatura = respuesta.data.asignatura_infraestructura;
               if( infAsignatura != undefined ){
                 for (var indasig = 0; indasig < infAsignatura.length; indasig++) {
+                  if (infAsignatura[indasig].ubicacion == null) {
+                    infAsignatura[indasig].ubicacion = "";
+                  }
                   var filaInfAsig;
                   if($("#informacionCargar").val() != 4){
                     var inputInfAsig = document.createElement("INPUT");
@@ -651,7 +654,6 @@ EditarSolicitud.getSolicitud = function() {
             $("#id_domiclio_plantel").attr("name","DOMICILIOPLANTEL-id");
             for (var campo in Objdomicilio) {
               if (Objdomicilio.hasOwnProperty(campo)) {
-
                 $("#"+campo).val(Objdomicilio[campo]);
 
               }
@@ -867,8 +869,23 @@ EditarSolicitud.verImagen = function(enlace){
 $(document).ready(function ($) {
   EditarSolicitud.getSolicitud();
   document.getElementById("cargandoOtro").style.display = "block";
-  EditarSolicitud.promesaDatosSolicitud.done(
-    document.getElementById("cargandoOtro").style.display = "none",
-    document.getElementById("cargando").style.display = "none"
-  );
+  //EditarSolicitud.promesaDatosSolicitud.done();
+  $.when(EditarSolicitud.promesaDatosSolicitud)
+  .then(function(){
+      })
+    .done(function(){
+      var m = document.getElementById("municipio");
+      var mun = m.options[m.selectedIndex].text;
+      var r = document.getElementById("municipio_representante");
+      var mun_r = r.options[r.selectedIndex].text;
+      console.log(mun_r);
+      console.log(mun);
+      if (mun !== "Seleccione municipio" && mun_r !== "Seleccione municipio") {
+        document.getElementById("cargandoOtro").style.display = "none",
+        document.getElementById("cargando").style.display = "none"
+      };
+      })
+  .fail(function(){
+      console.log("Pero algo fallo");
+    });
   });

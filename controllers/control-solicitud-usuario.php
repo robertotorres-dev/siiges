@@ -296,7 +296,7 @@ session_start();
                   $mixta_noescolarizada = new MixtaNoEscolarizada();
                   $res_mixta = $mixta_noescolarizada->consultarPor("mixta_noescolarizadas",array( "programa_id" => $resultado["data"]["programa"]["id"] ),"*");
                   if( sizeof($res_mixta["data"]) > 0){
-                    //Trae la ultima actualizaci¨®n de los campos MixtaNoEscolarizada
+                    //Trae la ultima actualizaciï¿½ï¿½n de los campos MixtaNoEscolarizada
                     //$resultado["data"]["programa"]["mixta"] = $res_mixta["data"][0];
                     $resultado["data"]["programa"]["mixta"] = end($res_mixta["data"]);
                     $respaldo = new Respaldo();
@@ -381,6 +381,7 @@ session_start();
                         }
                       }
                     }
+                  //print_r($docentes_final);
                   $resultado["data"]["docentes"] = $docentes_final;
                   //Agregar las claves de las asignaturas a la infraestructura (Se eliminan  repetidos)
                   $infraestructuras_final = array();
@@ -484,7 +485,7 @@ session_start();
                 //Obtener infraestructuras de uso comÃºn
                 $infraestructura_final= array( );
                 foreach ($infraestructuras as $key => $value) {
-                  if( $value["tipo_instalacion_id"] >= 9 ){
+                  if( $value["tipo_instalacion_id"] >= 2 ){
                     $value["instalacion"] = [];
                     $temporal_instalacion = new TipoInstalacion();
                     $temporal_instalacion->setAttributes( array( 'id' => $value["tipo_instalacion_id"] ) );

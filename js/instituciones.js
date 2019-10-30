@@ -81,7 +81,7 @@ Institucion.getInstitucion = function(){
         if(Object.keys(respuesta.data[0].documentos.data).length>0){
           $('#documento_id').val(respuesta.data[0].documentos.data[0].id);
           $('#boton_mostar').show();
-          $("#modalMensaje").modal();
+          //$("#modalMensaje").modal();
           $("#acta").attr("style","margin-top:20px;height: 600px;");
           $('#acta').attr('src',respuesta.data[0].documentos.data[0].archivo);
         }
