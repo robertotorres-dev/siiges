@@ -128,7 +128,8 @@
            $evaluacion = new ProgramaEvaluacion( );
            if($_POST["opcion_evaluacion"] == 2)
            {
-             $evaluacion->setAttributes(array("id"=>$_POST["evaluacion_id"],"cumplimiento_id"=>$_POST["cumplimiento_id"],"cumplimiento"=>$_POST["porcentaje_resultado"],"valoracion"=>$_POST["resultado_valoracion"],"numero"=>$_POST["resultado_numero"],"estatus"=>2));
+             $fecha = date(Y)."/".date(m)."/".date(d);
+             $evaluacion->setAttributes(array("id"=>$_POST["evaluacion_id"],"cumplimiento_id"=>$_POST["cumplimiento_id"],"cumplimiento"=>$_POST["porcentaje_resultado"],"valoracion"=>$_POST["resultado_valoracion"],"fecha"=>$fecha,"numero"=>$_POST["resultado_numero"],"estatus"=>2));
            }else
            {
              $evaluacion->setAttributes(array("id"=>$_POST["evaluacion_id"],"cumplimiento_id"=>$_POST["cumplimiento_id"],"cumplimiento"=>$_POST["porcentaje_resultado"],"valoracion"=>$_POST["resultado_valoracion"],"numero"=>$_POST["resultado_numero"]));

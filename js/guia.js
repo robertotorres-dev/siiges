@@ -215,8 +215,8 @@ Guia.CamposLLenos = function(){
 };
 //Terminar la solicitud
 Guia.terminar = function(){
-     $("#opcion_evaluacion").val(2);
-    $( "#guia" ).submit();
+  $("#opcion_evaluacion").val(2);
+  $("#guia").submit();
 };
 //Obtener los documentos requeridos
 Guia.getDocumentos = function(){

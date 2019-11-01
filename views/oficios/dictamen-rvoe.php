@@ -168,7 +168,7 @@ foreach ($fechas as $key => $f) {
 
 $pdf->MultiCell( 0, 5, utf8_decode("5. Con fecha "
 .$fecha
-."se recibieron los resultados de la evaluación técnico-curricular del plan y programas de estudio de la "
+." se recibieron los resultados de la evaluación técnico-curricular del plan y programas de estudio de la "
 .$pdf->programa["nivel"]["descripcion"]." en "
 .$pdf->programa["nombre"]
 .", en la modalidad "

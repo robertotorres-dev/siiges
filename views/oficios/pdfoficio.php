@@ -314,7 +314,6 @@ function getOficio($oficio = null ){
       $oficioE["detalles"] = $detalles;
     }
   }
-
   return $oficioE;
 }
 

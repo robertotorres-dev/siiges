@@ -280,7 +280,8 @@ $pdf->MultiCell( 0, 5, utf8_decode("DECIMO.- Notifíquese esta resolución a las
 $pdf->Ln(5);
 
 $pdf->Cell( 0, 5, utf8_decode("Expedido en la ciudad de Guadalajara, Jalisco, el día "
-.$pdf->convertirFecha(date("Y-m-d"))
+//.$pdf->convertirFecha(date("Y-m-d"))
+.$pdf->convertirFecha($oficio["fecha"])
 ."."), 0, 1, "L");
 $pdf->Ln(10);
 

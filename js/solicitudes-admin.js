@@ -347,7 +347,7 @@ Solicitudes.getDetalles = function(){
               }
               if(avances[i].estatus_solicitud_id==3)
               {
-                observaciones =  observaciones  + "USTED DEBE DE ENTREGAR LOS DOCUMENTOS (FA01-FDA06):  "+ solicitud.cita +"\n";
+                observaciones =  observaciones  + "USTED DEBE DE ENTREGAR LOS DOCUMENTOS (FDA01 al FDA06):  "+ solicitud.cita +"\n";
 
               }
               // if(avances[i].estatus_solicitud_id == 200 || avances[i].estatus_solicitud_id == 100){
