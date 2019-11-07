@@ -85,6 +85,10 @@ Utileria::validarSesion( basename( __FILE__ ) );
                               <input type="hidden" id="nombre-institucion" name="INSTITUCION-nombre" value="NO AUTORIZADO">
                             </div>
                           </div>
+                          <div class="col-sm-12 col-md-12" >
+                            <label class="control-label" for="razon_social">Razón Social *</label><br>
+                            <input type="text" class="form-control" id="razon_social" name="INSTITUCION-razon_social">
+                          </div>
                           <div id="institucion-autorizada" class="col-sm-12 col-md-12" style="display:none">
                             <label class="control-label" for="nombre">Nombre de la institución</label><br>
                             <input type="text" id="autorizado" class="form-control" name="INSTITUCION-nombre">
@@ -619,7 +623,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             </div>
                             <div class="col-sm-12 col-md-7">
                               <label class="control-label" for="">Duración del programa</label><br>
-                              <input type="text" id="duracion" name="PROGRAMA-duracion" class="form-control revision" campo="Duración del programa" ubicacion="Programas de estudios - Datos generales" value="" placeholder="Número de semanas por periodo"><br>
+                              <input type="text" id="duracion" name="PROGRAMA-duracion" class="form-control revision" campo="Duración del programa" ubicacion="Programas de estudios - Datos generales" value="" placeholder="# semanas efectivas clase"><br>
                             </div>
                             <div class="col-sm-12 col-md-7">
                               <label class="control-label" for="">Créditos necesarios para concluir el programa</label><br>
@@ -2548,8 +2552,8 @@ Utileria::validarSesion( basename( __FILE__ ) );
  	 <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js" integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q==" crossorigin=""></script>
  	 <script src="https://unpkg.com/esri-leaflet@2.2.2/dist/esri-leaflet.js"	integrity="sha512-cll/dcqNKG7yfQBrTbRNzGQ70Bh4m+J5jnvU97tPyMnWsD1Ry+CXi0JE+T7Rk54pdJEYlRgXtpwxa9sUqzUAyg==" crossorigin=""></script>
  	 <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.13/dist/esri-leaflet-geocoder.js" integrity="sha512-zdT4Pc2tIrc6uoYly2Wp8jh6EPEWaveqqD3sT0lf5yei19BC1WulGuh5CesB0ldBKZieKGD7Qyf/G0jdSe016A==" crossorigin=""></script>
-   <script src="../js/funciones.js"></script>
    <script src="../js/solicitudes.js"></script>
+   <script src="../js/funciones.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_4zHAnZD2kXiCf3UIyoWn2lpB4FK3fy0&amp;callback=setMapa" async="" defer=""></script>
   </body>
 </html>

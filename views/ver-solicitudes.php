@@ -127,6 +127,10 @@ Utileria::validarSesion( basename( __FILE__ ) );
                               <input type="hidden" id="nombre-institucion" name="INSTITUCION-nombre" value="NO AUTORIZADO">
                             </div>
                           </div>
+                          <div class="col-sm-12 col-md-12" >
+                            <label class="control-label" for="razon_social">Razón Social *</label><br>
+                            <input type="text" class="form-control" id="razon_social" name="INSTITUCION-razon_social">
+                          </div>
                           <div id="institucion-autorizada" class="col-sm-12 col-md-12" style="display:none">
                             <label class="control-label" for="nombre">Nombre de la institución</label><br>
                             <input type="text" id="autorizado" class="form-control" name="INSTITUCION-nombre">
@@ -263,7 +267,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                   <div class="panel panel-default">
                     <div class="panel-heading">
                       <h4 class="panel-tittle">
-                        <a data-parent="#acordion" data-toggle="collapse" href="#personas-involucradas" aria-expanded="false" aria-controls="personas-involucradas" class="collapsed collapsed-tittle">Dilegencias</a>
+                        <a data-parent="#acordion" data-toggle="collapse" href="#personas-involucradas" aria-expanded="false" aria-controls="personas-involucradas" class="collapsed collapsed-tittle">Diligencias</a>
                         <button type="button" class="collpase-button collapsed" data-parent="#acordion" data-toggle="collapse" href="#personas-involucradas" aria-expanded="false"></button>
                       </h4>
                     </div>
@@ -523,7 +527,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             </div>
                             <div class="col-sm-12 col-md-7">
                               <label class="control-label" for="">Duración del programa</label><br>
-                              <input type="text" id="duracion" name="PROGRAMA-duracion" class="form-control revision" campo="Duración del programa" ubicacion="Programas de estudios - Datos generales" value="" placeholder="Número de semanas por periodo"><br>
+                              <input type="text" id="duracion" name="PROGRAMA-duracion" class="form-control revision" campo="Duración del programa" ubicacion="Programas de estudios - Datos generales" value="" placeholder="# semanas efectivas clase"><br>
                             </div>
                             <div class="col-sm-12 col-md-7">
                               <label class="control-label" for="">Créditos necesarios para concluir el programa</label><br>

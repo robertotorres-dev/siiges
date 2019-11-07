@@ -12,6 +12,7 @@
     protected $id;
     protected $usuario_id;
     protected $nombre;
+    protected $razon_social;
     protected $historia;
     protected $vision;
     protected $mision;
