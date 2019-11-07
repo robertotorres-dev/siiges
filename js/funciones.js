@@ -834,33 +834,146 @@ function limpiarInputs() {
 
 }
 
-function setMapa ()
-{
-      //Se crea una nueva instancia del objeto mapa
-      var map = new google.maps.Map(document.getElementById('map'),
-      {
-        zoom: 7,
-        center: {lat: 19.8303731, lng: -105.1940895}
-      });
-
-      //Creamos el marcador en el mapa con sus propiedades
-      //para nuestro obetivo tenemos que poner el atributo draggable en true
-      //position pondremos las mismas coordenas que obtuvimos en la geolocalización
-     marker = new google.maps.Marker({
-        map: map,
-        draggable: true,
-        position: new google.maps.LatLng(20.696100144603037,-103.29894789843752),
-      });
-
-    // console.log(marker.position);
-    google.maps.event.addListener(map,'click',function(event){
-      marker.setPosition(event.latLng),
-      document.getElementById('coordenadas').value = event.latLng.lat() +","+ event.latLng.lng();
-      document.getElementById('latitud').value = event.latLng.lat();
-      document.getElementById('longitud').value = event.latLng.lng();
-
-    });
-
-
-
+//función para obtener id desde URL
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+    results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
+
+var Plantel = {};
+Plantel.getInformacion = function(){
+  var dt = getParameterByName('dt');
+  //condición si está en view plantel o en solicitud
+  if ($('#id').val()) {
+    var id = $('#id').val();
+    var url = "../controllers/control-plantel.php";
+    var webSer = "consultarId";
+  } else if (dt) {
+    var id = "solicitud_id";
+    var url = "../controllers/control-solicitud-usuario.php";
+    webSer = "datosSolicitud";
+  };
+
+  //Si input id existe, se carga información del mapa
+  Plantel.promesaInformacion =   $.ajax({
+    type: "POST",
+    url: url,
+    dataType : "json",
+    data: (webSer == "datosSolicitud") ? {webService:webSer,url:"",solicitud_id:dt} : {webService:webSer,url:"",id:id},
+    success:function(respuesta){
+      console.log(respuesta);
+      if (respuesta.data.programa || respuesta.data.domicilio) {
+        if (dt) {
+          domicilio = respuesta.data.programa.plantel.domicilio;
+        } else {
+          domicilio = respuesta.data.domicilio.data[0];
+        }
+
+        z = 15,
+        lt = parseFloat(domicilio.latitud),
+        lg = parseFloat(domicilio.longitud)
+
+        //Se crea una nueva instancia del objeto mapa
+        var map = new google.maps.Map(document.getElementById('map'),
+          {
+            zoom: z,
+            center: {lat: lt, lng: lg}
+          });
+
+          //Creamos el marcador en el mapa con sus propiedades
+          //para nuestro obetivo tenemos que poner el atributo draggable en true
+          //position pondremos las mismas coordenas que obtuvimos en la geolocalización
+          marker = new google.maps.Marker({
+            map: map,
+            draggable: true,
+            position: new google.maps.LatLng(lt,lg)
+          });
+
+          //Al dar clic en el mapa se actualizan las coordenadas
+          google.maps.event.addListener(map,'click',function(event){
+            marker.setPosition(event.latLng),
+            document.getElementById('coordenadas').value = event.latLng.lat() +","+ event.latLng.lng();
+            document.getElementById('latitud').value = event.latLng.lat();
+            document.getElementById('longitud').value = event.latLng.lng();
+
+          });
+      } else {
+        z = 7;
+        lt = 20.66434058010041;
+        lg = -103.335607313818;
+        //Se crea una nueva instancia del objeto mapa
+        var map = new google.maps.Map(document.getElementById('map'),
+          {
+            zoom: z,
+            center: {lat: lt, lng: lg}
+          });
+
+          //Creamos el marcador en el mapa con sus propiedades
+          //para nuestro obetivo tenemos que poner el atributo draggable en true
+          //position pondremos las mismas coordenas que obtuvimos en la geolocalización
+          marker = new google.maps.Marker({
+             map: map,
+             draggable: true,
+             position: new google.maps.LatLng(lt,lg)
+           });
+
+           //Al dar clic en el mapa se actualizan las coordenadas
+           google.maps.event.addListener(map,'click',function(event){
+             marker.setPosition(event.latLng),
+             document.getElementById('coordenadas').value = event.latLng.lat() +","+ event.latLng.lng();
+             document.getElementById('latitud').value = event.latLng.lat();
+             document.getElementById('longitud').value = event.latLng.lng();
+
+           });
+         }
+      },
+      error: function(respuesta,errmsg,err){
+        console.log(respuesta);
+        z = 7;
+        lt = 20.66434058010041;
+        lg = -103.335607313818;
+        //Se crea una nueva instancia del objeto mapa
+        var map = new google.maps.Map(document.getElementById('map'),
+          {
+            zoom: z,
+            center: {lat: lt, lng: lg}
+          });
+
+          //Creamos el marcador en el mapa con sus propiedades
+          //para nuestro obetivo tenemos que poner el atributo draggable en true
+          //position pondremos las mismas coordenas que obtuvimos en la geolocalización
+          marker = new google.maps.Marker({
+             map: map,
+             draggable: true,
+             position: new google.maps.LatLng(lt,lg)
+           });
+
+           //Al dar clic en el mapa se actualizan las coordenadas
+           google.maps.event.addListener(map,'click',function(event){
+             marker.setPosition(event.latLng),
+             document.getElementById('coordenadas').value = event.latLng.lat() +","+ event.latLng.lng();
+             document.getElementById('latitud').value = event.latLng.lat();
+             document.getElementById('longitud').value = event.latLng.lng();
+
+           });
+             //console.log(respuesta.status + ": " + respuesta.responseText);
+        }
+    });
+};
+
+$(document).ready(function ($) {
+  Plantel.getInformacion();
+  $.when(Plantel.promesaInformacion)
+  .then(function(){
+    console.log( ' Promesas completadas para alta solicitud' );
+  })
+  .done(function(){
+    console.log('Todo listo para cargar la informacion necesaria');
+    //document.getElementById("cargando").style.display = "none";
+  })
+  .fail(function(){
+      console.log("Nuevo plantel");
+    });
+});

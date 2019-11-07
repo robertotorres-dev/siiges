@@ -397,6 +397,7 @@ Solicitud.getPlantelesBasicos = function(){
             var institucion = respuesta.data.institucion;
             var ratificacion = respuesta.data.ratificacion;
             $("#id-institucion").val(institucion.id);
+            $("#razon_social").val(institucion.razon_social);
             $("#historia").val(institucion.historia);
             $("#mision").val(institucion.mision);
             $("#vision").val(institucion.vision);
@@ -699,6 +700,7 @@ Solicitud.modificacionPrograma =  function(){
                 $("#nombre_propuesto3").val(respuesta.data.ratificacion.nombre_propuesto3);
 
               }
+              $("#razon_social").val(institucion.razon_social);
               $("#historia").val(institucion.historia);
               $("#vision").val(institucion.vision);
               $("#mision").val(institucion.mision);
@@ -1365,7 +1367,7 @@ $(document).ready(function ($) {
                     console.log("cargar plantel con id:"+$("#datosNecesarios").val());
                     Solicitud.getDatosPlantel($("#datosNecesarios").val());
                     Solicitud.promesaPlantel.done(function(){
-                      console.log("datos del plantel se cargaron");
+                      console.log("datos del plantel se cargaron");                      
                       document.getElementById("cargando").style.display = "none";
 
                     });

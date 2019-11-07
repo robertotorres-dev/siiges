@@ -157,8 +157,8 @@ session_start();
 		<script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
 		<!-- JS JQUERY -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="../js/funciones.js"></script>
 		<script src="../js/planteles.js"></script>
+		<script src="../js/funciones.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_4zHAnZD2kXiCf3UIyoWn2lpB4FK3fy0&amp;callback=setMapa" async="" defer=""></script>
 
 	</body>

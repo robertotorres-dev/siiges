@@ -878,13 +878,11 @@ $(document).ready(function ($) {
       var mun = m.options[m.selectedIndex].text;
       var r = document.getElementById("municipio_representante");
       var mun_r = r.options[r.selectedIndex].text;
-      console.log(mun_r);
-      console.log(mun);
       if (mun !== "Seleccione municipio" && mun_r !== "Seleccione municipio") {
         document.getElementById("cargandoOtro").style.display = "none",
         document.getElementById("cargando").style.display = "none"
       };
-      })
+    })
   .fail(function(){
       console.log("Pero algo fallo");
     });

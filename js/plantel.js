@@ -30,7 +30,7 @@ function cargarOpcionesSelect(id_div,nombre_select) {
   });
 
 }
-function coordenadas() {
+/*function coordenadas() {
     var direccion = $('#calle').val()+" "+ $('#numero_exterior').val()+" "+('#colonia')+" "+$('#codigo_postal').val();
     L.esri.Geocoding.geocode().text(direccion).run(function(err, results, response){
     if(results.results[0].latlng){
@@ -41,7 +41,10 @@ function coordenadas() {
       $('#longitud').val(longitud);
     }
     });
+}*/
 }
+
+
 //Se cambio al final del archivo para mermitir cargar municipios
 var gestores = $.ajax({
   type: "POST",
@@ -58,7 +61,7 @@ var gestores = $.ajax({
         select.add(option);
       }
     }else {*/
-      $('#textoInicial').html("Agrege gestores");
+      $('#textoInicial').html("Agregue gestores");
       $('#textoInicial').val("");
       $('#textoInicial').attr("disabled", true);
     //}

@@ -81,6 +81,7 @@ Planteles.getInformacion = function(){
             $("#coordenadas").val(domicilio.latitud+","+domicilio.longitud);
             $("#longitud").val(domicilio.longitud);
             $("#latitud").val(domicilio.latitud);
+            console.log($("#coordenadas").val(domicilio.latitud+","+domicilio.longitud));
             var plantel = respuesta.data;
             $("#plantel_id").val(plantel.id);
             $("#clave_centro_trabajo").val(plantel.clave_centro_trabajo);
@@ -123,8 +124,10 @@ $(document).ready(function ($) {
     });
 });
 
+
 // function coordenadas() {
 //     var direccion = $('#calle').val()+" "+ $('#numero_exterior').val()+" "+$('#colonia').val()+" "+$('#codigo_postal').val();
+//     console.log(direccion);
 //     L.esri.Geocoding.geocode().text(direccion).run(function(err, results, response){
 //     if(results.results[0].latlng){
 //       console.log(results.results[0].latlng);
@@ -132,6 +135,7 @@ $(document).ready(function ($) {
 //       var longitud = results.results[0].latlng.lng;
 //       $('#latitud').val(latitud);
 //       $('#longitud').val(longitud);
+//       $('#coordenadas').val(longitud+", "+latitud);
 //     }
 //     });
 // }
