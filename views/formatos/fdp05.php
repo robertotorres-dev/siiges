@@ -49,7 +49,7 @@
 
   $pdf->SetFillColor( 166, 166, 166 );
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 0, 5, utf8_decode("3.1. PROGRAMA DE SEGUIMIENTO"), 1, 1, "C", true );
+  $pdf->Cell( 0, 5, utf8_decode("3.1. PROGRAMA DE SEGUIMIENTO DE LA TRAYECTORIA ACADÉMICA DE LOS ESTUDIANTES"), 1, 1, "C", true );
   $pdf->SetFont( "Arial", "", 9 );
   $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["programa_seguimiento"]), 1, "J");
   if($pdf->checkNewPage()){
@@ -109,12 +109,12 @@
   }
   $pdf->Ln( 5 );
 
-  $pdf->Ln( 15 );
+  $pdf->Ln( 30 );
   $pdf->SetFont( "Arial", "B", 11 );
   $pdf->Cell( 0, 5, "BAJO PROTESTA DE DECIR VERDAD", 0, 0, "C");
-  $pdf->Ln( 20);
+  $pdf->Ln( 5);
 
-  $pdf->Cell( 0, 5, utf8_decode($pdf->nombreRepresentante), 0, 0, "C");
+  $pdf->Cell( 0, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 0, "C");
 
 
   $pdf->Output( "I", "FDP05.pdf" );

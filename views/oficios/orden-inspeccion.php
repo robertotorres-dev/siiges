@@ -11,7 +11,8 @@ $pdf = new PDF();
 $pdf->AliasNbPages( );
 $pdf->AddPage( "P", "Letter" );
 $pdf->SetFont( "Arial", "B", 10 );
-$pdf->SetMargins(50, 20 , 20);
+$pdf->SetMargins(20, 38 , 20);
+$pdf->SetAutoPageBreak(true, 35);
 
 // Obtener datos
 $pdf->getProgramaPorSolicitud($_GET["id"]);
@@ -28,7 +29,7 @@ $registro["fecha"] = date("Y-m-d");
 
 $oficio = $pdf->getOficio($registro);
 
-$pdf->Ln(5);
+$pdf->Ln(25);
 $pdf->Cell( 0, 5, utf8_decode("DIRECCIÓN DE EDUCACIÓN SUPERIOR"), 0, 1, "R");
 $pdf->Cell( 0, 5, utf8_decode(isset($oficio["oficio"])?$oficio["oficio"]:$pdf->inspecciones["folio"]), 0, 1, "R");
 $pdf->Ln(5);
@@ -36,11 +37,11 @@ $pdf->Ln(5);
 $pdf->SetFont( "Arial", "", 10 );
 $fecha = $pdf->convertirFecha(isset($oficio["fecha"])?$oficio["fecha"]:date("Y-m-d"));
 $pdf->Cell( 0, 5, "Guadalajara, Jalisco; ".$fecha, 0, 1, "R");
-$pdf->Ln(10);
+$pdf->Ln(5);
 
 $pdf->SetFont( "Arial", "B", 10 );
 $pdf->Cell( 0, 5, utf8_decode("ORDEN DE INSPECCIÓN HIGIÉNICO TÉCNICO PEDAGÓGICA"), 0, 1, "C");
-$pdf->Ln(10);
+$pdf->Ln(5);
 
 $pdf->SetFont( "Arial", "", 9 );
 
@@ -160,7 +161,7 @@ $pdf->Ln(5);
 $pdf->MultiCell( 0, 5,utf8_decode("Las demás características y hechos que se señalen en el momento de la diligencia, cuando así lo consideren pertinente los Supervisores Técnico Escolares."), 0, "J");
 $pdf->Ln(5);
 $pdf->MultiCell( 0, 5,utf8_decode("Se le comunica que una vez realizada la visita de inspección, cuenta con un término de cinco días hábiles, que correrán a partir del siguiente día en que ésta concluya, para presentar la documentación relacionada con la misma y manifestar las irregularidades que se hayan presentado."), 0, "J");
-$pdf->Ln(5);
+$pdf->Ln(2);
 
 $pdf->SetFont( "Arial", "B", 9 );
 $pdf->Cell( 0, 5,utf8_decode("ATENTAMENTE") , 0, 1, "C");
@@ -168,10 +169,10 @@ $pdf->MultiCell( 0, 5,utf8_decode("''2017, AÑO DEL CENTENARIO DE LA PROMULGACI�
 
 
 $pdf->Ln(10);
-$pdf->Cell( 0, 5,utf8_decode("Lic. Maura Alicia Álvarez Zambrano") , 0, 1, "C");
-$pdf->Cell( 0, 5,utf8_decode("Coordinadora de Instituciones de Educación Superior Incorporadas") , 0, 1, "C");
-$pdf->Cell( 0, 5,utf8_decode("INVESTIGACIÓN Y POSGRADO") , 0, 1, "C");
-$pdf->Ln(5);
+$pdf->Cell( 0, 5,utf8_decode("Ing. Marco Arturo Castro Aguilera") , 0, 1, "C");
+$pdf->Cell( 0, 5,utf8_decode("Director de Educación Superior") , 0, 1, "C");
+//$pdf->Cell( 0, 5,utf8_decode("INVESTIGACIÓN Y POSGRADO") , 0, 1, "C");
+$pdf->Ln(2);
 
 $pdf->SetFont( "Arial", "", 5 );
 $pdf->MultiCell( 0, 5,utf8_decode("JMNV/MAAZ/JAMV/jccf*"), 0, "J");

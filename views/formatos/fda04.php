@@ -64,14 +64,14 @@
   $pdf->SetFont( "Arial", "B", 9 );
   $pdf->Cell( 0, 5, utf8_decode("2. DATOS DE LA INSTITUCIÓN"), 1, 1, "L", true );
   $pdf->SetFillColor( 191, 191, 191 );
-  $pdf->Cell( 0, 5, utf8_decode("NOMBRE DE LA INSTITUCIÓN "), 1, 1, "L",true);
+  $pdf->Cell( 0, 5, utf8_decode("NOMBRE DE LA INSTITUCIÓN "), 1, 1, "C",true);
   $pdf->SetFont( "Arial", "", 9 );
   $pdf->SetFillColor( 255, 255, 255 );
   $pdf->MultiCell( 0, 5, utf8_decode($pdf->nombreInstitucion), 1, 1, "L");
 
   $pdf->SetFillColor( 191, 191, 191 );
-  $pdf->Cell( 116, 5, utf8_decode("CALLE Y NÚMERO"), 1, 0, "L", true );
-  $pdf->Cell( 60, 5, utf8_decode("COLONA"), 1, 1, "L", true );
+  $pdf->Cell( 116, 5, utf8_decode("CALLE Y NÚMERO"), 1, 0, "C", true );
+  $pdf->Cell( 60, 5, utf8_decode("COLONA"), 1, 1, "C", true );
 
   $pdf->SetFillColor( 255, 255, 255 );
   $pdf->SetFont( "Arial", "", 9 );
@@ -80,9 +80,9 @@
 
   $pdf->SetFillColor( 191, 191, 191 );
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 58, 5, utf8_decode("CÓDIGO POSTAL"), 1, 0, "L", true );
-  $pdf->Cell( 58, 5, utf8_decode("MUNICIPIO"), 1, 0, "L", true );
-  $pdf->Cell( 60, 5, utf8_decode("ENTIDAD FEDERATIVA"), 1, 1, "L", true );
+  $pdf->Cell( 58, 5, utf8_decode("CÓDIGO POSTAL"), 1, 0, "C", true );
+  $pdf->Cell( 58, 5, utf8_decode("DELEGACIÓN O MUNICIPIO"), 1, 0, "C", true );
+  $pdf->Cell( 60, 5, utf8_decode("ENTIDAD FEDERATIVA"), 1, 1, "C", true );
 
   $pdf->SetFillColor( 255, 255, 255 );
   $pdf->SetFont( "Arial", "", 9 );
@@ -106,8 +106,8 @@
 
   $pdf->SetFillColor( 191, 191, 191 );
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 58, 5, utf8_decode("PÁGINA WEB"), 1, 0, "L", true );
-  $pdf->Cell( 118, 5, utf8_decode("COORDENADAS DE LA UBICACIÓN GOOGLE MAPS"), 1, 1, "L", true );
+  $pdf->Cell( 58, 5, utf8_decode("PÁGINA WEB"), 1, 0, "C", true );
+  $pdf->Cell( 118, 5, utf8_decode("COORDENADAS DE LA UBICACIÓN GOOGLE MAPS"), 1, 1, "C", true );
 
   $pdf->SetFillColor( 255, 255, 255 );
   $pdf->SetFont( "Arial", "", 9 );
@@ -128,6 +128,11 @@ $pdf->SetFont( "Arial", "B", 9 );
 $pdf->Cell( 0, 5, utf8_decode("ESPECIFICACIONES DEL PLANTEL "), 1, 1, "L", true );
 $pdf->SetFont( "Arial", "", 9 );
 $pdf->MultiCell( 0, 5, utf8_decode($pdf->plantel["especificaciones"]), 1, "L");
+$pdf->Ln( 30 );
+$pdf->SetFont( "Arial", "", 11 );
+$pdf->Cell(0,5, utf8_decode("BAJO PROTESTA DE DECIR VERDAD"), 0, 1, "C");
+$pdf->SetFont( "Arial", "B", 11 );
+$pdf->Cell( 0, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 1, "C");
 
 
   $pdf->Output( "I", "FDA04.pdf" );

@@ -48,19 +48,19 @@
   // echo "<br>SOLICITUD: ";var_dump($pdf->solicitud);
   // exit();
   if("Masculino" == $pdf->usuarioR["persona"]["sexo"]){
-    $prefijo = "EL";
+    $prefijo = "El";
   }else{
     $prefijo = "La";
   }
   $folio = $pdf->solicitud["folio"];
-  $programa = $pdf->nivel["descripcion"]." en ".$pdf->programa["nombre"];
+  $programa = $pdf->nivel["descripcion"]."en ".$pdf->programa["nombre"];
   $modalidad = $pdf->modalidad["nombre"];
   $periodo = $pdf->ciclo["nombre"];
 
 
   $pdf->SetFont( "Arial", "", 9 );
   $pdf->MultiCell( 0, 5,
-        utf8_decode("$prefijo C. $pdf->nombreRepresentante de la $pdf->nombreInstitucion declara, bajo protesta de decir verdad, que los datos proporcionados en la Solicitud $folio cuenta con un inmueble con las condiciones de seguridad, higiénicas necesarias para impartir el plan de estudios para el programa $programa, modalidad $modalidad en períodos $periodo, asimismo ACEPTA cumplir y se compromete con las siguientes obligaciones derivadas del otorgamiento del Reconocimiento de Validez Oficial de Estudios.")
+        utf8_decode("$prefijo C. $pdf->nombreRepresentante de $pdf->nombreInstitucion declara, bajo protesta de decir verdad, que los datos proporcionados en la Solicitud $folio cuenta con un inmueble con las condiciones de seguridad, higiénicas necesarias para impartir el plan de estudios para el programa $programa, modalidad $modalidad en periodos $periodo, asimismo ACEPTA cumplir y se compromete con las siguientes obligaciones derivadas del otorgamiento del Reconocimiento de Validez Oficial de Estudios.")
         , 0, "J");
   $pdf->Ln( 5 );
 
@@ -70,7 +70,7 @@
   $pdf->Ln( 5 );
 
   $pdf->MultiCell( 0, 5,
-        utf8_decode("2.- Mencionar, en toda su documentación y publicidad que expida, la fecha y número del acuerdo por el cual se otorgó el Reconocimiento de Validez Oficial de Estudios, así como la autoridad que lo expidió.")
+        utf8_decode("2.- Mencionar, en toda su documentación y publicidad que expida, la fecha y número del acuerdo por el cual se otorgó el Reconocimiento de Validez Oficial de Estudios, así como la autoridad que lo expidió y el periodo establecido.")
         , 0, "J");
   $pdf->Ln( 5 );
 
@@ -80,7 +80,7 @@
   $pdf->Ln( 5 );
 
   $pdf->MultiCell( 0, 5,
-        utf8_decode("4.- Ceñirse a los planes y programas autorizados por la autoridad educativa.")
+        utf8_decode("4.- Ceñirse a los planes y programas autorizados por la autoridad educativa y a los tiempos aprobados para su aplicación.")
         , 0, "J");
   $pdf->Ln( 5 );
 
@@ -90,7 +90,7 @@
   $pdf->Ln( 5 );
 
   $pdf->MultiCell( 0, 5,
-        utf8_decode("6.- La institución se compromete a mantener actualizados los planes y programas de estudio de acuerdo a los avances de la materia.")
+        utf8_decode("6.- La institución se compromete a mantener actualizados los planes y programas de estudio de acuerdo a los avances de la materia y renovarlos al término del periodo establecido por la autoridad educativa.")
         , 0, "J");
   $pdf->Ln( 5 );
 
@@ -178,10 +178,11 @@
   $pdf->Ln( 5 );
 
   $pdf->SetFont( "Arial", "B", 11 );
+  $pdf->Ln( 20 );
   $pdf->Cell( 0, 5, "BAJO PROTESTA DE DECIR VERDAD", 0, 0, "C");
-  $pdf->Ln( 15 );
+  $pdf->Ln( 5 );
 
-  $pdf->Cell( 0, 5, utf8_decode($pdf->nombreRepresentante), 0, 0, "C");
+  $pdf->Cell( 0, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 0, "C");
   $pdf->Ln( 10 );
 
   $domicilio1 = $pdf->domicilioPlantel["calle"]." "

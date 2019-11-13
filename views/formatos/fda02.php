@@ -9,7 +9,7 @@
 
 
   $tituloTipoSolicitud = [
-                        "SOLICITUD DE OBTENCIÓN DE RECONOCIMIENTO DE VALIDEZ OFICIAL DE ESTUDIOS",
+                        "SOLICITUD DE RECONOCIMIENTO DE VALIDEZ OFICIAL DE ESTUDIOS",
                         "SOLICITUD DE MODIFICACIÓN A PLANES Y PROGRAMAS DE ESTUDIO ",
                         "SOLICITUD DE CAMBIO DE DOMICILIO",
                         "SOLICITUD DE CAMBIO DE REPRESENTANTE LEGAL"
@@ -66,18 +66,18 @@
 
   $pdf->SetFillColor( 166, 166, 166 );
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->MultiCell( 70, 5  , utf8_decode("NOMBRE COMPLETO DE LA PERSONA FÍSICA O JURÍDICA "), 1, "L", true );
+  $pdf->MultiCell( 70, 5  , utf8_decode("NOMBRE COMPLETO DE LA RAZÓN SOCIAL"), 1, "L", true );
   $pdf->SetFillColor( 255, 255, 255 );
   $pdf->SetFont( "Arial", "", 9 );
   $pdf->SetY(90);
   $pdf->SetX(90);
-  $pdf->Cell( 105, 10, utf8_decode($pdf->nombreRepresentante), 1, 1, "L", true );
+  $pdf->Cell( 105, 10, utf8_decode($pdf->razonSocial), 1, 1, "L", true );
 
   $pdf->Ln(10 );
 
   $pdf->SetFillColor( 166, 166, 166 );
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 40, 5, utf8_decode("NIVEL DE ESTUDIOS"), 1, 1, "L", true );
+  $pdf->Cell( 40, 5, utf8_decode("NIVEL DE ESTUDIOS"), 1, 1, "C", true );
   $pdf->SetFillColor( 255, 255, 255 );
   $pdf->SetFont( "Arial", "", 9 );
   $pdf->Cell( 40, 5, utf8_decode($pdf->nivel["descripcion"]), 1, 0, "L", true );
@@ -86,7 +86,7 @@
   $pdf->SetX(65);
   $pdf->SetFillColor( 166, 166, 166 );
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 40, 5, utf8_decode("TURNOS"), 1, 1, "L", true );
+  $pdf->Cell( 40, 5, utf8_decode("TURNOS"), 1, 1, "C", true );
   $pdf->SetFillColor( 255, 255, 255 );
   $pdf->SetFont( "Arial", "", 9 );
   $y = 115;
@@ -101,7 +101,7 @@
   $pdf->SetX(110);
   $pdf->SetFillColor( 166, 166, 166 );
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 40, 5, utf8_decode("MODALIDAD"), 1, 1, "L", true );
+  $pdf->Cell( 40, 5, utf8_decode("MODALIDAD"), 1, 1, "C", true );
   $pdf->SetFillColor( 255, 255, 255 );
   $pdf->SetFont( "Arial", "", 9 );
   $pdf->SetY(115);
@@ -112,7 +112,7 @@
   $pdf->SetX(155);
   $pdf->SetFillColor( 166, 166, 166 );
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 40, 5, utf8_decode("CICLO"), 1, 1, "L", true );
+  $pdf->Cell( 40, 5, utf8_decode("CICLO"), 1, 1, "C", true );
   $pdf->SetFillColor( 255, 255, 255 );
   $pdf->SetFont( "Arial", "", 9 );
   $pdf->SetY(115);
@@ -137,7 +137,7 @@
   $pdf->SetFillColor( 191, 191, 191 );
   $pdf->SetFont( "Arial", "B", 9 );
   $pdf->Cell( 58, 5, utf8_decode("CÓDIGO POSTAL"), 1, 0, "L", true );
-  $pdf->Cell( 58, 5, utf8_decode("MUNICIPIO"), 1, 0, "L", true );
+  $pdf->Cell( 58, 5, utf8_decode("DELEGACIÓN O MUNICIPIO"), 1, 0, "L", true );
   $pdf->Cell( 60, 5, utf8_decode("ENTIDAD FEDERATIVA"), 1, 1, "L", true );
 
   $pdf->SetFillColor( 255, 255, 255 );
@@ -150,7 +150,7 @@
   // Solicitante
   $pdf->SetFillColor( 166, 166, 166 );
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 0, 5, utf8_decode("DATOS DEL SOLICITANTE (PERSONA FÍSICA O REPRESENTANTE LEGAL)"), 1, 1, "C", true );
+  $pdf->Cell( 0, 5, utf8_decode("DATOS DEL SOLICITANTE (PERSONA FÍSICA O REPRESENTANTE LEGAL DE LA PERSONA JURÍDICA)"), 1, 1, "C", true );
   $pdf->SetFillColor( 191, 191, 191 );
   $pdf->Cell( 40, 5, utf8_decode("NOMBRE (S)"), 1, 0, "L", true );
   $pdf->SetFillColor( 255, 255, 255 );
@@ -189,7 +189,7 @@
   $pdf->SetFillColor( 191, 191, 191 );
   $pdf->SetFont( "Arial", "B", 9 );
   $pdf->Cell( 58, 5, utf8_decode("CÓDIGO POSTAL"), 1, 0, "L", true );
-  $pdf->Cell( 58, 5, utf8_decode("MUNICIPIO"), 1, 0, "L", true );
+  $pdf->Cell( 58, 5, utf8_decode("DELEGACIÓN O MUNICIPIO"), 1, 0, "L", true );
   $pdf->Cell( 60, 5, utf8_decode("ENTIDAD FEDERATIVA"), 1, 1, "L", true );
 
   $pdf->SetFillColor( 255, 255, 255 );
@@ -223,8 +223,15 @@
   $pdf->SetTextColor( 0, 0, 0 );
   $pdf->SetFillColor( 166, 166, 166 );
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->MultiCell( 0, 5, utf8_decode("PERSONAL DESIGNADO PARA REALIZAR LAS DILIGENCIAS PARA EL DESARROLLO Y SEGUIMIENTO DE LA SOLICITUD"), 1, "C", true );
+  $pdf->MultiCell( 0, 5, utf8_decode("PERSONAL DESIGNADO PARA REALIZAR LAS DILIGENCIAS PARA EL DESARROLLO Y SEGUIMIENTO DE LA SOLICITUD DE RVOE"), 1, "C", true );
   foreach ($pdf->nombresDiligencias as $key => $diligencia) {
+    $pdf->SetFillColor( 191, 191, 191 );
+    $pdf->SetFont( "Arial", "B", 9 );
+    $pdf->Cell( 60, 5, utf8_decode("NOMBRE"), 1, 0, "L", true );
+    $pdf->SetFillColor( 255, 255, 255 );
+    $pdf->SetFont( "Arial", "", 9 );
+    $pdf->Cell( 116, 5, utf8_decode($diligencia["nombre"]), 1, 1, "L", true );
+    $pdf->SetFont( "Arial", "B", 9 );
     $pdf->SetFillColor( 191, 191, 191 );
     $pdf->SetFont( "Arial", "B", 9 );
     $pdf->Cell( 60, 5, utf8_decode("CARGO"), 1, 0, "L", true );
@@ -256,7 +263,7 @@
   }
   $pdf->SetTextColor( 127, 127,127 );
   $pdf->SetFont( "Arial", "", 8 );
-  $pdf->MultiCell( 0, 5, utf8_decode("EL PERSONAL DESIGNADO DEBERÁ CONTAR CON CARTA PODER CERTIFICADA POR NOTARIO, LA CUAL DEBERÁ PRESENTAR PARA CUALQUIER DILIGENCIA A REALZAR. "), 0, "L");
+  $pdf->MultiCell( 0, 5, utf8_decode("NOTA: EL PERSONAL DESIGNADO DEBERÁ CONTAR CON CARTA PODER CERTIFICADA POR NOTARIO, LA CUAL DEBERÁ PRESENTAR PARA CUALQUIER DILIGENCIA A REALZAR. "), 0, "L");
 $pdf->SetTextColor( 0, 0,0 );
 $pdf->SetFont( "Arial", "B", 9 );
 
@@ -315,6 +322,12 @@ $pdf->SetFont( "Arial", "B", 9 );
     $pdf->SetFillColor( 255, 255, 255 );
     $pdf->SetFont( "Arial", "", 9 );
     $pdf->Cell( 116, 5, utf8_decode($pdf->ratificacion["autoridad"]), 1, 1, "L", true );
+    $pdf->Ln( 30 );
+    $pdf->SetFont( "Arial", "", 11 );
+    $pdf->Cell(0,5, utf8_decode("Bajo protesta de decir verdad"), 0, 1, "C");
+    $pdf->SetFont( "Arial", "B", 11 );
+    $pdf->Cell( 0, 5, utf8_decode("nombreRepresentante"), 0, 1, "C");
+
   }
 
 

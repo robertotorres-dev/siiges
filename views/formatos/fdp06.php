@@ -117,11 +117,13 @@
   }
 
 
-  $pdf->Ln( 20 );
-    $pdf->SetFillColor( 255, 255, 255 );
-  $pdf->Cell( 75, 5, utf8_decode($pdf->nombreRepresentante), 0, 0, "L");
-  $pdf->Cell( 55, 5, utf8_decode( Solicitud::convertirFecha(date("d-m-y"))), 0, 0, "L");
-  $pdf->MultiCell( 0, 5, utf8_decode("AUTORIZÓ DIRECTOR DE EDUCACIÓN SUPERIOR"), 0, 1, "R");
+  $pdf->Ln( 30 );
+  $pdf->SetFillColor( 255, 255, 255 );
+  $pdf->Cell( 60, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 0, "L");
+  $pdf->Cell( 65, 5, utf8_decode( Solicitud::convertirFecha(date("d-m-y"))), 0, 0, "L");
+  $pdf->Cell( 55, 5, utf8_decode( "AUTORIZÓ"), 0, 0, "L");
+  $pdf->Ln( 5 );
+  $pdf->Cell( 275, 5, utf8_decode( "DIRECTOR DE EDUCACIÓN SUPERIOR"), 0, 0, "C");
 
   $pdf->Output( "I", "FDP06.pdf" );
 ?>

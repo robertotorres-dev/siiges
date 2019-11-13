@@ -26,7 +26,7 @@
   $pdf->Ln( 10 );
 
   $pdf->SetTextColor( 0, 127, 204 );
-  $pdf->Cell( 0, 5, utf8_decode("DESCRIPCIÓN DE LAS INSTALACIONES"), 0, 1, "R");
+  $pdf->Cell( 0, 5, utf8_decode("DESCRIPCIÓN DE INSTALACIONES"), 0, 1, "R");
   $pdf->SetTextColor( 0, 0, 0 );
   $pdf->Ln( 10 );
 
@@ -77,8 +77,8 @@
   $pdf->Cell( 0, 5, utf8_decode("2.	DOMICILIO DE LA INSTITUCIÓN"), 1, 1, "L", true );
 
   $pdf->SetFillColor( 191, 191, 191 );
-  $pdf->Cell( 116, 5, utf8_decode("CALLE Y NÚMERO"), 1, 0, "L", true );
-  $pdf->Cell( 60, 5, utf8_decode("COLONA"), 1, 1, "L", true );
+  $pdf->Cell( 116, 5, utf8_decode("CALLE Y NÚMERO"), 1, 0, "C", true );
+  $pdf->Cell( 60, 5, utf8_decode("COLONA"), 1, 1, "C", true );
 
   $pdf->SetFillColor( 255, 255, 255 );
   $pdf->SetFont( "Arial", "", 9 );
@@ -87,9 +87,9 @@
 
   $pdf->SetFillColor( 191, 191, 191 );
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 58, 5, utf8_decode("CÓDIGO POSTAL"), 1, 0, "L", true );
-  $pdf->Cell( 58, 5, utf8_decode("MUNICIPIO"), 1, 0, "L", true );
-  $pdf->Cell( 60, 5, utf8_decode("ENTIDAD FEDERATIVA"), 1, 1, "L", true );
+  $pdf->Cell( 58, 5, utf8_decode("CÓDIGO POSTAL"), 1, 0, "C", true );
+  $pdf->Cell( 58, 5, utf8_decode("DELEGACIÓN O MUNICIPIO"), 1, 0, "C", true );
+  $pdf->Cell( 60, 5, utf8_decode("ENTIDAD FEDERATIVA"), 1, 1, "C", true );
 
   $pdf->SetFillColor( 255, 255, 255 );
   $pdf->SetFont( "Arial", "", 9 );
@@ -238,8 +238,8 @@
   $pdf->SetFillColor( 191, 191, 191 );
 
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 146, 5, utf8_decode("CONCEPTO"), 1, 0, "L", true );
-  $pdf->Cell( 30, 5, utf8_decode("CANTIDAD"), 1, 1, "L", true );
+  $pdf->Cell( 146, 5, utf8_decode("CONCEPTO"), 1, 0, "C", true );
+  $pdf->Cell( 30, 5, utf8_decode("CANTIDAD"), 1, 1, "C", true );
   $pdf->SetFont( "Arial", "", 9 );
   $pdf->SetFillColor( 255, 255, 255 );
 
@@ -310,7 +310,7 @@
   $pdf->SetFont( "Arial", "B", 9 );
   $pdf->Cell( 0, 5, utf8_decode("7.	PROGRAMAS IMPARTIDOS EN EL PLANTEL (OTROS RVOE)"), 1, 1, "L", true );
 
-  $headersO = ["nombre"=>"Nombre","nivel"=>"Nivel","acuerdo"=>"Acuerdo","numero_alumnos"=>"Número de Alumnos"];
+  $headersO = ["nombre"=>"Nombre del programa","nivel"=>"Nivel","acuerdo"=>"No. de Acuerdo","numero_alumnos"=>"Total de Alumnos"];
   $dataO =  json_decode($pdf->programa["otros_rvoes"]);
   $widthsO = ["nombre"=>47,"nivel"=>43,"acuerdo"=>43,"numero_alumnos"=>43];
   $lengthO = ["nombre"=>20,"nivel"=>20,"acuerdo"=>20,"numero_alumnos"=>20];
@@ -337,7 +337,7 @@
   $pdf->MultiCell( 0, 5, utf8_decode("8.	RELACIÓN DE INSTITUCIONES DE SALUD ALEDAÑAS, SERVICIOS DE AMBULANCIA U OTROS SERVICIOS DE EMERGENCIA A LOS CUALES RECURRIRÁ LA INSTITUCIÓN EN CASO DE ALGUNA CONTINGENCIA "), 1, "L", true );
   $pdf->SetFillColor( 191, 191, 191);
   $pdf->Cell( 88, 10, utf8_decode("NOMBRE DE LA INSTITUCIÓN"), 1, 0, "C", true );
-  $pdf->MultiCell( 88, 5, utf8_decode("TIEMPO APROXIMADO REQUERIDO PARA LLEGAR A A LA ESCUELA (EN  MINUTOS)"), 1, 1, "C", true );
+  $pdf->MultiCell( 88, 5, utf8_decode("TIEMPO APROXIMADO REQUERIDO PARA LLEGAR A LA ESCUELA (EN MINUTOS)"), 1, 1, "C", true );
 $pdf->SetFont( "Arial", "", 9 );
   foreach ($pdf->salud as $salud) {
     $pdf->SetFillColor( 255, 255, 255);

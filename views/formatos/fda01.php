@@ -262,13 +262,13 @@ foreach ($diligencias as $diligencia) {
   $pdf->SetMargins(20, 20 , 20);
 
   $pdf->SetTextColor( 0, 127, 204 );
-  $pdf->Cell( 0, 5, utf8_decode("OFICIO ENTREGA DE LA DOCUMENTACIÓN"), 0, 1, "R");
+  $pdf->Cell( 0, 5, utf8_decode("OFICIO DE ENTREGA DE DOCUMENTACIÓN"), 0, 1, "R");
   $pdf->SetTextColor( 0, 0, 0 );
   $pdf->Ln( 10 );
   $pdf->Cell( 0, 5, utf8_decode("DIRECTOR GENERAL DE EDUCACIÓN SUPERIOR"), 0, 1, "L");
   $pdf->Cell( 0, 5, utf8_decode("INVESTIGACIÓN Y POSGRADO"), 0, 1, "L");
   $pdf->Ln( 10 );
-  $pdf->Cell( 0, 5, utf8_decode("AT´N: COORDINADORA DE INSTITUCIONES DE EDUCACIÓN"), 0, 1, "R");
+  $pdf->Cell( 0, 5, utf8_decode("AT´N: DIRETOR DE EDUCACIÓN SUPERIOR"), 0, 1, "R");
   $pdf->Cell( 0, 5, utf8_decode("SUPERIOR INCORPORADAS"), 0, 1, "R");
   $pdf->Ln( 5 );
   $pdf->SetFont( "Arial", "", 9 );
@@ -278,13 +278,15 @@ foreach ($diligencias as $diligencia) {
   $pdf->MultiCell(0, 5, utf8_decode("Por este conducto manifiesto que estoy en condiciones para iniciar el trámite de Solicitud de Reconocimiento de Validez Oficial de Estudios (RVOE) para el programa ".$nivel['descripcion']." en ".$programa['nombre'].", ".$modalidad['nombre'].", en periodos ".$ciclo["nombre"].", turno ".$turno." de la institución ".$nombreInstitucion."."),0,"J");
   $pdf->Ln( 5 );
 
-  $pdf->MultiCell(0, 5, utf8_decode("Así mismo declaro Bajo Protesta de Decir la Verdad que la información y los documentos anexos en la presente solicitud son verídicos y fueron elaborados siguiendo principios éticos profesionales, que son de mi conocimiento las penas en que incurren quienes se conducen con falsedad ante autoridad distinta de la judicial, y acepto que el domicilio de la institución sea el mismo para recibir notificaciones y que autorizo para oírlas y recibirlas a la(s) siguiente(s) persona(s):"),0,"J");
+  $pdf->MultiCell(0, 5, utf8_decode("Así mismo declaro Bajo Protesta de Decir la Verdad que la información y los documentos anexos en la presente solicitud son verídicos y fueron elaborados siguiendo principios éticos profesionales, que son de mi conocimiento las penas en que incurren quienes se conducen con falsedad ante autoridad distinta de la judicial, y señalo como domicilio de la institución sea el mismo para recibir notificaciones y que autorizo para oírlas y recibirlas a la(s) siguiente(s) persona(s):"),0,"J");
   $pdf->Ln( 5 );
   $pdf->SetTextColor( 0, 0, 0 );
   $pdf->Tabla($headers,$nombresDiligencias);
   $pdf->Ln( 5 );
   $pdf->MultiCell(0, 5, utf8_decode("Quedo enterado de todas las disposiciones establecidas en el Reglamento de La Ley de Educación del Estado de Jalisco en Materia de Otorgamiento, Refrendo y Revocación de Incorporación de Instituciones Particulares al Sistema Educativo Estatal, así como en el Instructivo para integrar el expediente de la solicitud de obtención de Reconocimiento de Validez Oficial de Estudios de Educación Superior."),0,"J");
-  $pdf->Ln( 10 );
+  $pdf->Ln( 30 );
+  $pdf->SetFont( "Arial", "", 11 );
+  $pdf->Cell(0,5, utf8_decode("Bajo protesta de decir verdad"), 0, 1, "C");
   $pdf->SetFont( "Arial", "B", 11 );
   $pdf->Cell( 0, 5, utf8_decode($nombreRepresentante), 0, 1, "C");
 

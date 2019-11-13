@@ -26,6 +26,8 @@
         $this->SetTextColor( 0, 0, 0 );
     }
     public function footer(){
+      $this->SetY(-20);
+      $this->SetFont("Arial", "I", 9);
       $this->Cell( 0, 10, utf8_decode($this->PageNo()." de {nb}"), 0, 1, "R" );
       $this->Image( "../../images/jalisco.png",20,245,20);
 
@@ -45,7 +47,7 @@
 
   $pdf->SetFont( "Arial", "B", 10 );
   $pdf->SetMargins(20, 35 , 20);
-  
+
   $pdf->SetAutoPageBreak(true, 30);
   //$pdf->Image( "../../images/encabezado.jpg",0,5,100);
   // Nombre del formato
@@ -66,7 +68,7 @@
 
 
 
-  $pdf->SetFont( "Arial", "", 9 );
+  $pdf->SetFont( "Arial", "B", 11 );
   $pdf->Cell( 0, 5,utf8_decode($pdf->nombreInstitucion), 0,1, "L");
   $pdf->Cell( 0, 5,utf8_decode($programa.", ".$modalidad), 0,1, "L");
   $pdf->Ln( 5 );
@@ -75,21 +77,21 @@
   $pdf->SetFont( "Arial", "B", 9 );
   $pdf->Cell( 0, 5, utf8_decode("1.1  ESTUDIO DE PERTINENCIA Y FACTIBILIDAD"), 1, 1, "C", true );
   $pdf->SetFillColor( 191, 191, 191 );
-  $pdf->Cell( 0, 5, utf8_decode("NECESIDAD SOCIAL"), 1, 1, "L", true );
+  $pdf->Cell( 0, 5, utf8_decode("CON REFERENCIA GENERAL"), 1, 1, "L", true );
   $pdf->SetFont( "Arial", "", 9 );
   $pdf->MultiCell( 0, 5, utf8_decode($pdf->programa["necesidad_social"]), 1, "J");
   if($pdf->checkNewPage()){
   $pdf->Ln(15);
   }
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 0, 5, utf8_decode("NECESIDAD PROFESIONAL"), 1, 1, "L", true );
+  $pdf->Cell( 0, 5, utf8_decode("CON REFERENCIA AL PERFIL DE NUEVO INGRESO"), 1, 1, "L", true );
   $pdf->SetFont( "Arial", "", 9 );
   $pdf->MultiCell( 0, 5, utf8_decode($pdf->programa["necesidad_profesional"]), 1, "J");
   if($pdf->checkNewPage()){
   $pdf->Ln(15);
   }
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 0, 5, utf8_decode("NECESIDAD INSTITUCIONAL"), 1, 1, "L", true );
+  $pdf->Cell( 0, 5, utf8_decode("CON REFERENCIA AL PERFIL DE EGRESO"), 1, 1, "L", true );
   $pdf->SetFont( "Arial", "", 9 );
   $pdf->MultiCell( 0, 5, utf8_decode($pdf->programa["necesidad_institucional"]), 1, "J");
   if($pdf->checkNewPage()){
@@ -119,7 +121,7 @@
   $pdf->Ln(5);
   $pdf->SetFillColor( 166, 166, 166 );
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 0, 5, utf8_decode("1.4 IDEARIO EDUCATIVO E INSTITUCIONAL"), 1, 1, "C", true );
+  $pdf->Cell( 0, 5, utf8_decode("1.4 IDEARIO INSTITUCIONAL"), 1, 1, "C", true );
   $pdf->SetFillColor( 191, 191, 191 );
   $pdf->Cell( 0, 5, utf8_decode("MISIÓN"), 1, 1, "L", true );
   $pdf->SetFont( "Arial", "", 9 );
@@ -164,12 +166,12 @@
   $pdf->Ln(15);
   }
 
-  $pdf->Ln( 15 );
+  $pdf->Ln( 30 );
   $pdf->SetFont( "Arial", "B", 11 );
   $pdf->Cell( 0, 5, "BAJO PROTESTA DE DECIR VERDAD", 0, 0, "C");
-  $pdf->Ln( 20);
+  $pdf->Ln( 10);
 
-  $pdf->Cell( 0, 5, utf8_decode($pdf->nombreRepresentante), 0, 0, "C");
+  $pdf->Cell( 0, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 0, "C");
 
 
   $pdf->Output( "I", "PDP01.pdf" );

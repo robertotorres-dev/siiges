@@ -171,6 +171,7 @@ class PDF extends FPDF
      $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Solicitud no encontrada.","data"=>[]]);
      header("Location: ../home.php");exit();
    }
+   //print_r($this->programa);
    // Nivel
    $this->nivel = new Nivel();
    $this->nivel->setAttributes(["id"=>$this->programa["nivel_id"]]);
@@ -252,6 +253,7 @@ class PDF extends FPDF
    }
 
    $this->nombreInstitucion = "";
+   $this->razonSocial = "";
    // Institución
    $this->institucion = new Institucion();
    $this->institucion = $this->institucion->consultarPor("instituciones",["usuario_id"=>$this->solicitud["usuario_id"]],"*");
@@ -260,6 +262,7 @@ class PDF extends FPDF
      $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Institucion no encontrado.","data"=>[]]);
      header("Location: ../home.php");exit();
    }
+   $this->razonSocial = $this->institucion["razon_social"];
    if($this->institucion["es_nombre_autorizado"]){
      $this->nombreInstitucion = $this->institucion["nombre"];
    }else{
@@ -323,6 +326,7 @@ class PDF extends FPDF
                                      "horario" => $this->usuarioD["rfc"]
                                    ]);
    }
+   //print_r($this->nombresDiligencias);
 
      $this->fecha = Solicitud::convertirFecha($this->solicitud['fecha']);
 
@@ -401,9 +405,13 @@ class PDF extends FPDF
        $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Higiene de plantel no encontrado.","data"=>[]]);
        header("Location: ../home.php");exit();
      }
+     if ($plantelHigiene["higiene_id"] == 8) {
+       $plantelHigiene["cantidad"] = ($plantelHigiene["cantidad"] / $this->plantelHigienes[6]["cantidad"]);
+     }
      array_push($this->higienes,["higiene"=>$this->higiene["descripcion"],
                                   "cantidad"=>$plantelHigiene["cantidad"]]);
    }
+
    // Infraestructura
    $this->plantelInfraestructura = new Infraestructura();
    $this->plantelInfraestructura = $this->plantelInfraestructura->consultarPor("infraestructuras",["plantel_id"=>$id],"*");
@@ -485,6 +493,8 @@ class PDF extends FPDF
    $this->TodasAsignaturas = sizeof($this->TodasAsignaturas["data"]) > 0? $this->TodasAsignaturas["data"]:[];
    $asignaturas = [];
    foreach ($this->TodasAsignaturas as $key => $asignatura) {
+     //print_r(wordwrap($asignatura["nombre"], 11, "<br />\n"));
+     //echo "<br>";
      $infra = new Infraestructura();
      $infra->setAttributes(["id"=>$asignatura["infraestructura_id"]]);
      $infra = $infra->consultarId();
@@ -674,29 +684,32 @@ class PDF extends FPDF
 
    $this->experienciaDocente = [];
    $this->experienciaProDir = [];
-   foreach ($this->experiencias as $key => $experiencia) {
-     if(Experiencia::EXPERIENCIA_DOCENTE == $experiencia["tipo"]){
-       array_push($this->experienciaDocente,$experiencia);
-     }else{
-       array_push($this->experienciaProDir,$experiencia);
+   if ($this->experiencias) {
+     foreach ($this->experiencias as $key => $experiencia) {
+       if(Experiencia::EXPERIENCIA_DOCENTE == $experiencia["tipo"]){
+         array_push($this->experienciaDocente,$experiencia);
+       }else{
+         array_push($this->experienciaProDir,$experiencia);
 
+       }
      }
    }
+
 
    $publicaciones = new Publicacion();
    $publicaciones = $publicaciones->consultarPor("publicaciones",["persona_id"=>$this->director["id"]],"*");
    $publicaciones = !empty($publicaciones["data"])?$publicaciones["data"]:false;
 
    $this->publicaciones = [];
-   foreach ($publicaciones as $key => $publicacion) {
-     $p = [
-       "titulo"=> $publicacion["titulo"],
-       "detalles"=> $publicacion["volumen"]." ".$publicacion["editorial"]." ".$publicacion["anio"]." ".$publicacion["pais"]." ".$publicacion["otros"]
-     ];
-     array_push($this->publicaciones,$p);
+   if ($publicaciones) {
+     foreach ($publicaciones as $key => $publicacion) {
+       $p = [
+         "titulo"=> $publicacion["titulo"],
+         "detalles"=> $publicacion["volumen"]." ".$publicacion["editorial"]." ".$publicacion["anio"]." ".$publicacion["pais"]." ".$publicacion["otros"]
+       ];
+       array_push($this->publicaciones,$p);
+     }
    }
-
-
  }
 
 }

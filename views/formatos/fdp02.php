@@ -28,6 +28,8 @@
         $this->SetTextColor( 0, 0, 0 );
     }
     public function footer(){
+      $this->SetY(-20);
+      $this->SetFont("Arial", "I", 9);
       $this->Cell( 0, 10, utf8_decode($this->PageNo()." de {nb}"), 0, 1, "R" );
       $this->Image( "../../images/jalisco.png",20,245,20);
 
@@ -77,7 +79,7 @@
 
 
 
-  $programa = $pdf->nivel["descripcion"]." en ".$pdf->programa["nombre"];
+  $programa = $pdf->nivel["descripcion"]."en ".$pdf->programa["nombre"];
   $modalidad = $pdf->modalidad["nombre"];
   $periodo = $pdf->ciclo["nombre"];
 
@@ -241,22 +243,50 @@
   $pdf->Cell( 0, 5, utf8_decode("2.7 ESTRUCTURA DEL PLAN DE ESTUDIOS"), 1, 1, "C", true );
   $pdf->SetFont( "Arial", "", 9 );
   $pdf->SetFillColor( 192, 192, 192 );
+  $total_docente = 0;
+  $total_incependiente = 0;
+  $total_creditos = 0;
   foreach ($asignaturaGrados as $grado => $asignatura) {
     $pdf->Cell( 0, 5, utf8_decode($grado), 1, 1, "C", true );
     $headersA = ["nombre"=>"Asignatura","clave"=>"Clave","seriacion"=>"Seriación","horas_docente"=>"Con Docente","horas_independiente"=>"Independiente","creditos"=>"Créditos","infraestructura_nombre"=>"Instalaciones"];
     $dataA = $asignatura;
-    $widthsA = ["nombre"=>26,"clave"=>25,"seriacion"=>25,"horas_docente"=>25,"horas_independiente"=>25,"creditos"=>25,"infraestructura_nombre"=>25];
-    $lengthA = ["nombre"=>11,"clave"=>15,"seriacion"=>15,"horas_docente"=>15,"horas_independiente"=>15,"creditos"=>15,"infraestructura_nombre"=>12];
-
+    $horas_docente = 0;
+    $horas_independiente = 0;
+    $creditos = 0;
+    foreach ($asignatura as $asignatura => $detalle) {
+      $total_docente = $total_docente + $detalle["horas_docente"];
+      $horas_docente = $horas_docente + $detalle["horas_docente"];
+      $total_independiente = $total_incependiente + $detalle["horas_independiente"];
+      $horas_independiente = $horas_independiente + $detalle["horas_independiente"];
+      $total_creditos = $total_creditos + $detalle["creditos"];
+      $creditos = $creditos + $detalle["creditos"];
+    }
+    $widthsA = ["nombre"=>35,"clave"=>21,"seriacion"=>25,"horas_docente"=>25,"horas_independiente"=>25,"creditos"=>20,"infraestructura_nombre"=>25];
+    $lengthA = ["nombre"=>20,"clave"=>15,"seriacion"=>15,"horas_docente"=>15,"horas_independiente"=>15,"creditos"=>15,"infraestructura_nombre"=>12];
     $pdf->Tabla($headersA,$dataA,$widthsA,0,$lengthA);
+    $pdf->SetFillColor( 255, 255, 255 );
+    $pdf->Cell( 81, 5, utf8_decode(""), 0, 0, "R", true );
+    $pdf->SetFillColor( 191, 191, 191 );
+    $pdf->SetFont( "Arial", "", 9 );
+    $pdf->Cell( 25, 5, utf8_decode($horas_docente), 1, 0, "C", true );
+    $pdf->Cell( 25, 5, utf8_decode($horas_independiente), 1, 0, "C", true );
+    $pdf->Cell( 20, 5, utf8_decode($creditos), 1, 1, "C", true );
     $pdf->Ln(5);
     if($pdf->checkNewPage()){
-      $pdf->Ln(15);
+      $pdf->Ln(5);
     }
   }
+  $pdf->Ln(-5);
+  $pdf->SetFillColor( 255, 255, 255 );
+  $pdf->Cell( 81, 10, utf8_decode("SUMA TOTAL"), 0, 0, "R", true );
+  $pdf->SetFillColor( 191, 191, 191 );
+  $pdf->SetFont( "Arial", "B", 11 );
+  $pdf->Cell( 25, 10, utf8_decode($total_docente), 1, 0, "C", true );
+  $pdf->Cell( 25, 10, utf8_decode($total_independiente), 1, 0, "C", true );
+  $pdf->Cell( 20, 10, utf8_decode($total_creditos), 1, 1, "C", true );
 
   if($pdf->checkNewPage()){
-    $pdf->Ln(15);
+    $pdf->Ln(5);
   }
   $pdf->Ln(5);
 
@@ -320,15 +350,20 @@
   $pdf->Ln(5);
 
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 15, 5, utf8_decode("Vigencia: "), 0, 0, "L");
+  //$pdf->Cell( 15, 5, utf8_decode("Vigencia: "), 0, 0, "L");
   $pdf->SetFont( "Arial", "", 9 );
-  $pdf->Cell( 0, 5, utf8_decode($pdf->programa["vigencia"]), 0,1, "L");
-  $pdf->Ln(15);
+  //$pdf->Cell( 0, 5, utf8_decode($pdf->programa["vigencia"]), 0,1, "L");
+  $pdf->Ln(20);
 
 
-  $pdf->Cell( 50, 5, utf8_decode($pdf->nombreRepresentante), 0, 0, "C");
-  $pdf->Cell( 55, 5, Solicitud::convertirFecha(date("d-m-y")), 0, 0, "C");
-  $pdf->Cell( 60, 5, utf8_decode("DIRECTOR DE EDUCACIÓN SUPERIOR"), 0, 0, "C");
+  $pdf->Cell( 60, 10, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 0, "C");
+  if ($pdf->programa["acuerdo_rvoe"]) {
+    $pdf->Cell( 50, 10, Solicitud::convertirFecha(date("d-m-y")), 0, 0, "C");
+    $pdf->MultiCell( 65, 5, utf8_decode("AUTORIZÓ\nDIRECTOR DE EDUCACIÓN SUPERIOR"), 0, "C");
+  } else {
+    $pdf->Cell( 50, 10, utf8_decode(""), 0, 0, "C");
+  }
+  $pdf->Ln(10);
 
 
   $pdf->Output( "I", "PDP02.pdf" );

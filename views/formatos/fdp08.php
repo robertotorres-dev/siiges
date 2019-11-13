@@ -134,16 +134,18 @@
   $data = $pdf->publicaciones;
   $pdf->Tabla($headers,$data,$widths,0,$length);
 
-  $pdf->Ln( 5 );
+  $pdf->Ln( 30 );
 
   $pdf->SetFillColor( 166, 166, 166 );
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 88, 5, utf8_decode("REPRESENTANTE LEGAL"), 1, 0, "L", true );
-  $pdf->Cell( 88, 5, utf8_decode("DIRECTOR PROPUESTO"), 1, 1, "L", true );
+  //$pdf->Cell( 88, 5, utf8_decode("REPRESENTANTE LEGAL"), 1, 0, "C", true );
+  //$pdf->Cell( 88, 5, utf8_decode("DIRECTOR PROPUESTO"), 1, 1, "C", true );
 
   $pdf->SetFont( "Arial", "", 9 );
-  $pdf->Cell( 88, 30, utf8_decode($pdf->representante["persona"]["nombre"]." ".$pdf->representante["persona"]["apellido_paterno"]." ".$pdf->representante["persona"]["apellido_materno"]), 1,0, "C");
-  $pdf->Cell( 88, 30, utf8_decode($pdf->director["nombre"]." ".$pdf->director["apellido_paterno"]." ".$pdf->director["apellido_materno"]), 1,1, "C");
+  $pdf->Cell( 88, 5, utf8_decode("REPRESENTANTE LEGAL"), 0, 0, "C" );
+  $pdf->Cell( 88, 5, utf8_decode("DIRECTOR PROPUESTO"), 0, 1, "C" );
+  $pdf->Cell( 88, 5, utf8_decode(mb_strtoupper($pdf->representante["persona"]["nombre"]." ".$pdf->representante["persona"]["apellido_paterno"]." ".$pdf->representante["persona"]["apellido_materno"])), 0,0, "C");
+  $pdf->Cell( 88, 5, utf8_decode(mb_strtoupper($pdf->director["nombre"]." ".$pdf->director["apellido_paterno"]." ".$pdf->director["apellido_materno"])), 0,1, "C");
 
 
 
