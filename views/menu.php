@@ -41,7 +41,7 @@ require_once "../models/modelo-rol.php";
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Control Escolar<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="ce-programas.php">Mis programas de Estudio</a></li>
+                                <li><a href="ce-planteles-institucion.php">Mis programas de Estudio</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -94,7 +94,7 @@ require_once "../models/modelo-rol.php";
 				        <li class="dropdown">
 				            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Control Escolar<span class="caret"></span></a>
 				            <ul class="dropdown-menu" role="menu">
-				    	        <li><a href="ce-programas.php">Mis Programas de Estudios</a></li>
+				    	        <li><a href="ce-planteles-institucion.php">Mis Programas de Estudios</a></li>
 				            </ul>
 				        </li>
 				        <?php endif;?>
@@ -145,7 +145,7 @@ require_once "../models/modelo-rol.php";
 				        </li>
                         <?php endif;?>
 
-                        <?php if(Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] ): ?>
+                        <?php if(Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || (Rol::ROL_ADMIN == $_SESSION["rol_id"] )): ?>
 				        <li class="dropdown">
 				            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span>Control Escolar<span class="caret"></span></a>
 				            <ul class="dropdown-menu" role="menu">

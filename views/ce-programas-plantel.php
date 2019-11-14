@@ -85,7 +85,6 @@
 								$programa = new Programa( );
 								$programa->setAttributes( array( "plantel_id"=>$_GET["plantel_id"] ) );
 								$resultadoPrograma = $programa->consultarAcreditadosPlantel( );
-
 								$max = count( $resultadoPrograma["data"] );
 
 								for( $i=0; $i<$max; $i++ )
@@ -158,11 +157,13 @@
 								<td><?php echo $resultadoPrograma["data"][$i]["acuerdo_rvoe"]; ?></td>
 								<!-- Se agregar los siguientes botones para poder migrar con usuario de control escolar SICYT -->
 								<td>
+									<?php if(Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] ): ?>
 									<a href="ce-reglas.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Reglas</span></a>
 									<br/>
 									<a href="ce-alumnos.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Alumnos</span></a>
 									<br/>
 									<a href="ce-ciclos-escolares.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Acreditaci&oacute;n</span></a>
+									<?php endif;?>
 								</td>
 							</tr>
 							<?php
