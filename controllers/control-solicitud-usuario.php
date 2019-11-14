@@ -205,12 +205,18 @@ session_start();
           }else{
               $opciones_edicion = $detalles.$espacio.$ver;
           }
+          if( isset($campos["domicilio"] )){
+            $plantel = $campos["domicilio"]["numero_exterior"]." ".$campos["domicilio"]["calle"]." ".$campos["domicilio"]["municipio"];
+          }else{
+            $plantel = "S/N";
+          }
 
           $tabla.='{
                 "folio":"'.$folio.'",
                 "planestudios":"'.$plan.'",
                 "alta":"'.$alta.'",
                 "estatus":"'.$estatus.'",
+                "plantel":"'."$plantel".'",
                 "acciones":"'.$opciones_edicion.'"
               },';
         }

@@ -157,6 +157,7 @@ Solicitud.getSolicitudes = function(){
        { "data": "planestudios" },
        { "data": "alta" },
        { "data": "estatus" },
+       { "data": "plantel"},
        { "data": "acciones" }
        ],
      "oLanguage": {
@@ -1367,7 +1368,7 @@ $(document).ready(function ($) {
                     console.log("cargar plantel con id:"+$("#datosNecesarios").val());
                     Solicitud.getDatosPlantel($("#datosNecesarios").val());
                     Solicitud.promesaPlantel.done(function(){
-                      console.log("datos del plantel se cargaron");                      
+                      console.log("datos del plantel se cargaron");
                       document.getElementById("cargando").style.display = "none";
 
                     });
