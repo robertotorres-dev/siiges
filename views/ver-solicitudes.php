@@ -422,13 +422,13 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <!-- Trabaja gobierno -->
                           <div class="col-sm-12 col-md-12">
-                            <label class="control-label">¿Labora en ámbito gubernamental?</label>
+                            <!--<label class="control-label">¿Labora en ámbito gubernamental?</label>
                             <select class="form-control" id="ambito_gubernamental" name="DIRECTOR-ambito_gubernamental">
                                 <option value="">Seleccione una opción</option>
                                 <option value="Si">Si</option>
                                 <option value="No">No</option>
                             </select><br>
-                            <textarea class="form-control" id="descripcion_ambito_gubernamental" name="DIRECTOR-descripcion_ambito_gubernamental" rows="4" placeholder="Detalle tanto como sea posible en el ámbito gubernamental"></textarea>
+                            <textarea class="form-control" id="descripcion_ambito_gubernamental" name="DIRECTOR-descripcion_ambito_gubernamental" rows="4" placeholder="Detalle tanto como sea posible en el ámbito gubernamental"></textarea>-->
                           </div>
                         </div>
                         <!-- Publicaciones director -->

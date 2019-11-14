@@ -28,7 +28,6 @@ function cargarOpcionesSelect(id_div,nombre_select) {
   };
   console.log(jsonError);
   });
-
 }
 /*function coordenadas() {
     var direccion = $('#calle').val()+" "+ $('#numero_exterior').val()+" "+('#colonia')+" "+$('#codigo_postal').val();
@@ -42,7 +41,6 @@ function cargarOpcionesSelect(id_div,nombre_select) {
     }
     });
 }*/
-}
 
 
 //Se cambio al final del archivo para mermitir cargar municipios

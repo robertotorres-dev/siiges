@@ -501,6 +501,7 @@ session_start();
                             }
                             $parametrosSolicitud["tipo_solicitud_id"] = $_POST["SOLICITUD-tipo_solicitud_id"];
                             $parametrosSolicitud["usuario_id"] = $parametrosInstitucion["usuario_id"];
+                            //$parametrosSolicitud["fecha"]
                             $parametrosSolicitud["estatus_solicitud_id"] = isset($_POST["SOLICITUD-estatus_solicitud_id"])?$_POST["SOLICITUD-estatus_solicitud_id"]:Solicitud::NUEVA;
                             $solicitud->setAttributes($parametrosSolicitud);
                             $solicitud = $solicitud->guardar();
@@ -538,7 +539,7 @@ session_start();
                               $parametrosConsecutivo["id"] = $entidadesIds["SOLICITUD"];
                               // Construccion del folio
                               if(isset($_POST["PROGRAMA-nivel_id"]) && !empty($_POST["PROGRAMA-nivel_id"])){
-                                $parametrosConsecutivo["folio"] = "ES".Nivel::$niveles[$_POST["PROGRAMA-nivel_id"]]."14".date("Y").str_pad($entidadesIds["SOLICITUD"], 3, "0", STR_PAD_LEFT);
+                                $parametrosConsecutivo["folio"] = Nivel::$niveles[$_POST["PROGRAMA-nivel_id"]].date("Y").str_pad($entidadesIds["SOLICITUD"], 3, "0", STR_PAD_LEFT);
                               }
                               // Guardado de folio
                               $consecutivo->setAttributes($parametrosConsecutivo);
@@ -1302,9 +1303,13 @@ session_start();
         $estatus_solicitudes = new SolicitudEstatus();
         $estatus_solicitudes->setAttributes(array("id"=>$estatus["id"],"comentario"=>$comentariosF));
         $resultado = $estatus_solicitudes->guardar();
-
+        if ($estatusF == 3) {
+          $fecha = date("Y-m-d");
+        } else {
+          $fecha ="";
+        }
         $solicitudF = new Solicitud();
-        $solicitudF->setAttributes(array("id"=>$id_solicitud,"estatus_solicitud_id"=>$estatusF));
+        $solicitudF->setAttributes(array("id"=>$id_solicitud,"estatus_solicitud_id"=>$estatusF, "fecha"=>$fecha));
         $res_solicitudF = $solicitudF->guardar();
         if($res_solicitudF["data"]["id"]){
           $new_estatus = new SolicitudEstatus();
