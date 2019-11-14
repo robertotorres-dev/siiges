@@ -460,11 +460,11 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             </div>
                             <div class="col-sm-12 col-md-7">
                                 <label>Función *</label>
-                                <input id="funcion_experiencia_director" class="form-control" type="text" placeholder="Funcíon en la cual se desempeña o desempeñabá"><br>
+                                <input id="funcion_experiencia_director" class="form-control" type="text" placeholder="Función en la cual se desempeña o desempeñaba"><br>
                             </div>
                             <div class="col-sm-12 col-md-5">
                                 <label>Institución o empresa *</label>
-                                <input id="institucion_experiencia_director" class="form-control" type="text" placeholder="Institución en la que se desempeña o desempeñabá"><br>
+                                <input id="institucion_experiencia_director" class="form-control" type="text" placeholder="Institución en la que se desempeña o desempeñaba"><br>
                                 <br>
                             </div>
                             <div class="col-sm-12 col-md-3">
@@ -505,13 +505,13 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <!-- Trabaja gobierno -->
                           <div class="col-sm-12 col-md-12">
-                            <label class="control-label">¿Labora en ámbito gubernamental?</label>
+                            <!--<label class="control-label">¿Labora en ámbito gubernamental?</label>
                             <select class="form-control" id="ambito_gubernamental" name="DIRECTOR-ambito_gubernamental">
                                 <option value="">Seleccione una opción</option>
                                 <option value="Si">Si</option>
                                 <option value="No">No</option>
                             </select><br>
-                            <textarea class="form-control" id="descripcion_ambito_gubernamental" name="DIRECTOR-descripcion_ambito_gubernamental" rows="4" placeholder="Detalle tanto como sea posible en el ámbito gubernamental"></textarea>
+                            <textarea class="form-control" id="descripcion_ambito_gubernamental" name="DIRECTOR-descripcion_ambito_gubernamental" rows="4" placeholder="Detalle tanto como sea posible en el ámbito gubernamental"></textarea>-->
                           </div>
                         </div>
                         <!-- Publicaciones director -->

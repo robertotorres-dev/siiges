@@ -116,10 +116,11 @@
 						<table id="solicitudes" class="table table-striped table-bordered" cellspacing="0" width="100%">
 							<thead>
 								<tr>
-										<th>Folio</th>
+										<th>Folio de captura</th>
 										<th>Plan de estudios</th>
 										<th>Fecha de alta</th>
 										<th>Estatus</th>
+										<th>Plantel</th>
 										<th>Acciones</th>
 								</tr>
 							</thead>

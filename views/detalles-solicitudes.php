@@ -73,7 +73,7 @@
 							<input type="text" id="alta_solicitud" class="form-control" value="" readonly>
 						</div>
 						<div class="col-sm-12 col-md-3">
-							<label class="control-label">Folio</label>
+							<label class="control-label">Folio de captura</label>
 							<input type="text" id="folio" name="" class="form-control" value="" readonly>
 						</div>
 						<div class="col-sm-12 col-md-3">

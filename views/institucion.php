@@ -48,7 +48,7 @@
 				</div>
 					<div class="form-group col-sm-12 col-md-12">
 						<label class="control-label" for="nombre">Nombre Institución autorizado *</label><br>
-						<input class="form-control" id="nombre" name="nombre" value="" placeholder="Nombre de la autorizado institución" type="text" required>
+						<input class="form-control" id="nombre" name="nombre" value="" placeholder="Nombre autorizado de la institución" type="text" required>
 					</div>
 					<div class="form-group col-sm-12 col-md-12">
 						<label class="control-label" for="">Acta constitutiva de la Institución *</label><br>

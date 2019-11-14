@@ -851,7 +851,6 @@ Plantel.getInformacion = function(){
     var url = "../controllers/control-plantel.php";
     var webSer = "consultarId";
   } else if (dt) {
-    var id = "solicitud_id";
     var url = "../controllers/control-solicitud-usuario.php";
     webSer = "datosSolicitud";
   };
@@ -870,10 +869,15 @@ Plantel.getInformacion = function(){
         } else {
           domicilio = respuesta.data.domicilio.data[0];
         }
-
-        z = 15,
-        lt = parseFloat(domicilio.latitud),
-        lg = parseFloat(domicilio.longitud)
+        if (domicilio.latitud === null || domicilio.longitud === null ) {
+          z = 7,
+          lt = 20.66434058010041,
+          lg = -103.335607313818
+        } else {
+          z = 15,
+          lt = parseFloat(domicilio.latitud),
+          lg = parseFloat(domicilio.longitud)
+        }
 
         //Se crea una nueva instancia del objeto mapa
         var map = new google.maps.Map(document.getElementById('map'),
