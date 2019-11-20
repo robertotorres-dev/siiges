@@ -27,6 +27,7 @@
   require_once "../models/modelo-tipo-instalacion.php";
   require_once "../models/modelo-ratificacion-nombre.php";
   require_once "../models/modelo-bitacora.php";
+  require_once "../models/modelo-solicitud.php";
   session_start();
 
 
@@ -303,7 +304,6 @@
     //session_start();
     $resultado["status"] = "200";
     $resultado["mesagge"] = "OK";
-
     if( isset( $_SESSION["id"] ) ) {
       $institucion = new Institucion();
       $idUsuario = $_SESSION["id"];
@@ -312,6 +312,11 @@
         $gestor = new Usuario();
         $representanteGestor = $gestor->consultarPor("usuario_usuarios", array("secundario_id"=>$_SESSION["id"]) , "*");
         $idUsuario = $representanteGestor["data"][0]["principal_id"];
+      } else if($_SESSION["rol_id"]==2 || $_SESSION["rol_id"]>=7) {
+        $solicitud = new Solicitud();
+        $solicitud->setAttributes( array("id"=>$_POST["solicitud_id"]));
+        $res_solicitud = $solicitud->consultarId();
+        $idUsuario = $res_solicitud["data"]["usuario_id"];
       }
       $res_institucion = $institucion->consultarPor( "instituciones", array( "usuario_id" =>  $idUsuario)  ,"*");
 
