@@ -665,7 +665,6 @@ EditarSolicitud.getSolicitud = function() {
             {
               $('#inputsDictamenes').empty();
               $('#dictamenes tr:not(:first)').remove();
-
               for (var dic = 0; dic < dictamenes.length; dic++) {
                   var filaDictamen;
                 if($("#informacionCargar").val()!=4)
@@ -675,7 +674,9 @@ EditarSolicitud.getSolicitud = function() {
                 inputDictamen.setAttribute("id",'dictamen'+dictamenes[dic].id);
                 inputDictamen.setAttribute("name","DICTAMEN-dictamenes[]");
                 inputDictamen.setAttribute("value",JSON.stringify({"id":dictamenes[dic].id,"nombre": dictamenes[dic].nombre,"autoridad":dictamenes[dic].autoridad,"fecha_emision":dictamenes[dic].fecha_emision}));
-                __('inputsDictamenes').appendChild(inputDictamen);
+                if (__('inputsDictamenes')) {
+                  __('inputsDictamenes').appendChild(inputDictamen);
+                }
                 filaDictamen = '<tr id="dictamen' + dictamenes[dic].id + '"><td>' + dictamenes[dic].nombre + '</td><td>'+ dictamenes[dic].autoridad  +'</td><td>'+ dictamenes[dic].fecha_emision +'</td><td><button type="button" name="removeDictamen" id="' + dictamenes[dic].id + '" class="btn btn-danger" onclick="eliminarDictamen(this)">Quitar</button></td></tr>';
 
                 }else{
@@ -758,7 +759,9 @@ EditarSolicitud.getSolicitud = function() {
                 inputInsSalud.setAttribute("id",'institucionSalud'+instSalud[ind].id);
                 inputInsSalud.setAttribute("name",'SALUD-nombresInstitucionSalud[]');
                 inputInsSalud.setAttribute("value",JSON.stringify({"id":instSalud[ind].id,"nombre":instSalud[ind].nombre, "tiempo":instSalud[ind].tiempo}));
-                __('inputsSaludInstituciones').appendChild(inputInsSalud);
+                if (__('inputsSaludInstituciones')) {
+                  __('inputsSaludInstituciones').appendChild(inputInsSalud);
+                }
                   filaInstSalud = '<tr id="institucionSalud' + instSalud[ind].id + '"><td>' + instSalud[ind].nombre + '</td><td>'+ instSalud[ind].tiempo  +'</td><td><button type="button"  id="' + instSalud[ind].id + '" class="btn btn-danger" onclick="eliminarInstitucionSalud(this)">Quitar</button></td></tr>';
                 }else{
                   filaInstSalud = '<tr id="institucionSalud' + instSalud[ind].id + '"><td>' + instSalud[ind].nombre + '</td><td>'+ instSalud[ind].tiempo  +'</td></tr>';
