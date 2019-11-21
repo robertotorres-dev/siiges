@@ -95,7 +95,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <label class="control-label" for="historia">Historia </label><br>
-                            <textarea class="form-control revision" id="historia" campo="Historia" ubicacion="Datos generales apartado Datos institución"  name="INSTITUCION-historia"  rows="8" placeholder="Por favor detalle la historia de la institución"></textarea>
+                            <textarea class="form-control" id="historia" campo="Historia" ubicacion="Datos generales apartado Datos institución"  name="INSTITUCION-historia"  rows="8" placeholder="Por favor detalle la historia de la institución"></textarea>
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <label class="control-label" for="vision">Visión </label><br>
@@ -138,12 +138,12 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             <label class="control-label" for="">Nombre(s)</label><br>
                             <input type="hidden" id="id-representante" name="REPRESENTANTE-id" value="">
                             <input type="hidden" id="domicilio-id-representante" name="REPRESENTANTE-domicilio_id" value="">
-                            <input type="text" id="nombre" name="REPRESENTANTE-nombre" class="form-control revision" campo="Nombre del representante" ubicacion="Datos generales - Representante legal" value="" placeholder="Nombre del representante legal" >
+                            <input type="text" id="nombre" name="REPRESENTANTE-nombre" class="form-control" campo="Nombre del representante" ubicacion="Datos generales - Representante legal" value="" placeholder="Nombre del representante legal" >
                             <br>
                           </div>
                           <div class="col-sm-6 col-md-6">
                             <label class="control-label" for="">Apellido paterno</label><br>
-                            <input type="text" id="apellido_paterno" name="REPRESENTANTE-apellido_paterno" class="form-control revision"  campo="Apellido paterno del representante" ubicacion="Datos generales - Representante legal" value="" placeholder="Apellido paterno del representante legal" >
+                            <input type="text" id="apellido_paterno" name="REPRESENTANTE-apellido_paterno" class="form-control"  campo="Apellido paterno del representante" ubicacion="Datos generales - Representante legal" value="" placeholder="Apellido paterno del representante legal" >
                             <br>
                           </div>
                           <div class="col-sm-6 col-md-6">
@@ -153,17 +153,17 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-6 col-md-6">
                             <label class="control-label" for="">Nacionalidad</label><br>
-                            <input type="text" id="nacionalidad_representante" name="REPRESENTANTE-nacionalidad" class="form-control revision"  campo="Nacionaliad del representante" ubicacion="Datos generales - Representante legal" value="" placeholder="Nacionalidad del representante legal" >
+                            <input type="text" id="nacionalidad_representante" name="REPRESENTANTE-nacionalidad" class="form-control"  campo="Nacionaliad del representante" ubicacion="Datos generales - Representante legal" value="" placeholder="Nacionalidad del representante legal" >
                             <br>
                           </div>
                           <div class="col-sm-6 col-md-6">
                             <label class="control-label" for="">Calle</label><br>
-                            <input type="text" id="calle_representante" name="REPRESENTANTE-calle" class="form-control revision"   campo="Domicilio del representante" ubicacion="Datos generales - Representante legal" value="" placeholder="Nombre de la calle, avenida" >
+                            <input type="text" id="calle_representante" name="REPRESENTANTE-calle" class="form-control"   campo="Domicilio del representante" ubicacion="Datos generales - Representante legal" value="" placeholder="Nombre de la calle, avenida" >
                             <br>
                           </div>
                           <div class="col-sm-6 col-md-6">
                             <label class="control-label" for="">Número exterior</label><br>
-                            <input type="text" id="numero_exterior_representante" name="REPRESENTANTE-numero_exterior" class="form-control revision"   campo="Domicilio del representante" ubicacion="Datos generales - Representante legal" value="" placeholder="Número exterior" >
+                            <input type="text" id="numero_exterior_representante" name="REPRESENTANTE-numero_exterior" class="form-control"   campo="Domicilio del representante" ubicacion="Datos generales - Representante legal" value="" placeholder="Número exterior" >
                             <br>
                           </div>
                           <div class="col-sm-6 col-md-6">
@@ -173,18 +173,18 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-6 col-md-6">
                             <label class="control-label" for="">Colonia</label><br>
-                            <input type="text" id="colonia_representante" name="REPRESENTANTE-colonia" class="form-control revision"   campo="Domicilio del representante" ubicacion="Datos generales - Representante legal" value="" placeholder="Nombre de la colonia" >
+                            <input type="text" id="colonia_representante" name="REPRESENTANTE-colonia" class="form-control"   campo="Domicilio del representante" ubicacion="Datos generales - Representante legal" value="" placeholder="Nombre de la colonia" >
                             <br>
                           </div>
                           <div class="col-sm-6 col-md-6">
                             <label class="control-label" for="">CP</label><br>
-                            <input type="text" id="codigo_representante" name="REPRESENTANTE-codigo_postal" class="form-control revision"   campo="Domicilio del representante" ubicacion="Datos generales - Representante legal" value="" placeholder="Código postal" >
+                            <input type="text" id="codigo_representante" name="REPRESENTANTE-codigo_postal" class="form-control"   campo="Domicilio del representante" ubicacion="Datos generales - Representante legal" value="" placeholder="Código postal" >
                             <br>
                           </div>
                           <div class="col-sm-6 col-md-6">
                             <label class="control-label" for="">Municipio</label><br>
                             <div id="municipios">
-                              <select class="form-control revision"   campo="Domicilio del representante" ubicacion="Datos generales - Representante legal" id="municipio_representante" name="REPRESENTANTE-municipio" >
+                              <select class="form-control"   campo="Domicilio del representante" ubicacion="Datos generales - Representante legal" id="municipio_representante" name="REPRESENTANTE-municipio" >
                                 <option value="">Seleccione municipio</option>
                               </select>
                               <br>
@@ -193,7 +193,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label" for="">Correo electrónico:</label><br>
-                            <input type="email" id="correo_representante" name="REPRESENTANTE-correo" class="form-control  revision"   campo="Correo del representante" ubicacion="Datos generales - Representante legal" value="" placeholder="correo@dominio.com">
+                            <input type="email" id="correo_representante" name="REPRESENTANTE-correo" class="form-control"   campo="Correo del representante" ubicacion="Datos generales - Representante legal" value="" placeholder="correo@dominio.com">
                             <br>
                           </div>
                           <div class=" form-group col-sm-12 col-md-6">
@@ -309,7 +309,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                   <div class="panel panel-default">
                     <div class="panel-heading">
                       <h4 class="panel-tittle">
-                        <a data-parent="#acordion" data-toggle="collapse" href="#director" aria-expanded="false" aria-controls="director" class="collapsed">Director *</a>
+                        <a data-parent="#acordion" data-toggle="collapse" href="#director" aria-expanded="false" aria-controls="director" class="collapsed">Director propuesto *</a>
                         <button type="button" class="collpase-button collapsed" data-parent="#acordion" data-toggle="collapse" href="#director" aria-expanded="false"></button>
                       </h4>
                     </div>
@@ -324,11 +324,11 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-6 col-md-6">
                             <label class="control-label" for="">Nombre(s)</label><br>
-                            <input type="text" id="nombre_director" name="DIRECTOR-nombre" class="form-control revision" campo="Nombre del director" ubicacion="Datos generales apartado Director" value="" placeholder="Nombre del director" >
+                            <input type="text" id="nombre_director" name="DIRECTOR-nombre" class="form-control" campo="Nombre del director" ubicacion="Datos generales apartado Director" value="" placeholder="Nombre del director" >
                           </div>
                           <div class="col-sm-6 col-md-6">
                             <label class="control-label" for="">Apellido paterno</label><br>
-                            <input type="text" id="apellido_paterno_director" name="DIRECTOR-apellido_paterno" class="form-control revision" campo="Apellido paterno del director" ubicacion="Datos generales apartado Director" value="" placeholder="Apellido paterno del director" >
+                            <input type="text" id="apellido_paterno_director" name="DIRECTOR-apellido_paterno" class="form-control" campo="Apellido paterno del director" ubicacion="Datos generales apartado Director" value="" placeholder="Apellido paterno del director" >
                           </div>
                           <div class="col-sm-6 col-md-6">
                             <label class="control-label" for="">Apellido paterno</label><br>
@@ -336,7 +336,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-6 col-md-2">
                             <label class="control-label" for="">Nacionalidad</label><br>
-                            <input type="text" id="nacionalidad_director" name="DIRECTOR-nacionalidad" class="form-control revision" campo="Nacionalidad del director" ubicacion="Datos generales apartado Director" value="" placeholder="Mexicano" >
+                            <input type="text" id="nacionalidad_director" name="DIRECTOR-nacionalidad" class="form-control" campo="Nacionalidad del director" ubicacion="Datos generales apartado Director" value="" placeholder="Mexicano" >
                           </div>
                           <div class="col-sm-6 col-md-4">
                             <label class="control-label" for="">Clave CURP</label><br>
@@ -345,7 +345,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-6 col-md-3">
                             <label class="control-label" for="">Género</label><br>
-                            <select class="form-control revision" campo="Genero del director" ubicacion="Datos generales apartado Director" id="sexo_director" name="DIRECTOR-sexo">
+                            <select class="form-control" campo="Genero del director" ubicacion="Datos generales apartado Director" id="sexo_director" name="DIRECTOR-sexo">
                               <option value="">Seleccione una opción</option>
                               <option value="Masculino">Masculino</option>
                               <option value="Femenino">Femenino</option>
@@ -623,7 +623,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             </div>
                             <div class="col-sm-12 col-md-7">
                               <label class="control-label" for="">Duración del programa</label><br>
-                              <input type="text" id="duracion" name="PROGRAMA-duracion" class="form-control revision" campo="Duración del programa" ubicacion="Programas de estudios - Datos generales" value="" placeholder="# semanas efectivas clase"><br>
+                              <input type="text" id="duracion" name="PROGRAMA-duracion" class="form-control" campo="Duración del programa" ubicacion="Programas de estudios - Datos generales" value="" placeholder="# semanas efectivas clase"><br>
                             </div>
                             <div class="col-sm-12 col-md-7">
                               <label class="control-label" for="">Créditos necesarios para concluir el programa</label><br>
@@ -650,11 +650,11 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label" for="">Nombre(s) del coordinador</label><br>
-                            <input type="text" id="nombre_coordinador_programa" name="COORDINADOR-nombre" class="form-control revision" campo="Nombre del coordinador" ubicacion="Programa estudios - Datos generales" value="" placeholder="Nombre(s) del coordinador del programa"><br>
+                            <input type="text" id="nombre_coordinador_programa" name="COORDINADOR-nombre" class="form-control" campo="Nombre del coordinador" ubicacion="Programa estudios - Datos generales" value="" placeholder="Nombre(s) del coordinador del programa"><br>
                           </div>
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label" for="">Apellido paterno del coordinador</label><br>
-                            <input type="text" id="apellido_paterno_coordinador_programa" name="COORDINADOR-apellido_paterno" class="form-control revision" campo="Apellido paterno del coordinador" ubicacion="Programa estudios - Datos generales" value="" placeholder="Apellido paterno del coordinador del programa"><br>
+                            <input type="text" id="apellido_paterno_coordinador_programa" name="COORDINADOR-apellido_paterno" class="form-control" campo="Apellido paterno del coordinador" ubicacion="Programa estudios - Datos generales" value="" placeholder="Apellido paterno del coordinador del programa"><br>
                           </div>
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label" for="">Apellido materno del coordinador</label><br>
@@ -662,7 +662,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label" for="">Perfil académico del coordinador</label><br>
-                            <input type="text" id="perfil_coordinador_programa" name="COORDINADOR-formacion" class="form-control revision" campo="Perfil del coordinador" ubicacion="Programa estudios - Datos generales" value="" placeholder="Perfil del coordinador del programa"><br>
+                            <input type="text" id="perfil_coordinador_programa" name="COORDINADOR-formacion" class="form-control" campo="Perfil del coordinador" ubicacion="Programa estudios - Datos generales" value="" placeholder="Perfil del coordinador del programa"><br>
                           </div>
                         </div>
                         <?php } ?>
@@ -765,7 +765,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-12 col-md-7">
                             <label class="control-label">Nivel educativo previo *</label>
-                            <select class="form-control revision" id="antecedente_academico" campo="Antecedente académico de ingreso" name="PROGRAMA-antecedente_academico">
+                            <select class="form-control" id="antecedente_academico" campo="Antecedente académico de ingreso" name="PROGRAMA-antecedente_academico">
                               <option value="">Seleccione una opción</option>
                             </select><br>
                           </div>
@@ -912,8 +912,8 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             <h2>Asignaturas</h2>
                             <hr class="red">
                             <p class="text-muted small">
-                              <strong>Nota:</strong>
-                              Asegúrese de asignarle algún tipo de insfraestructura y un docente a las asginaturas para que éstas queden registradas.
+                              <!--<strong>Nota:</strong>-->
+                              <!--Asegúrese de asignarle algún tipo de insfraestructura y un docente a las asginaturas para que éstas queden registradas.-->
                             </p>
                           </div>
                           <!-- insertar valores -->
@@ -1451,7 +1451,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <label class="control-label">Servicios y herramientas educativas de aprendizaje con las que cuenta el sistema</label>
-                            <textarea class="form-control revision" campo="Servicios y herramientas educativas" id="servicios_herramientas_educativas" name="MIXTA-servicios_herramientas_educativas" rows="4" placeholder="Describa los servicios y herramientas educativas de aprendizaje con las que cuenta el sistema"></textarea><br>
+                            <textarea class="form-control" campo="Servicios y herramientas educativas" id="servicios_herramientas_educativas" name="MIXTA-servicios_herramientas_educativas" rows="4" placeholder="Describa los servicios y herramientas educativas de aprendizaje con las que cuenta el sistema"></textarea><br>
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <h3>Sistemas de seguridad</h3>
@@ -1459,7 +1459,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <label class="control-label">Sistemas y protocolos utilizados</label>
-                            <textarea class="form-control revision" campo="Sistemas y protocolos" id="sistemas_seguridad" name="MIXTA-sistemas_seguridad" rows="4" placeholder="Mencione los sistemas de seguridad utilizados"></textarea><br>
+                            <textarea class="form-control" campo="Sistemas y protocolos" id="sistemas_seguridad" name="MIXTA-sistemas_seguridad" rows="4" placeholder="Mencione los sistemas de seguridad utilizados"></textarea><br>
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <h3>Direccionamineto IP</h3>
@@ -1467,7 +1467,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <label class="control-label">Direccionamiento IP Público</label>
-                            <textarea class="form-control revision" campo="Direccionamiento IP" id="direccionamiento_ip_publico" name="MIXTA-direccionamiento_ip_publico" rows="4" placeholder="Describa el direccionamineto de ip público con el que cuenta su plantel"></textarea><br>
+                            <textarea class="form-control" campo="Direccionamiento IP" id="direccionamiento_ip_publico" name="MIXTA-direccionamiento_ip_publico" rows="4" placeholder="Describa el direccionamineto de ip público con el que cuenta su plantel"></textarea><br>
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <h3>Tecnologías de la información y la comunicación</h3>
@@ -1475,15 +1475,15 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <label class="control-label">Ingreso a la plataforma</label>
-                            <textarea class="form-control revision" campo="Ingreso a la plataforma" id="ti_ingreso" name="MIXTA-ti_ingreso" rows="4" placeholder="Proporcionar un ingreso a la plataforma, este deberá ser permanente"></textarea><br>
+                            <textarea class="form-control" campo="Ingreso a la plataforma" id="ti_ingreso" name="MIXTA-ti_ingreso" rows="4" placeholder="Proporcionar un ingreso a la plataforma, este deberá ser permanente"></textarea><br>
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <label class="control-label">Estructura</label>
-                            <textarea class="form-control revision" campo="Estructura de la herramienta educativa" id="ti_estructura" name="MIXTA-ti_estructura" rows="4" placeholder="Describir la estructura"></textarea><br>
+                            <textarea class="form-control" campo="Estructura de la herramienta educativa" id="ti_estructura" name="MIXTA-ti_estructura" rows="4" placeholder="Describir la estructura"></textarea><br>
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <label class="control-label">Contratos</label>
-                            <textarea class="form-control revision" campo="Contratos de la herramienta educativa" id="ti_contratos" name="MIXTA-ti_contratos" rows="4" placeholder="Mencione los contratos realizados para la utilizacion de plataforma (biliotecas, laboratorias virtuales)"></textarea><br><br>
+                            <textarea class="form-control" campo="Contratos de la herramienta educativa" id="ti_contratos" name="MIXTA-ti_contratos" rows="4" placeholder="Mencione los contratos realizados para la utilizacion de plataforma (biliotecas, laboratorias virtuales)"></textarea><br><br>
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <h3>Acceso a internet</h3>
@@ -1491,7 +1491,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label">Enlaces y ancho de banda</label>
-                            <textarea class="form-control revision" campo="Enlaces de internet" id="acceso_internet" type="text" name="MIXTA-acceso_internet" placeholder="Nombre de los enlaces y ancho de banda"></textarea>
+                            <textarea class="form-control" campo="Enlaces de internet" id="acceso_internet" type="text" name="MIXTA-acceso_internet" placeholder="Nombre de los enlaces y ancho de banda"></textarea>
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <h3>Mantenimiento a la plataforma</h3>
@@ -1499,7 +1499,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <label class="control-label">Descripción</label>
-                            <textarea class="form-control revision" campo="Descripción del mantenimiento a la plataforma" id="mantenimiento_plataforma" name="MIXTA-mantenimiento_plataforma" rows="4" placeholder="Describa el mantenimiento que se le brinda a la plataforma"></textarea><br><br>
+                            <textarea class="form-control" campo="Descripción del mantenimiento a la plataforma" id="mantenimiento_plataforma" name="MIXTA-mantenimiento_plataforma" rows="4" placeholder="Describa el mantenimiento que se le brinda a la plataforma"></textarea><br><br>
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <h3>Diagrama de proceso</h3>
@@ -1507,7 +1507,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <label class="control-label">Comunicación alumno-docente</label>
-                            <textarea class="form-control revision" campo="Comunicación alumno-docente" id="diagrama_plataforma" name="MIXTA-diagrama_plataforma" rows="4" placeholder="Describa como se realizará la comunicación entre alumnos y docentes"></textarea><br><br>
+                            <textarea class="form-control" campo="Comunicación alumno-docente" id="diagrama_plataforma" name="MIXTA-diagrama_plataforma" rows="4" placeholder="Describa como se realizará la comunicación entre alumnos y docentes"></textarea><br><br>
                           </div>
                         </div>
                       </div>
@@ -1754,7 +1754,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           <div class="col-sm-6 col-md-8">
                             <label class="control-label" for="">Municipio</label><br>
                             <div id="municipios">
-                              <select class="form-control revision" campo="Municipio del plantel" ubicacion="Plantel apartado Ubicación" id="municipio" name="DOMICILIOPLANTEL-municipio" >
+                              <select class="form-control revision" campo="Municipio del plantel revision" ubicacion="Plantel apartado Ubicación" id="municipio" name="DOMICILIOPLANTEL-municipio" >
                                 <option value="">Seleccione municipio</option>
                               </select>
                             </div>
@@ -2519,6 +2519,29 @@ Utileria::validarSesion( basename( __FILE__ ) );
 
           </div>
         </div>
+
+        <!-- Modal inicial -->
+        <div class="modal fade" id="modalInicial" role="dialog">
+            <div id="tamanoModales" class="modal-dialog" >
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Atención</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="mensajesTerminar" class="alert alert-info">
+                      <p class="text-justify">
+                        <p class="text-center">¡Estimada institución!</p>
+                        Recuerda que la fecha de recepción oficial será la fecha de entrega de documentos de forma física.<br>
+                        No olvides llenar todos los campos y respetar las reglas gramaticales (mayúsculas y minúsculas).
+                      </p>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         <!-- Modal para confirmación -->
         <div class="modal fade" id="modalConfirmacion" role="dialog">
             <div id="tamanoModales" class="modal-dialog" >
@@ -2531,7 +2554,10 @@ Utileria::validarSesion( basename( __FILE__ ) );
                 <div class="modal-body">
                     <div id="mensajesTerminar" class="alert alert-info">
                       <p class="text-justify">
-                        Esta a punto de concluir el llenado de la solicitudes. Si usted lleno en su totalidad los campos solicitados de clic en "Concluir" para terminar la solicitud.
+                        <p class="text-center">¡Estimada institución!</p>
+                        Está a punto de concluir el llenado de la solicitud. Si usted llenó en su totalidad los campos solicitados de clic en "Aceptar" para terminar la solicitud.<br>
+                        Recuerda que la fecha de recepción oficial será la fecha de entrega de documentos de forma física.<br>
+                        No olvides llenar todos los campos y respetar las reglas gramaticales (mayúsculas y minúsculas).
                       </p>
                     </div>
                 </div>
