@@ -208,28 +208,36 @@
                               foreach ($asignaturas["data"] as $index => $campos)
                               {
                                   $temporal_infraestructura = new Infraestructura();
-                                  $temporal_infraestructura->setAttributes( array( 'id' => $campos["infraestructura_id"] ) );
-                                  $resultado_temp = $temporal_infraestructura->consultarId();
-                                  $resultado_temp["data"]["asignatura"] = $campos["clave"];
-                                  array_push($infraestructuras,$resultado_temp["data"]);
+                                  $resultado_temp = $temporal_infraestructura->consultarPor("infraestructuras", array("id"=> $campos["infraestructura_id"], "deleted_at"), "*");
+                                  //$temporal_infraestructura->setAttributes( array( 'id' => $campos["infraestructura_id"] ) );
+                                  //$resultado_temp = $temporal_infraestructura->consultarId();
+                                  if (isset($resultado_temp["data"][0])) {
+                                    // code...
+                                    $resultado_temp["data"] = $resultado_temp["data"][0];
+                                    $resultado_temp["data"]["asignatura"] = $campos["clave"];
+                                    array_push($infraestructuras,$resultado_temp["data"]);
+                                  }
 
                                   $temporal_docente = new Docente();
-                                  $temporal_docente->setAttributes( array( 'id' => $campos["docente_id"] ) );
-                                  $resultado_temp = $temporal_docente->consultarId();
-                                  $resultado_temp["data"]["asignatura"] = $campos["clave"];
+                                  //$temporal_docente->setAttributes( array( 'id' => $campos["docente_id"] ) );
+                                  $resultado_temp = $temporal_docente->consultarPor("docentes", array("id" => $campos["docente_id"], "deleted_at" ), "*");
+                                  if (isset($resultado_temp["data"][0])) {
+                                    $resultado_temp["data"] = $resultado_temp["data"][0];
+                                    $resultado_temp["data"]["asignatura"] = $campos["clave"];
+                                    $temp_persona = new Persona();
 
-                                  $temp_persona = new Persona();
-                                  $temp_persona->setAttributes( array( 'id' => $resultado_temp["data"]["persona_id"] ) );
-                                  $respuesta_temp = $temp_persona->consultarId();
-                                  $resultado_temp["data"]["persona"] =  $respuesta_temp["data"];
-                                  array_push($docentes,$resultado_temp["data"]);
+                                    $temp_persona->setAttributes( array( 'id' => $resultado_temp["data"]["persona_id"] ) );
+                                    $respuesta_temp = $temp_persona->consultarId();
 
-
-                              }
+                                    $resultado_temp["data"]["persona"] =  $respuesta_temp["data"];
+                                    array_push($docentes,$resultado_temp["data"]);
+                                    }
+                                  }
                               $resultado["data"]["asignaturas"] = $asignaturas["data"];
                               //Agregar las claves de las asignaturas al docente (Se eliminan los docentes repetidos)
                               $docentes_final = array();
                               foreach ($docentes as $key => $value) {
+
                                 $value["asignaturas"] = [];
                                 if(empty($docentes_final)){
                                     array_push($value["asignaturas"],$value["asignatura"]);

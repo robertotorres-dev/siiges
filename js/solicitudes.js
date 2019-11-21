@@ -390,7 +390,7 @@ Solicitud.getPlantelesBasicos = function(){
         type : "POST",
         url : "../controllers/control-plantel.php",
         dataType : "json",
-        data : { webService:"informacionBasica", url:"" },
+        data : { webService:"informacionBasica", url:"", solicitud_id:$("#id_solicitud").val() },
         success: function(respuesta){
           console.log("infomracion basica");
           console.log(respuesta.data);
@@ -943,54 +943,55 @@ Solicitud.modificacionPrograma =  function(){
                 var docentes = respuesta.data.docentes;
                 if( docentes != undefined){
                   for (var posicionD = 0; posicionD < docentes.length; posicionD++) {
-                    var formacionesD;
-                    var formacionestxt;
-                    if( docentes[posicionD].formaciones.length == 2 ){
-                      formacionesD = [{"nivel":docentes[posicionD].formaciones[0].grado.descripcion,"nombre":docentes[posicionD].formaciones[0].nombre,"descripcion":docentes[posicionD].formaciones[0].descripcion},{"nivel":docentes[posicionD].formaciones[1].grado.descripcion,"nombre":docentes[posicionD].formaciones[1].nombre,"descripcion":docentes[posicionD].formaciones[1].descripcion}];
-                      formacionestxt = docentes[posicionD].formaciones[0].nombre + ": "+ docentes[posicionD].formaciones[0].descripcion+"<br></br>"+docentes[posicionD].formaciones[1].nombre + ": "+ docentes[posicionD].formaciones[0].descripcion;
-                    }else if(  docentes[posicionD].formaciones.length == 1){
-                      formacionesD = [{"nivel":docentes[posicionD].formaciones[0].grado.descripcion,"nombre":docentes[posicionD].formaciones[0].nombre,"descripcion":docentes[posicionD].formaciones[0].descripcion}];
-                      formacionestxt = docentes[posicionD].formaciones[0].nombre + ": "+ docentes[posicionD].formaciones[0].descripcion;
-                    }
-                    if( docentes[posicionD].tipo_docente == 1 ){
+                      var formacionesD;
+                      var formacionestxt;
+                      //console.log(docentes[posicionD].id);
+
+                      if( docentes[posicionD].formaciones.length == 2 ){
+                        formacionesD = [{"nivel":docentes[posicionD].formaciones[0].grado.descripcion,"nombre":docentes[posicionD].formaciones[0].nombre,"descripcion":docentes[posicionD].formaciones[0].descripcion},{"nivel":docentes[posicionD].formaciones[1].grado.descripcion,"nombre":docentes[posicionD].formaciones[1].nombre,"descripcion":docentes[posicionD].formaciones[1].descripcion}];
+                        formacionestxt = docentes[posicionD].formaciones[0].nombre + ": "+ docentes[posicionD].formaciones[0].descripcion+"<br></br>"+docentes[posicionD].formaciones[1].nombre + ": "+ docentes[posicionD].formaciones[0].descripcion;
+                      }else if(  docentes[posicionD].formaciones.length == 1){
+                        formacionesD = [{"nivel":docentes[posicionD].formaciones[0].grado.descripcion,"nombre":docentes[posicionD].formaciones[0].nombre,"descripcion":docentes[posicionD].formaciones[0].descripcion}];
+                        formacionestxt = docentes[posicionD].formaciones[0].nombre + ": "+ docentes[posicionD].formaciones[0].descripcion;
+                      }
+                      if( docentes[posicionD].tipo_docente == 1 ){
                         docentes[posicionD].tipo_docente = "Asignatura";
-                    }else if(docentes[posicionD].tipo_docente == 2){
-                      docentes[posicionD].tipo_docente = "Tiempo completo";
-                    }
+                      }else if(docentes[posicionD].tipo_docente == 2){
+                        docentes[posicionD].tipo_docente = "Tiempo completo";
+                      }
 
-                    if( docentes[posicionD].tipo_contratacion == 1 ){
+                      if( docentes[posicionD].tipo_contratacion == 1 ){
                         docentes[posicionD].tipo_contratacion = "Contrato";
-                    }else if(docentes[posicionD].tipo_contratacion == 1){
-                      docentes[posicionD].tipo_contratacion = "Tiempo indefinido";
-                    }else{
-                      docentes[posicionD].tipo_contratacion = "Otro";
-                    }
+                      }else if(docentes[posicionD].tipo_contratacion == 1){
+                        docentes[posicionD].tipo_contratacion = "Tiempo indefinido";
+                      }else{
+                        docentes[posicionD].tipo_contratacion = "Otro";
+                      }
 
-                    if( docentes[posicionD].antiguedad == null ){
-                      docentes[posicionD].antiguedad = "Ninguna";
-                    }
-                    var filaDocente;
-                    if($("#informacionCargar").val() != 4){
-                      var docenteInput = document.createElement("INPUT");
-                      docenteInput.setAttribute("type","hidden");
-                      docenteInput.setAttribute("id",'docente'+nfila);
-                      docenteInput.setAttribute("name","DOCENTE-docentes[]");
-                      docenteInput.setAttribute("value",JSON.stringify({"nombre": docentes[posicionD].persona.nombre,
-                                                            "apellido_paterno": docentes[posicionD].persona.apellido_paterno,
-                                                            "apellido_materno":docentes[posicionD].persona.apellido_materno,
-                                                            "tipo_docente":docentes[posicionD].tipo_docente,
-                                                            "tipo_contratacion":docentes[posicionD].tipo_contratacion,
-                                                            "antiguedad": docentes[posicionD].antiguedad,
-                                                            "formaciones": formacionesD,
-                                                            "experiencias":"NO SE GUARDÓ DATO",
-                                                            "asignaturas":docentes[posicionD].asignaturas
-                                                            }));
+                      if( docentes[posicionD].antiguedad == null ){
+                        docentes[posicionD].antiguedad = "Ninguna";
+                      }
+                      var filaDocente;
+                      if($("#informacionCargar").val() != 4){
+                        var docenteInput = document.createElement("INPUT");
+                        docenteInput.setAttribute("type","hidden");
+                        docenteInput.setAttribute("id",'docente'+nfila);
+                        docenteInput.setAttribute("name","DOCENTE-docentes[]");
+                        docenteInput.setAttribute("value",JSON.stringify({"nombre": docentes[posicionD].persona.nombre,
+                        "apellido_paterno": docentes[posicionD].persona.apellido_paterno,
+                        "apellido_materno":docentes[posicionD].persona.apellido_materno,
+                        "tipo_docente":docentes[posicionD].tipo_docente,
+                        "tipo_contratacion":docentes[posicionD].tipo_contratacion,
+                        "antiguedad": docentes[posicionD].antiguedad,
+                        "formaciones": formacionesD,
+                        "experiencias":"NO SE GUARDÓ DATO",
+                        "asignaturas":docentes[posicionD].asignaturas
+                      }));
                       __('inputsDocentes').appendChild(docenteInput);
                       filaDocente = '<tr id="docente' + nfila + '"><td class="small">' + docentes[posicionD].persona.nombre + " "+ docentes[posicionD].persona.apellido_paterno+ " " + docentes[posicionD].persona.apellido_materno + '</td><td class="small">'+ docentes[posicionD].tipo_docente  +'</td><td class="small">' +  formacionestxt +'</td><td class="small">'+docentes[posicionD].asignaturas+'</td><td class="small">'+"NO SE GUARDÓ DATO"+'</td><td class="small">'+docentes[posicionD].tipo_contratacion+" - "+docentes[posicionD].antiguedad +'</td><td class="small"><button type="button" name="removePublicacion" id="' + nfila + '" class="btn btn-danger" onclick="eliminarDocente(this)">Quitar</button></td></tr>';
 
                     }else{
                       // filaDocente = '<tr id="docente' + nfila + '"><td class="small">' + docentes[posicionD].persona.nombre + " "+ docentes[posicionD].persona.apellido_paterno+ " " + docentes[posicionD].persona.apellido_materno + '</td><td class="small">'+ docentes[posicionD].tipo_docente  +'</td><td class="small">' +  formacionestxt +'</td><td class="small">'+docentes[posicionD].asignaturas+'</td><td class="small">'+"NO SE GUARDÓ DATO"+'</td><td class="small">'+docentes[posicionD].tipo_contratacion+" - "+docentes[posicionD].antiguedad +'</td></tr>';
-
                     }
                     nfila++;
                     $('#docentes tr:last').after(filaDocente);
@@ -1000,20 +1001,20 @@ Solicitud.modificacionPrograma =  function(){
                 var infAsignatura = respuesta.data.asignatura_infraestructura;
                 if( infAsignatura != undefined ){
                   for (var indasig = 0; indasig < infAsignatura.length; indasig++) {
-                    var filaInfAsig;
-                    if($("#informacionCargar").val() != 4){
-                      var inputInfAsig = document.createElement("INPUT");
-                      inputInfAsig.setAttribute("type","hidden");
-                      inputInfAsig.setAttribute("id",'infraestructura'+nfilaInf);
-                      inputInfAsig.setAttribute("name","INFRAESTRUCTURA-infraestructuras[]");
-                      inputInfAsig.setAttribute("value",JSON.stringify({"tipo_instalacion_id":infAsignatura[indasig].tipo_instalacion_id,
-                                                            "nombre":infAsignatura[indasig].nombre,
-                                                            "ubicacion":infAsignatura[indasig].ubicacion,
-                                                            "capacidad":infAsignatura[indasig].capacidad,
-                                                            "metros":infAsignatura[indasig].metros,
-                                                            "recursos":infAsignatura[indasig].recursos,
-                                                            "asignaturas":infAsignatura[indasig].asignaturas
-                                                            }));
+                      var filaInfAsig;
+                      if($("#informacionCargar").val() != 4){
+                        var inputInfAsig = document.createElement("INPUT");
+                        inputInfAsig.setAttribute("type","hidden");
+                        inputInfAsig.setAttribute("id",'infraestructura'+nfilaInf);
+                        inputInfAsig.setAttribute("name","INFRAESTRUCTURA-infraestructuras[]");
+                        inputInfAsig.setAttribute("value",JSON.stringify({"tipo_instalacion_id":infAsignatura[indasig].tipo_instalacion_id,
+                        "nombre":infAsignatura[indasig].nombre,
+                        "ubicacion":infAsignatura[indasig].ubicacion,
+                        "capacidad":infAsignatura[indasig].capacidad,
+                        "metros":infAsignatura[indasig].metros,
+                        "recursos":infAsignatura[indasig].recursos,
+                        "asignaturas":infAsignatura[indasig].asignaturas
+                      }));
                       __('inputsInfraestructuras').appendChild(inputInfAsig);
                       filaInfAsig = '<tr id="infraestructura' + nfilaInf + '"><td>' +  infAsignatura[indasig].instalacion.nombre + " " + infAsignatura[indasig].nombre+ '</td><td>'+ infAsignatura[indasig].capacidad  +'</td><td>'+ infAsignatura[indasig].metros +'</td><td>'+ infAsignatura[indasig].recursos + '</td><td>'+ infAsignatura[indasig].ubicacion + '</td><td>'+ infAsignatura[indasig].asignaturas +'</td><td><button type="button"  id="' + nfilaInf + '" class="btn btn-danger" onclick="eliminarInfraestructura(this)">Quitar</button></td></tr>';
 
@@ -1023,8 +1024,8 @@ Solicitud.modificacionPrograma =  function(){
                     }
 
                     $('#infraestructuras tr:last').after(filaInfAsig);
-                  }
                 }
+              }
                 var infComun = respuesta.data.infraestructuraComun;
                 if( infComun != undefined ){
                   for (var indInf = 0; indInf < infComun.length; indInf++) {
@@ -1370,7 +1371,8 @@ $(document).ready(function ($) {
                     Solicitud.promesaPlantel.done(function(){
                       console.log("datos del plantel se cargaron");
                       document.getElementById("cargando").style.display = "none";
-
+                      $("#modalInicial").modal();
+                      $("#tamanoModales").attr("style","margin-top:80px;");
                     });
               }
               //Carga la informacion del programa seleccionado previamente en mis solicitudes
