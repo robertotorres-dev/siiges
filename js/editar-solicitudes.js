@@ -472,21 +472,18 @@ EditarSolicitud.getSolicitud = function() {
               for (var n = 0; n < asignaturas.length; n++) {
                 var filaAsignatura;
                 if( asignaturas[n].tipo == 1 ){
+                  if(asignaturas[n].seriacion===null){asignaturas[n].seriacion="";}
                   if($("#informacionCargar").val() != 4){
                     var asig = document.createElement("INPUT");
                     asig.setAttribute("type","hidden");
                     asig.setAttribute("id",'asignatura'+asignaturas[n].id);
                     asig.setAttribute("name","ASIGNATURA-asignaturas[]");
-                    if(asignaturas[n].seriacion==null){asignaturas[n].seriacion="";}
                     asig.setAttribute("value",JSON.stringify({"id":asignaturas[n].id,"grado":asignaturas[n].grado,"nombre":asignaturas[n].nombre,"clave":asignaturas[n].clave,"creditos":asignaturas[n].creditos,"seriacion":asignaturas[n].seriacion,"horas_docente":asignaturas[n].horas_docente,"horas_independiente":asignaturas[n].horas_independiente,"academia":asignaturas[n].academia,"tipo":asignaturas[n].tipo}));
                     __('inputsAsignaturas').appendChild(asig);
                     filaAsignatura = '<tr id="row' + asignaturas[n].id + '"><td>' + asignaturas[n].grado + '</td><td>' + asignaturas[n].nombre + '</td><td>'+asignaturas[n].clave+'</td><td>'+asignaturas[n].seriacion+'</td><td id="hrsdocente'+asignaturas[n].id+'">'+asignaturas[n].horas_docente+'</td><td id="hrsindependiente'+asignaturas[n].id+'">'+asignaturas[n].horas_independiente+'</td><td>'+asignaturas[n].creditos+ '</td><td>'+asignaturas[n].academia+'</td><td><button type="button" clave="'+asignaturas[n].clave+'" name="remove" id="' + asignaturas[n].id + '" class="btn btn-danger" onclick="EditarSolicitud.eliminarMateria(this)">Quitar</button></td></tr>';
-
                   }else{
                     filaAsignatura = '<tr id="row' + asignaturas[n].id + '"><td>' + asignaturas[n].grado + '</td><td>' + asignaturas[n].nombre + '</td><td>'+asignaturas[n].clave+'</td><td>'+asignaturas[n].seriacion+'</td><td id="hrsdocente'+asignaturas[n].id+'">'+asignaturas[n].horas_docente+'</td><td id="hrsindependiente'+asignaturas[n].id+'">'+asignaturas[n].horas_independiente+'</td><td>'+asignaturas[n].creditos+ '</td><td>'+asignaturas[n].academia+'</td></tr>';
-
                   }
-
                   $("#totalHorasDocentes").val(parseInt( $("#totalHorasDocentes").val() ) + parseInt( asignaturas[n].horas_docente ));
                   $("#totalHorasIndependientes").val(parseInt( $("#totalHorasIndependientes").val() ) + parseInt( asignaturas[n].horas_independiente ));
 

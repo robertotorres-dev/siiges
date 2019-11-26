@@ -879,6 +879,7 @@ Solicitud.modificacionPrograma =  function(){
                 for (var n = 0; n < asignaturas.length; n++) {
                   var filaAsignatura;
                   if( asignaturas[n].tipo == 1 ){
+                    if(asignaturas[n].seriacion==null){asignaturas[n].seriacion="";}
                     if($("#informacionCargar").val() != 4){
                       var asig = document.createElement("INPUT");
                       asig.setAttribute("type","hidden");
