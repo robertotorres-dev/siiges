@@ -798,7 +798,7 @@ session_start();
                                     $licencia = json_decode($cadena);
                                     array_push($licencias,$licencia);
                                   }
-                                  $licencias = json_encode($licencias);
+                                  $licencias = json_encode($licencias, JSON_UNESCAPED_UNICODE);
                                   //Mixta no escolarizada
                                   // ya se valido anteriormente programa
                                   $mixtaNoescolarizada = new MixtaNoescolarizada( );
