@@ -31,6 +31,7 @@
   }
 
   $pdf = new FDP06();
+  //header('Content-Type: text/html; charset=UTF-8');
   $pdf->getData($_GET["id"]);
   $pdf->getDocentes(Docente::DOCENTE_ASIGNATURA);
 
@@ -99,17 +100,19 @@
 
   $headers = ["formacion"=>"","docente"=>"","asignatura"=>"","experiencia"=>"","contratacion_antiguedad"=>"","aceptado"=>"","observaciones"=>""];
   // 176
-  $widths = ["formacion"=>26,"docente"=>25,"asignatura"=>25,"experiencia"=>25,"contratacion_antiguedad"=>25,"aceptado"=>25,"observaciones"=>25];
+  $widths = ["formacion"=>31,"docente"=>27,"asignatura"=>27,"experiencia"=>25,"contratacion_antiguedad"=>25,"aceptado"=>18,"observaciones"=>23];
   // 95
-  $length = ["formacion"=>12,"docente"=>11,"asignatura"=>11,"experiencia"=>11,"contratacion_antiguedad"=>11,"aceptado"=>11,"observaciones"=>11];
+  $length = ["formacion"=>19,"docente"=>19,"asignatura"=>16,"experiencia"=>11,"contratacion_antiguedad"=>10,"aceptado"=>11,"observaciones"=>15];
 
   foreach ($pdf->AsigPorGrado as $grado => $asignatura) {
     $pdf->SetFont( "Arial", "B", 9 );
-    $pdf->Cell( 0, 5, utf8_decode($grado), 1, 1, "L", true );
+    $pdf->Cell( 0, 5, utf8_decode($grado), 1, 1, "C", true );
+
+    $data = array();
+
     $data = $asignatura;
 
     $pdf->Tabla($headers,$data,$widths,0,$length,false);
-
     if($pdf->checkNewPage()){
       $pdf->Ln(25);
     }

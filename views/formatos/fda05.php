@@ -103,7 +103,7 @@
         [
             "correo"=>utf8_decode($pdf->plantel["email1"].", ".$pdf->plantel["email2"].", ".$pdf->plantel["email3"]),
             "telefono"=>utf8_decode($pdf->plantel["telefono1"].", ".$pdf->plantel["telefono2"].", ".$pdf->plantel["telefono3"]),
-            "redes_sociales"=>utf8_decode($pdf->plantel["redes_sociales"])
+            "redes_sociales"=>$pdf->plantel["redes_sociales"]
         ]
   ];
   $widths = ["correo"=>58,"telefono"=>58,"redes_sociales"=>60];
@@ -260,6 +260,7 @@
               "capacidad"=>"CAPACIDAD PROMEDIO (No. ALUMNOS)","metros"=>"METROS",
                 "recursos"=>"RECURSOS MATERIALES","ubicacion"=>"UBICACIÓN"];
   $dataI = $pdf->tiposInstalacion;
+  //print_r($dataI);
   $widthsI = ["asignaturas"=>30,"instalacion"=>30,"capacidad"=>22,"metros"=>28,"recursos"=>36,"ubicacion"=>30];
   $lengthI = ["asignaturas"=>15,"instalacion"=>14,"capacidad"=>10,"metros"=>15,"recursos"=>15,"ubicacion"=>15];
   // Headers

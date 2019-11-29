@@ -91,12 +91,15 @@
   $pdf->Cell( 60, 5, utf8_decode($pdf->domicilioPlantel["estado"]), 1, 1, "L", true );
 
   $pdf->SetFillColor( 191, 191, 191 );
+  //print_r($pdf->plantel);
+  //echo "<br>";
+  //print_r($pdf->plantel["redes_sociales"]);
   $headers = ["correo"=>"CORREO ELECTRÓNICO","telefono"=>"TELÉFONO","redes_sociales"=>"REDES SOCIALES"];
   $data = [
         [
             "correo"=>utf8_decode($pdf->plantel["email1"].", ".$pdf->plantel["email2"].", ".$pdf->plantel["email3"]),
             "telefono"=>utf8_decode($pdf->plantel["telefono1"].", ".$pdf->plantel["telefono2"].", ".$pdf->plantel["telefono3"]),
-            "redes_sociales"=>utf8_decode($pdf->plantel["redes_sociales"])
+            "redes_sociales"=>$pdf->plantel["redes_sociales"]
         ]
   ];
   $widths = ["correo"=>58,"telefono"=>58,"redes_sociales"=>60];

@@ -80,6 +80,10 @@ class PDF extends FPDF
 
   function vcell($c_width, $c_height, $x_axis,$text,$length){
     // var_dump($text);
+      /*echo "<br>";
+      echo $text;
+      echo $length;
+      echo "<br>";*/
       $w_text=str_split($text,$length);
       $c_height = $c_height > sizeof($w_text)*5?$c_height:sizeof($w_text)*5;
       $w_w = sizeof($w_text);
@@ -121,15 +125,18 @@ class PDF extends FPDF
     $this->Ln();
   }
 
-  $this->SetFont('Arial','',9);
+  $this->SetFont('Arial','',7);
+  //print_r($datos);
   foreach ($datos as $registro) {
     $registro = (array) $registro;
     foreach ($header as $key => $value) {
       if($this->checkNewPage()){
         $this->Ln(25);
       }
+
       $x_axis=$this->getx();
       $c_height = $this->vcell($c_width[$key],$c_height,$x_axis,$registro[$key],$length[$key]);
+
     }
 
     $this->Ln();
@@ -426,6 +433,7 @@ class PDF extends FPDF
      $this->instalacion->setAttributes(["id"=>$infraestructura["tipo_instalacion_id"]]);
      $this->instalacion = $this->instalacion->consultarId();
      $this->instalacion = !empty($this->instalacion["data"])? $this->instalacion["data"]:false;
+     //print_r($this->instalacion);
      if(!$this->instalacion){
        $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Tipo de instalacion no encontrado.","data"=>[]]);
        header("Location: ../home.php");exit();
@@ -572,15 +580,14 @@ class PDF extends FPDF
          $formaciones = !empty($formaciones["data"])?$formaciones["data"]:false;
        }
 
-
        if($tipo_docente == $docente["tipo_docente"]){
          if(!isset($this->AsigPorGrado[$asignatura["grado"]])){
            $this->AsigPorGrado[$asignatura["grado"]] = [];
            $fila = [
-                     "docente"=>"NOMBRE DEL DOCENTE",
+                     "docente"=>"NOMBRE DOCENTE",
                      "formacion"=>"FORMACIÓN PROFESIONAL",
-                     "asignatura"=>"PROPUESTA ASIGNATURA",
-                     "experiencia"=>"EXPERIENCIA LABORAL",
+                     "asignatura"=>"ASIGNATURA PROPUESTA",
+                     "experiencia"=>"EXPERIENCIA",
                      "contratacion_antiguedad"=>"CONTRATO, ANTIGUEDAD",
                      "aceptado"=>"SE ACEPTA",
                      "observaciones"=>"OBSERVACIONES"
@@ -607,7 +614,9 @@ class PDF extends FPDF
                   "aceptado"=>$docente["es_aceptado"]?"SI":"NO",
                   "observaciones"=>$docente["observaciones"]
                 ];
-       array_push($this->AsigPorGrado[$asignatura["grado"]],$fila);
+                if ($PersonaDocente["id"] != 208) {
+                  array_push($this->AsigPorGrado[$asignatura["grado"]],$fila);
+                }
 
        }
      }
