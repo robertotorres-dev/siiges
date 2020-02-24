@@ -524,8 +524,9 @@ function eliminarDictamen(fila){
   var id = fila.id;
   var input = 'dictamen'+id;
   __('inputsDictamenes').removeChild(__(input));
-  $('#dictamen'+id).remove();
+  $('#dictamen'+id+'').remove();
   console.log(__('inputsDictamenes'));
+  console.log(input);
 }
 
 function agregarOtrosProgramas() {
@@ -626,12 +627,12 @@ function agregarInfraestructura() {
 
 
     if(nombre.length==0){
-      nombre = "NA";
+      nombre = "";
     }
     //Almacenar valores en inputs
     var a = document.createElement("INPUT");
     a.setAttribute("type","hidden");
-    a.setAttribute("id",'inpputInfraestructura'+nfilaInf);
+    a.setAttribute("id",'inputInfraestructura'+nfilaInf);
     a.setAttribute("name","INFRAESTRUCTURA-infraestructuras[]");
     a.setAttribute("value",JSON.stringify({"id":null,
                                           "tipo_instalacion_id":tipo,
@@ -811,9 +812,9 @@ function limpiarInputs() {
     if($("#turno_programa").val() == ""){
       resultado =  resultado + "Turno del programa"+ "<br>";
     }
-    if($("#inputsLicencias > *").length == 0 && $("#auxmodalidad").val() == 2) {
-        resultado =  resultado + "Por lo menos introduzca una licencia"+ "<br>";
-    }
+    //if($("#inputsLicencias > *").length == 0 && $("#auxmodalidad").val() == 2) {
+        //resultado =  resultado + "Por lo menos introduzca una licencia"+ "<br>";
+    //}
     // if($("#inputsRespaldos > *").length == 0 && $("#auxmodalidad").val() == 2) {
     //     resultado =  resultado + "Por lo menos un sistema de respaldo"+ "<br>";
     // }
@@ -934,7 +935,7 @@ Plantel.getInformacion = function(){
          }
       },
       error: function(respuesta,errmsg,err){
-        console.log(respuesta);
+        //console.log(respuesta);
         z = 7;
         lt = 20.66434058010041;
         lg = -103.335607313818;

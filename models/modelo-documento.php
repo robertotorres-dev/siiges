@@ -44,7 +44,7 @@ tipo_entidad = id_tabla
                                               "archivo_instrumentos_trayectoria_educativa"=>11,
                                               "archivo_trayectoria_educativa"=>12,
                                               "biografia"=>13,
-                                              "blibliografia"=>14,
+                                              "bibliografia"=>14,
                                               "identificacion_representante"=>15,
                                               "comprobante_pago"=>16,
                                               "acreditacion_inmueble"=>17,
@@ -64,6 +64,7 @@ tipo_entidad = id_tabla
                                               "fotografia_persona"=>31,
                                               "propuesta_horario"=>32,
                                               "forma_migratoria"=>33,
+                                              "acta_constitutiva"=>34,
                                             );
 
     public static $dir_subida = '../uploads/';

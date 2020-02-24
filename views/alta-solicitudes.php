@@ -611,9 +611,9 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                 <option value="">Seleccione una opción</option>
                                 <option value="1">Semestral</option>
                                 <option value="2">Cuatrimestral</option>
-								<option value="3">Anual</option>
-								<option value="4">Semestral curriculum felxible</option>
-								<option value="5">Cuatrimestral curriculum felxible</option>
+                								<option value="3">Anual</option>
+                								<option value="4">Semestral curriculum felxible</option>
+                								<option value="5">Cuatrimestral curriculum felxible</option>
                               </select><br>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -864,19 +864,19 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label">Mapa curricular<sup>1</sup> </label>
-                            <input class="form-control " type="file" name="PROGRAMA-archivo_mapa_curricular" value=""><br>
+                            <input class="form-control" type="file" name="PROGRAMA-archivo_mapa_curricular" value=""><br>
                           </div>
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label">Reglas de operación de las academias <sup>2</sup> </label>
-                            <input class="form-control"type="file" name="PROGRAMA-archivo_reglas_academias"><br>
+                            <input class="form-control" type="file" name="PROGRAMA-archivo_reglas_academias"><br>
                           </div>
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label">Asignaturas a detalle <sup>3</sup> </label>
-                            <input class="form-control"type="file" name="PROGRAMA-archivo_asignaturas_detalle">
+                            <input class="form-control" type="file" name="PROGRAMA-archivo_asignaturas_detalle">
                           </div>
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label">Propuesta hemerobibliográfica <sup>4</sup> </label>
-                            <input class="form-control"type="file" name="PROGRAMA-propuesta_hemerobibliografica">
+                            <input class="form-control" type="file" name="PROGRAMA-propuesta_hemerobibliografica">
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <p class="small">
@@ -946,6 +946,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                       <option value="Octavo cuatrimestre">Octavo</option>
                                       <option value="Noveno cuatrimestre">Noveno</option>
                                       <option value="Decimo cuatrimestre">Decimo</option>
+                                      <option value="Undecimo cuatrimestre">Undecimo</option>
                                     </optgroup>
                                     <optgroup label="Curriculum Flexible">
                                       <option value="Flexible Cuatrimestral">Listado Cuatrimestral</option>
@@ -2035,7 +2036,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             <label  for="">Ventilación</label><br><br>
                             <div class="col-sm-12 col-md-12">
                               <div class="col-sm-12 col-md-3">
-                                <p >Ventanas en todo el plantel</p>
+                                <p >Ventanas que pueden abrirse por aula</p>
                               </div>
                               <div class="col-sm-12 col-md-5">
                                 <input type="number" id="ventanas" name="HIGIENE-ventanas" class="form-control" value="" placeholder="Ventanas que pueden abrirse"><br>

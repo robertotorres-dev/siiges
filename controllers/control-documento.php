@@ -188,6 +188,7 @@
 
     $asignaturas = new Documento();
     $res_asignaturas = $asignaturas->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PROGRAMA"],"entidad_id"=>$id_programa,"tipo_documento"=>Documento::$nombresDocumentos["archivo_asignaturas_detalle"],"deleted_at"),"*");
+    //print_r($res_asignaturas);
     if (sizeof($res_asignaturas["data"])>0)
     {
       $resultado["documentos"]["asignaturas"] =$res_asignaturas["data"][0];

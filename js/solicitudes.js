@@ -423,6 +423,8 @@ Solicitud.getPlantelesBasicos = function(){
               $("#institucion-noautorizada").show();
               $("#institucion-autorizada").hide();
               $("#ratificacion-nombre").show();
+              $("#id-ratificacion").val(ratificacion.id);
+              $("#id-ratificacion").attr("name","RATIFICACION-id");
               if(ratificacion!=undefined)
               {
                 $("#nombre_propuesto1").val(ratificacion.nombre_propuesto1);

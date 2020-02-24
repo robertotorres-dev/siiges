@@ -123,8 +123,8 @@
           $id_tabla = array_search('instituciones',Documento::$tablas);
           //Obtenemos los datos de del tipo_documento
           $posicion_arreglo = array_search("Acta constitutiva", array_column(Documento::$tipos_documentos, 'nombre'));
-          $tipo_documento = Documento::$tipos_documentos[$posicion_arreglo];
-
+          //$tipo_documento = Documento::$tipos_documentos[$posicion_arreglo];
+          $tipo_documento = Documento::$nombresDocumentos["acta_constitutiva"];
           $atributos = array();
           if( $_POST['documento_id']!="" )
           {
@@ -132,7 +132,7 @@
           }
           $atributos["tipo_entidad"] = $id_tabla;
           $atributos["entidad_id"] = $resultado["data"]["id"];
-          $atributos["tipo_documento"] = $tipo_documento["id"];
+          $atributos["tipo_documento"] = $tipo_documento;
           $atributos["nombre"] = $nombre_archivo;
           $atributos["archivo"] = $ruta_archivo;
           $documento = new Documento( );

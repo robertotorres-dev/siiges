@@ -54,6 +54,25 @@
 		retornarWebService( $_POST["url"], $resultado );
   }
 
+  // Web service para consultar registro por id
+  if( $_POST["webService"]=="consultarEstatusSolicitud" )
+  {
+    $obj = new SolicitudEstatus();
+    $aux = new Utileria( );
+
+    //print_r($_POST);
+
+    $resultado = $obj->consultarPor("solicitudes_estatus_solicitudes",array("solicitud_id"=>$_POST['solicitud_id'],"deleted_at"=>""),"*");
+
+    // Registro en bitacora
+      /*$bitacora = new Bitacora();
+      $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
+      $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"solicitudes_estatus_solicitudes","accion"=>"consultarId","lugar"=>"control-solicitud-estatus"]);
+      $result = $bitacora->guardar();*/
+		retornarWebService( $_POST["url"], $resultado );
+  }
+
+
   // Web service para guardar registro
   if( $_POST["webService"]=="guardar" )
   {

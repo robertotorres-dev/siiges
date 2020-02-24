@@ -414,34 +414,40 @@ session_start();
                           }
 
                           // Seguridad Plantel
-                          foreach ($parametrosSeguridad as $key => $value) {
-                            $seguridad["plantel_id"] = $entidadesIds["PLANTEL"];
-                            $seguridad["seguridad_sistema_id"] = SeguridadSistema::$seguridad[$key];
-                            $seguridad["cantidad"] = $value;
-                            $actualizarSeguridad = new PlantelSeguridadSistema();
-                            $res_actulizarSeguridad =  $actualizarSeguridad->consultarPor("planteles_seguridad_sistemas",array("plantel_id"=>$entidadesIds["PLANTEL"],"seguridad_sistema_id"=>$seguridad["seguridad_sistema_id"]),"id");
-                            if(sizeof($res_actulizarSeguridad["data"])>0)
-                            {
-                              $seguridad["id"] =$res_actulizarSeguridad["data"][0]["id"];
+
+                          if (isset($parametrosSeguridad)) {
+                            // code...
+                            foreach ($parametrosSeguridad as $key => $value) {
+                              $seguridad["plantel_id"] = $entidadesIds["PLANTEL"];
+                              $seguridad["seguridad_sistema_id"] = SeguridadSistema::$seguridad[$key];
+                              $seguridad["cantidad"] = $value;
+                              $actualizarSeguridad = new PlantelSeguridadSistema();
+                              $res_actulizarSeguridad =  $actualizarSeguridad->consultarPor("planteles_seguridad_sistemas",array("plantel_id"=>$entidadesIds["PLANTEL"],"seguridad_sistema_id"=>$seguridad["seguridad_sistema_id"]),"id");
+                              if(sizeof($res_actulizarSeguridad["data"])>0)
+                              {
+                                $seguridad["id"] =$res_actulizarSeguridad["data"][0]["id"];
+                              }
+                              $objPlantelSeguridad = new PlantelSeguridadSistema();
+                              $objPlantelSeguridad->setAttributes($seguridad);
+                              $objPlantelSeguridad->guardar();
                             }
-                            $objPlantelSeguridad = new PlantelSeguridadSistema();
-                            $objPlantelSeguridad->setAttributes($seguridad);
-                            $objPlantelSeguridad->guardar();
                           }
                           // Higiene Plantel
-                          foreach ($parametrosHigiene as $key => $value) {
-                            $higiene["plantel_id"] = $entidadesIds["PLANTEL"];
-                            $higiene["higiene_id"] = Higiene::$higiene[$key];
-                            $higiene["cantidad"] = $value;
-                            $actualizarHigiene = new PlantelHigiene();
-                            $res_actulizarHigiene = $actualizarHigiene->consultarPor("planteles_higienes",array("plantel_id"=>$higiene["plantel_id"],"higiene_id"=>$higiene["higiene_id"]),"id");
-                            if(sizeof($res_actulizarHigiene["data"])>0)
-                            {
-                              $higiene["id"] = $res_actulizarHigiene["data"][0]["id"];
+                          if (isset($parametrosSeguridad)){
+                            foreach ($parametrosHigiene as $key => $value) {
+                              $higiene["plantel_id"] = $entidadesIds["PLANTEL"];
+                              $higiene["higiene_id"] = Higiene::$higiene[$key];
+                              $higiene["cantidad"] = $value;
+                              $actualizarHigiene = new PlantelHigiene();
+                              $res_actulizarHigiene = $actualizarHigiene->consultarPor("planteles_higienes",array("plantel_id"=>$higiene["plantel_id"],"higiene_id"=>$higiene["higiene_id"]),"id");
+                              if(sizeof($res_actulizarHigiene["data"])>0)
+                              {
+                                $higiene["id"] = $res_actulizarHigiene["data"][0]["id"];
+                              }
+                              $objPlanteHigiene = new PlantelHigiene();
+                              $objPlanteHigiene->setAttributes($higiene);
+                              $objPlanteHigiene->guardar();
                             }
-                            $objPlanteHigiene = new PlantelHigiene();
-                            $objPlanteHigiene->setAttributes($higiene);
-                            $objPlanteHigiene->guardar();
                           }
 
                           // Salud Plantel
@@ -479,14 +485,16 @@ session_start();
                                 $errores .= "INFRAESTRUCTURA - error al guardar";
                               } else{
                                 // Relación infraestructura  con la asignatura
+                                //Omitir mientras se corrige ERROR
 
-                                foreach ($infraestructura->asignaturas as $asignatura) {
-                                  $asignaturaInfraestructura[$asignatura] = $resultadoInfraestructura["data"]["id"];
+                                if ($infraestructura->asignaturas !== 'USO COMÚN') {
+                                  foreach ($infraestructura->asignaturas as $asignatura) {
+
+                                    $asignaturaInfraestructura[$asignatura] = $resultadoInfraestructura["data"]["id"];
+                                  }
                                 }
-
                               }
                             }
-
                           }
                         }
                         // Solicitud
@@ -597,13 +605,14 @@ session_start();
                             // otros rvoes
                             $otrosRvoes = [];
                             $rvoes = isset($parametrosPrograma["otrosRVOE"])?$parametrosPrograma["otrosRVOE"]:[];
+
                             foreach ($rvoes as $cadena) {
                               $cadena = str_replace('\\', '', $cadena);
                               $otro = json_decode($cadena);
                               array_push($otrosRvoes,$otro);
 
                             }
-                            $otrosRvoes = json_encode($otrosRvoes);
+                            $otrosRvoes = json_encode($otrosRvoes, JSON_UNESCAPED_UNICODE);
                             // Programa
                             try {
                               $details = "";
@@ -734,6 +743,7 @@ session_start();
                                 // Asignaturas
                                 // ya se valido anteriormente el programa
                                 $asignaturas = isset($parametrosAsignatura["asignaturas"])?$parametrosAsignatura["asignaturas"]:[];
+
                                 foreach ($asignaturas as $cadena) {
                                   $cadena = str_replace('\\', '', $cadena);
                                   $asignatura = json_decode($cadena);
@@ -745,6 +755,7 @@ session_start();
                                     $objAsignaturas->eliminar();
                                   }else
                                   {
+                                    //print_r($asignaturaInfraestructura[$asignatura->clave]);
                                     if(!isset($asignaturaInfraestructura[$asignatura->clave])){
                                       $asignatura->infraestructura_id = 83;
                                     }else{
@@ -868,8 +879,10 @@ session_start();
 
       // Archivos
       foreach ($_FILES as $campo => $archivo) {
+
         $nombreInput = $campo."-id";
         isset($_POST[$nombreInput])? $idDocumento = $_POST[$nombreInput] : $idDocumento = null;
+
         $tipoEntidad = strstr($campo, '-', true);
         $nombreFormulario = substr(strstr($campo, '-'),1);
         if(empty($archivo["name"])){
@@ -1231,7 +1244,7 @@ session_start();
         $representante = $repre->consultarId();
         $respuesta["data"]["representante"] =   $representante["data"];
         $avance = new Solicitud();
-        $avances = $avance->consultarPor("solicitudes_estatus_solicitudes", array("solicitud_id"=>$res_solicitud["data"]["id"]),"*");
+        $avances = $avance->consultarPor("solicitudes_estatus_solicitudes", array("solicitud_id"=>$res_solicitud["data"]["id"], "deleted_at"),"*");
         if( sizeof($avances["data"])>0){
             //Detalles de los avances
             $detallesAvances = [];

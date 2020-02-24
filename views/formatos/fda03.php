@@ -24,17 +24,21 @@
   $pdf->SetFont( "Arial", "B", 11 );
   $pdf->Ln( 25 );
   $pdf->SetTextColor( 255, 255, 255 );
-  $pdf->SetFillColor( 205, 36, 33 );
+  $pdf->SetFillColor( 0, 127, 204 );
   $pdf->Cell( 140, 5, "", 0, 0, "L");
   $pdf->Cell( 35, 6, "FDA03", 0, 0, "R", true);
   $pdf->Ln( 10 );
 
-  $pdf->SetTextColor( 205, 36, 33 );
+  $pdf->SetTextColor( 0, 127, 204 );
   $pdf->Cell( 0, 5, utf8_decode("SOLICITUD PARA LA AUTORIZACIÓN DE NOMBRE DE LA INSTITUCIÓN"), 0, 1, "R");
   $pdf->SetTextColor( 0, 0, 0 );
   $pdf->Ln( 10 );
   // Fecha
   $pdf->SetFont( "Arial", "", 10 );
+  //print_r($pdf->fecha);
+  if ($pdf->fecha){
+
+  }
   $fecha =  $pdf->fecha;
   $pdf->Cell( 0, 5, utf8_decode($fecha), 0, 1, "R");
   $pdf->Ln( 10 );
@@ -70,7 +74,7 @@
 
   $pdf->SetFillColor( 191, 191, 191 );
   $pdf->Cell( 116, 5, utf8_decode("CALLE Y NÚMERO"), 1, 0, "L", true );
-  $pdf->Cell( 60, 5, utf8_decode("COLONA"), 1, 1, "L", true );
+  $pdf->Cell( 60, 5, utf8_decode("COLONIA"), 1, 1, "L", true );
 
   $pdf->SetFillColor( 255, 255, 255 );
   $pdf->SetFont( "Arial", "", 9 );
@@ -89,6 +93,37 @@
   $pdf->Cell( 58, 5, utf8_decode($pdf->domicilioPlantel["municipio"]), 1, 0, "L", true );
   $pdf->Cell( 60, 5, utf8_decode($pdf->domicilioPlantel["estado"]), 1, 1, "L", true );
 
+  $pdf->SetFillColor(191, 191, 191);
+  $pdf->SetFont("Arial", "B", 9);
+  $pdf->Cell( 58, 5, utf8_decode("CORREO ELECTRÓNICO"), 1, 0, "L", true );
+  $pdf->Cell( 58, 5, utf8_decode("TELÉFONO"), 1, 0, "L", true );
+  $pdf->Cell( 60, 5, utf8_decode("REDES SOCIALES"), 1, 1, "L", true );
+
+
+  $pdf->SetFillColor( 255, 255, 255 );
+  $pdf->SetFont( "Arial", "", 9 );
+
+  $x = $pdf->GetX();
+  $y = $pdf->GetY();
+  $pdf->Cell( 58, 20, "", 1,"L" );
+  $pdf->SetXY($x, $y);
+  $pdf->MultiCell( 58, 5, utf8_decode($pdf->plantel["email1"].", ".$pdf->plantel["email2"].", ".$pdf->plantel["email3"]),0, "L" );
+
+  $x = $pdf->GetX();
+  $pdf->SetXY($x + 58, $y);
+  $pdf->Cell( 58, 20, "", 1,"L" );
+  $pdf->SetXY($x + 58, $y);
+  $pdf->MultiCell( 58, 5, utf8_decode($pdf->plantel["telefono1"].", ".$pdf->plantel["telefono2"].", ".$pdf->plantel["telefono2"]), 0, "L" );
+
+  $x = $pdf->GetX();
+  $pdf->SetXY($x + 116, $y);
+  $pdf->Cell( 60, 20, "", 1,"L" );
+  $pdf->SetXY($x + 116, $y);
+
+  $pdf->MultiCell( 60, 5, utf8_decode($pdf->plantel["redes_sociales"]), 0, "L" );
+
+
+
   $pdf->SetFillColor( 191, 191, 191 );
   $headers = ["correo"=>"CORREO ELECTRÓNICO","telefono"=>"TELÉFONO","redes_sociales"=>"REDES SOCIALES"];
   $data = [
@@ -101,7 +136,8 @@
   $widths = ["correo"=>58,"telefono"=>58,"redes_sociales"=>60];
   $length = ["correo"=>30,"telefono"=>30,"redes_sociales"=>35];
 
-  $pdf->Tabla($headers,$data,$widths,0,$length);
+  //$pdf->Tabla($headers,$data,$widths,0,$length);
+
 if(!$pdf->institucion["es_nombre_autorizado"]){
 // Propuesta de dombres
 $pdf->Ln( 10 );
@@ -167,12 +203,13 @@ $pdf->Ln( 2);
 $pdf->SetTextColor( 127, 127,127 );
 $pdf->SetFont( "Arial", "", 8 );
 $pdf->MultiCell( 0, 3, utf8_decode("NOMBRES DE PERSONAS FÍSICAS: SE DEBERÁ ANEXAR LA BIOGRAFÍA O FUNDAMENTO POR EL QUE SE HACE LA PROPUESTA DE NOMBRE. EN SU CASO, SE ANEXARÁ LA BIBLIOGRAFÍA QUE SIRVA DE FUENTE DE CONSULTA (AUTOR, TÍTULO DE LA OBRA EDITORIAL, LUGAR Y FECHA DE EDICIÓN)."), 0, "J");
-$pdf->Ln( 10 );
+$pdf->Ln( 30 );
 
 $pdf->SetTextColor( 0, 0,0 );
-$pdf->SetFont( "Arial", "B", 10 );
-$pdf->Cell( 0, 5, "BAJO PROTESTA DE DECIR VERDAD ", 0, 1, "C");
-$pdf->Cell( 0, 5, utf8_decode($pdf->nombreRepresentante), 0, 1, "C");
+$pdf->SetFont( "Arial", "", 11 );
+$pdf->Cell( 0, 5, "BAJO PROTESTA DE DECIR VERDAD", 0, 1, "C");
+$pdf->SetFont( "Arial", "B", 11 );
+$pdf->Cell( 0, 5, mb_strtoupper(utf8_decode($pdf->nombreRepresentante)), 0, 1, "C");
 
 
   $pdf->Output( "I", "FDA03.pdf" );

@@ -14,7 +14,7 @@
   $pdf->AliasNbPages( );
   $pdf->AddPage( "P", "Letter" );
   $pdf->SetFont( "Arial", "B", 10 );
-  $pdf->SetMargins(20, 25 , 20);
+  $pdf->SetMargins(20, 35 , 20);
 
 // Nombre del formato
   $pdf->SetFont( "Arial", "B", 11 );
@@ -78,7 +78,7 @@
 
   $pdf->SetFillColor( 191, 191, 191 );
   $pdf->Cell( 116, 5, utf8_decode("CALLE Y NÚMERO"), 1, 0, "C", true );
-  $pdf->Cell( 60, 5, utf8_decode("COLONA"), 1, 1, "C", true );
+  $pdf->Cell( 60, 5, utf8_decode("COLONIA"), 1, 1, "C", true );
 
   $pdf->SetFillColor( 255, 255, 255 );
   $pdf->SetFont( "Arial", "", 9 );
@@ -261,33 +261,33 @@
                 "recursos"=>"RECURSOS MATERIALES","ubicacion"=>"UBICACIÓN"];
   $dataI = $pdf->tiposInstalacion;
   //print_r($dataI);
-  $widthsI = ["asignaturas"=>30,"instalacion"=>30,"capacidad"=>22,"metros"=>28,"recursos"=>36,"ubicacion"=>30];
-  $lengthI = ["asignaturas"=>15,"instalacion"=>14,"capacidad"=>10,"metros"=>15,"recursos"=>15,"ubicacion"=>15];
+  $widthsI = ["asignaturas"=>35,"instalacion"=>28,"capacidad"=>28,"metros"=>15,"recursos"=>46,"ubicacion"=>24];
+  $lengthI = ["asignaturas"=>15,"instalacion"=>19,"capacidad"=>20,"metros"=>15,"recursos"=>39,"ubicacion"=>15];
   // Headers
 
   $ejeX = $pdf->GetX();
   $ejeY = $pdf->GetY();
-  $pdf->MultiCell( 30, 6, utf8_decode($headersI["asignaturas"]), 1, "C", true );
+  $pdf->MultiCell( 35, 6, utf8_decode($headersI["asignaturas"]), 1, "C", true );
   $pdf->SetY($ejeY);
   //$pdf->SetY(125);
-  $pdf->SetX(50);
-  $pdf->Cell( 30, 12, utf8_decode($headersI["instalacion"]), 1, 1, "C", true );
+  $pdf->SetX(55);
+  $pdf->Cell( 28, 12, utf8_decode($headersI["instalacion"]), 1, 1, "C", true );
   $pdf->SetY($ejeY);
   //$pdf->SetY(125);
-  $pdf->SetX(80);
-  $pdf->MultiCell( 22, 3, utf8_decode($headersI["capacidad"]), 1, "C", true );
+  $pdf->SetX(83);
+  $pdf->MultiCell( 28, 4, utf8_decode($headersI["capacidad"]), 1, "C", true );
   $pdf->SetY($ejeY);
   //$pdf->SetY(125);
-  $pdf->SetX(102);
-  $pdf->Cell( 28, 12, utf8_decode($headersI["metros"]), 1,1, "C", true );
+  $pdf->SetX(111);
+  $pdf->Cell( 15, 12, utf8_decode($headersI["metros"]), 1,1, "C", true );
   $pdf->SetY($ejeY);
   //$pdf->SetY(125);
-  $pdf->SetX(130);
-  $pdf->MultiCell( 36, 6, utf8_decode($headersI["recursos"]), 1, "C", true );
+  $pdf->SetX(126);
+  $pdf->MultiCell( 46, 12, utf8_decode($headersI["recursos"]), 1, "C", true );
   $pdf->SetY($ejeY);
   //$pdf->SetY(125);
-  $pdf->SetX(166);
-  $pdf->Cell( 30, 12, utf8_decode($headersI["ubicacion"]), 1,1, "C", true );
+  $pdf->SetX(172);
+  $pdf->Cell( 24, 12, utf8_decode($headersI["ubicacion"]), 1,1, "C", true );
 
   $pdf->Tabla($headersI,$dataI,$widthsI,0,$lengthI,false);
   $pdf->Ln( 5 );
@@ -346,7 +346,11 @@ $pdf->SetFont( "Arial", "", 9 );
     $pdf->Cell( 88, 5, utf8_decode($salud["tiempo"]), 1, 1, "C", true );
 
   }
-  $pdf->Ln( 5 );
+  $pdf->Ln( 10 );
+  $pdf->SetFont( "Arial", "", 11 );
+  $pdf->Cell(0,5, utf8_decode("BAJO PROTESTA DE DECIR VERDAD"), 0, 1, "C");
+  $pdf->SetFont( "Arial", "B", 11 );
+  $pdf->Cell( 0, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 1, "C");
 
   if($pdf->checkNewPage()){
     // Nombre del formato
@@ -360,6 +364,7 @@ $pdf->SetFont( "Arial", "", 9 );
       $pdf->SetTextColor( 0, 0, 0 );
 
   }
+
   if($pdf->programa["modalidad_id"] != Modalidad::ESCOLARIZADA){
     $pdf->getDataMixta($pdf->programa["id"]);
     // Instituciones de salud aledañas
@@ -599,7 +604,6 @@ $pdf->SetFont( "Arial", "", 9 );
     $pdf->Cell( 76, 5, utf8_decode("URL (sólo si tiene)"), 1,0, "L");
     $pdf->SetFont( "Arial", "", 9 );
     $pdf->Cell( 100, 5, utf8_decode($pdf->espejos["url_espejo"]), 1,1, "L");
-
     $pdf->SetFont( "Arial", "B", 9 );
     $pdf->Cell( 76, 5, utf8_decode("Periodicidad"), 1,0, "L");
     $pdf->SetFont( "Arial", "", 9 );

@@ -51,6 +51,9 @@
     protected $fecha_asignacion_evaluador;
     protected $otros_rvoes;
     protected $total_alumnos_otros_rvoes;
+    protected $calificacion_minima;
+    protected $calificacion_maxima;
+    protected $calificacion_aprobatoria;
 
 		// Constructor
 		public function __construct( )
@@ -103,16 +106,22 @@
     public function consultarAcreditados( )
     {
       $fecha_actual =  date( "Y-m-d" );
-			$sql = "select * from solicitudes, programas where
+			/*$sql = "select * from solicitudes, programas where
 			solicitudes.usuario_id='$this->usuario_id' and
 			solicitudes.deleted_at is null and
 			solicitudes.id = programas.solicitud_id and
       programas.vigencia>='$fecha_actual' and
 			programas.acuerdo_rvoe!='' and
+			programas.deleted_at is null";*/
+			$sql = "select * from solicitudes, programas where
+			solicitudes.usuario_id='$this->usuario_id' and
+			solicitudes.deleted_at is null and
+			solicitudes.id = programas.solicitud_id and
+			programas.acuerdo_rvoe!='' and
 			programas.deleted_at is null";
 
 			$resultado = parent::consultarSQLCatalogo( $sql );
-			return $resultado;
+      return $resultado;
     }
 
 
@@ -120,16 +129,23 @@
     public function consultarNoAcreditados( )
     {
       $fecha_actual =  date( "Y-m-d" );
-			$sql = "select * from solicitudes, programas where
+			/*$sql = "select * from solicitudes, programas where
 			solicitudes.usuario_id='$this->usuario_id' and
 			solicitudes.deleted_at is null and
 			solicitudes.id = programas.solicitud_id and
       (programas.vigencia<'$fecha_actual' or
 			programas.acuerdo_rvoe='') and
+			programas.deleted_at is null";*/
+
+			$sql = "select * from solicitudes, programas where
+			solicitudes.usuario_id='$this->usuario_id' and
+			solicitudes.deleted_at is null and
+			solicitudes.id = programas.solicitud_id and
+      programas.acuerdo_rvoe is null and
 			programas.deleted_at is null";
 
 			$resultado = parent::consultarSQLCatalogo( $sql );
-			return $resultado;
+      return $resultado;
     }
 
 
@@ -137,10 +153,13 @@
     public function consultarAcreditadosPlantel( )
     {
       $fecha_actual =  date( "Y-m-d" );
-			$sql = "select * from programas where plantel_id='$this->plantel_id' and vigencia>='$fecha_actual' and acuerdo_rvoe!='' and deleted_at is null";
 
+			//$sql = "select * from programas where plantel_id='$this->plantel_id' and vigencia>='$fecha_actual' and acuerdo_rvoe!='' and deleted_at is null";
+      $sql = "select * from programas where plantel_id='$this->plantel_id'
+      and acuerdo_rvoe!=''
+      and deleted_at is null";
 			$resultado = parent::consultarSQLCatalogo( $sql );
-			return $resultado;
+      return $resultado;
     }
 
 
@@ -148,10 +167,13 @@
     public function consultarNoAcreditadosPlantel( )
     {
       $fecha_actual =  date( "Y-m-d" );
-			$sql = "select * from programas where plantel_id='$this->plantel_id' and (vigencia<'$fecha_actual' or acuerdo_rvoe='') and deleted_at is null";
+			//$sql = "select * from programas where plantel_id='$this->plantel_id' and (vigencia<'$fecha_actual' or acuerdo_rvoe='') and deleted_at is null";
+			$sql = "select * from programas where plantel_id='$this->plantel_id'
+      and acuerdo_rvoe is null
+      and deleted_at is null";
 
-			$resultado = parent::consultarSQLCatalogo( $sql );
-			return $resultado;
+      $resultado = parent::consultarSQLCatalogo( $sql );
+      return $resultado;
     }
 
 

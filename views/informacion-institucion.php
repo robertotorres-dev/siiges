@@ -44,6 +44,10 @@
 
 			<!-- INICIA FORMULARIO -->
 			<form  role="form" class="form" method="post" action="../controllers/control-institucion.php" enctype="multipart/form-data">
+					<div class="form-group" >
+						<label class="control-label" for="razon_social">Razón Social *</label><br>
+						<input type="text" class="form-control" id="razon_social" name="razon_social" placeholder="Razón social de la institución" required>
+					</div>
 					<div class="form-group">
 						<label class="control-label" for="nombre">Nombre Institución *</label><br>
 						<input class="form-control" id="nombre" name="nombre" value="" placeholder="Nombre de la institución" type="text" required>

@@ -251,7 +251,6 @@ foreach ($diligencias as $diligencia) {
                                   "horario" => $usuarioD["rfc"]
                                 ]);
 }
-
   $fecha = Solicitud::convertirFecha($solicitud['fecha']);
   $headers = [ "Nombre","Cargo", utf8_decode("Teléfono"), "Celular", "Correo", "Horario"];
 
@@ -268,8 +267,8 @@ foreach ($diligencias as $diligencia) {
   $pdf->Cell( 0, 5, utf8_decode("DIRECTOR GENERAL DE EDUCACIÓN SUPERIOR"), 0, 1, "L");
   $pdf->Cell( 0, 5, utf8_decode("INVESTIGACIÓN Y POSGRADO"), 0, 1, "L");
   $pdf->Ln( 10 );
-  $pdf->Cell( 0, 5, utf8_decode("AT´N: DIRETOR DE EDUCACIÓN SUPERIOR"), 0, 1, "R");
-  $pdf->Cell( 0, 5, utf8_decode("SUPERIOR INCORPORADAS"), 0, 1, "R");
+  $pdf->Cell( 0, 5, utf8_decode("AT´N: DIRECTOR DE EDUCACIÓN SUPERIOR"), 0, 1, "R");
+  //$pdf->Cell( 0, 5, utf8_decode("SUPERIOR INCORPORADAS"), 0, 1, "R");
   $pdf->Ln( 5 );
   $pdf->SetFont( "Arial", "", 9 );
 
@@ -286,9 +285,9 @@ foreach ($diligencias as $diligencia) {
   $pdf->MultiCell(0, 5, utf8_decode("Quedo enterado de todas las disposiciones establecidas en el Reglamento de La Ley de Educación del Estado de Jalisco en Materia de Otorgamiento, Refrendo y Revocación de Incorporación de Instituciones Particulares al Sistema Educativo Estatal, así como en el Instructivo para integrar el expediente de la solicitud de obtención de Reconocimiento de Validez Oficial de Estudios de Educación Superior."),0,"J");
   $pdf->Ln( 30 );
   $pdf->SetFont( "Arial", "", 11 );
-  $pdf->Cell(0,5, utf8_decode("Bajo protesta de decir verdad"), 0, 1, "C");
+  $pdf->Cell(0,5, strtoupper(utf8_decode("Bajo protesta de decir verdad")), 0, 1, "C");
   $pdf->SetFont( "Arial", "B", 11 );
-  $pdf->Cell( 0, 5, utf8_decode($nombreRepresentante), 0, 1, "C");
+  $pdf->Cell( 0, 5, utf8_decode(mb_strtoupper($nombreRepresentante)), 0, 1, "C");
 
   $pdf->Output( "I", "FDA01.pdf" );
 

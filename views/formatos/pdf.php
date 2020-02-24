@@ -110,7 +110,6 @@ class PDF extends FPDF
 
   function Tabla($header,$datos,$width = 0,$height = 0,$length = 15,$sHeaders=true)
  {
-
    $c_width = $width;
    $c_height = $height;
    $this->SetLineWidth(.3);
@@ -261,6 +260,7 @@ class PDF extends FPDF
 
    $this->nombreInstitucion = "";
    $this->razonSocial = "";
+   $this->nombrePropuesto = [];
    // Institución
    $this->institucion = new Institucion();
    $this->institucion = $this->institucion->consultarPor("instituciones",["usuario_id"=>$this->solicitud["usuario_id"]],"*");
@@ -271,7 +271,20 @@ class PDF extends FPDF
    }
    $this->razonSocial = $this->institucion["razon_social"];
    if($this->institucion["es_nombre_autorizado"]){
+     //print_r($this->institucion["id"]);
      $this->nombreInstitucion = $this->institucion["nombre"];
+     $this->ratificacion = new RatificacionNombre();
+     $this->ratificacion = $this->ratificacion->consultarPor("ratificacion_nombres",["institucion_id"=>$this->institucion["id"]],"*");
+     $this->ratificacion = !empty($this->ratificacion["data"][0])?$this->ratificacion["data"][0]:false;
+     if(!$this->ratificacion){
+       $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Ratificación no encontrado.","data"=>[]]);
+       header("Location: ../home.php");exit();
+     }
+     $this->nombreAutorizado["acuerdo"] = $this->ratificacion["acuerdo"];
+     $this->nombreAutorizado["autoridad"] = $this->ratificacion["autoridad"];
+     $this->nombreAutorizado["nombre_solicitado"] = $this->ratificacion["nombre_solicitado"];
+     $this->nombreAutorizado["nombre_autorizado"] = $this->ratificacion["nombre_autorizado"];
+     $this->nombreAutorizado["fecha_autorizacion"] = $this->ratificacion["fecha_autorizacion"];
    }else{
      // Institución
      $this->ratificacion = new RatificacionNombre();
@@ -281,7 +294,9 @@ class PDF extends FPDF
        $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Ratificación no encontrado.","data"=>[]]);
        header("Location: ../home.php");exit();
      }
-     $this->nombreInstitucion .= $this->ratificacion["nombre_propuesto1"].", ".$this->ratificacion["nombre_propuesto2"].", ".$this->ratificacion["nombre_propuesto3"];
+     $this->nombrePropuesto["nombre_propuesto1"] = $this->ratificacion["nombre_propuesto1"];
+     $this->nombrePropuesto["nombre_propuesto2"] = $this->ratificacion["nombre_propuesto2"];
+     $this->nombrePropuesto["nombre_propuesto3"] = $this->ratificacion["nombre_propuesto3"];
    }
 
    //usuario
@@ -333,11 +348,7 @@ class PDF extends FPDF
                                      "horario" => $this->usuarioD["rfc"]
                                    ]);
    }
-   //print_r($this->nombresDiligencias);
-
-     $this->fecha = Solicitud::convertirFecha($this->solicitud['fecha']);
-
-
+   $this->fecha = Solicitud::convertirFecha($this->solicitud['fecha']);
  }
 
  // Extrae los datos de las relaciones debiles de plantel
@@ -412,9 +423,6 @@ class PDF extends FPDF
        $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Higiene de plantel no encontrado.","data"=>[]]);
        header("Location: ../home.php");exit();
      }
-     if ($plantelHigiene["higiene_id"] == 8) {
-       $plantelHigiene["cantidad"] = ($plantelHigiene["cantidad"] / $this->plantelHigienes[6]["cantidad"]);
-     }
      array_push($this->higienes,["higiene"=>$this->higiene["descripcion"],
                                   "cantidad"=>$plantelHigiene["cantidad"]]);
    }
@@ -447,14 +455,22 @@ class PDF extends FPDF
      foreach ($this->asignatura as $key => $asignatura) {
        $asignaturas .= $asignatura["clave"].", ";
      }
+
      $asignaturas = !empty($asignaturas)?substr($asignaturas, 0, -2):"";
-     array_push($this->tiposInstalacion,["instalacion"=>$this->instalacion["nombre"]." ".$infraestructura["nombre"],
-                                        "capacidad"=>$infraestructura["capacidad"],
-                                        "metros"=>$infraestructura["metros"],
-                                        "recursos"=>$infraestructura["recursos"],
-                                        "ubicacion"=>$infraestructura["ubicacion"],
-                                        "asignaturas"=> $asignaturas
-                                ]);
+
+     //Si el aula no tiene materias registradas no se imprimirán
+     if ($this->instalacion["id"] == 1 & empty($asignaturas)) {
+
+    } else {
+       array_push($this->tiposInstalacion,["instalacion"=>$this->instalacion["nombre"]." ".$infraestructura["nombre"],
+       "capacidad"=>$infraestructura["capacidad"],
+       "metros"=>$infraestructura["metros"],
+       "recursos"=>$infraestructura["recursos"],
+       "ubicacion"=>$infraestructura["ubicacion"],
+       "asignaturas"=> $asignaturas
+     ]);
+     }
+
    }
    // Salud
    $this->salud = new SaludInstitucion();
@@ -497,7 +513,7 @@ class PDF extends FPDF
 
  function getAsignaturas(){
    $this->TodasAsignaturas = new Asignatura();
-   $this->TodasAsignaturas = $this->TodasAsignaturas->consultarPor("asignaturas",["programa_id"=>$this->programa["id"]],"*");
+   $this->TodasAsignaturas = $this->TodasAsignaturas->consultarPor("asignaturas",array("programa_id"=>$this->programa["id"], "deleted_at"),"*");
    $this->TodasAsignaturas = sizeof($this->TodasAsignaturas["data"]) > 0? $this->TodasAsignaturas["data"]:[];
    $asignaturas = [];
    foreach ($this->TodasAsignaturas as $key => $asignatura) {
@@ -556,7 +572,7 @@ class PDF extends FPDF
 
  function getDocentes($tipo_docente=null){
    $asignaturasDocente = new Asignatura();
-   $asignaturasDocente = $asignaturasDocente->consultarPor("asignaturas",["programa_id"=>$this->programa["id"]],"*");
+   $asignaturasDocente = $asignaturasDocente->consultarPor("asignaturas",array("programa_id"=>$this->programa["id"], "deleted_at"),"*");
    $asignaturasDocente = !empty($asignaturasDocente["data"])?$asignaturasDocente["data"]:false;
 
    $mensaje = "";
@@ -580,7 +596,7 @@ class PDF extends FPDF
          $formaciones = !empty($formaciones["data"])?$formaciones["data"]:false;
        }
 
-       if($tipo_docente == $docente["tipo_docente"]){
+       if($tipo_docente == $docente["tipo_docente"] & $docente["id"]!=23){
          if(!isset($this->AsigPorGrado[$asignatura["grado"]])){
            $this->AsigPorGrado[$asignatura["grado"]] = [];
            $fila = [
@@ -592,7 +608,7 @@ class PDF extends FPDF
                      "aceptado"=>"SE ACEPTA",
                      "observaciones"=>"OBSERVACIONES"
                    ];
-          array_push($this->AsigPorGrado[$asignatura["grado"]],$fila);
+                   array_push($this->AsigPorGrado[$asignatura["grado"]],$fila);
         }
         $fTexto = "";
 
@@ -611,7 +627,7 @@ class PDF extends FPDF
                   "asignatura"=>$asignatura["clave"]." - ".$asignatura["nombre"],
                   "experiencia"=>"",
                   "contratacion_antiguedad"=>Docente::$TIPO_CONTRATACION[$docente["tipo_contratacion"]].", ".$docente["antiguedad"],
-                  "aceptado"=>$docente["es_aceptado"]?"SI":"NO",
+                  "aceptado"=>$docente["es_aceptado"]?"SI":"PENDIENTE",
                   "observaciones"=>$docente["observaciones"]
                 ];
                 if ($PersonaDocente["id"] != 208) {

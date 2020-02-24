@@ -515,9 +515,9 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                 <option value="">Seleccione una opción</option>
                                 <option value="1">Semestral</option>
                                 <option value="2">Cuatrimestral</option>
-								<option value="3">Anual</option>
-								<option value="4">Semestral curriculum felxible</option>
-								<option value="5">Cuatrimestral curriculum felxible</option>
+                								<option value="3">Anual</option>
+                								<option value="4">Semestral curriculum felxible</option>
+                								<option value="5">Cuatrimestral curriculum felxible</option>
                               </select><br>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -804,8 +804,8 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             <a id="enlace-asignaturas" class="enlaces" href="" target="_blank" >Ver detalles de las asignaturas</a>
                             <br>
                           </div>
-                          <div class="col-sm-12 col-md-6" id="contendorBibliografias" style="display: none">
-                            <a id="enlace-bibliografia" class="enlaces" href="" target="_blank" >Ver propuesta hemerobibliográfica</a>
+                          <div class="col-sm-12 col-md-6" id="contendorPropuestaHemerobibliografica" style="display: none">
+                            <a id="enlace-propuesta_hemerobibliografica" class="enlaces" href="" target="_blank" >Ver propuesta hemerobibliográfica</a>
                             <br>
                           </div>
                           <div class="col-sm-12 col-md-12">
@@ -876,6 +876,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                       <option value="Octavo cuatrimestre">Octavo</option>
                                       <option value="Noveno cuatrimestre">Noveno</option>
                                       <option value="Decimo cuatrimestre">Decimo</option>
+                                      <option value="Undecimo cuatrimestre">Undecimo</option>
                                     </optgroup>
                                     <optgroup label="Curriculum Flexible">
                                       <option value="Flexible Cuatrimestral">Listado Cuatrimestral</option>
@@ -1974,7 +1975,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             <label  for="">Ventilación</label><br><br>
                             <div class="col-sm-12 col-md-12">
                               <div class="col-sm-12 col-md-3">
-                                <p >Ventanas en todo el plantel</p>
+                                <p >Ventanas que pueden abrirse por aula</p>
                               </div>
                               <div class="col-sm-12 col-md-5">
                                 <input type="number" id="ventanas" name="HIGIENE-ventanas" class="form-control" value="" placeholder="Ventanas que pueden abrirse"><br>
@@ -2255,12 +2256,23 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             </div>
                             <div class="col-sm-12 col-md-8">
                               <label class="control-label" for="">Nombre propuesto:</label><br>
-                              <input id="nombre_propuesto3" type="text" name="RATIFICACION-nombre_propuesto3" class="form-control" value="" placeholder="Nombre propuesto como opcional">
+                              <input id="nombre_propuesto3" type="text" name="RATIFICACION-nombre_propuesto3" class="form-control" value="" placeholder="Nombre propuesto como opcional"><br>
                             </div>
                             <div class="col-sm-12 col-md-8">
+                              <label class="control-label" for="">Biografía o Fundamento</label>
+                              <br>
+                            </div>
+                            <div class="col-sm-12 col-md-12" id="contenedorBiografia" style="display: none">
+                              <a id="enlace-biografia" class="enlaces" href="" target="_blank" >Ver archivo</a>
+                              <br><br>
                             </div>
                             <div class="col-sm-12 col-md-8">
                               <label class="control-label" for="">Bibliografía para fuente de consulta</label>
+                              <br>
+                            </div>
+                            <div class="col-sm-12 col-md-12" id="contenedorBibliografia" style="display: none">
+                              <a id="enlace-bibliografia" class="enlaces" href="" target="_blank" >Ver archivo</a>
+                              <br><br>
                             </div>
                             <div class="col-sm-12 col-md-8">
                               <p class="text-muted small">

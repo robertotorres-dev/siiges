@@ -5,7 +5,7 @@
 
   require_once "base-catalogo.php";
 
-	define( "TABLA_RATIFICACION_NOMNRES", "ratificacion_nombres" );
+	define( "TABLA_RATIFICACION_NOMBRES", "ratificacion_nombres" );
 
   class RatificacionNombre extends Catalogo
   {
@@ -40,7 +40,7 @@
 		// Método para consultar todos los registros
     public function consultarTodos( )
     {
-      $resultado = parent::consultarTodosCatalogo( TABLA_RATIFICACION_NOMNRES );
+      $resultado = parent::consultarTodosCatalogo( TABLA_RATIFICACION_NOMBRES );
 			return $resultado;
     }
 
@@ -48,7 +48,7 @@
 		// Método para consultar registro por id
 		public function consultarId( )
     {
-      $resultado = parent::consultarIdCatalogo( TABLA_RATIFICACION_NOMNRES );
+      $resultado = parent::consultarIdCatalogo( TABLA_RATIFICACION_NOMBRES );
 			return $resultado;
     }
 
@@ -56,7 +56,7 @@
 		// Método para guardar registro
 		public function guardar( )
     {
-			$resultado = parent::guardarCatalogo( TABLA_RATIFICACION_NOMNRES );
+			$resultado = parent::guardarCatalogo( TABLA_RATIFICACION_NOMBRES );
 			return $resultado;
     }
 
@@ -64,7 +64,7 @@
 		// Método para eliminar registro
 		public function eliminar( )
     {
-			$resultado = parent::eliminarCatalogo( TABLA_RATIFICACION_NOMNRES );
+			$resultado = parent::eliminarCatalogo( TABLA_RATIFICACION_NOMBRES );
 			return $resultado;
     }
 

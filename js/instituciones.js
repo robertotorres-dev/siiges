@@ -72,6 +72,7 @@ Institucion.getInstitucion = function(){
         }else {
           $('#id').val(respuesta.data[0].id);
           $('#usuario_id').val(respuesta.data[0].usuario_id);
+          $('#razon_social').val(respuesta.data[0].razon_social);
           $('#nombre').val(respuesta.data[0].nombre);
           $('#historia').val(respuesta.data[0].historia);
           $('#vision').val(respuesta.data[0].vision);
@@ -79,10 +80,12 @@ Institucion.getInstitucion = function(){
           $('#valores_institucionales').val(respuesta.data[0].valores_institucionales);
         }
         if(Object.keys(respuesta.data[0].documentos.data).length>0){
+          console.log(respuesta.data);
           $('#documento_id').val(respuesta.data[0].documentos.data[0].id);
           $('#boton_mostar').show();
           //$("#modalMensaje").modal();
           $("#acta").attr("style","margin-top:20px;height: 600px;");
+          console.log(respuesta.data[0].documentos.data[0].archivo);
           $('#acta').attr('src',respuesta.data[0].documentos.data[0].archivo);
         }
         $('#enlace_alta').attr('href','alta-plantel.php?institucion='+respuesta.data[0].id+'&usuario='+respuesta.data[0].usuario_id);

@@ -631,8 +631,9 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                 <option value="">Seleccione una opción</option>
                                 <option value="1">Semestral</option>
                                 <option value="2">Cuatrimestral</option>
-                                <option value="3">Semestral curriculum felxible</option>
-                                <option value="4">Cuatrimestral curriculum felxible</option>
+                								<option value="3">Anual</option>
+                								<option value="4">Semestral curriculum felxible</option>
+                								<option value="5">Cuatrimestral curriculum felxible</option>
                               </select><br>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -901,12 +902,12 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label">Mapa curricular<sup>1</sup> </label>
                             <input type="hidden" id="curricular-id" name="PROGRAMA-archivo_mapa_curricular-id" value="">
-                            <input class="form-control " type="file" name="PROGRAMA-archivo_mapa_curricular" value=""><br>
+                            <input class="form-control" type="file" name="PROGRAMA-archivo_mapa_curricular" value=""><br>
                           </div>
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label">Reglas de operación de las academias <sup>2</sup> </label>
                             <input type="hidden" id="academias-id" name="PROGRAMA-archivo_reglas_academias-id" value="">
-                            <input class="form-control"type="file" name="PROGRAMA-archivo_reglas_academias"><br>
+                            <input class="form-control" type="file" name="PROGRAMA-archivo_reglas_academias"><br>
                           </div>
                           <div class="col-sm-12 col-md-6" id="contendorMapaCurricular" style="display: none">
                             <a id="enlace-mapaCurricular" class="enlaces" href="" target="_blank" >Ver mapa curricular</a>
@@ -920,21 +921,21 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label">Asignaturas a detalle <sup>3</sup> </label>
                             <input type="hidden" id="asignaturas-id" name="PROGRAMA-archivo_asignaturas_detalle-id" value="">
-                            <input class="form-control"type="file" name="PROGRAMA-archivo_asignaturas_detalle">
+                            <input class="form-control" type="file" name="PROGRAMA-archivo_asignaturas_detalle">
                             <br>
                           </div>
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label">Propuesta hemerobibliográfica <sup>4</sup> </label>
-                            <input type="hidden" id="bibliografia-id" name="PROGRAMA-propuesta_hemerobibliografica-id" value="">
-                            <input class="form-control"type="file" name="PROGRAMA-propuesta_hemerobibliografica">
+                            <input type="hidden" id="propuesta_hemerobibliografica-id" name="PROGRAMA-propuesta_hemerobibliografica-id" value="">
+                            <input class="form-control" type="file" name="PROGRAMA-propuesta_hemerobibliografica">
                             <br>
                           </div>
                           <div class="col-sm-12 col-md-6" id="contendorAsignaturas" style="display: none">
                             <a id="enlace-asignaturas" class="enlaces" href="" target="_blank" >Ver detalles de las asignaturas</a>
                             <br>
                           </div>
-                          <div class="col-sm-12 col-md-6" id="contendorBibliografias" style="display: none">
-                            <a id="enlace-bibliografia" class="enlaces" href="" target="_blank" >Ver propuesta hemerobibliográfica</a>
+                          <div class="col-sm-12 col-md-6" id="contendorPropuestaHemerobibliografica" style="display: none">
+                            <a id="enlace-propuesta_hemerobibliografica" class="enlaces" href="" target="_blank" >Ver propuesta hemerobibliográfica</a>
                             <br>
                           </div>
                           <div class="col-sm-12 col-md-12">
@@ -1005,6 +1006,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                       <option value="Octavo cuatrimestre">Octavo</option>
                                       <option value="Noveno cuatrimestre">Noveno</option>
                                       <option value="Decimo cuatrimestre">Decimo</option>
+                                      <option value="Undecimo cuatrimestre">Undecimo</option>
                                     </optgroup>
                                     <optgroup label="Curriculum Flexible">
                                       <option value="Flexible Cuatrimestral">Listado Cuatrimestral</option>
@@ -2109,7 +2111,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             <label  for="">Ventilación</label><br><br>
                             <div class="col-sm-12 col-md-12">
                               <div class="col-sm-12 col-md-3">
-                                <p >Ventanas en todo el plantel</p>
+                                <p >Ventanas que pueden abrirse por aula</p>
                               </div>
                               <div class="col-sm-12 col-md-5">
                                 <input type="number" id="ventanas" name="HIGIENE-ventanas" class="form-control" value="" placeholder="Ventanas que pueden abrirse"><br>
@@ -2394,11 +2396,21 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             </div>
                             <div class="col-sm-12 col-md-8">
                               <label class="control-label" for="">Biografía o Fundamento</label>
-                              <input type="file" onchange="Solicitud.verificarArchivo(this)" id="biografia" name="RATIFICACION-biografia" class="form-control"><br>
+                              <input type="hidden" id="biografia-id" name="RATIFICACION-biografia-id" value="">
+                              <input type="file" onchange="Solicitud.verificarArchivo(this)" id="biografia" name="RATIFICACION-biografia" class="form-control">
+                            </div>
+                            <div class="col-sm-12 col-md-12" id="contenedorBiografia" style="display: none">
+                              <a id="enlace-biografia" class="enlaces" href="" target="_blank" >Ver archivo</a>
+                              <br><br>
                             </div>
                             <div class="col-sm-12 col-md-8">
                               <label class="control-label" for="">Bibliografía para fuente de consulta</label>
-                              <input type="file" onchange="Solicitud.verificarArchivo(this)" id="consulta" name="RATIFICACION-blibliografia" class="form-control">
+                              <input type="hidden" id="bibliografia-id" name="RATIFICACION-bibliografia-id" value="">
+                              <input type="file" onchange="Solicitud.verificarArchivo(this)" id="bibliografia" name="RATIFICACION-bibliografia" class="form-control">
+                            </div>
+                            <div class="col-sm-12 col-md-12" id="contenedorBibliografia" style="display: none">
+                              <a id="enlace-bibliografia" class="enlaces" href="" target="_blank" >Ver archivo</a>
+                              <br><br>
                             </div>
                             <div class="col-sm-12 col-md-8">
                               <p class="text-muted small">
@@ -2653,9 +2665,10 @@ Utileria::validarSesion( basename( __FILE__ ) );
                 <input type="hidden" id="estatus_solicitud" name="SOLICITUD-estatus_solicitud_id" value="1" />
                 <input type="hidden" id="estatus" name="SOLICITUD-tipo_solicitud_id" value="<?= $_GET["tps"] ?>" />
                   <?php if ([$_SESSION][0]["rol_id"] == 3){?>
-                  <button id="btnTerminar" type="button" class="btn btn-primary pull-right" onclick="Solicitud.camposLlenos()">Terminar solicitud</button>
+                  <!-- Fin de convocatoria 2019 -->
+                  <button id="btnTerminar" type="button" class="btn btn-primary pull-right" onclick="Solicitud.camposLlenos()" >Terminar solicitud</button>
                   <?php } ?>
-                <button id="btnGuardar" type="button" name="" class="btn btn-default pull-right" style="margin-right: 10px;" onclick="limpiarInputs()"> Guardar solicitud</button>
+                <button id="btnGuardar" type="button" name="" class="btn btn-default pull-right" style="margin-right: 10px;" onclick="limpiarInputs()" > Guardar solicitud</button>
                 <!-- Filtrar informacion a cargar  -->
               </div>
 
@@ -2710,6 +2723,29 @@ Utileria::validarSesion( basename( __FILE__ ) );
               </div>
             </div>
           </div>
+
+        <!-- Modal para aviso de término de convocatoria 2019 -->
+        <div class="modal fade" id="modalConvocatoria" role="dialog">
+            <div id="tamanoModalConvocatoria" class="modal-dialog" >
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">¡Aviso importante!</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="mensajeConvocatoriaExpirada" class="">
+                      <p class="text-justify">
+                        <p class="text-center">¡Estimada institución!</p>
+                        El periodo para subir tu solicitud para la convocatoria de RVOE 2019 con vigencia el día 17 de Enero de 2020 ha expirado.<br>
+                        Está atento a las fechas de nuestra próxima convocatoria de RVOE 2020.<br>
+                      </p>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         <!-- Modal para mostrar archivos -->
         <div class="modal fade" id="modalArchivos"  tabindex="-1" role="dialog" aria-hidden="true">
             <div  id="tamanoModalArchivo" class="modal-dialog" >

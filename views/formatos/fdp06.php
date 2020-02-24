@@ -100,11 +100,11 @@
 
   $headers = ["formacion"=>"","docente"=>"","asignatura"=>"","experiencia"=>"","contratacion_antiguedad"=>"","aceptado"=>"","observaciones"=>""];
   // 176
-  $widths = ["formacion"=>31,"docente"=>27,"asignatura"=>27,"experiencia"=>25,"contratacion_antiguedad"=>25,"aceptado"=>18,"observaciones"=>23];
+  $widths = ["formacion"=>38,"docente"=>32,"asignatura"=>34,"experiencia"=>19,"contratacion_antiguedad"=>18,"aceptado"=>15,"observaciones"=>20];
   // 95
-  $length = ["formacion"=>19,"docente"=>19,"asignatura"=>16,"experiencia"=>11,"contratacion_antiguedad"=>10,"aceptado"=>11,"observaciones"=>15];
-
+  $length = ["formacion"=>25,"docente"=>21,"asignatura"=>22,"experiencia"=>11,"contratacion_antiguedad"=>10,"aceptado"=>11,"observaciones"=>15];
   foreach ($pdf->AsigPorGrado as $grado => $asignatura) {
+    //print_r($pdf->AsigPorGrado);
     $pdf->SetFont( "Arial", "B", 9 );
     $pdf->Cell( 0, 5, utf8_decode($grado), 1, 1, "C", true );
 
@@ -114,19 +114,33 @@
 
     $pdf->Tabla($headers,$data,$widths,0,$length,false);
     if($pdf->checkNewPage()){
-      $pdf->Ln(25);
+      $pdf->Ln(15);
     }
     $pdf->Ln( 5 );
   }
 
+  $pdf->Ln( 20 );
 
-  $pdf->Ln( 30 );
-  $pdf->SetFillColor( 255, 255, 255 );
+  if ($pdf->programa["acuerdo_rvoe"]) {
+    $pdf->Cell( 60, 10, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 0, "C");
+    $pdf->Cell( 50, 10, Solicitud::convertirFecha(date("d-m-y")), 0, 0, "C");
+    $pdf->MultiCell( 65, 5, utf8_decode("AUTORIZÓ\nDIRECTOR DE EDUCACIÓN SUPERIOR"), 0, "C");
+  } else {
+    $pdf->SetFont( "Arial", "", 11 );
+    $pdf->Cell( 0, 5, "BAJO PROTESTA DE DECIR VERDAD", 0, 0, "C");
+    $pdf->Ln( 5);
+    $pdf->SetFont( "Arial", "B", 11 );
+    $pdf->Cell( 0, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 0, "C");
+
+  }
+  $pdf->Ln( 5 );
+  /*
+  $pdf->SetFillColor( 191, 191, 191 );
   $pdf->Cell( 60, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 0, "L");
   $pdf->Cell( 65, 5, utf8_decode( Solicitud::convertirFecha(date("d-m-y"))), 0, 0, "L");
   $pdf->Cell( 55, 5, utf8_decode( "AUTORIZÓ"), 0, 0, "L");
   $pdf->Ln( 5 );
-  $pdf->Cell( 275, 5, utf8_decode( "DIRECTOR DE EDUCACIÓN SUPERIOR"), 0, 0, "C");
+  $pdf->Cell( 275, 5, utf8_decode( "DIRECTOR DE EDUCACIÓN SUPERIOR"), 0, 0, "C");*/
 
   $pdf->Output( "I", "FDP06.pdf" );
 ?>

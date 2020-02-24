@@ -1,5 +1,47 @@
 //Objeto
 var EditarSolicitud = {};
+//Si ha tenido observaciones, le permite terminar solicitud
+var TerminarSolicitud = {};
+
+//Función para periodo final de modalConvocatoria
+//Sólo los programas que ya están en observación pueden subir su información
+TerminarSolicitud.getEstatusSolicitud = function() {
+  TerminarSolicitud.promesaEstatusSolicitud = $.ajax({
+    type: "POST",
+    url:"../controllers/control-solicitud-estatus.php",
+    dataType: "json",
+    data:{webService:"consultarEstatusSolicitud",url:"",solicitud_id:$("#id_solicitud").val()},
+    success : function(respuesta){
+      //Si el estatus de la solicitud está en observación entonces si puede entrar a editar su inforamción
+      if (respuesta.data.length > 0) {
+        for (let i = 0; i < respuesta.data.length; i++) {
+          let estatus = respuesta.data[i].estatus_solicitud_id
+          //Si tiene observaciones, que permita guardarSolicitud y mostrar modal
+          if (estatus === '200') {
+            //$("#btnTerminar").attr("disabled",false)
+            //$("#btnGuardar").attr("disabled",false)
+          }
+
+          if($("#editar").val()==0)
+          {
+            //$("#btnGuardar").attr("disabled",true);
+            //$("#btnTerminar").attr("disabled",true);
+          }
+        }
+      }
+      // Si es el primer guardado de la solicitud, no tiene estatus y se muestra el mensaje de tiempo fuera de la solicitud
+       else
+       {
+        $("#modalConvocatoria").modal()
+        $("#tamanoModalConvocatoria").attr("style","margin-top:80px;")
+        $("#mensajeConvocatoriaExpirada").addClass("alert alert-danger")
+      }
+   },
+   error : function(respuesta,errmsg,err) {
+        console.log(respuesta);
+    }
+  })
+}
 
 //Obtener una solicitud en especifico
 EditarSolicitud.getSolicitud = function() {
@@ -17,7 +59,6 @@ EditarSolicitud.getSolicitud = function() {
           console.log(respuesta);
         }
         if(respuesta.data != ""){
-          console.log(respuesta.data);
           if(respuesta.data.documentos!=undefined)
           {
             var documentos = respuesta.data.documentos;
@@ -32,21 +73,18 @@ EditarSolicitud.getSolicitud = function() {
               $("#contenedorFirma").attr("style","display: block");
               $("#enlace-firma").attr("href",documentos.firma_representante.archivo);
             }
-
             if(documentos.logotipo!=undefined)
             {
               $("#logotipo-id").val(documentos.logotipo.id);
               $("#contendorLogotipo").attr("style","display: block");
               $("#enlace-logotipo").attr("href",documentos.logotipo.archivo);
             }
-
             if(documentos.estudio_pertinencia!=undefined)
             {
               $("#pertinencia-id").val(documentos.estudio_pertinencia.id);
               $("#contendorPertinencia").attr("style","display: block");
               $("#enlace-pertinencia").attr("href",documentos.estudio_pertinencia.archivo);
             }
-
             if(documentos.oferta_demanda!=undefined)
             {
               $("#demanda-id").val(documentos.oferta_demanda.id);
@@ -69,7 +107,7 @@ EditarSolicitud.getSolicitud = function() {
             }
             if(documentos.asignaturas!=undefined)
             {
-              $("#asignarutas-id").val(documentos.asignaturas.id);
+              $("#asignaturas-id").val(documentos.asignaturas.id);
               $("#contendorAsignaturas").attr("style","display: block");
               $("#enlace-asignaturas").attr("href",documentos.asignaturas.archivo);
             }
@@ -81,12 +119,13 @@ EditarSolicitud.getSolicitud = function() {
               $("#enlace-reglasAcademia").attr("href",documentos.reglas_academias.archivo);
             }
 
-            if(documentos.bibliografia!=undefined)
+            if(documentos.propuesta_hemerobibliografica!=undefined)
             {
-              $("#bibliografia-id").val(documentos.bibliografia.id);
-              $("#contendorBibliografias").attr("style","display: block");
-              $("#enlace-bibliografia").attr("href",documentos.bibliografia.archivo);
+              $("#propuesta_hemerobibliografica-id").val(documentos.propuesta_hemerobibliografica.id);
+              $("#contendorPropuestaHemerobibliografica").attr("style","display: block");
+              $("#enlace-propuesta_hemerobibliografica").attr("href",documentos.propuesta_hemerobibliografica.archivo);
             }
+
             if(documentos.informe_resultados!=undefined)
             {
               $("#informe-id").val(documentos.informe_resultados.id);
@@ -104,6 +143,16 @@ EditarSolicitud.getSolicitud = function() {
               $("#trayectoria-id").val(documentos.trayectoria_educativa.id);
               $("#contendorTrayectoria").attr("style","display: block");
               $("#enlace-trayectoria").attr("href",documentos.trayectoria_educativa.archivo);
+            }
+            if (documentos.biografia!= undefined) {
+              $("#biografia-id").val(documentos.biografia.id);
+              $("#contenedorBiografia").attr("style","display: block");
+              $("#enlace-biografia").attr("href",documentos.biografia.archivo);
+            }
+            if (documentos.bibliografia != undefined) {
+              $("#bibliografia-id").val(documentos.bibliografia.id);
+              $("#contenedorBibliografia").attr("style", "display: block");
+              $("#enlace-bibliografia").attr("href", documentos.bibliografia.archivo);
             }
             if(documentos.identificacion_representante!=undefined)
             {
@@ -468,6 +517,7 @@ EditarSolicitud.getSolicitud = function() {
              }
             }
             var asignaturas = respuesta.data.asignaturas;
+            console.log(respuesta.data.asignaturas);
             if( asignaturas != undefined ){
               for (var n = 0; n < asignaturas.length; n++) {
                 var filaAsignatura;
@@ -478,7 +528,7 @@ EditarSolicitud.getSolicitud = function() {
                     asig.setAttribute("type","hidden");
                     asig.setAttribute("id",'asignatura'+asignaturas[n].id);
                     asig.setAttribute("name","ASIGNATURA-asignaturas[]");
-                    asig.setAttribute("value",JSON.stringify({"id":asignaturas[n].id,"grado":asignaturas[n].grado,"nombre":asignaturas[n].nombre,"clave":asignaturas[n].clave,"creditos":asignaturas[n].creditos,"seriacion":asignaturas[n].seriacion,"horas_docente":asignaturas[n].horas_docente,"horas_independiente":asignaturas[n].horas_independiente,"academia":asignaturas[n].academia,"tipo":asignaturas[n].tipo}));
+                    asig.setAttribute("value",JSON.stringify({"id":asignaturas[n].id,"grado":asignaturas[n].grado,"nombre":asignaturas[n].nombre,"clave":asignaturas[n].clave,"creditos":asignaturas[n].creditos,"seriacion":asignaturas[n].seriacion,"horas_docente":asignaturas[n].horas_docente,"horas_independiente":asignaturas[n].horas_independiente,"academia":asignaturas[n].academia,"tipo":asignaturas[n].tipo, "infraestructura_id":asignaturas[n].infraestructura_id}));
                     __('inputsAsignaturas').appendChild(asig);
                     filaAsignatura = '<tr id="row' + asignaturas[n].id + '"><td>' + asignaturas[n].grado + '</td><td>' + asignaturas[n].nombre + '</td><td>'+asignaturas[n].clave+'</td><td>'+asignaturas[n].seriacion+'</td><td id="hrsdocente'+asignaturas[n].id+'">'+asignaturas[n].horas_docente+'</td><td id="hrsindependiente'+asignaturas[n].id+'">'+asignaturas[n].horas_independiente+'</td><td>'+asignaturas[n].creditos+ '</td><td>'+asignaturas[n].academia+'</td><td><button type="button" clave="'+asignaturas[n].clave+'" name="remove" id="' + asignaturas[n].id + '" class="btn btn-danger" onclick="EditarSolicitud.eliminarMateria(this)">Quitar</button></td></tr>';
                   }else{
@@ -602,6 +652,7 @@ EditarSolicitud.getSolicitud = function() {
                   if (infAsignatura[indasig].ubicacion == null) {
                     infAsignatura[indasig].ubicacion = "";
                   }
+                  console.log(infAsignatura[indasig])
                   var filaInfAsig;
                   if($("#informacionCargar").val() != 4){
                     var inputInfAsig = document.createElement("INPUT");
@@ -774,20 +825,25 @@ EditarSolicitud.getSolicitud = function() {
                 var rvoes = JSON.parse(otrosRVOES);
                 for (var posiR = 0; posiR < rvoes.length; posiR++) {
                   var filaOtro;
-
                   var niveltxt = $("#nivelOtrosProgramas").val(rvoes[posiR].nivel);
                   niveltxt = $("#nivelOtrosProgramas option:selected").html();
                   var turnotxt = rvoes[posiR].turno;
-                  __('totalAlumnosOtrosProgramas').value = parseInt(__('totalAlumnosOtrosProgramas').value) + parseInt(rvoes[posiR].numero_alumnos);
+                  if (__('totalAlumnosOtrosProgramas')) {
+                    __('totalAlumnosOtrosProgramas').value = parseInt(__('totalAlumnosOtrosProgramas').value) + parseInt(rvoes[posiR].numero_alumnos);
+                  }
                   if($("#informacionCargar").val() != 4){
                   var inputOtro = document.createElement("INPUT");
                   inputOtro.setAttribute("type","hidden");
                   inputOtro.setAttribute("id",'otroPrograma'+posiR);
                   inputOtro.setAttribute("name",'PROGRAMA-otrosRVOE[]');
                   inputOtro.setAttribute("value",JSON.stringify({"nivel":rvoes[posiR].nivel,"nombre":rvoes[posiR].nombre, "acuerdo":rvoes[posiR].acuerdo,"numero_alumnos":rvoes[posiR].numero_alumnos,"turno":rvoes[posiR].turno}));
-                  __('inputsOtrosProgramas').appendChild(inputOtro);
+                  if (__('inputsOtrosProgramas')) {
+                    __('inputsOtrosProgramas').appendChild(inputOtro);
+                  }
                     filaOtro = '<tr id="otroPrograma' +posiR + '"><td>' + niveltxt + '</td><td>'+ rvoes[posiR].nombre  +'</td><td>'+ rvoes[posiR].acuerdo +'</td><td id="numeroAlumnos'+posiR+'">'+ rvoes[posiR].numero_alumnos + '</td><td>'+ turnotxt +'</td><td><button type="button"  id="' + posiR + '" class="btn btn-danger" onclick="eliminarOtrosProgramas(this)">Quitar</button></td></tr>';
+                    if (__('nivelOtrosProgramas')) {
                       __('nivelOtrosProgramas').value = "";
+                    }
                   }else{
                     filaOtro = '<tr id="otroPrograma' +posiR + '"><td>' + niveltxt + '</td><td>'+ rvoes[posiR].nombre  +'</td><td>'+ rvoes[posiR].acuerdo +'</td><td id="numeroAlumnos'+posiR+'">'+ rvoes[posiR].numero_alumnos + '</td><td>'+ turnotxt +'</td></tr>';
 
@@ -821,6 +877,7 @@ EditarSolicitud.eliminarFilaTabla = function(fila){
   $("#"+input+id).attr("value",JSON.stringify({"id":json.id,
                                           "borrar": 1
                                         }));
+  console.log(input);
 };
 
 //Eliminar materias
@@ -854,6 +911,7 @@ EditarSolicitud.eliminarMateria = function(fila){
   $("#"+input).attr("value",JSON.stringify({"id":json.id,
                                           "borrar": 1
                                         }));
+  console.log($("#"+input))
 
 };
 
@@ -872,6 +930,7 @@ $(document).ready(function ($) {
   //EditarSolicitud.promesaDatosSolicitud.done();
   $.when(EditarSolicitud.promesaDatosSolicitud)
   .then(function(){
+    TerminarSolicitud.getEstatusSolicitud();
       })
     .done(function(){
       var m = document.getElementById("municipio");

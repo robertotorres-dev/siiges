@@ -9,10 +9,20 @@
 	require_once "../models/modelo-alumno.php";
 	require_once "../models/modelo-persona.php";
 	require_once "../models/modelo-situacion.php";
+	require_once "../models/modelo-institucion.php";
 
 	$programa = new Programa( );
 	$programa->setAttributes( array( "id"=>$_GET["programa_id"] ) );
 	$resultadoPrograma = $programa->consultarId( );
+
+	$plantel = new Plantel( );
+	$plantel->setAttributes( array( "id"=>$resultadoPrograma["data"]["plantel_id"] ) );
+	$resultadoPlantel = $plantel->consultarId();
+
+	$institucion = new Institucion();
+	$institucion->setAttributes( array( "id"=>$resultadoPlantel["data"]["institucion_id"] ) );
+	$resultadoInstitucion = $institucion->consultarId();
+
 ?>
 
 
@@ -53,7 +63,7 @@
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
 						<li><a href="home.php">SIIGES</a></li>
-						<li><a href="ce-programas.php">Programas de Estudios</a></li>
+						<li><a href="ce-programas-plantel.php?institucion_id=<?php echo $resultadoInstitucion["data"]["id"] ?>&plantel_id=<?php echo $resultadoPlantel["data"]["id"] ?>">Programas de Estudios</a></li>
 						<li class="active">Alumnos</li>
 					</ol>
 				</div>
@@ -117,7 +127,7 @@
 									$persona = new Persona( );
 									$persona->setAttributes( $parametros2 );
 									$resultadoPersona = $persona->consultarId( );
-									
+
 									$parametros3["id"] = $resultadoAlumno["data"][$i]["situacion_id"];
 
 									$situacion = new Situacion( );

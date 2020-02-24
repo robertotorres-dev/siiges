@@ -7,7 +7,7 @@
     header("../home.php");
   }
 
-
+//print_r($_GET["id"]);
   $tituloTipoSolicitud = [
                         "SOLICITUD DE RECONOCIMIENTO DE VALIDEZ OFICIAL DE ESTUDIOS",
                         "SOLICITUD DE MODIFICACIÓN A PLANES Y PROGRAMAS DE ESTUDIO ",
@@ -119,7 +119,7 @@
   $pdf->SetX(155);
   $pdf->Cell( 40, 5, utf8_decode($pdf->ciclo["nombre"]), 1, 1, "L", true );
 
-  $pdf->Ln(20 );
+  $pdf->Ln(10 );
   // Domicilio de la instituciones
   $pdf->SetFillColor( 166, 166, 166 );
   $pdf->SetFont( "Arial", "B", 9 );
@@ -127,7 +127,7 @@
 
   $pdf->SetFillColor( 191, 191, 191 );
   $pdf->Cell( 116, 5, utf8_decode("CALLE Y NÚMERO"), 1, 0, "L", true );
-  $pdf->Cell( 60, 5, utf8_decode("COLONA"), 1, 1, "L", true );
+  $pdf->Cell( 60, 5, utf8_decode("COLONIA"), 1, 1, "L", true );
 
   $pdf->SetFillColor( 255, 255, 255 );
   $pdf->SetFont( "Arial", "", 9 );
@@ -145,6 +145,24 @@
   $pdf->Cell( 58, 5, utf8_decode($pdf->domicilioPlantel["codigo_postal"]), 1, 0, "L", true );
   $pdf->Cell( 58, 5, utf8_decode($pdf->domicilioPlantel["municipio"]), 1, 0, "L", true );
   $pdf->Cell( 60, 5, utf8_decode($pdf->domicilioPlantel["estado"]), 1, 1, "L", true );
+
+  $pdf->SetFillColor( 191, 191, 191 );
+  //print_r($pdf->plantel);
+  //echo "<br>";
+  //print_r($pdf->plantel["redes_sociales"]);
+  $headers = ["correo"=>"CORREO ELECTRÓNICO","telefono"=>"TELÉFONO","redes_sociales"=>"REDES SOCIALES"];
+  $data = [
+        [
+            "correo"=>utf8_decode($pdf->plantel["email1"].", ".$pdf->plantel["email2"].", ".$pdf->plantel["email3"]),
+            "telefono"=>utf8_decode($pdf->plantel["telefono1"].", ".$pdf->plantel["telefono2"].", ".$pdf->plantel["telefono3"]),
+            "redes_sociales"=>$pdf->plantel["redes_sociales"]
+        ]
+  ];
+  $widths = ["correo"=>58,"telefono"=>58,"redes_sociales"=>60];
+  $length = ["correo"=>30,"telefono"=>30,"redes_sociales"=>35];
+
+  $pdf->Tabla($headers,$data,$widths,0,$length);
+
 
   $pdf->Ln(5);
   // Solicitante
@@ -179,7 +197,7 @@
   $pdf->SetFont( "Arial", "B", 9 );
   $pdf->SetFillColor( 191, 191, 191 );
   $pdf->Cell( 116, 5, utf8_decode("CALLE Y NÚMERO"), 1, 0, "L", true );
-  $pdf->Cell( 60, 5, utf8_decode("COLONA"), 1, 1, "L", true );
+  $pdf->Cell( 60, 5, utf8_decode("COLONIA"), 1, 1, "L", true );
 
   $pdf->SetFillColor( 255, 255, 255 );
   $pdf->SetFont( "Arial", "", 9 );
@@ -270,7 +288,7 @@ $pdf->SetFont( "Arial", "B", 9 );
   if(!$pdf->institucion["es_nombre_autorizado"]){
     $pdf->Ln( 10 );
     $pdf->SetFillColor( 166, 166, 166 );
-    $pdf->Cell( 0, 5, "NOMBRES PROPUESTOS PARA LA INSTITUCIÓN EDUCATIVA", 1, 1, "C", true );
+    $pdf->Cell( 0, 5, utf8_decode("NOMBRES PROPUESTOS PARA LA INSTITUCIÓN EDUCATIVA"), 1, 1, "C", true );
     $pdf->SetFillColor( 191, 191, 191 );
     $pdf->SetFont( "Arial", "B", 9 );
     $pdf->Cell( 60, 5, utf8_decode("1"), 1, 0, "L", true );
@@ -290,7 +308,11 @@ $pdf->SetFont( "Arial", "B", 9 );
     $pdf->SetFont( "Arial", "", 9 );
     $pdf->Cell( 116, 5, utf8_decode($pdf->ratificacion["nombre_propuesto3"]), 1, 1, "L", true );
     $pdf->Ln( 10 );
+
+  } else {
+    $pdf->Ln( 10 );
     $pdf->SetFillColor( 166, 166, 166 );
+    $pdf->SetFont( "Arial", "B", 9 );
     $pdf->Cell( 0, 5, utf8_decode("RATIFICACIÓN DE NOMBRE"), 1, 1, "C", true );
     $pdf->SetFillColor( 191, 191, 191 );
     $pdf->SetFont( "Arial", "B", 9 );
@@ -322,13 +344,12 @@ $pdf->SetFont( "Arial", "B", 9 );
     $pdf->SetFillColor( 255, 255, 255 );
     $pdf->SetFont( "Arial", "", 9 );
     $pdf->Cell( 116, 5, utf8_decode($pdf->ratificacion["autoridad"]), 1, 1, "L", true );
-    $pdf->Ln( 30 );
-    $pdf->SetFont( "Arial", "", 11 );
-    $pdf->Cell(0,5, utf8_decode("Bajo protesta de decir verdad"), 0, 1, "C");
-    $pdf->SetFont( "Arial", "B", 11 );
-    $pdf->Cell( 0, 5, utf8_decode("nombreRepresentante"), 0, 1, "C");
-
   }
+  $pdf->Ln( 30 );
+  $pdf->SetFont( "Arial", "", 11 );
+  $pdf->Cell(0,5, utf8_decode("BAJO PROTESTA DE DECIR VERDAD"), 0, 1, "C");
+  $pdf->SetFont( "Arial", "B", 11 );
+  $pdf->Cell( 0, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 1, "C");
 
 
 

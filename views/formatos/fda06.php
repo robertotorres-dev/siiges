@@ -177,11 +177,11 @@
         , 0, "J");
   $pdf->Ln( 5 );
 
-  $pdf->SetFont( "Arial", "B", 11 );
+  $pdf->SetFont( "Arial", "", 11 );
   $pdf->Ln( 20 );
   $pdf->Cell( 0, 5, "BAJO PROTESTA DE DECIR VERDAD", 0, 0, "C");
   $pdf->Ln( 5 );
-
+  $pdf->SetFont( "Arial", "B", 11 );
   $pdf->Cell( 0, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 0, "C");
   $pdf->Ln( 10 );
 

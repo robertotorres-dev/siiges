@@ -414,7 +414,7 @@ session_start();
                     $resultado_temp = $temporal_instalacion->consultarId();
                     $infraestructuras_final[$key]["instalacion"] = $resultado_temp["data"];
                   }
-                  $resultado["data"]["asignatura_infraestructura"] =$infraestructuras_final;
+                  $resultado["data"]["asignatura_infraestructura"] = $infraestructuras_final;
               }
 
               //Ratificación del nombre
@@ -539,31 +539,36 @@ session_start();
               {
                 $resultado["data"]["documentos"]["convenios"] =$res_convenios["data"][0];
               }
+
               $mapaCurricular = new Documento();
               $res_mapaCurricular = $mapaCurricular->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PROGRAMA"],"entidad_id"=>$resultado["data"]["programa"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["archivo_mapa_curricular"],"deleted_at"),"*");
               if (sizeof($res_mapaCurricular["data"])>0)
               {
                 $resultado["data"]["documentos"]["mapa_curricular"] =$res_mapaCurricular["data"][0];
               }
+
               $reglasAcademia = new Documento();
               $res_reglasAcademia = $reglasAcademia->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PROGRAMA"],"entidad_id"=>$resultado["data"]["programa"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["archivo_reglas_academias"],"deleted_at"),"*");
               if (sizeof($res_reglasAcademia["data"])>0)
               {
                 $resultado["data"]["documentos"]["reglas_academias"] =$res_reglasAcademia["data"][0];
               }
+
               $asignaturas = new Documento();
               $res_asignaturas = $asignaturas->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PROGRAMA"],"entidad_id"=>$resultado["data"]["programa"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["archivo_asignaturas_detalle"],"deleted_at"),"*");
               if (sizeof($res_asignaturas["data"])>0)
               {
+                //print_r($res_asignaturas["data"]);
                 $resultado["data"]["documentos"]["asignaturas"] =$res_asignaturas["data"][0];
               }
-              $bibliografia = new Documento();
-              $res_bibliografia = $bibliografia->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PROGRAMA"],"entidad_id"=>$resultado["data"]["programa"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["propuesta_hemerobibliografica"],"deleted_at"),"*");
-              if (sizeof($res_bibliografia["data"])>0)
-              {
-                $resultado["data"]["documentos"]["bibliografia"] =$res_bibliografia["data"][0];
 
+              $propuestaHemerobibliografica = new Documento();
+              $res_propuestaHemerobibliografica = $propuestaHemerobibliografica->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PROGRAMA"],"entidad_id"=>$resultado["data"]["programa"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["propuesta_hemerobibliografica"],"deleted_at"),"*");
+              if (sizeof($res_propuestaHemerobibliografica["data"])>0)
+              {
+                $resultado["data"]["documentos"]["propuesta_hemerobibliografica"] =$res_propuestaHemerobibliografica["data"][0];
               }
+
               $informeResultados = new Documento();
               $res_informeResultados = $informeResultados->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["TRAYECTORIA"],"entidad_id"=>$resultado["data"]["programa"]["trayectoria"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["archivo_informe_resultados_trayectoria_educativa"],"deleted_at"),"*");
               if (sizeof($res_informeResultados["data"])>0)
@@ -585,6 +590,19 @@ session_start();
                 $resultado["data"]["documentos"]["trayectoria_educativa"] =$res_trayectoriaEducativa["data"][0];
 
               }
+
+              $biografia = new Documento();
+              $res_biografia = $biografia->consultarPor("documentos", array("tipo_entidad" => Documento::$tipoEntidad["RATIFICACION"],"entidad_id"=>$resultado["data"]["programa"]["plantel"]["institucion_id"], "tipo_documento"=>Documento::$nombresDocumentos["biografia"], "deleted_at" ), "*");
+              if (sizeof($res_biografia["data"])>0) {
+                $resultado["data"]["documentos"]["biografia"] = $res_biografia["data"][0];
+              }
+
+              $bibliografia = new Documento();
+              $res_bibliografia = $bibliografia->consultarPor("documentos", array("tipo_entidad" => Documento::$tipoEntidad["RATIFICACION"],"entidad_id"=>$resultado["data"]["programa"]["plantel"]["institucion_id"], "tipo_documento"=>Documento::$nombresDocumentos["bibliografia"], "deleted_at" ), "*");
+              if (sizeof($res_bibliografia["data"])>0) {
+                $resultado["data"]["documentos"]["bibliografia"] = $res_bibliografia["data"][0];
+              }
+
               $identificacionRepresentante = new Documento();
               $res_identificacionRepresentante = $identificacionRepresentante->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["REPRESENTANTE"],"entidad_id"=>$resultado["data"]["programa"]["solicitud"]["usuario_id"],"tipo_documento"=>Documento::$nombresDocumentos["identificacion_representante"],"deleted_at"),"*");
               if (sizeof($res_identificacionRepresentante["data"])>0)
@@ -592,6 +610,7 @@ session_start();
                 $resultado["data"]["documentos"]["identificacion_representante"] =$res_identificacionRepresentante["data"][0];
 
               }
+
               $pago = new Documento();
               $res_pago = $pago->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["SOLICITUD"],"entidad_id"=>$resultado["data"]["programa"]["solicitud_id"],"tipo_documento"=>Documento::$nombresDocumentos["comprobante_pago"],"deleted_at"),"*");
               if (sizeof($res_pago["data"])>0)
@@ -599,6 +618,7 @@ session_start();
                 $resultado["data"]["documentos"]["pago"] =$res_pago["data"][0];
 
               }
+
               $inmueble = new Documento();
               $res_inmueble = $inmueble->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PLANTEL"],"entidad_id"=>$resultado["data"]["programa"]["plantel_id"],"tipo_documento"=>Documento::$nombresDocumentos["acreditacion_inmueble"],"deleted_at"),"*");
               if (sizeof($res_inmueble["data"])>0)
@@ -606,6 +626,7 @@ session_start();
                 $resultado["data"]["documentos"]["inmueble"] =$res_inmueble["data"][0];
 
               }
+
               $fotografias = new Documento();
               $res_fotografias = $fotografias->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PLANTEL"],"entidad_id"=>$resultado["data"]["programa"]["plantel_id"],"tipo_documento"=>Documento::$nombresDocumentos["fotografia_inmueble"],"deleted_at"),"*");
               if (sizeof($res_fotografias["data"])>0)
@@ -613,6 +634,7 @@ session_start();
                 $resultado["data"]["documentos"]["fotografias"] =$res_fotografias["data"][0];
 
               }
+
               $plano = new Documento();
               $res_plano = $plano->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PLANTEL"],"entidad_id"=>$resultado["data"]["programa"]["plantel_id"],"tipo_documento"=>Documento::$nombresDocumentos["plano"],"deleted_at"),"*");
               if (sizeof($res_plano["data"])>0)
@@ -620,6 +642,7 @@ session_start();
                 $resultado["data"]["documentos"]["plano"] =$res_plano["data"][0];
 
               }
+
               $dictamenes = new Documento();
               $res_dictamenes = $dictamenes->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PLANTEL"],"entidad_id"=>$resultado["data"]["programa"]["plantel_id"],"tipo_documento"=>Documento::$nombresDocumentos["dictamenes"],"deleted_at"),"*");
               if (sizeof($res_dictamenes["data"])>0)
@@ -627,6 +650,7 @@ session_start();
                 $resultado["data"]["documentos"]["dictamenes"] =$res_dictamenes["data"][0];
 
               }
+
               $infejal = new Documento();
               $res_infejal = $infejal->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PLANTEL"],"entidad_id"=>$resultado["data"]["programa"]["plantel_id"],"tipo_documento"=>Documento::$nombresDocumentos["constancia_infejal"],"deleted_at"),"*");
               if (sizeof($res_infejal["data"])>0)
@@ -634,6 +658,7 @@ session_start();
                 $resultado["data"]["documentos"]["infejal"] =$res_infejal["data"][0];
 
               }
+
               $licenciaMunicipal = new Documento();
               $res_licenciaMunicipal = $licenciaMunicipal->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PLANTEL"],"entidad_id"=>$resultado["data"]["programa"]["plantel_id"],"tipo_documento"=>Documento::$nombresDocumentos["licencia_municipal"],"deleted_at"),"*");
               if (sizeof($res_licenciaMunicipal["data"])>0)
@@ -641,6 +666,7 @@ session_start();
                 $resultado["data"]["documentos"]["licencia_municipal"] =$res_licenciaMunicipal["data"][0];
 
               }
+
               $secretariaSalud = new Documento();
               $res_secretariaSalud = $secretariaSalud->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PLANTEL"],"entidad_id"=>$resultado["data"]["programa"]["plantel_id"],"tipo_documento"=>Documento::$nombresDocumentos["secretaria_salud"],"deleted_at"),"*");
               if (sizeof($res_secretariaSalud["data"])>0)
@@ -648,6 +674,7 @@ session_start();
                 $resultado["data"]["documentos"]["secretaria_salud"] =$res_secretariaSalud["data"][0];
 
               }
+
               $telefono = new Documento();
               $res_telefono = $telefono->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PLANTEL"],"entidad_id"=>$resultado["data"]["programa"]["plantel_id"],"tipo_documento"=>Documento::$nombresDocumentos["comprobante_telefono"],"deleted_at"),"*");
               if (sizeof($res_telefono["data"])>0)
@@ -655,6 +682,7 @@ session_start();
                 $resultado["data"]["documentos"]["comprobante_telefono"] =$res_telefono["data"][0];
 
               }
+
               $calendario = new Documento();
               $res_calendario = $calendario->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PROGRAMA"],"entidad_id"=>$resultado["data"]["programa"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["propuesta_calendario"],"deleted_at"),"*");
               if (sizeof($res_calendario["data"])>0)
@@ -662,6 +690,7 @@ session_start();
                 $resultado["data"]["documentos"]["propuesta_calendario"] =$res_calendario["data"][0];
 
               }
+
               $vinculacion = new Documento();
               $res_vinculacion = $vinculacion->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PROGRAMA"],"entidad_id"=>$resultado["data"]["programa"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["proyecto_vinculacion"],"deleted_at"),"*");
               if (sizeof($res_vinculacion["data"])>0)
@@ -669,6 +698,7 @@ session_start();
                 $resultado["data"]["documentos"]["proyecto_vinculacion"] =$res_vinculacion["data"][0];
 
               }
+
               $superacion = new Documento();
               $res_superacion = $superacion->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PROGRAMA"],"entidad_id"=>$resultado["data"]["programa"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["programa_superacion"],"deleted_at"),"*");
               if (sizeof($res_superacion["data"])>0)
@@ -676,6 +706,7 @@ session_start();
                 $resultado["data"]["documentos"]["programa_superacion"] =$res_superacion["data"][0];
 
               }
+
               $mejora = new Documento();
               $res_mejora = $mejora->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PROGRAMA"],"entidad_id"=>$resultado["data"]["programa"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["plan_mejora"],"deleted_at"),"*");
               if (sizeof($res_mejora["data"])>0)
@@ -683,6 +714,7 @@ session_start();
                 $resultado["data"]["documentos"]["plan_mejora"] =$res_mejora["data"][0];
 
               }
+
               $reglamento = new Documento();
               $res_reglamento = $reglamento->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PROGRAMA"],"entidad_id"=>$resultado["data"]["programa"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["reglamento_institucional"],"deleted_at"),"*");
               if (sizeof($res_reglamento["data"])>0)
@@ -690,6 +722,7 @@ session_start();
                 $resultado["data"]["documentos"]["reglamento_institucional"] =$res_reglamento["data"][0];
 
               }
+
               $horarios = new Documento();
               $res_horarios = $horarios->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PROGRAMA"],"entidad_id"=>$resultado["data"]["programa"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["propuesta_horario"],"deleted_at"),"*");
               if (sizeof($res_horarios["data"])>0)

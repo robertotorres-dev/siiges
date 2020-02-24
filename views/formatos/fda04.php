@@ -71,7 +71,7 @@
 
   $pdf->SetFillColor( 191, 191, 191 );
   $pdf->Cell( 116, 5, utf8_decode("CALLE Y NÚMERO"), 1, 0, "C", true );
-  $pdf->Cell( 60, 5, utf8_decode("COLONA"), 1, 1, "C", true );
+  $pdf->Cell( 60, 5, utf8_decode("COLONIA"), 1, 1, "C", true );
 
   $pdf->SetFillColor( 255, 255, 255 );
   $pdf->SetFont( "Arial", "", 9 );

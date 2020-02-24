@@ -69,8 +69,12 @@
 
 
   $pdf->SetFont( "Arial", "B", 11 );
-  $pdf->Cell( 0, 5,utf8_decode($pdf->nombreInstitucion), 0,1, "L");
-  $pdf->Cell( 0, 5,utf8_decode($programa.", ".$modalidad), 0,1, "L");
+  if ($pdf->nombreInstitucion) {
+    $pdf->Cell( 0, 5,utf8_decode($pdf->nombreInstitucion), 0,1, "L");
+  } else if($pdf->nombrePropuesto){
+    $pdf->Cell( 0, 5,utf8_decode($pdf->nombrePropuesto["nombre_propuesto1"]), 0,1, "L");
+  }
+  $pdf->Cell( 0, 5,utf8_decode(mb_strtoupper($programa.", ".$modalidad)), 0,1, "L");
   $pdf->Ln( 5 );
 
   $pdf->SetFillColor( 166, 166, 166 );
@@ -113,7 +117,7 @@
   $pdf->SetFont( "Arial", "B", 9 );
   $pdf->Cell( 0, 5, utf8_decode("1.3 FUENTES DE INFORMACIÓN"), 1, 1, "C", true );
   $pdf->SetFont( "Arial", "", 9 );
-  $pdf->MultiCell( 0, 5, utf8_decode($pdf->programa["fuentes_informacion"]), 1, "J");
+  $pdf->MultiCell( 0, 5, utf8_decode($pdf->programa["fuentes_informacion"]), 1, "L");
   if($pdf->checkNewPage()){
   $pdf->Ln(15);
   }

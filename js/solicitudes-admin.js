@@ -243,7 +243,7 @@ Solicitudes.getDetalles = function(){
               $("#CartaImpCon").hide();
               $("#OficioTurnarCIFRHS").hide();
             }
-            if(respuesta.institucion.es_nombre_autorizado){
+            if(respuesta.institucion.es_nombre_autorizado == 1){
               $("#fda03").on("click",function(e){
                 e.preventDefault();
                 Solicitudes.mostrarMensaje("error","La institución tiene nombre autorizado");
@@ -347,7 +347,7 @@ Solicitudes.getDetalles = function(){
               }
               if(avances[i].estatus_solicitud_id==3)
               {
-                observaciones =  observaciones  + "USTED DEBE DE ENTREGAR LOS DOCUMENTOS (FDA01 al FDA06):  "+ solicitud.cita +"\n";
+                observaciones =  observaciones  + "USTED DEBE DE ENTREGAR LOS DOCUMENTOS (FDA01 al FDA06) ASÍ COMO EL COMPROBANTE DE PAGO ORIGINAL, EL DOCUMENTO DE INFEJAL Y PROTECCIÓN CIVIL EL DÍA:  "+ solicitud.cita +"\n";
 
               }
               // if(avances[i].estatus_solicitud_id == 200 || avances[i].estatus_solicitud_id == 100){
@@ -407,14 +407,17 @@ Solicitudes.mostrarMensaje = function(tipo,texto){
 //Guardar cambios de la revisión
 Solicitudes.guardarComentarios = function(opcion){
   $("#opcion-comentarios").val(opcion);
+  console.log($("#opcion-comentarios").val(opcion));
   if(opcion == 2){
     if( $("#terminarRevision").val() == "" ){
       Solicitud.mostrarMensaje("error","Para poder terminar la resivisión debe de responder ¿El llenado es correcto?");
       $( "#terminarRevision" ).focus();
     }else{
+      //console.log("Form comentarios");
       $("#form-comentarios").submit();
     }
   }else{
+    //console.log("Form comentarios");
     $("#form-comentarios").submit();
   }
 };
