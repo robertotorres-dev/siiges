@@ -62,7 +62,8 @@ Institucion.getInstitucion = function(){
     dataType : "json",
     data : {webService:"consultarUsuarioInstitucion",url:"",id:$('#usuario_id').val()},
     success : function(respuesta){
-      // console.log(Object.keys(respuesta.data[0]);
+      // console.log(Object.keys(respuesta.data[0]));
+      console.log(respuesta);
       if(respuesta.data.length > 0 ){
       if(Object.keys(respuesta.data[0]).length>0){
         if($('#txtNombre').html()){

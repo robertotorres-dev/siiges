@@ -182,7 +182,7 @@
     $obj = new Institucion( );
     $aux = new Utileria( );
     $_POST = $aux->limpiarEntrada( $_POST );
-    $resultado = $obj->consultarPor('instituciones', array( "usuario_id"=>$_POST["id"] ), '*');
+    $resultado = $obj->consultarPor('instituciones', array( "usuario_id"=>$_POST["id"], "deleted_at" ), '*');
     $documentos = new Documento();
     $tipo_entidad = array_search('instituciones',Documento::$tablas);
     if(sizeof($resultado['data'])>0){

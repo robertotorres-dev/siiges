@@ -318,7 +318,7 @@
         $res_solicitud = $solicitud->consultarId();
         $idUsuario = $res_solicitud["data"]["usuario_id"];
       }
-      $res_institucion = $institucion->consultarPor( "instituciones", array( "usuario_id" =>  $idUsuario)  ,"*");
+      $res_institucion = $institucion->consultarPor( "instituciones", array( "usuario_id" =>  $idUsuario, "deleted_at")  ,"*");
 
       if( sizeof( $res_institucion["data"] ) > 0){
         $resultado["data"]["institucion"] = $res_institucion["data"][0];

@@ -423,10 +423,10 @@ Solicitud.getPlantelesBasicos = function(){
               $("#institucion-noautorizada").show();
               $("#institucion-autorizada").hide();
               $("#ratificacion-nombre").show();
-              $("#id-ratificacion").val(ratificacion.id);
-              $("#id-ratificacion").attr("name","RATIFICACION-id");
               if(ratificacion!=undefined)
               {
+                $("#id-ratificacion").val(ratificacion.id);
+                $("#id-ratificacion").attr("name","RATIFICACION-id");
                 $("#nombre_propuesto1").val(ratificacion.nombre_propuesto1);
                 $("#nombre_propuesto2").val(ratificacion.nombre_propuesto2);
                 $("#nombre_propuesto3").val(ratificacion.nombre_propuesto3);
