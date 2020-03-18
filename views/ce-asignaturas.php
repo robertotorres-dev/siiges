@@ -117,9 +117,22 @@
 								$parametros3["programa_id"] = $_GET["programa_id"];
 								$parametros3["grado"] = $_GET["grado"];
 
+								$parametros4["programa_id"] = $_GET["programa_id"];
+								$parametros4["grado"] = "Optativa";
+
 								$asignatura = new Asignatura( );
 								$asignatura->setAttributes( $parametros3 );
 								$resultadoAsignatura = $asignatura->consultarAsignaturasGrado( );
+
+								$asignaturaOptativa = new Asignatura();
+								$asignaturaOptativa->setAttributes($parametros4);
+								$resultadoAsignaturaOptativa = $asignaturaOptativa->consultarAsignaturasGrado();
+
+								$maxOpt = count($resultadoAsignaturaOptativa["data"]);
+
+								for ($j=0; $j < $maxOpt ; $j++) {
+									array_push($resultadoAsignatura["data"], $resultadoAsignaturaOptativa["data"][$j] );
+								}
 
 								$max = count( $resultadoAsignatura["data"] );
 
@@ -128,7 +141,7 @@
 
 							?>
 							<tr>
-								<td><?php echo $resultadoGrupo["data"]["grado"]; ?></td>
+								<td><?php echo $resultadoAsignatura["data"][$i]["grado"]; ?></td>
 								<td><?php echo $resultadoGrupo["data"]["grupo"]; ?></td>
 								<td><?php echo $resultadoTurno["data"]["nombre"]; ?></td>
 								<td><?php echo $resultadoAsignatura["data"][$i]["nombre"]; ?></td>

@@ -108,7 +108,7 @@
 		  header( "Location: ../views/ce-catalogo-alumno.php?programa_id=".$_POST["programa_id"]."&alumno_id=".$_POST["id"]."&proceso=".$_POST["proceso"]."&codigo=404" );
 			exit( );
 		}
-		
+
 		$parametros2 = array( );
     $parametros2["id"] = $_POST["persona_id"];
 		$parametros2["nombre"] = $_POST["nombre"];
@@ -121,13 +121,13 @@
 		$parametros2["telefono"] = $_POST["telefono"];
 		$parametros2["celular"] = $_POST["celular"];
 		$parametros2["curp"] = $_POST["curp"];
-		$parametros2["rfc"] = $_POST["rfc"];
-		$parametros2["ine"] = $_POST["ine"];
+		//$parametros2["rfc"] = $_POST["rfc"];
+		//$parametros2["ine"] = $_POST["ine"];
 
 		$persona = new Persona( );
 		$persona->setAttributes( $parametros2 );
     $resultadoPersona = $persona->guardar( );
-    
+
 		$parametros3 = array( );
 		$parametros3["id"] = $_POST["id"];
 		$parametros3["persona_id"] = $resultadoPersona["data"]["id"];
@@ -148,7 +148,7 @@
     $result = $bitacora->guardar();
 		retornarWebService( $_POST["url"], $resultadoAlumno );
   }
-	
+
 	// Web service para guardar registro alumno persona
   if( $_POST["webService"]=="guardarAlumnoCertificado" )
   {
@@ -164,13 +164,13 @@
 				}
 			}
 		}
-		
+
 		if( $_FILES["archivo_certificado"]["name"]!=null && $exito==0 )
 		{
 			header( "Location: ../views/ce-certificado.php?programa_id=".$_POST["programa_id"]."&alumno_id=".$_POST["id"]."&codigo=404" );
 			exit( );
 		}
-		
+
 		$exito = 0;
 		if( is_uploaded_file( $_FILES["archivo_nacimiento"]["tmp_name"] ) )
 		{
@@ -183,13 +183,13 @@
 				}
 			}
 		}
-		
+
 		if( $_FILES["archivo_nacimiento"]["name"]!=null && $exito==0 )
 		{
 			header( "Location: ../views/ce-certificado.php?programa_id=".$_POST["programa_id"]."&alumno_id=".$_POST["id"]."&codigo=404" );
 			exit( );
 		}
-		
+
 		$exito = 0;
 		if( is_uploaded_file( $_FILES["archivo_curp"]["tmp_name"] ) )
 		{
@@ -202,17 +202,17 @@
 				}
 			}
 		}
-		
+
 		if( $_FILES["archivo_curp"]["name"]!=null && $exito==0 )
 		{
 			header( "Location: ../views/ce-certificado.php?programa_id=".$_POST["programa_id"]."&alumno_id=".$_POST["id"]."&codigo=404" );
 			exit( );
 		}
-		
+
 		if( !$_POST["estatus_certificado"] ){ $_POST["estatus_certificado"] = -1; }
 		if( !$_POST["estatus_nacimiento"] ){ $_POST["estatus_nacimiento"] = -1; }
 		if( !$_POST["estatus_curp"] ){ $_POST["estatus_curp"] = -1; }
-		
+
 		$parametros = array( );
 		$parametros["id"] = $_POST["id"];
 		if( $_FILES["archivo_certificado"]["name"]!=null ){ $parametros["archivo_certificado"] = "documento1_".$_POST["id"].".pdf"; }
@@ -223,11 +223,11 @@
 		$parametros["estatus_curp"] = $_POST["estatus_curp"];
 		$parametros["observaciones1"] = $_POST["observaciones1"];
 		$parametros["observaciones2"] = $_POST["observaciones2"];
-		
+
 		$alumno = new Alumno( );
 		$alumno->setAttributes( $parametros );
     $resultadoAlumno = $alumno->guardar( );
-		
+
     // Registro en bitacora
     $bitacora = new Bitacora();
     $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;

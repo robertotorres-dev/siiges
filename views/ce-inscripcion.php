@@ -185,15 +185,65 @@
 						</table>
           </div>
         </div>
+				<?php
+					$parametros["programa_id"] = $_GET["programa_id"];
+					$parametros["grado"] = "Optativa";
+
+					$asignaturaOptativa = new Asignatura( );
+					$asignaturaOptativa->setAttributes( $parametros );
+					$resultadoAsignaturaOptativa = $asignaturaOptativa->consultarAsignaturasGrado( );
+
+					if ($resultadoAsignaturaOptativa["data"]) {
+				?>
+				<div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+							<label class="control-label" for="matricula">Optativas</label>
+						</div>
+          </div>
+					<div class="col-sm-8">
+          </div>
+        </div>
+				<div class="row">
+          <div class="col-sm-12">
+            <table id="tabla-reporte1" class="table table-striped table-bordered" cellspacing="0" width="100%">
+	            <thead>
+								<tr>
+	                <th width="20%">Inscribir</th>
+									<th width="80%">Asignatura Optativa</th>
+								</tr>
+							</thead>
+	            <tbody>
+								<?php
+
+									$max = count( $resultadoAsignaturaOptativa["data"] );
+
+									for( $j=0; $j<$max; $j++ )
+									{
+								?>
+							<tr>
+								<td align="center"><input type="checkbox" id="asignaturas_grado[]" name="asignaturas_grado[]" value="<?php echo $resultadoAsignaturaOptativa["data"][$j]["id"]; ?>" /></td>
+								<td><?php echo $resultadoAsignaturaOptativa["data"][$j]["nombre"]; ?></td>
+							</tr>
+							<?php
+								}
+							?>
+	            </tbody>
+						</table>
+          </div>
+        </div>
+				<?php
+					}
+				?>
 				<div class="row">
           <div class="col-sm-12">
             <div class="form-group">
 							<input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" />
 							<input type="hidden"  name="webService" value="guardarAlumnoGrupo" />
-							<input type="hidden"  name="programa_id" value="<? echo $_GET["programa_id"]; ?>" />
-							<input type="hidden"  name="ciclo_id" value="<? echo $_GET["ciclo_id"]; ?>" />
-							<input type="hidden"  name="grado" value="<? echo $_GET["grado"]; ?>" />
-							<input type="hidden"  name="grupo_id" value="<? echo $_GET["grupo_id"]; ?>" />
+							<input type="hidden"  name="programa_id" value="<?php echo $_GET['programa_id']; ?>" />
+							<input type="hidden"  name="ciclo_id" value="<?php echo $_GET['ciclo_id']; ?>" />
+							<input type="hidden"  name="grado" value="<?php echo $_GET['grado']; ?>" />
+							<input type="hidden"  name="grupo_id" value="<?php echo $_GET['grupo_id']; ?>" />
 						</div>
           </div>
         </div>
@@ -285,7 +335,7 @@
 			dateFormat: 'yy-mm-dd'
 		});
 	});
-	
+
 	function confirmarBaja( )
 	{
 		if( confirm( "¿Desea eliminar el registro seleccionado?\nSe eliminarán asignaturas y calificaciones del alumno." ) )

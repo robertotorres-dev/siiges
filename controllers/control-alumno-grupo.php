@@ -99,28 +99,24 @@
 		$parametros["id"] = "";
 		$parametros["programa_id"] = $_POST["programa_id"];
 		$parametros["matricula"] = $_POST["matricula"];
-
-		$alumno = new Alumno( );
+    $alumno = new Alumno( );
 		$alumno->setAttributes( $parametros );
     $resultadoAlumno = $alumno->consultarMatricula( );
-
-		if( !$resultadoAlumno["data"][0]["id"] )
+    if( !$resultadoAlumno["data"][0]["id"] )
 		{
 		  header( "Location: ../views/ce-inscripcion.php?programa_id=".$_POST["programa_id"]."&ciclo_id=".$_POST["ciclo_id"]."&grado=".$_POST["grado"]."&grupo_id=".$_POST["grupo_id"]."&codigo=404" );
 			exit( );
 		}
-
 		$parametros2 = array( );
     $parametros2["alumno_id"] = $resultadoAlumno["data"][0]["id"];
 		$parametros2["grupo_id"] = $_POST["grupo_id"];
 		$parametros2["periodo_fecha_inicio"] = "0000:00:00";
 		$parametros2["periodo_fecha_fin"] = "0000:00:00";
-
-		$alumnoGrupo = new AlumnoGrupo( );
+    $alumnoGrupo = new AlumnoGrupo( );
 		$alumnoGrupo->setAttributes( $parametros2 );
     $resultadoAlumnoGrupo = $alumnoGrupo->guardar( );
 
-		foreach( $_POST["asignaturas_grado"] as $asignatura_id )
+    foreach( $_POST["asignaturas_grado"] as $asignatura_id )
 		{
 			$parametros3 = array( );
 			$parametros3["alumno_id"] = $resultadoAlumno["data"][0]["id"];
@@ -133,7 +129,7 @@
 			$resultadoCalificacion = $calificacion->guardar( );
 		}
 
-    // Registro en bitacora
+    //Registro en bitacora
     $bitacora = new Bitacora();
     $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
     $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"alumnos_grupos","accion"=>"guardarAlumnoGrupo","lugar"=>"control-alumno-grupo"]);
@@ -142,31 +138,31 @@
 		header( "Location: ../views/ce-inscripcion.php?programa_id=".$_POST["programa_id"]."&ciclo_id=".$_POST["ciclo_id"]."&grado=".$_POST["grado"]."&grupo_id=".$_POST["grupo_id"]."&codigo=200" );
 		exit( );
   }
-	
+
 	// Web service para eliminar registro alumno grupo
   if( $_GET["webService"]=="eliminarAlumnoGrupo" )
   {
     $parametros = array( );
 		$parametros["id"] = $_GET["id"];
-		
+
 		$alumnoGrupo = new AlumnoGrupo( );
 		$alumnoGrupo->setAttributes( $parametros );
     $resultadoAlumnoGrupo = $alumnoGrupo->eliminar( );
-		
+
 		$parametros2 = array( );
 		$parametros2["alumno_id"] = $_GET["alumno_id"];
 		$parametros2["grupo_id"] = $_GET["grupo_id"];
-		
+
 		$calificacion = new Calificacion( );
 		$calificacion->setAttributes( $parametros2 );
     $resultadoCalificacion = $calificacion->eliminarAlumnoGrupoAsignaturas( );
-		
+
     // Registro en bitacora
     $bitacora = new Bitacora();
     $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
     $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"alumnos_grupos","accion"=>"eliminarAlumnoGrupo","lugar"=>"control-alumno-grupo"]);
     $result = $bitacora->guardar();
-		
+
 		header( "Location: ../views/ce-inscripcion.php?programa_id=".$_GET["programa_id"]."&ciclo_id=".$_GET["ciclo_id"]."&grado=".$_GET["grado"]."&grupo_id=".$_GET["grupo_id"]."&codigo=200" );
 		exit( );
   }

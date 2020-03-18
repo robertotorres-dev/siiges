@@ -118,13 +118,14 @@
           <div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="id">Id</label>
-							<input type="text" id="id" name="id" value="<?php echo $resultadoAlumno["data"]["id"]; ?>" maxlength="11" class="form-control" readonly />
+							<input type="text" id="id" name="id" value="<?php echo (isset($resultadoAlumno)) ? $resultadoAlumno["data"]["id"] : "";
+								?>" maxlength="11" class="form-control" readonly />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="persona_id">Persona Id</label>
-							<input type="text" id="persona_id" name="persona_id" value="<?php echo $resultadoAlumno["data"]["persona_id"]; ?>" maxlength="11" class="form-control" readonly />
+							<input type="text" id="persona_id" name="persona_id" value="<?php echo(isset($resultadoAlumno)) ? $resultadoAlumno["data"]["persona_id"] : ""; ?>" maxlength="11" class="form-control" readonly />
 						</div>
           </div>
 					<div class="col-sm-4">
@@ -138,19 +139,19 @@
           <div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="nombre">Nombre</label>
-							<input type="text" id="nombre" name="nombre" value="<?php echo $resultadoPersona["data"]["nombre"]; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="nombre" name="nombre" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["nombre"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="apellido_paterno">Apellido Paterno</label>
-							<input type="text" id="apellido_paterno" name="apellido_paterno" value="<?php echo $resultadoPersona["data"]["apellido_paterno"]; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="apellido_paterno" name="apellido_paterno" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["apellido_paterno"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="apellido_materno">Apellido Materno</label>
-							<input type="text" id="apellido_materno" name="apellido_materno" value="<?php echo $resultadoPersona["data"]["apellido_materno"]; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="apellido_materno" name="apellido_materno" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["apellido_materno"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
         </div>
@@ -158,7 +159,7 @@
           <div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="fecha_nacimiento">Fecha de Nacimiento</label>
-							<input type="text" id="fecha_nacimiento" name="fecha_nacimiento" value="<?php echo $resultadoPersona["data"]["fecha_nacimiento"]; ?>" maxlength="10" class="form-control" required />
+							<input type="text" id="fecha_nacimiento" name="fecha_nacimiento" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["fecha_nacimiento"] : ""; ?>" maxlength="10" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
@@ -166,15 +167,15 @@
 							<label class="txt-label1" for="sexo">Sexo</label>
 							<select id="sexo" name="sexo" class="selectpicker" data-live-search="true" data-width="100%" required>
 								<option value=""> </option>
-								<option value="Masculino" <?php if( $resultadoPersona["data"]["sexo"]=="Masculino" ) { echo "selected"; } ?>>Masculino</option>
-								<option value="Femenino" <?php if( $resultadoPersona["data"]["sexo"]=="Femenino" ) { echo "selected"; } ?>>Femenino</option>
+								<option value="Masculino" <?php if (isset($resultadoPersona)) { if( $resultadoPersona["data"]["sexo"]=="Masculino" ) { echo "selected"; }} ?>>Masculino</option>
+								<option value="Femenino" <?php if (isset($resultadoPersona)) { if( $resultadoPersona["data"]["sexo"]=="Femenino" ) { echo "selected"; }} ?>>Femenino</option>
 							</select>
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="nacionalidad">Nacionalidad</label>
-							<input type="text" id="nacionalidad" name="nacionalidad" value="<?php echo $resultadoPersona["data"]["nacionalidad"]; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="nacionalidad" name="nacionalidad" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["nacionalidad"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
         </div>
@@ -182,19 +183,19 @@
           <div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="correo">Correo</label>
-							<input type="text" id="correo" name="correo" value="<?php echo $resultadoPersona["data"]["correo"]; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="correo" name="correo" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["correo"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="telefono">Tel&eacute;fono</label>
-							<input type="text" id="telefono" name="telefono" value="<?php echo $resultadoPersona["data"]["telefono"]; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="telefono" name="telefono" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["telefono"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="celular">Celular</label>
-							<input type="text" id="celular" name="celular" value="<?php echo $resultadoPersona["data"]["celular"]; ?>" maxlength="255" class="form-control" />
+							<input type="text" id="celular" name="celular" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["celular"] : ""; ?>" maxlength="255" class="form-control" />
 						</div>
           </div>
         </div>
@@ -202,7 +203,7 @@
           <div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="curp">CURP</label>
-							<input type="text" id="curp" name="curp" value="<?php echo $resultadoPersona["data"]["curp"]; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="curp" name="curp" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["curp"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-8">
@@ -214,7 +215,7 @@
           <div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="matricula">Matr&iacute;cula</label>
-							<input type="text" id="matricula" name="matricula" value="<?php echo $resultadoAlumno["data"]["matricula"]; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="matricula" name="matricula" value="<?php echo (isset($resultadoPersona)) ? $resultadoAlumno["data"]["matricula"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">

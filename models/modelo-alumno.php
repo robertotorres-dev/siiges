@@ -69,16 +69,16 @@
     public function consultarMatricula( )
     {
       $sql = "select * from " . TABLA_ALUMNOS . " where id!='$this->id' and programa_id='$this->programa_id' and matricula='$this->matricula' and deleted_at is null order by id";
-			
+
 			$resultado = parent::consultarSQLCatalogo( $sql );
 			return $resultado;
     }
-		
+
 		// Método para consultar alumnos por programa
     public function consultarAlumnosPrograma( )
     {
       $sql = "select * from " . TABLA_ALUMNOS . " where programa_id='$this->programa_id' and deleted_at is null order by id";
-			
+
 			$resultado = parent::consultarSQLCatalogo( $sql );
 			return $resultado;
     }

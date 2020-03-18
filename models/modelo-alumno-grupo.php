@@ -15,7 +15,7 @@
     protected $periodo_fecha_inicio;
     protected $periodo_fecha_fin;
     protected $grado;
-  
+
 		// Constructor
 		public function __construct( )
     {
@@ -52,7 +52,7 @@
 		// Método para guardar registro
 		public function guardar( )
     {
-			$resultado = parent::guardarCatalogo( TABLA_ALUMNOS_GRUPOS );
+      $resultado = parent::guardarCatalogo( TABLA_ALUMNOS_GRUPOS );
 			return $resultado;
     }
 
@@ -63,23 +63,23 @@
 			$resultado = parent::eliminarCatalogo( TABLA_ALUMNOS_GRUPOS );
 			return $resultado;
     }
-		
-		
+
+
 		// Método para consultar alumnos por grupo
     public function consultarAlumnosGrupo( )
     {
       $sql = "select * from " . TABLA_ALUMNOS_GRUPOS . " where grupo_id='$this->grupo_id' and deleted_at is null order by id";
-			
+
 			$resultado = parent::consultarSQLCatalogo( $sql );
 			return $resultado;
     }
-		
-		
+
+
 		// Método para consultar grupos por grado
     public function consultarGrupoGrado( )
     {
       $sql = "select * from " . TABLA_ALUMNOS_GRUPOS . " where grupo_id='$this->grupo_id' and grado='$this->grado' and deleted_at is null order by id";
-			
+
 			$resultado = parent::consultarSQLCatalogo( $sql );
 			return $resultado;
     }

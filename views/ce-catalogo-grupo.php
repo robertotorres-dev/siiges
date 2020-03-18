@@ -115,7 +115,7 @@
           <div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="id">Id</label>
-							<input type="text" id="id" name="id" value="<?php echo $resultadoGrupo["data"]["id"]; ?>" maxlength="11" class="form-control" readonly />
+							<input type="text" id="id" name="id" value="<?php echo (isset($resultadoGrupo["data"]["id"])) ? $resultadoGrupo["data"]["id"] : ""; ?>" maxlength="11" class="form-control" readonly />
 						</div>
           </div>
 					<div class="col-sm-4">
@@ -137,7 +137,7 @@
 					<div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="grupo">Grupo</label>
-							<input type="text" id="grupo" name="grupo" value="<?php echo $resultadoGrupo["data"]["grupo"]; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="grupo" name="grupo" value="<?php echo (isset($resultadoGrupo["data"]["grupo"])) ? $resultadoGrupo["data"]["grupo"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
@@ -172,19 +172,19 @@
           <div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="generacion">Generaci&oacute;n</label>
-							<input type="text" id="generacion" name="generacion" value="<?php echo $resultadoGrupo["data"]["generacion"]; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="generacion" name="generacion" value="<?php echo (isset($resultadoGrupo["data"]["generacion"])) ? $resultadoGrupo["data"]["generacion"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="generacion_fecha_inicio">Fecha de Inicio de Generaci&oacute;n</label>
-							<input type="text" id="generacion_fecha_inicio" name="generacion_fecha_inicio" value="<?php echo $resultadoGrupo["data"]["generacion_fecha_inicio"]; ?>" maxlength="10" class="form-control" required />
+							<input type="text" id="generacion_fecha_inicio" name="generacion_fecha_inicio" value="<?php echo (isset($resultadoGrupo["data"]["generacion_fecha_inicio"])) ? $resultadoGrupo["data"]["generacion_fecha_inicio"] : ""; ?>" maxlength="10" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="generacion_fecha_fin">Fecha de Fin de Generaci&oacute;n</label>
-							<input type="text" id="generacion_fecha_fin" name="generacion_fecha_fin" value="<?php echo $resultadoGrupo["data"]["generacion_fecha_fin"]; ?>" maxlength="10" class="form-control" required />
+							<input type="text" id="generacion_fecha_fin" name="generacion_fecha_fin" value="<?php echo (isset($resultadoGrupo["data"]["generacion_fecha_fin"])) ? $resultadoGrupo["data"]["generacion_fecha_fin"] : ""; ?>" maxlength="10" class="form-control" required />
 						</div>
           </div>
         </div>

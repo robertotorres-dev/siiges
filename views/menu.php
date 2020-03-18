@@ -149,7 +149,8 @@ require_once "../models/modelo-rol.php";
 				        <li class="dropdown">
 				            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span>Control Escolar<span class="caret"></span></a>
 				            <ul class="dropdown-menu" role="menu">
-				    	        <li><a href="ce-instituciones.php">Instituciones</a></li>
+                      <li><a href="ce-instituciones.php">Instituciones</a></li>
+				    	        <li><a href="ce-validacion.php">Validación CE</a></li>
 				            </ul>
 				        </li>
 				        <?php endif;?>

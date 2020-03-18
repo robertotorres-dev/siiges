@@ -98,6 +98,7 @@
 
 								for( $i=0; $i<$max; $i++ )
 								{
+									if ($resultadoAsignatura["data"][$i]["grado"] != "Optativa") {
 							?>
 							<tr>
 								<td><?php echo $resultadoAsignatura["data"][$i]["grado"]; ?></td>
@@ -106,6 +107,7 @@
 								</td>
 							</tr>
 							<?php
+									}
 								}
 							?>
 	            </tbody>

@@ -101,7 +101,7 @@
           <div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="id">Id</label>
-							<input type="text" id="id" name="id" value="<?php echo $resultadoCicloEscolar["data"]["id"]; ?>" maxlength="11" class="form-control" readonly />
+							<input type="text" id="id" name="id" value="<?php echo (isset($resultadoCicloEscolar)) ? $resultadoCicloEscolar["data"]["id"] : ""; ?>" maxlength="11" class="form-control" readonly />
 						</div>
           </div>
 					<div class="col-sm-4">
@@ -117,13 +117,13 @@
           <div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="nombre">Nombre de Ciclo Escolar</label>
-							<input type="text" id="nombre" name="nombre" value="<?php echo $resultadoCicloEscolar["data"]["nombre"]; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="nombre" name="nombre" value="<?php echo (isset($resultadoCicloEscolar)) ? $resultadoCicloEscolar["data"]["nombre"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-8">
 					  <div class="form-group">
 							<label class="control-label" for="descripcion">Descripci&oacute;n</label>
-							<input type="text" id="descripcion" name="descripcion" value="<?php echo $resultadoCicloEscolar["data"]["descripcion"]; ?>" maxlength="255" class="form-control" />
+							<input type="text" id="descripcion" name="descripcion" value="<?php echo (isset($resultadoCicloEscolar)) ? $resultadoCicloEscolar["data"]["descripcion"] : ""; ?>" maxlength="255" class="form-control" />
 						</div>
           </div>
         </div>
