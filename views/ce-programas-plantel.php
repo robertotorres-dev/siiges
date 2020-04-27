@@ -73,11 +73,11 @@
             <table id="tabla-reporte1" class="table table-striped table-bordered" cellspacing="0" width="100%">
 	            <thead>
 								<tr>
-	                <th width="10%">Id</th>
-	                <th width="40%">Nombre</th>
+	                <th width="5%">Id</th>
+	                <th width="35%">Nombre</th>
 	                <th width="20%">Vigencia</th>
 									<th width="20%">Acuerdo RVOE</th>
-	                <th width="10%">Acciones</th>
+	                <th width="20%">Acciones</th>
 								</tr>
 							</thead>
 	            <tbody>
@@ -101,6 +101,10 @@
 									<a href="ce-alumnos.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Alumnos</span></a>
 									<br/>
 									<a href="ce-ciclos-escolares.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Acreditaci&oacute;n</span></a>
+									<?php if(Rol::ROL_ADMIN == $_SESSION["rol_id"] ): ?>
+									<br/>
+									<a href="ce-catalogo-asignaturas.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Plan de Estudios</span></a>
+									<?php endif;?>
 								</td>
 							</tr>
 							<?php
@@ -157,13 +161,7 @@
 								<td><?php echo $resultadoPrograma["data"][$i]["acuerdo_rvoe"]; ?></td>
 								<!-- Se agregar los siguientes botones para poder migrar con usuario de control escolar SICYT -->
 								<td>
-									<?php if(Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] ): ?>
-									<a href="ce-reglas.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Reglas</span></a>
-									<br/>
-									<a href="ce-alumnos.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Alumnos</span></a>
-									<br/>
-									<a href="ce-ciclos-escolares.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Acreditaci&oacute;n</span></a>
-									<?php endif;?>
+
 								</td>
 							</tr>
 							<?php
