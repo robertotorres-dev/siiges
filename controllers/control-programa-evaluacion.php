@@ -212,13 +212,13 @@
 
       $registros = array();
       $evaluador = new ProgramaEvaluacion();
-      $res_evaluador = $evaluador->consultarPor("evaluadores",array("persona_id"=>$_SESSION["persona_id"]),"*");
+      $res_evaluador = $evaluador->consultarPor("evaluadores",array("persona_id"=>$_SESSION["persona_id"], "deleted_at"),"*");
       $res_evaluador = $res_evaluador["data"];
       if( sizeof($res_evaluador)>0)
       {
         $res_evaluador =   $res_evaluador[0];
         $evaluacion = new ProgramaEvaluacion();
-        $evaluaciones = $evaluacion->consultarPor("programa_evaluaciones",array("evaluador_id"=>$res_evaluador["id"]),"*");
+        $evaluaciones = $evaluacion->consultarPor("programa_evaluaciones",array("evaluador_id"=>$res_evaluador["id"], "deleted_at"),"*");
         if( sizeof( $evaluaciones["data"] ) > 0 )
         {
           $evaluaciones = $evaluaciones["data"];
