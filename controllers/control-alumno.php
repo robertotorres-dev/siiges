@@ -67,6 +67,7 @@
 		$obj = new Alumno( );
 		$obj->setAttributes( $parametros );
     $resultado = $obj->guardar( );
+
     // Registro en bitacora
     $bitacora = new Bitacora();
     $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;

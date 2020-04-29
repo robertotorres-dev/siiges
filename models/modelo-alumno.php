@@ -12,10 +12,21 @@
     protected $id;
     protected $persona_id;
     protected $situacion_id;
+    protected $programa_id;
     protected $matricula;
     protected $adeudos_materias;
     protected $estatus;
     protected $descripcion_estatus;
+    protected $archivo_certificado;
+    protected $archivo_nacimiento;
+    protected $archivo_curp;
+    protected $estatus_certificado;
+    protected $estatus_nacimiento;
+    protected $estatus_curp;
+    protected $observaciones1;
+    protected $observaciones2;
+    protected $fecha_baja;
+    protected $observaciones_baja;
 
 		// Constructor
 		public function __construct( )

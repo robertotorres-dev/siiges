@@ -44,6 +44,12 @@
 		$persona = new Persona( );
 		$persona->setAttributes( array( "id"=>$resultadoAlumno["data"]["persona_id"] ) );
 		$resultadoPersona = $persona->consultarId( );
+
+		$json = [];
+		$nombre =  $resultadoPersona["data"]["nombre"]." ".$resultadoPersona["data"]["apellido_paterno"]." ".$resultadoPersona["data"]["apellido_materno"];
+		$json["id"] = $resultadoAlumno["data"]["id"];
+		$json["nombre"] = $nombre;
+		$json = json_encode($json);
 	}
 ?>
 
@@ -206,22 +212,29 @@
 							<input type="text" id="curp" name="curp" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["curp"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
-					<div class="col-sm-8">
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label class="control-label" for="matricula">Matr&iacute;cula</label>
+							<input type="text" id="matricula" name="matricula" value="<?php echo (isset($resultadoPersona)) ? $resultadoAlumno["data"]["matricula"] : ""; ?>" maxlength="255" class="form-control" required />
+						</div>
+					</div>
+					<div class="col-sm-4">
             <div class="form-group">
 						</div>
           </div>
         </div>
+
+				<!-- Permisos de administrador o control escolar SICYT para dar estatus a alumno -->
+				<?php if(Rol::ROL_ADMIN == $_SESSION["rol_id"] || Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] ): ?>
 				<div class="row">
-          <div class="col-sm-4">
-            <div class="form-group">
-							<label class="control-label" for="matricula">Matr&iacute;cula</label>
-							<input type="text" id="matricula" name="matricula" value="<?php echo (isset($resultadoPersona)) ? $resultadoAlumno["data"]["matricula"] : ""; ?>" maxlength="255" class="form-control" required />
-						</div>
-          </div>
 					<div class="col-sm-4">
             <div class="form-group">
 							<label class="txt-label1" for="situacion_id">Situaci&oacute;n</label>
-							<select id="situacion_id" name="situacion_id" class="selectpicker" data-live-search="true" data-width="100%" required>
+							<select onchange="changeFunc(
+							<?php
+							echo (isset($json) ? htmlentities($json) : "");
+							 ?>
+							 );" id="situacion_id" name="situacion_id" class="selectpicker" data-live-search="true" data-width="100%" required>
 								<option value=""> </option>
 								<?php
 									$situacion = new Situacion( );
@@ -234,7 +247,7 @@
 									{
 										if( $resultadoSituacion["data"][$i]["id"]==$resultadoAlumno["data"]["situacion_id"] )
 										{
-										  echo "<option value='".$resultadoSituacion["data"][$i]["id"]."' selected>".$resultadoSituacion["data"][$i]["nombre"]."</option>";
+											echo "<option value='".$resultadoSituacion["data"][$i]["id"]."' selected>".$resultadoSituacion["data"][$i]["nombre"]."</option>";
 										}
 										else
 										{
@@ -245,11 +258,78 @@
 							</select>
 						</div>
           </div>
+					<?php if (isset($resultadoAlumno["data"]["situacion_id"]) && $resultadoAlumno["data"]["situacion_id"] == "4"): ?>
+
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="control-label" for="">Fecha de baja</label><br>
+								<input type="text" id="" class="form-control" value="<?php echo(isset($resultadoAlumno)) ? date_format(date_create($resultadoAlumno["data"]["fecha_baja"]), 'Y-m-d') : ""; ?>" readonly />
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="control-label" for="">Motivos de baja</label><br>
+								<input type="text" id="" class="form-control" value="<?php echo(isset($resultadoAlumno)) ? $resultadoAlumno["data"]["observaciones_baja"] : ""; ?>" readonly/>
+							</div>
+						</div>
+					 <?php endif; ?>
+				 </div>
+				<?php endif;?>
+
+				<!-- Rol control escolar IES y Representante legal no pueden editar el estatus del alumno -->
+				<?php if( Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] ): ?>
+				<div class="row">
 					<div class="col-sm-4">
             <div class="form-group">
+							<label class="txt-label1" for="situacion_id">Situaci&oacute;n</label>
+							<select onchange="changeFunc(
+							<?php
+							echo (isset($json) ? htmlentities($json) : "");
+							 ?>
+							 );" id="situacion_id" name="situacion_id" class="selectpicker" data-live-search="true" data-width="100%" disabled="true" required>
+								<option value=""> </option>
+								<?php
+									$situacion = new Situacion( );
+									$situacion->setAttributes( array( ) );
+									$resultadoSituacion = $situacion->consultarTodos( );
+
+									$max = count( $resultadoSituacion["data"] );
+
+									if (isset($resultadoAlumno["data"]["id"])) {
+										for( $i=0; $i<$max; $i++ )
+										{
+											if( $resultadoSituacion["data"][$i]["id"]==$resultadoAlumno["data"]["situacion_id"] )
+											{
+												echo "<option value='".$resultadoSituacion["data"][$i]["id"]."' selected>".$resultadoSituacion["data"][$i]["nombre"]."</option>";
+											}
+											else
+											{
+												echo "<option value='".$resultadoSituacion["data"][$i]["id"]."'>".$resultadoSituacion["data"][$i]["nombre"]."</option>";
+											}
+										}
+									} else {
+										echo "<option value='1' selected>"."Inactivo"."</option>";
+									}
+								?>
+							</select>
 						</div>
           </div>
+					<?php if ( isset($resultadoAlumno["data"]["situacion_id"]) && $resultadoAlumno["data"]["situacion_id"] == "4"): ?>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label class="control-label" for="">Fecha de baja</label><br>
+							<input type="text" id="" class="form-control" value="<?php echo(isset($resultadoAlumno)) ? date_format(date_create($resultadoAlumno["data"]["fecha_baja"]), 'Y-m-d') : ""; ?>" readonly />
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label class="control-label" for="">Motivos de baja</label><br>
+							<input type="text" id="" class="form-control" value="<?php echo(isset($resultadoAlumno)) ? $resultadoAlumno["data"]["observaciones_baja"] : ""; ?>" readonly/>
+						</div>
+					</div>
+						<?php endif;?>
         </div>
+				<?php endif;?>
 				<?php
 					if( $_GET["proceso"]!="consulta" )
 					{
@@ -271,6 +351,58 @@
 			</form>
 
 		</section>
+
+		<!-- Modal para confirmación -->
+		<div class="modal fade" id="modalConfirmacion" role="dialog">
+			<div id="tamanoModales" class="modal-dialog" >
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Confirmación</h4>
+					</div>
+					<div class="modal-body">
+							<div id="mensajesTerminar" class="alert alert-danger">
+								<p  id="textoConfirmacion" class="text-justify"></p>
+							</div>
+							<div class="col-sm-12 col-md-12">
+								<label class="control-label" for="">Fecha de baja</label><br>
+								<input type="date" id="fecha_baja" class="form-control">
+								<br>
+							</div>
+							<div class="col-sm-12 col-md-12">
+								<label class="control-label" for="">Motivos de baja</label><br>
+								<input type="text" id="observaciones_baja" class="form-control">
+								<br>
+							</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+						<button  id="boton-terminar" type="button" class="btn btn-primary" onclick="Alumno.baja()">Baja Alumno</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Modal que muestra mensaje -->
+		<div class="modal fade" id="modalMensaje" role="dialog">
+			<div id="tamanoModal" class="modal-dialog" >
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Mensaje</h4>
+					</div>
+					<div class="modal-body">
+							<div id="mensajesTerminar" class="alert alert-success">
+								<p class="text-justify">Baja de alumno satisfactoria</p>
+							</div>
+					</div>
+					<div class="modal-footer">
+						<button  id="boton-terminar" type="button" class="btn btn-primary" onclick="Alumno.listo()">Listo</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 <!-- JS GOB.MX -->
@@ -283,6 +415,7 @@
 <script src="../js/bootstrap-select.min.js"></script>
 <!-- JS CALENDAR -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script>
 	$(document).ready(function(){
 		$("#fecha_nacimiento").datepicker({
@@ -293,5 +426,8 @@
 		});
 	});
 </script>
+<!-- JS PROPIOS -->
+<script src="../js/alumnos.js"></script>
+
 </body>
 </html>
