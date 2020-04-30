@@ -123,10 +123,12 @@
             <table id="tabla-reporte2" class="table table-striped table-bordered" cellspacing="0" width="100%">
 	            <thead>
 								<tr>
-	                <th width="15%">Ciclo</th>
-									<th width="40%">Asignatura</th>
-									<th width="15%">Tipo</th>
-									<th width="15%">Calificaci&oacute;n</th>
+	                <th width="10%">Ciclo</th>
+									<th width="10%">Clave</th>
+									<th width="10%">Seriaci&oacute;n</th>
+									<th width="35%">Asignatura</th>
+									<th width="10%">Tipo</th>
+									<th width="10%">Calificaci&oacute;n</th>
 									<th width="15%">Fecha de Examen</th>
 								</tr>
 							</thead>
@@ -168,6 +170,8 @@
 							?>
 							<tr>
 								<td><?php echo $resultadoCicloEscolar["data"]["nombre"]; ?></td>
+								<td><?php echo $resultadoAsignatura["data"]["clave"]; ?></td>
+								<td><?php echo $resultadoAsignatura["data"]["seriacion"]; ?></td>
 								<td><?php echo $resultadoAsignatura["data"]["nombre"]; ?></td>
 								<td><?php echo $tipo; ?></td>
 								<td <?php if( $resultadoCalificacion["data"][$i]["calificacion"]<$resultadoPrograma["data"]["calificacion_aprobatoria"] ){ echo "style='color: red;'"; } ?>><?php echo $resultadoCalificacion["data"][$i]["calificacion"]; ?></td>

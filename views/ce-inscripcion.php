@@ -157,7 +157,9 @@
 	            <thead>
 								<tr>
 	                <th width="20%">Inscribir</th>
-									<th width="80%">Asignatura</th>
+									<th width="10%">Clave</th>
+									<th width="10%">Seriaci&oacute;n</th>
+									<th width="60%">Asignatura</th>
 								</tr>
 							</thead>
 	            <tbody>
@@ -176,6 +178,8 @@
 							?>
 							<tr>
 								<td align="center"><input type="checkbox" id="asignaturas_grado[]" name="asignaturas_grado[]" value="<?php echo $resultadoAsignatura["data"][$i]["id"]; ?>" /></td>
+								<td><?php echo $resultadoAsignatura["data"][$i]["clave"]; ?></td>
+								<td><?php echo $resultadoAsignatura["data"][$i]["seriacion"]; ?></td>
 								<td><?php echo $resultadoAsignatura["data"][$i]["nombre"]; ?></td>
 							</tr>
 							<?php

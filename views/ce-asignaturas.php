@@ -94,8 +94,9 @@
 	            <thead>
 								<tr>
 	                <th width="15%">Grado</th>
-									<th width="15%">Grupo</th>
-	                <th width="15%">Turno</th>
+									<th width="10%">Grupo</th>
+									<th width="10%">Turno</th>
+	                <th width="10%">Clave</th>
 									<th width="45%">Asignatura</th>
 	                <th width="10%">Acciones</th>
 								</tr>
@@ -144,6 +145,7 @@
 								<td><?php echo $resultadoAsignatura["data"][$i]["grado"]; ?></td>
 								<td><?php echo $resultadoGrupo["data"]["grupo"]; ?></td>
 								<td><?php echo $resultadoTurno["data"]["nombre"]; ?></td>
+								<td><?php echo $resultadoAsignatura["data"][$i]["clave"]; ?></td>
 								<td><?php echo $resultadoAsignatura["data"][$i]["nombre"]; ?></td>
 								<td>
 								  <a href="ce-ordinarios.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $_GET["grupo_id"]; ?>&asignatura_id=<?php echo $resultadoAsignatura["data"][$i]["id"] ?>">Ordinarios</a>
