@@ -245,11 +245,11 @@ fieldset.border {
 }
 /* Color para menú */
 .sub-navbar .navbar-collapse {
-    background-color: #eaeaea;
+    /* background-color: #eaeaea; */
 }
 
 .sub-navbar {
-    background: #eaeaea;
+    /* background: #eaeaea; */
 }
 
 /*Colo de encabezado de pestañas*/

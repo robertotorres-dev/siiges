@@ -99,22 +99,32 @@
           </div>
         </div>
 				<div class="row">
-          <div class="col-sm-4">
+          <div class="col-sm-3">
             <div class="form-group">
 							<label class="control-label" for="calificacion_minima">Calificaci&oacute;n M&iacute;nima</label>
 							<input type="text" id="calificacion_minima" name="calificacion_minima" value="<?php echo $resultadoPrograma["data"]["calificacion_minima"]; ?>" maxlength="11" class="form-control" required />
 						</div>
           </div>
-					<div class="col-sm-4">
+					<div class="col-sm-3">
             <div class="form-group">
 							<label class="control-label" for="calificacion_maxima">Calificaci&oacute;n M&aacute;xima</label>
 							<input type="text" id="calificacion_maxima" name="calificacion_maxima" value="<?php echo $resultadoPrograma["data"]["calificacion_maxima"]; ?>" maxlength="11" class="form-control" required />
 						</div>
           </div>
-					<div class="col-sm-4">
+					<div class="col-sm-3">
             <div class="form-group">
 							<label class="control-label" for="calificacion_aprobatoria">Calificaci&oacute;n Aprobatoria</label>
 							<input type="text" id="calificacion_aprobatoria" name="calificacion_aprobatoria" value="<?php echo $resultadoPrograma["data"]["calificacion_aprobatoria"]; ?>" maxlength="11" class="form-control" required />
+						</div>
+          </div>
+					<div class="col-sm-3">
+            <div class="form-group">
+							<label class="control-label" for="calificacion_aprobatoria">Calificaciones Decimales</label>
+							<select class="form-control" id="calificacion_decimal" name="calificacion_decimal">
+								<option value=""></option>
+								<option value="1" <?php if(isset($resultadoPrograma["data"]["calificacion_decimal"])) {if ($resultadoPrograma["data"]["calificacion_decimal"] == 1) {echo "selected";}} ?>>Si</option>
+								<option value="2" <?php if(isset($resultadoPrograma["data"]["calificacion_decimal"])) {if ($resultadoPrograma["data"]["calificacion_decimal"] == 2) {echo "selected";}} ?>>No</option>
+							</select>
 						</div>
           </div>
         </div>

@@ -197,7 +197,15 @@
 							<tr>
 								<td><?php echo $resultadoAlumno["data"]["matricula"]; ?></td>
 								<td><?php echo $resultadoPersona["data"]["apellido_paterno"]." ".$resultadoPersona["data"]["apellido_materno"]." ".$resultadoPersona["data"]["nombre"]; ?></td>
-								<td><input type="number" id="calificacion[]" name="calificacion[]" value="<?php echo $resultadoCalificacion["data"][0]["calificacion"]; ?>" maxlength="5" min="<?php echo $resultadoPrograma["data"]["calificacion_minima"]; ?>" max="<?php echo $resultadoPrograma["data"]["calificacion_maxima"]; ?>" class="form-control" step="any" /></td>
+								<td id="calificaciones"><input type="number" id="calificacion[]" name="calificacion[]" value="<?php
+								echo $resultadoCalificacion["data"][0]["calificacion"];
+								?>" maxlength="5" min="<?php
+								echo $resultadoPrograma["data"]["calificacion_minima"];
+								?>" max="<?php
+								echo $resultadoPrograma["data"]["calificacion_maxima"];
+								?>" class="form-control" step="<?php
+								echo ($resultadoPrograma["data"]["calificacion_decimal"]==1) ? "0.1" : "1";
+								?>" /></td>
 								<td><input type="date" id="fecha_examen[]" name="fecha_examen[]" value="<?php echo $resultadoCalificacion["data"][0]["fecha_examen"]; ?>" maxlength="10" class="form-control" /></td>
 							</tr>
 							<?php
@@ -237,5 +245,33 @@
 <script src="../js/bootstrap-select.min.js"></script>
 <!-- JS CALENDAR -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!-- JS PROPIOS -->
+<script type="text/javascript">
+	const inputs = document.querySelectorAll('#calificaciones');
+	const input = [];
+	const enteros = [1,2,3,4,5,6,7,8,9];
+
+	for (let i = 0; i < inputs.length; i++) {
+		input.push(inputs[i].children[0]);
+		if (input[i].step === "0.1") {
+			input[i].addEventListener('change', updateValueFloat);
+		} else {
+			input[i].addEventListener('change', updateValueInt);
+		}
+	}
+
+	function updateValueFloat(e) {
+		enteros.map( function (entero) {
+			if (entero === parseFloat(e.target.value)) {
+				e.target.value = parseFloat(e.target.value).toFixed(1);
+			}
+		});
+	}
+
+	function updateValueInt(e) {
+				e.target.value = parseFloat(e.target.value).toFixed(0);
+		}
+</script>
 </body>
 </html>
