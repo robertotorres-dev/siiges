@@ -117,7 +117,24 @@
           <div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="nombre">Nombre de Ciclo Escolar</label>
-							<input type="text" id="nombre" name="nombre" value="<?php echo (isset($resultadoCicloEscolar)) ? $resultadoCicloEscolar["data"]["nombre"] : ""; ?>" maxlength="255" class="form-control" required />
+							<select id="nombre" name="nombre" value="<?php echo (isset($resultadoCicloEscolar)) ? $resultadoCicloEscolar["data"]["nombre"] : ""; ?>" maxlength="255" class="form-control" required >
+								<option value=""> </option>
+								<option value="2016A" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2016A" ) { echo "selected"; }} ?>>2016A</option>
+								<option value="2016B" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2016B" ) { echo "selected"; }} ?>>2016B</option>
+								<option value="2016C" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2016C" ) { echo "selected"; }} ?>>2016C</option>
+								<option value="2017A" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2017A" ) { echo "selected"; }} ?>>2017A</option>
+								<option value="2017B" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2017B" ) { echo "selected"; }} ?>>2017B</option>
+								<option value="2017C" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2017C" ) { echo "selected"; }} ?>>2017C</option>
+								<option value="2018A" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2018A" ) { echo "selected"; }} ?>>2018A</option>
+								<option value="2018B" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2018B" ) { echo "selected"; }} ?>>2018B</option>
+								<option value="2018C" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2018C" ) { echo "selected"; }} ?>>2018C</option>
+								<option value="2019A" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2019A" ) { echo "selected"; }} ?>>2019A</option>
+								<option value="2019B" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2019B" ) { echo "selected"; }} ?>>2019B</option>
+								<option value="2019C" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2019C" ) { echo "selected"; }} ?>>2019C</option>
+								<option value="2020A" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2020A" ) { echo "selected"; }} ?>>2020A</option>
+								<option value="2020B" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2020B" ) { echo "selected"; }} ?>>2020B</option>
+								<option value="2020C" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2020C" ) { echo "selected"; }} ?>>2020C</option>
+							</select>
 						</div>
           </div>
 					<div class="col-sm-8">

@@ -184,7 +184,7 @@
 					<div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="generacion_fecha_fin">Fecha de Fin de Generaci&oacute;n</label>
-							<input type="text" id="generacion_fecha_fin" name="generacion_fecha_fin" value="<?php echo (isset($resultadoGrupo["data"]["generacion_fecha_fin"])) ? $resultadoGrupo["data"]["generacion_fecha_fin"] : ""; ?>" maxlength="10" class="form-control" required />
+							<input type="text" id="generacion_fecha_fin" name="generacion_fecha_fin" value="<?php echo (isset($resultadoGrupo["data"]["generacion_fecha_fin"])) ? $resultadoGrupo["data"]["generacion_fecha_fin"] : ""; ?>" maxlength="10" class="form-control" />
 						</div>
           </div>
         </div>
