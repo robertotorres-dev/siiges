@@ -12,7 +12,7 @@
 	$programa = new Programa( );
 	$programa->setAttributes( array( "id"=>$_GET["programa_id"] ) );
 	$resultadoPrograma = $programa->consultarId( );
-  
+
 	$alumno = new Alumno( );
 	$alumno->setAttributes( array( "id"=>$_GET["alumno_id"] ) );
 	$resultadoAlumno = $alumno->consultarId( );
@@ -20,14 +20,14 @@
 	$persona = new Persona( );
 	$persona->setAttributes( array( "id"=>$resultadoAlumno["data"]["persona_id"] ) );
 	$resultadoPersona = $persona->consultarId( );
-	
-	if( $resultadoPrograma["data"]["nivel_id"]==2 )
+
+	if( $resultadoPrograma["data"]["nivel_id"]==2 || $resultadoPrograma["data"]["nivel_id"]==3 )
 	{
 		$titulo_certificado1 = "Archivo Certificado de Bachillerato o equivalente (PDF)";
 		$titulo_certificado2 = "Acreditación Certificado de Bachillerato";
 	}
-	
-	if( $resultadoPrograma["data"]["nivel_id"]>=3 && $resultadoPrograma["data"]["nivel_id"]<=7)
+
+	if( $resultadoPrograma["data"]["nivel_id"]>=4 && $resultadoPrograma["data"]["nivel_id"]<=7)
 	{
 		$titulo_certificado1 = "Archivo C&eacute;dula Profesional o T&iacute;tulo (PDF)";
 		$titulo_certificado2 = "Acreditación C&eacute;dula Profesional o T&iacute;tulo";

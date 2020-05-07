@@ -107,6 +107,10 @@
 		  header( "Location: ../views/ce-inscripcion.php?programa_id=".$_POST["programa_id"]."&ciclo_id=".$_POST["ciclo_id"]."&grado=".$_POST["grado"]."&grupo_id=".$_POST["grupo_id"]."&codigo=404" );
 			exit( );
 		}
+    if ($resultadoAlumno["data"][0]["situacion_id"] >= 2 && $resultadoAlumno["data"][0]["situacion_id"] <= 4 ) {
+      header( "Location: ../views/ce-inscripcion.php?programa_id=".$_POST["programa_id"]."&ciclo_id=".$_POST["ciclo_id"]."&grado=".$_POST["grado"]."&grupo_id=".$_POST["grupo_id"]."&codigo=403" );
+			exit( );
+    }
 		$parametros2 = array( );
     $parametros2["alumno_id"] = $resultadoAlumno["data"][0]["id"];
 		$parametros2["grupo_id"] = $_POST["grupo_id"];

@@ -107,6 +107,11 @@
         <div class="alert alert-danger">
 					<p>La matr&iacute;cula ingresada no existe.</p>
         </div>
+				<?php } ?>
+				<?php if( isset( $_GET["codigo"] ) && $_GET["codigo"]==403 ){ ?>
+        <div class="alert alert-danger">
+					<p>Alumno no autorizado para ser inscrito.</p>
+        </div>
         <?php } ?>
 				<!-- CONTENIDO -->
 				<div class="row">
