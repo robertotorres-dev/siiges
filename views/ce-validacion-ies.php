@@ -14,6 +14,18 @@
 	require_once "../models/modelo-validacion.php";
 	require_once "../models/modelo-situacion-validacion.php";
 
+	$institucion = new Institucion( );
+	$institucion->setAttributes( array( "usuario_id"=>	$_SESSION["id"] ) );
+	$representante = new Institucion;
+	$ce = $representante->consultarPor("usuario_usuarios",array("secundario_id"=>$_SESSION["id"]),"*");
+
+	if(sizeof($ce["data"])>0)
+	{
+		$resultadoInstitucionIes = $institucion->consultarPor("instituciones", array("usuario_id"=>$ce["data"][0]["principal_id"]),"*");
+	} else {
+		$resultadoInstitucionIes = $institucion->consultarPor("instituciones", array("usuario_id"=>$_SESSION["id"]),"*");
+	}
+
   /*$programa = new Programa( );
   $programa->setAttributes( array( "id"=>$_GET["programa_id"] ) );
   $resultadoPrograma = $programa->consultarId( );
@@ -76,6 +88,11 @@
       			<div id="cargar-todos"></div>
       			<h2>Alumnos</h2>
       			<hr class="red">
+						<div class="row">
+		          <div class="col-sm-12">
+								<legend><?php echo $resultadoInstitucionIes["data"][0]["nombre"]; ?></legend>
+							</div>
+						</div>
           </div>
           <!-- NOTIFICACIÓN -->
           <?php if( isset( $_GET["codigo"] ) && $_GET["codigo"]==200 ){ ?>
@@ -88,9 +105,9 @@
             <table id="alumnos" class="table table-striped table-bordered" cellspacing="0" width="100%" >
                 <thead>
                 <tr>
+										<th>Matr&iacutecula</th>
                     <th style="width: 200px; overflow: auto;">Nombre</th>
                     <th>CURP</th>
-                    <th>Instituci&oacuten</th>
                     <th>Programa</th>
                     <th>Estatus</th>
                     <th>Acciones</th>
@@ -109,6 +126,7 @@
 
     								for( $i=0; $i<$max; $i++ )
     								{
+
                       $parametros2["id"] = $resultadoAlumno["data"][$i]["persona_id"];
 
     									$persona = new Persona( );
@@ -131,11 +149,14 @@
 											$validacion = new Validacion( );
 											$res_validacion = $validacion->consultarPor('validaciones', array("alumno_id"=>$resultadoAlumno["data"][$i]["id"], "deleted_at"), '*' );
 
+											// Consulta alumnos sólo de ésta institución
+											if ($resultadoInstitucion["data"]["id"] === $resultadoInstitucionIes["data"][0]["id"]) {
+
     							?>
     							<tr>
+										<td><?php echo $resultadoAlumno["data"][$i]["matricula"] ?></td>
     								<td><?php echo ($resultadoPersona["data"]["nombre"]." ".$resultadoPersona["data"]["apellido_paterno"]." ".$resultadoPersona["data"]["apellido_materno"]); ?></td>
     								<td><?php echo $resultadoPersona["data"]["curp"]; ?></td>
-                    <td><?php echo $resultadoInstitucion["data"]["nombre"]; ?></td>
                     <td><?php echo $resultadoPrograma["data"]["nombre"]; ?></td>
                     <td><?php
 
@@ -156,6 +177,7 @@
 										</td>
     							</tr>
     							<?php
+											}
     								}
     							?>
                 </tbody>

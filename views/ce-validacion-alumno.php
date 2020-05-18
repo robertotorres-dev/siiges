@@ -22,9 +22,11 @@
 	$validacion = new Validacion( );
 	$res_validacion = $validacion->consultarPor('validaciones', array("alumno_id"=>$_GET["alumno_id"], "deleted_at"), '*' );
 
-	$usuario = new Usuario( );
-	$usuario->setAttributes( array( "id"=>$res_validacion["data"][0]["usuario_id"] ) );
-	$resultadoUsuario = $usuario->consultarId( );
+	if ($res_validacion["data"]) {
+		$usuario = new Usuario( );
+		$usuario->setAttributes( array( "id"=>$res_validacion["data"][0]["usuario_id"] ) );
+		$resultadoUsuario = $usuario->consultarId( );
+	}
 
 	$programa = new Programa( );
 	$programa->setAttributes( array( "id"=>$_GET["programa_id"] ) );
@@ -151,7 +153,7 @@
 				<!-- TÍTULO -->
 				<h2 id="txtNombre"><?php echo $titulo; ?></h2>
 				<hr class="red">
-				
+
 				<!-- NOTIFICACIÓN -->
 				<?php if( isset( $_GET["codigo"] ) && $_GET["codigo"]==404 ){ ?>
         <div class="alert alert-danger">
@@ -269,7 +271,7 @@
           <div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="nombre_institucion_emisora">Instituci&oacute;n de Procedencia</label>
-							<input type="text" id="nombre_institucion_emisora" name="nombre_institucion_emisora" value="<?php echo (isset($res_validacion)) ? $res_validacion["data"][0]["nombre_institucion_emisora"] : ""; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="nombre_institucion_emisora" name="nombre_institucion_emisora" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["nombre_institucion_emisora"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
@@ -299,7 +301,7 @@
 					<div class="col-sm-4">
             <div class="form-group">
 							<label class="txt-label1" for="clave_centro_trabajo_emisor">CCT de Procedencia</label>
-							<input type="text" id="clave_centro_trabajo_emisor" name="clave_centro_trabajo_emisor" value="<?php echo (isset($res_validacion)) ? $res_validacion["data"][0]["clave_centro_trabajo_emisor"] : ""; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="clave_centro_trabajo_emisor" name="clave_centro_trabajo_emisor" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["clave_centro_trabajo_emisor"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
         </div>
@@ -307,13 +309,13 @@
           <div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="folio">Folio de Certificado</label>
-							<input type="text" id="folio" name="folio" value="<?php echo (isset($res_validacion)) ? $res_validacion["data"][0]["folio"] : ""; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="folio" name="folio" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["folio"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
 							<label class="txt-label1" for="fecha_expedicion">Fecha de expedici&oacute;n</label>
-							<input type="text" id="fecha_expedicion" name="fecha_expedicion" value="<?php echo (isset($res_validacion)) ? $res_validacion["data"][0]["fecha_expedicion"] : ""; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="fecha_expedicion" name="fecha_expedicion" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["fecha_expedicion"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
@@ -373,13 +375,13 @@
           <div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="folio_envio">Folio de Oficio de Vaildaci&oacute;n</label>
-							<input type="text" id="folio_envio" name="folio_envio" value="<?php echo (isset($res_validacion)) ? $res_validacion["data"][0]["folio_envio"] : ""; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="folio_envio" name="folio_envio" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["folio_envio"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
 							<label class="txt-label1" for="fecha_envio">Fecha de Oficio de Validaci&oacute;n</label>
-							<input type="text" id="fecha_envio" name="fecha_envio" value="<?php echo (isset($res_validacion)) ? $res_validacion["data"][0]["fecha_envio"] : ""; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="fecha_envio" name="fecha_envio" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["fecha_envio"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
@@ -392,20 +394,20 @@
             <div class="form-group">
 							<label class="control-label" for="oficio_envio">Oficio de Validaci&oacute;n</label>
 							<input type="file" id="oficio_envio" name="oficio_envio" accept="application/pdf" class="form-control" />
-							<div><a href="../uploads/validaciones/<?php echo (isset($res_validacion)) ? $res_validacion["data"][0]["oficio_envio"] : ""; ?>" target="_blank"><?php echo isset($res_validacion["data"][0]["oficio_envio"]) ? "Oficio de validación" : ""; ?></a></div>
+							<div><a href="../uploads/validaciones/<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["oficio_envio"] : ""; ?>" target="_blank"><?php echo isset($res_validacion["data"][0]["oficio_envio"]) ? "Oficio de validación" : ""; ?></a></div>
 						</div>
           </div>
         </div><div class="row">
           <div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="folio_respuesta">Folio de Oficio de Respuesta</label>
-							<input type="text" id="folio_respuesta" name="folio_respuesta" value="<?php echo (isset($res_validacion)) ? $res_validacion["data"][0]["folio_respuesta"] : ""; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="folio_respuesta" name="folio_respuesta" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["folio_respuesta"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
 							<label class="txt-label1" for="fecha_respuesta">Fecha de Oficio de Respuesta</label>
-							<input type="text" id="fecha_respuesta" name="fecha_respuesta" value="<?php echo (isset($res_validacion)) ? $res_validacion["data"][0]["fecha_respuesta"] : ""; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="fecha_respuesta" name="fecha_respuesta" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["fecha_respuesta"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
@@ -418,7 +420,7 @@
             <div class="form-group">
 							<label class="control-label" for="oficio_respuesta">Oficio de Respuesta</label>
 							<input type="file" id="oficio_respuesta" name="oficio_respuesta" accept="application/pdf" class="form-control" />
-							<div><a href="../uploads/validaciones/<?php echo (isset($res_validacion)) ? $res_validacion["data"][0]["oficio_respuesta"] : ""; ?>" target="_blank"><?php echo isset($res_validacion["data"][0]["oficio_envio"]) ? "Oficio de Respuesta" : ""; ?></a></div>
+							<div><a href="../uploads/validaciones/<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["oficio_respuesta"] : ""; ?>" target="_blank"><?php echo isset($res_validacion["data"][0]["oficio_envio"]) ? "Oficio de Respuesta" : ""; ?></a></div>
 						</div>
           </div>
         </div>
@@ -436,7 +438,7 @@
 				<div class="row">
           <div class="col-sm-12">
             <div class="form-group">
-							<input type="hidden"  name="id" value="<?php echo $res_validacion["data"][0]["id"]; ?>" />
+							<input type="hidden"  name="id" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["id"] : ""; ?>" />
 							<input type="hidden"  name="usuario_id" value="<?php echo isset($_SESSION["id"])?$_SESSION["id"]:-1; ?>" />
 							<input type="hidden"  name="url" value="../views/ce-validacion-alumno.php?programa_id=<?php echo $_GET["programa_id"]."&alumno_id=".$_GET["alumno_id"]."&proceso=edicion"."&codigo=200"; ?> "/>
 							<input type="hidden"  name="webService" value="guardar" />
