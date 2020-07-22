@@ -242,6 +242,7 @@ session_start();
   //webService que obtiene los datos de una solicitud
   if($_POST["webService"]="datosSolicitud")
   {
+
     $resultado["status"] = "200";
     $resultado["message"] = "OK";
     $url = "";
@@ -569,27 +570,32 @@ session_start();
                 $resultado["data"]["documentos"]["propuesta_hemerobibliografica"] =$res_propuestaHemerobibliografica["data"][0];
               }
 
-              $informeResultados = new Documento();
-              $res_informeResultados = $informeResultados->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["TRAYECTORIA"],"entidad_id"=>$resultado["data"]["programa"]["trayectoria"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["archivo_informe_resultados_trayectoria_educativa"],"deleted_at"),"*");
-              if (sizeof($res_informeResultados["data"])>0)
-              {
-                $resultado["data"]["documentos"]["informe_resultados"] =$res_informeResultados["data"][0];
-
+              if ($res_solicitud["tipo_solicitud_id"] != 3) {
+                $informeResultados = new Documento();
+                $res_informeResultados = $informeResultados->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["TRAYECTORIA"],"entidad_id"=>$resultado["data"]["programa"]["trayectoria"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["archivo_informe_resultados_trayectoria_educativa"],"deleted_at"),"*");
+                if (sizeof($res_informeResultados["data"])>0)
+                {
+                  $resultado["data"]["documentos"]["informe_resultados"] =$res_informeResultados["data"][0];
+  
+                }
+                
+                $instrumentosTrayectoria = new Documento();
+                $res_instrumentosTrayectoria = $instrumentosTrayectoria->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["TRAYECTORIA"],"entidad_id"=>$resultado["data"]["programa"]["trayectoria"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["archivo_instrumentos_trayectoria_educativa"],"deleted_at"),"*");
+                if (sizeof($res_instrumentosTrayectoria["data"])>0)
+                {
+                  $resultado["data"]["documentos"]["instrumentos_trayectoria"] =$res_instrumentosTrayectoria["data"][0];
+  
+                }
+                
+                $trayectoriaEducativa = new Documento();
+                $res_trayectoriaEducativa = $trayectoriaEducativa->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["TRAYECTORIA"],"entidad_id"=>$resultado["data"]["programa"]["trayectoria"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["archivo_trayectoria_educativa"],"deleted_at"),"*");
+                if (sizeof($res_trayectoriaEducativa["data"])>0)
+                {
+                  $resultado["data"]["documentos"]["trayectoria_educativa"] =$res_trayectoriaEducativa["data"][0];
+  
+                }
               }
-              $instrumentosTrayectoria = new Documento();
-              $res_instrumentosTrayectoria = $instrumentosTrayectoria->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["TRAYECTORIA"],"entidad_id"=>$resultado["data"]["programa"]["trayectoria"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["archivo_instrumentos_trayectoria_educativa"],"deleted_at"),"*");
-              if (sizeof($res_instrumentosTrayectoria["data"])>0)
-              {
-                $resultado["data"]["documentos"]["instrumentos_trayectoria"] =$res_instrumentosTrayectoria["data"][0];
 
-              }
-              $trayectoriaEducativa = new Documento();
-              $res_trayectoriaEducativa = $trayectoriaEducativa->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["TRAYECTORIA"],"entidad_id"=>$resultado["data"]["programa"]["trayectoria"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["archivo_trayectoria_educativa"],"deleted_at"),"*");
-              if (sizeof($res_trayectoriaEducativa["data"])>0)
-              {
-                $resultado["data"]["documentos"]["trayectoria_educativa"] =$res_trayectoriaEducativa["data"][0];
-
-              }
 
               $biografia = new Documento();
               $res_biografia = $biografia->consultarPor("documentos", array("tipo_entidad" => Documento::$tipoEntidad["RATIFICACION"],"entidad_id"=>$resultado["data"]["programa"]["plantel"]["institucion_id"], "tipo_documento"=>Documento::$nombresDocumentos["biografia"], "deleted_at" ), "*");

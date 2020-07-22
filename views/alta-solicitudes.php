@@ -324,7 +324,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-6 col-md-6">
                             <label class="control-label" for="">Nombre(s)</label><br>
-                            <input type="text" id="nombre_director" name="DIRECTOR-nombre" class="form-control" campo="Nombre del director" ubicacion="Datos generales apartado Director" value="" placeholder="Nombre del director" >
+                            <input type="text" id="nombre_director" name="DIRECTOR-nombre" class="form-control" campo="Nombre del director" ubicacion="Datos generales apartado Director" value="" placeholder="Nombre del director" required>
                           </div>
                           <div class="col-sm-6 col-md-6">
                             <label class="control-label" for="">Apellido paterno</label><br>
@@ -560,6 +560,57 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                 </tbody>
                               </table><br><br>
                             </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <?php } else if ($_GET['tipo'] == 3) { ?>
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-tittle">
+                        <a data-parent="#acordion" data-toggle="collapse" href="#director" aria-expanded="false" aria-controls="director" class="collapsed">Director *</a>
+                        <button type="button" class="collpase-button collapsed" data-parent="#acordion" data-toggle="collapse" href="#director" aria-expanded="false"></button>
+                      </h4>
+                    </div>
+                    <div id="director" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        <!-- Datos generales  -->
+                        <div class="form-group">
+                          <div class="col-sm-col-md-12">
+                            <h2>Datos generales director</h2>
+                            <input type="hidden" id="id-director" value="">
+                            <hr class="red">
+                          </div>
+                          <div class="col-sm-6 col-md-6">
+                            <label class="control-label" for="">Nombre(s)</label><br>
+                            <input type="text" id="nombre_director" name="DIRECTOR-nombre" class="form-control revision" campo="Nombre del director" ubicacion="Datos generales apartado Director" value="" placeholder="Nombre del director" >
+                          </div>
+                          <div class="col-sm-6 col-md-6">
+                            <label class="control-label" for="">Apellido paterno</label><br>
+                            <input type="text" id="apellido_paterno_director" name="DIRECTOR-apellido_paterno" class="form-control revision" campo="Apellido paterno del director" ubicacion="Datos generales apartado Director" value="" placeholder="Apellido paterno del director" >
+                          </div>
+                          <div class="col-sm-6 col-md-6">
+                            <label class="control-label" for="">Apellido materno</label><br>
+                            <input type="text" id="apellido_materno_director" name="DIRECTOR-apellido_materno" class="form-control revision" campo="Apellido materno del director" value="" placeholder="Apellido materno del director" >
+                          </div>
+                          <div class="col-sm-6 col-md-2">
+                            <label class="control-label" for="">Nacionalidad</label><br>
+                            <input type="text" id="nacionalidad_director" name="DIRECTOR-nacionalidad" class="form-control" campo="Nacionalidad del director" ubicacion="Datos generales apartado Director" value="" placeholder="Mexicano" >
+                          </div>
+                          <div class="col-sm-6 col-md-4">
+                            <label class="control-label" for="">Clave CURP</label><br>
+                            <input type="text" id="curp_director" name="DIRECTOR-curp" class="form-control" value="" placeholder="CURP del director" >
+
+                          </div>
+                          <div class="col-sm-6 col-md-3">
+                            <label class="control-label" for="">Género</label><br>
+                            <select class="form-control" campo="Genero del director" ubicacion="Datos generales apartado Director" id="sexo_director" name="DIRECTOR-sexo">
+                              <option value="">Seleccione una opción</option>
+                              <option value="Masculino">Masculino</option>
+                              <option value="Femenino">Femenino</option>
+                            </select>
+                            <br>
                           </div>
                         </div>
                       </div>

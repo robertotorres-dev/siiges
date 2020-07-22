@@ -283,81 +283,86 @@ session_start();
                 $entidadesIds["DOMICILIO"] = isset($domicilio["data"]["id"])?$domicilio["data"]["id"]:false;
               }
               // Director
-
+                //echo $_POST["SOLICITUD-tipo_solicitud_id"];
                 if(!$entidadesIds["DOMICILIO"]){
                   $entidadesIds["DIRECTOR"] = false;
                   throw new Exception("DOMICILIO - error al guardar");
                 }else if(!empty($parametrosDirector["nombre"])){
-                  $director = new Persona( );
-                  $parametrosDirector["domicilio_id"] = $entidadesIds["DOMICILIO"];
-                  $parametrosDirector["fotografia"]= Persona::FOTO_DEFAULT;
-                  $director->setAttributes($parametrosDirector);
-                  $director = $director->guardar();
-                  $entidadesIds["DIRECTOR"] = isset($director["data"]["id"])?$director["data"]["id"]:false;
+                    $director = new Persona( );
+                    $parametrosDirector["domicilio_id"] = $entidadesIds["DOMICILIO"];
+                    $parametrosDirector["fotografia"]= Persona::FOTO_DEFAULT;
+                    /* print_r($parametrosDirector);
+                    echo "<br>"; */
+                    $director->setAttributes($parametrosDirector);
+                    $director = $director->guardar();
+                    /* print_r($director);
+                    echo "<br>"; */
+                    $entidadesIds["DIRECTOR"] = isset($director["data"]["id"])?$director["data"]["id"]:false;
+                    /* echo "<br>";
+                    print_r($entidadesIds["DIRECTOR"]); */
+                    if(!$entidadesIds["DIRECTOR"]){
+                      throw new Exception("DIRECTOR - error al guardar");
+                    }else{
 
-                  if(!$entidadesIds["DIRECTOR"]){
-                    throw new Exception("DIRECTOR - error al guardar");
-                  }else{
+                        // Publicaciones Director
+                        $publicaciones = isset($parametrosDirector["publicaciones"])?$parametrosDirector["publicaciones"]:[];
+                        foreach ($publicaciones as $cadena) {
+                          $cadena = str_replace('\\', '', $cadena);
+                          $publicacion = json_decode($cadena);
+                          $objPublicacion = new Publicacion();
+                          if(isset($publicacion->borrar) && $publicacion->borrar == 1)
+                          {
+                            $objPublicacion->setAttributes(array("id"=>$publicacion->id));
+                            $objPublicacion->eliminar();
+                          }else
+                          {
+                            $publicacion->persona_id = $entidadesIds["DIRECTOR"];
+                            $objPublicacion->setAttributes((array)$publicacion);
+                            $objPublicacion->guardar();
+                          }
 
-                      // Publicaciones Director
-                      $publicaciones = isset($parametrosDirector["publicaciones"])?$parametrosDirector["publicaciones"]:[];
-                      foreach ($publicaciones as $cadena) {
-                        $cadena = str_replace('\\', '', $cadena);
-                        $publicacion = json_decode($cadena);
-                        $objPublicacion = new Publicacion();
-                        if(isset($publicacion->borrar) && $publicacion->borrar == 1)
-                        {
-                          $objPublicacion->setAttributes(array("id"=>$publicacion->id));
-                          $objPublicacion->eliminar();
-                        }else
-                        {
-                          $publicacion->persona_id = $entidadesIds["DIRECTOR"];
-                          $objPublicacion->setAttributes((array)$publicacion);
-                          $objPublicacion->guardar();
                         }
 
-                      }
+                        // Formaciones Director
+                        $formaciones = isset($parametrosDirector["formaciones"])?$parametrosDirector["formaciones"]:[];
+                        foreach ($formaciones as $cadena) {
+                          $cadena = str_replace('\\', '', $cadena);
+                          $formacion = json_decode($cadena);
+                          $objFormacion = new Formacion();
+                          if(isset($formacion->borrar) && $formacion->borrar == 1)
+                          {
+                            $objFormacion->setAttributes(array("id"=>$formacion->id));
+                            $objFormacion->eliminar();
+                          }else
+                          {
+                            $formacion->persona_id = $director["data"]["id"];
+                            $objFormacion->setAttributes((array)$formacion);
+                            $objFormacion->guardar();
+                          }
 
-                      // Formaciones Director
-                      $formaciones = isset($parametrosDirector["formaciones"])?$parametrosDirector["formaciones"]:[];
-                      foreach ($formaciones as $cadena) {
-                        $cadena = str_replace('\\', '', $cadena);
-                        $formacion = json_decode($cadena);
-                        $objFormacion = new Formacion();
-                        if(isset($formacion->borrar) && $formacion->borrar == 1)
-                        {
-                          $objFormacion->setAttributes(array("id"=>$formacion->id));
-                          $objFormacion->eliminar();
-                        }else
-                        {
-                          $formacion->persona_id = $director["data"]["id"];
-                          $objFormacion->setAttributes((array)$formacion);
-                          $objFormacion->guardar();
                         }
 
-                      }
+                        // Experiencia Director
+                        $experiencias = isset($parametrosDirector["experiencias"])?$parametrosDirector["experiencias"]:[];
+                        foreach ($experiencias as $cadena) {
+                          $cadena = str_replace('\\', '', $cadena);
+                          $experiencia = json_decode($cadena);
+                          $objExperiencia = new Experiencia();
+                          if(isset($experiencia->borrar) && $experiencia->borrar == 1)
+                          {
+                            $objExperiencia->setAttributes(array("id"=>$experiencia->id));
+                            $objExperiencia->eliminar();
+                          }else
+                          {
+                            $experiencia->persona_id = $director["data"]["id"];
+                            $objExperiencia->setAttributes((array)$experiencia);
+                            $objExperiencia->guardar();
+                          }
 
-                      // Experiencia Director
-                      $experiencias = isset($parametrosDirector["experiencias"])?$parametrosDirector["experiencias"]:[];
-                      foreach ($experiencias as $cadena) {
-                        $cadena = str_replace('\\', '', $cadena);
-                        $experiencia = json_decode($cadena);
-                        $objExperiencia = new Experiencia();
-                        if(isset($experiencia->borrar) && $experiencia->borrar == 1)
-                        {
-                          $objExperiencia->setAttributes(array("id"=>$experiencia->id));
-                          $objExperiencia->eliminar();
-                        }else
-                        {
-                          $experiencia->persona_id = $director["data"]["id"];
-                          $objExperiencia->setAttributes((array)$experiencia);
-                          $objExperiencia->guardar();
                         }
-
                       }
-                    }
-
-                    //Plnatel
+                  
+                    //Plantel
                     $plantel = new Plantel( );
                     $parametrosPlantel["institucion_id"] = $entidadesIds["INSTITUCION"];
                     $parametrosPlantel["domicilio_id"] = $entidadesIds["DOMICILIO"];

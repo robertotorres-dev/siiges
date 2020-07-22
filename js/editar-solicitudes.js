@@ -51,8 +51,6 @@ EditarSolicitud.getSolicitud = function() {
        dataType: "json",
        data:{webService:"datosSolicitud",url:"",solicitud_id:$("#id_solicitud").val()},
        success : function(respuesta){
-
-         console.log(respuesta);
         if( respuesta.status == "202")
         {
           //location.href = respuesta.data;
@@ -861,7 +859,8 @@ EditarSolicitud.getSolicitud = function() {
         }
        },
        error : function(respuesta,errmsg,err) {
-            console.log(respuesta);
+          console.warn(respuesta.responseText)
+          console.log(respuesta);
         }
      });
 };
