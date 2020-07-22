@@ -13,6 +13,7 @@
     protected $persona_id;
     protected $situacion_id;
     protected $programa_id;
+    protected $tipo_tramite_id;
     protected $matricula;
     protected $adeudos_materias;
     protected $estatus;
@@ -89,6 +90,15 @@
     public function consultarAlumnosPrograma( )
     {
       $sql = "select * from " . TABLA_ALUMNOS . " where programa_id='$this->programa_id' and deleted_at is null order by id";
+
+			$resultado = parent::consultarSQLCatalogo( $sql );
+			return $resultado;
+    }
+
+    //Método para consultar alumnos por programa y tramite de revalidación
+    public function consultarAlumnosTramite( )
+    {
+      $sql = "select * from " . TABLA_ALUMNOS . " where programa_id='$this->programa_id' and tipo_tramite_id > 0 and deleted_at is null order by id";
 
 			$resultado = parent::consultarSQLCatalogo( $sql );
 			return $resultado;

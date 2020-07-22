@@ -96,9 +96,15 @@
 								<td><?php echo $resultadoPrograma["data"][$i]["vigencia"]; ?></td>
 								<td><?php echo $resultadoPrograma["data"][$i]["acuerdo_rvoe"]; ?></td>
 								<td>
+									<?php if(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] || Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || (Rol::ROL_ADMIN == $_SESSION["rol_id"] )): ?>
 									<a href="ce-reglas.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Reglas</span></a>
 									<br/>
 									<a href="ce-alumnos.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Alumnos</span></a>
+
+									<?php endif; ?>
+									<?php if(Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] ): ?>
+									<a href="ce-alumnos-equivalencia.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Alumnos</span></a>
+									<?php endif;?>
 									<br/>
 									<a href="ce-ciclos-escolares.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Acreditaci&oacute;n</span></a>
 									<?php if(Rol::ROL_ADMIN == $_SESSION["rol_id"] ): ?>

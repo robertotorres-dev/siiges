@@ -69,7 +69,11 @@
 						<li><i class="icon icon-home"></i></li>
 						<li><a href="home.php">SIIGES</a></li>
 						<li><a href="ce-programas.php">Programas de Estudios</a></li>
+						<?php if( Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] ){ ?>
+						<li><a href="ce-alumnos-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Alumnos</a></li>
+						<?php } else { ?>
 						<li><a href="ce-alumnos.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Alumnos</a></li>
+						<?php } ?>
 						<li class="active">Consulta de Kardex</li>
 					</ol>
 				</div>

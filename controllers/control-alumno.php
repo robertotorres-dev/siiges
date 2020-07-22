@@ -112,7 +112,7 @@
 
 		$parametros2 = array( );
     $parametros2["id"] = $_POST["persona_id"];
-		$parametros2["nombre"] = $_POST["nombre"];
+    $parametros2["nombre"] = $_POST["nombre"];
 		$parametros2["apellido_paterno"] = $_POST["apellido_paterno"];
 		$parametros2["apellido_materno"] = $_POST["apellido_materno"];
 		$parametros2["fecha_nacimiento"] = $_POST["fecha_nacimiento"];
@@ -134,6 +134,7 @@
 		$parametros3["persona_id"] = $resultadoPersona["data"]["id"];
 		$parametros3["situacion_id"] = $_POST["situacion_id"];
 		$parametros3["programa_id"] = $_POST["programa_id"];
+    $parametros3["tipo_tramite_id"] = $_POST["tipo_tramite_id"];
 		$parametros3["matricula"] = $_POST["matricula"];
 		$parametros3["adeudo_materias"] = 0;
 		$parametros3["estatus"] = 1;

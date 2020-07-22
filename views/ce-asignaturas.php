@@ -63,8 +63,6 @@
 					<!-- BARRA DE NAVEGACION -->
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
-						<li><a href="home.php">SIIGES</a></li>
-						<li><a href="ce-programas.php">Programas de Estudios</a></li>
 						<li><a href="ce-ciclos-escolares.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Ciclos Escolares</a></li>
 						<li><a href="ce-grados.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>">Grados</a></li>
 						<li><a href="ce-grupos.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>">Grupos</a></li>
@@ -95,7 +93,12 @@
 								<tr>
 	                <th width="15%">Grado</th>
 									<th width="10%">Grupo</th>
+									<?php
+									if (Rol::ROL_REVALIDACION_EQUIVALENCIA != $_SESSION["rol_id"]):
+									 ?>
 									<th width="10%">Turno</th>
+									<?php
+									endif; ?>
 	                <th width="10%">Clave</th>
 									<th width="45%">Asignatura</th>
 	                <th width="10%">Acciones</th>
@@ -144,7 +147,12 @@
 							<tr>
 								<td><?php echo $resultadoAsignatura["data"][$i]["grado"]; ?></td>
 								<td><?php echo $resultadoGrupo["data"]["grupo"]; ?></td>
+								<?php
+								if (Rol::ROL_REVALIDACION_EQUIVALENCIA != $_SESSION["rol_id"]):
+								 ?>
 								<td><?php echo $resultadoTurno["data"]["nombre"]; ?></td>
+								<?php
+								endif; ?>
 								<td><?php echo $resultadoAsignatura["data"][$i]["clave"]; ?></td>
 								<td><?php echo $resultadoAsignatura["data"][$i]["nombre"]; ?></td>
 								<td>

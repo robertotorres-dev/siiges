@@ -7,10 +7,21 @@
 
 	require_once "../models/modelo-programa.php";
 	require_once "../models/modelo-asignatura.php";
+	require_once "../models/modelo-institucion.php";
+
 
 	$programa = new Programa( );
 	$programa->setAttributes( array( "id"=>$_GET["programa_id"] ) );
 	$resultadoPrograma = $programa->consultarId( );
+
+	$plantel = new Plantel( );
+	$plantel->setAttributes( array( "id"=>$resultadoPrograma["data"]["plantel_id"] ) );
+	$resultadoPlantel = $plantel->consultarId();
+
+	$institucion = new Institucion();
+	$institucion->setAttributes( array( "id"=>$resultadoPlantel["data"]["institucion_id"] ) );
+	$resultadoInstitucion = $institucion->consultarId();
+
 ?>
 
 
@@ -51,7 +62,7 @@
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
 						<li><a href="home.php">SIIGES</a></li>
-						<li><a href="ce-programas.php">Programas de Estudios</a></li>
+						<li><a href="ce-programas-plantel.php?institucion_id=<?php echo $resultadoInstitucion["data"]["id"] ?>&plantel_id=<?php echo $resultadoPlantel["data"]["id"] ?>">Programas de Estudios</a></li>
 						<li><a href="ce-ciclos-escolares.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Ciclos Escolares</a></li>
 						<li class="active">Grados</li>
 					</ol>

@@ -10,6 +10,7 @@
 	require_once "../models/modelo-persona.php";
 	require_once "../models/modelo-pais.php";
 	require_once "../models/modelo-situacion.php";
+	require_once "../models/modelo-tipo-tramite.php";
 
 	$programa = new Programa( );
 	$programa->setAttributes( array( "id"=>$_GET["programa_id"] ) );
@@ -94,9 +95,12 @@
 					<!-- BARRA DE NAVEGACION -->
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
-						<li><a href="home.php">SIIGES</a></li>
 						<li><a href="ce-programas.php">Programas de Estudios</a></li>
+						<?php if( Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] ){ ?>
+						<li><a href="ce-alumnos-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Alumnos</a></li>
+						<?php } else { ?>
 						<li><a href="ce-alumnos.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Alumnos</a></li>
+						<?php } ?>
 						<li class="active"><?php echo $titulo; ?></li>
 					</ol>
 				</div>
@@ -157,7 +161,7 @@
 					<div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="apellido_materno">Apellido Materno</label>
-							<input type="text" id="apellido_materno" name="apellido_materno" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["apellido_materno"] : ""; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="apellido_materno" name="apellido_materno" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["apellido_materno"] : ""; ?>" maxlength="255" class="form-control" />
 						</div>
           </div>
         </div>
@@ -215,11 +219,42 @@
 					<div class="col-sm-4">
 						<div class="form-group">
 							<label class="control-label" for="matricula">Matr&iacute;cula</label>
-							<input type="text" id="matricula" name="matricula" value="<?php echo (isset($resultadoPersona)) ? $resultadoAlumno["data"]["matricula"] : ""; ?>" maxlength="255" class="form-control" required />
+							<input type="text" id="matricula" name="matricula" value="<?php echo (isset($resultadoPersona)) ? $resultadoAlumno["data"]["matricula"] : ""; ?>" maxlength="255" class="form-control"
+							<?php if( Rol::ROL_REVALIDACION_EQUIVALENCIA != $_SESSION["rol_id"] ): echo 'required'; endif; ?> />
 						</div>
 					</div>
 					<div class="col-sm-4">
             <div class="form-group">
+							<?php if( Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] ): ?>
+
+							<label class="control-label" for="revalidacion_equivalencia">Tipo de tr&aacute;mite</label>
+							<select onchange="changeFunc(
+							<?php
+							echo (isset($json) ? htmlentities($json) : "");
+							 ?>
+							 );" id="tipo_tramite_id" name="tipo_tramite_id" class="selectpicker" data-live-search="true" data-width="100%" required>
+								<option value=""> </option>
+								<?php
+									$tipoTramite = new TipoTramite( );
+									$tipoTramite->setAttributes( array( ) );
+									$resultadoTipoTramite = $tipoTramite->consultarTodos( );
+
+									$max = count( $resultadoTipoTramite["data"] );
+
+									for( $i=0; $i<$max; $i++ )
+									{
+										if( $resultadoTipoTramite["data"][$i]["id"]==$resultadoAlumno["data"]["tipo_tramite_id"] )
+										{
+											echo "<option value='".$resultadoTipoTramite["data"][$i]["id"]."' selected>".$resultadoTipoTramite["data"][$i]["nombre"]."</option>";
+										}
+										else
+										{
+										  echo "<option value='".$resultadoTipoTramite["data"][$i]["id"]."'>".$resultadoTipoTramite["data"][$i]["nombre"]."</option>";
+										}
+									}
+								?>
+							</select>
+							<?php endif; ?>
 						</div>
           </div>
         </div>
@@ -277,7 +312,7 @@
 				<?php endif;?>
 
 				<!-- Rol control escolar IES y Representante legal no pueden editar el estatus del alumno -->
-				<?php if( Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] ): ?>
+				<?php if( Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] || Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] ): ?>
 				<div class="row">
 					<div class="col-sm-4">
             <div class="form-group">
@@ -308,10 +343,11 @@
 											}
 										}
 									} else {
-										echo "<option value='1' selected>"."Inactivo"."</option>";
+										echo "<option value='2' selected>"."Inactivo"."</option>";
 									}
 								?>
 							</select>
+							<input type="hidden" id="situacion_id" name="situacion_id" value="<?php echo (isset($resultadoAlumno["data"]["situacion_id"]) ? $resultadoAlumno["data"]["situacion_id"] : "2"); ?>" />
 						</div>
           </div>
 					<?php if ( isset($resultadoAlumno["data"]["situacion_id"]) && $resultadoAlumno["data"]["situacion_id"] == "4"): ?>
@@ -340,7 +376,11 @@
 							<input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" />
 							<input type="hidden"  name="webService" value="guardarAlumnoPersona" />
 							<input type="hidden"  name="proceso" value="<?php echo $_GET["proceso"]; ?>" />
+							<?php if( Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] ){ ?>
+							<input type="hidden"  name="url" value="../views/ce-alumnos-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&codigo=200" />
+							<?php } else { ?>
 							<input type="hidden"  name="url" value="../views/ce-alumnos.php?programa_id=<?php echo $_GET["programa_id"]; ?>&codigo=200" />
+							<?php } ?>
 						</div>
           </div>
         </div>

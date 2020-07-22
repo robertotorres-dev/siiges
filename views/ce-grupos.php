@@ -8,10 +8,21 @@
 	require_once "../models/modelo-programa.php";
 	require_once "../models/modelo-grupo.php";
 	require_once "../models/modelo-turno.php";
+	require_once "../models/modelo-institucion.php";
+
 
 	$programa = new Programa( );
 	$programa->setAttributes( array( "id"=>$_GET["programa_id"] ) );
 	$resultadoPrograma = $programa->consultarId( );
+
+	$plantel = new Plantel( );
+	$plantel->setAttributes( array( "id"=>$resultadoPrograma["data"]["plantel_id"] ) );
+	$resultadoPlantel = $plantel->consultarId();
+
+	$institucion = new Institucion();
+	$institucion->setAttributes( array( "id"=>$resultadoPlantel["data"]["institucion_id"] ) );
+	$resultadoInstitucion = $institucion->consultarId();
+
 ?>
 
 
@@ -51,8 +62,7 @@
 					<!-- BARRA DE NAVEGACION -->
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
-						<li><a href="home.php">SIIGES</a></li>
-						<li><a href="ce-programas.php">Programas de Estudios</a></li>
+						<li><a href="ce-programas-plantel.php?institucion_id=<?php echo $resultadoInstitucion["data"]["id"] ?>&plantel_id=<?php echo $resultadoPlantel["data"]["id"] ?>">Programas de Estudios</a></li>
 						<li><a href="ce-ciclos-escolares.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Ciclos Escolares</a></li>
 						<li><a href="ce-grados.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>">Grados</a></li>
 						<li class="active">Grupos</li>
@@ -93,9 +103,15 @@
 								<tr>
 	                <th width="15%">Grado</th>
 									<th width="15%">Grupo</th>
+									<?php
+									if (Rol::ROL_REVALIDACION_EQUIVALENCIA != $_SESSION["rol_id"]):
+									 ?>
 	                <th width="15%">Turno</th>
 									<th width="35%">Generaci&oacute;n</th>
-	                <th width="10%">Acciones</th>
+									<?php
+									endif;
+									 ?>
+									<th width="10%">Acciones</th>
 									<th width="10%">Acciones</th>
 								</tr>
 							</thead>
@@ -121,15 +137,20 @@
 							<tr>
 								<td><?php echo $resultadoGruposCicloGrado["data"][$i]["grado"]; ?></td>
 								<td><?php echo $resultadoGruposCicloGrado["data"][$i]["grupo"]; ?></td>
+								<?php
+								if (Rol::ROL_REVALIDACION_EQUIVALENCIA != $_SESSION["rol_id"]):
+								 ?>
 								<td><?php echo $resultadoTurno["data"]["nombre"]; ?></td>
 								<td><?php echo $resultadoGruposCicloGrado["data"][$i]["generacion"]; ?></td>
+								<?php
+								endif; ?>
 								<td>
 									<a href="ce-catalogo-grupo.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $resultadoGruposCicloGrado["data"][$i]["id"]; ?>&proceso=consulta"><span id="" title="Abrir" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
 									<a href="ce-catalogo-grupo.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $resultadoGruposCicloGrado["data"][$i]["id"]; ?>&proceso=edicion"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a>
 									<a href="#" data-toggle="modal" data-target="#modalEliminar"><span id="" title="Eliminar" class="glyphicon glyphicon-trash col-sm-1 size_icon"></span></a>
 								</td>
 								<td>
-									<a href="ce-inscripcion.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $resultadoGruposCicloGrado["data"][$i]["id"]; ?>">Inscripci&oacute;n</a>
+									<a href="ce-inscripcion.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $resultadoGruposCicloGrado["data"][$i]["id"]; ?>">Inscripci&oacute;n</a><br>
 									<a href="ce-asignaturas.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $resultadoGruposCicloGrado["data"][$i]["id"]; ?>">Acreditaci&oacute;n</a>
 								</td>
 							</tr>

@@ -78,8 +78,6 @@
 					<!-- BARRA DE NAVEGACION -->
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
-						<li><a href="home.php">SIIGES</a></li>
-						<li><a href="ce-programas.php">Programas de Estudios</a></li>
 						<li><a href="ce-ciclos-escolares.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Ciclos Escolares</a></li>
 						<li><a href="ce-grados.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>">Grados</a></li>
 						<li><a href="ce-grupos.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>">Grupos</a></li>
@@ -134,6 +132,22 @@
 							<input type="text" id="grado" name="grado" value="<?php echo $_GET["grado"]; ?>" maxlength="11" class="form-control" required readonly />
 						</div>
           </div>
+					<?php
+					if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
+					?>
+					<div class="col-sm-4">
+            <div class="form-group">
+							<label class="control-label" for="grupo">Grupo</label>
+							<select id="grupo" name="grupo" value="<?php echo (isset($resultadoGrupo["data"]["grupo"])) ? $resultadoGrupo["data"]["grupo"] : ""; ?>" maxlength="255" class="form-control" required >
+								<option value=""> </option>
+								<option value="UNICO" <?php if (isset($resultadoGrupo["data"]["grupo"])) { if( $resultadoGrupo["data"]["grupo"]=="UNICO" ) { echo "selected"; }} ?>>UNICO</option>
+							</select>
+						</div>
+          </div>
+					<?php }
+					else
+					{ ?>
+
 					<div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="grupo">Grupo</label>
@@ -189,6 +203,7 @@
           </div>
         </div>
 				<?php
+					}
 					if( $_GET["proceso"]!="consulta" )
 					{
 				?>

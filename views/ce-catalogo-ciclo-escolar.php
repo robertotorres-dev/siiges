@@ -116,6 +116,14 @@
 				<div class="row">
           <div class="col-sm-4">
             <div class="form-group">
+							<?php if(Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] ){ ?>
+
+							<label class="control-label" for="nombre">Equivalencias</label>
+							<select id="nombre" name="nombre" value="<?php echo (isset($resultadoCicloEscolar)) ? $resultadoCicloEscolar["data"]["nombre"] : ""; ?>" maxlength="255" class="form-control" required >
+								<option value=""> </option>
+								<option value="EQUIV" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="EQUIV" ) { echo "selected"; }} ?>>EQUIV</option>
+							</select>
+							<?php } else { ?>
 							<label class="control-label" for="nombre">Nombre de Ciclo Escolar</label>
 							<select id="nombre" name="nombre" value="<?php echo (isset($resultadoCicloEscolar)) ? $resultadoCicloEscolar["data"]["nombre"] : ""; ?>" maxlength="255" class="form-control" required >
 								<option value=""> </option>
@@ -135,6 +143,7 @@
 								<option value="2020B" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2020B" ) { echo "selected"; }} ?>>2020B</option>
 								<option value="2020C" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2020C" ) { echo "selected"; }} ?>>2020C</option>
 							</select>
+							<?php } ?>
 						</div>
           </div>
 					<div class="col-sm-8">

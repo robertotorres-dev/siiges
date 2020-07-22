@@ -1,33 +1,17 @@
 <?php
   /**
-  * Clase que gestiona métodos de la tabla roles
+  * Clase que gestiona métodos de la tabla situaciones
   */
 
   require_once "base-catalogo.php";
 
-	define( "TABLA_ROLES", "roles" );
+	define( "TABLA_TIPO_TRAMITE", "tipo_tramite" );
 
-  class Rol extends Catalogo
+  class TipoTramite extends Catalogo
   {
     protected $id;
     protected $nombre;
     protected $descripcion;
-
-    const ROL_NUEVO = 1;
-    const ROL_ADMIN = 2;
-    const ROL_REPRESENTANTE_LEGAL = 3;
-    const ROL_GESTOR = 4;
-    const ROL_EVALUADOR = 5;
-    const ROL_INSPECTOR = 6;
-    const ROL_CONTROL_DOCUMENTAL = 7;
-    const ROL_SICYT_LECTURA = 8;
-    const ROL_SICYT_EDITAR = 9;
-    const ROL_JEFE_INSPECCION = 11;
-    const ROL_JEFE_EVALUACION = 10;
-    const ROL_CONTROL_ESCOLAR_IES = 12;
-    const ROL_CONTROL_ESCOLAR_SICYT = 13;
-    const ROL_REVALIDACION_EQUIVALENCIA = 14;
-
 
 		// Constructor
 		public function __construct( )
@@ -49,7 +33,7 @@
 		// Método para consultar todos los registros
     public function consultarTodos( )
     {
-      $resultado = parent::consultarTodosCatalogo( TABLA_ROLES );
+      $resultado = parent::consultarTodosCatalogo( TABLA_TIPO_TRAMITE );
 			return $resultado;
     }
 
@@ -57,7 +41,7 @@
 		// Método para consultar registro por id
 		public function consultarId( )
     {
-      $resultado = parent::consultarIdCatalogo( TABLA_ROLES );
+      $resultado = parent::consultarIdCatalogo( TABLA_TIPO_TRAMITE );
 			return $resultado;
     }
 
@@ -65,7 +49,7 @@
 		// Método para guardar registro
 		public function guardar( )
     {
-			$resultado = parent::guardarCatalogo( TABLA_ROLES );
+			$resultado = parent::guardarCatalogo( TABLA_TIPO_TRAMITE );
 			return $resultado;
     }
 
@@ -73,7 +57,7 @@
 		// Método para eliminar registro
 		public function eliminar( )
     {
-			$resultado = parent::eliminarCatalogo( TABLA_ROLES );
+			$resultado = parent::eliminarCatalogo( TABLA_TIPO_TRAMITE );
 			return $resultado;
     }
 
