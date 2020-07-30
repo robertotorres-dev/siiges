@@ -846,6 +846,7 @@ function getParameterByName(name) {
 var Plantel = {};
 Plantel.getInformacion = function(){
   var dt = getParameterByName('dt');
+  var solicitud = getParameterByName('solicitud');
   //condición si está en view plantel o en solicitud
   if ($('#id').val()) {
     var id = $('#id').val();
@@ -861,9 +862,8 @@ Plantel.getInformacion = function(){
     type: "POST",
     url: url,
     dataType : "json",
-    data: (webSer == "datosSolicitud") ? {webService:webSer,url:"",solicitud_id:dt} : {webService:webSer,url:"",id:id},
+    data: (webSer == "datosSolicitud") ? {webService:webSer,url:"",solicitud_id:solicitud} : {webService:webSer,url:"",id:id},
     success:function(respuesta){
-      console.log(respuesta);
       if (respuesta.data.programa || respuesta.data.domicilio) {
         if (dt) {
           domicilio = respuesta.data.programa.plantel.domicilio;

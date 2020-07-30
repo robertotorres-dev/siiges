@@ -5,7 +5,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
 //====================================================================================================
   if(isset($_GET['tps'])){
     $_GET['tps'] = (int)$_GET['tps'];
-    echo $_GET['tps'];
+    //echo $_GET['tps'];
   }
 
   if( !isset($_GET['tps']) || $_GET['tps']==null || $_GET['tps'] > 6 || is_string($_GET['tps']) ){
@@ -324,7 +324,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     </div>
                   </div>
                   <!-- Director -->
-                  <?php if( $_GET['tps'] == 1 || $_GET['tps'] == 2 ) { ?>
+                  <?php if( $_GET['tps'] == 1 || $_GET['tps'] == 2 || $_GET['tps'] == 3 ) { ?>
                   <div class="panel panel-default">
                     <div class="panel-heading">
                       <h4 class="panel-tittle">
@@ -584,57 +584,6 @@ Utileria::validarSesion( basename( __FILE__ ) );
                       </div>
                     </div>
                   </div>
-                  <?php } else if ($_GET['tps'] == 3) { ?>
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h4 class="panel-tittle">
-                        <a data-parent="#acordion" data-toggle="collapse" href="#director" aria-expanded="false" aria-controls="director" class="collapsed">Director *</a>
-                        <button type="button" class="collpase-button collapsed" data-parent="#acordion" data-toggle="collapse" href="#director" aria-expanded="false"></button>
-                      </h4>
-                    </div>
-                    <div id="director" class="panel-collapse collapse">
-                      <div class="panel-body">
-                        <!-- Datos generales  -->
-                        <div class="form-group">
-                          <div class="col-sm-col-md-12">
-                            <h2>Datos generales director</h2>
-                            <input type="hidden" id="id-director" value="">
-                            <hr class="red">
-                          </div>
-                          <div class="col-sm-6 col-md-6">
-                            <label class="control-label" for="">Nombre(s)</label><br>
-                            <input type="text" id="nombre_director" name="DIRECTOR-nombre" class="form-control revision" campo="Nombre del director" ubicacion="Datos generales apartado Director" value="" placeholder="Nombre del director" >
-                          </div>
-                          <div class="col-sm-6 col-md-6">
-                            <label class="control-label" for="">Apellido paterno</label><br>
-                            <input type="text" id="apellido_paterno_director" name="DIRECTOR-apellido_paterno" class="form-control revision" campo="Apellido paterno del director" ubicacion="Datos generales apartado Director" value="" placeholder="Apellido paterno del director" >
-                          </div>
-                          <div class="col-sm-6 col-md-6">
-                            <label class="control-label" for="">Apellido materno</label><br>
-                            <input type="text" id="apellido_materno_director" name="DIRECTOR-apellido_materno" class="form-control revision" campo="Apellido materno del director" value="" placeholder="Apellido materno del director" >
-                          </div>
-                          <div class="col-sm-6 col-md-2">
-                            <label class="control-label" for="">Nacionalidad</label><br>
-                            <input type="text" id="nacionalidad_director" name="DIRECTOR-nacionalidad" class="form-control" campo="Nacionalidad del director" ubicacion="Datos generales apartado Director" value="" placeholder="Mexicano" >
-                          </div>
-                          <div class="col-sm-6 col-md-4">
-                            <label class="control-label" for="">Clave CURP</label><br>
-                            <input type="text" id="curp_director" name="DIRECTOR-curp" class="form-control" value="" placeholder="CURP del director" >
-
-                          </div>
-                          <div class="col-sm-6 col-md-3">
-                            <label class="control-label" for="">Género</label><br>
-                            <select class="form-control" campo="Genero del director" ubicacion="Datos generales apartado Director" id="sexo_director" name="DIRECTOR-sexo">
-                              <option value="">Seleccione una opción</option>
-                              <option value="Masculino">Masculino</option>
-                              <option value="Femenino">Femenino</option>
-                            </select>
-                            <br>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                   <?php } ?>
                 </div>
               </div>
@@ -743,7 +692,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     </div>
                   </div>
 
-                  <?php if( $_GET['tps'] == 1 || $_GET['tps'] == 2  ) {  ?>
+                  
                   <!-- Estudios de pertinencia y oferta/demanda -->
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -834,7 +783,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                       </div>
                     </div>
                   </div>
-
+                  <?php if( $_GET['tps'] == 1 || $_GET['tps'] == 2  ) {  ?>
                   <!-- Perfil de ingreso/egreso -->
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -2714,13 +2663,19 @@ Utileria::validarSesion( basename( __FILE__ ) );
                 <input type="hidden" id="editar" value="<?=$_GET["editar"]?>">
                 <input type="hidden" id="id_solicitud"  name="SOLICITUD-id" value="<?= $_GET["solicitud"] ?>">
                 <input type="hidden" id="estatus_solicitud" name="SOLICITUD-estatus_solicitud_id" value="1" />
-                <input type="hidden" id="estatus" name="SOLICITUD-tipo_solicitud_id" value="<?= $_GET["tps"] ?>" />
-                  <?php if ([$_SESSION][0]["rol_id"] == 3){?>
-                  <!-- Fin de convocatoria 2019 -->
-                  <button id="btnTerminar" type="button" class="btn btn-primary pull-right" onclick="Solicitud.camposLlenos()" >Terminar solicitud</button>
-                  <?php } ?>
+                <input type="hidden" id="type" name="SOLICITUD-tipo_solicitud_id" value="<?= $_GET["tps"] ?>" />
+                <input type="hidden" id="id_usuario" value="<?=$_SESSION["id"]?>" />
+                <?php if ([$_SESSION][0]["rol_id"] == 3){?>
+                <!-- Fin de convocatoria 2019 -->
+                <button id="btnTerminar" type="button" class="btn btn-primary pull-right" onclick="Solicitud.camposLlenos()" >Terminar solicitud</button>
+                <?php } ?>
                 <button id="btnGuardar" type="button" name="" class="btn btn-default pull-right" style="margin-right: 10px;" onclick="limpiarInputs()" > Guardar solicitud</button>
                 <!-- Filtrar informacion a cargar  -->
+                <input type="hidden" id="opcionSolicitud" name="opcionSolicitud" value="">
+                <input type="hidden" id="informacionCargar" value="2">
+                <input type="hidden" id="datosNecesarios" value="<?= $_GET["dt"] ?>">
+                <input type="hidden" id="auxmodalidad" value="<?= $_GET["modalidad"] ?>">
+                <input type="hidden" id="masDatos" value="<?= $_GET["odt"] ?>">
               </div>
 
             </div>

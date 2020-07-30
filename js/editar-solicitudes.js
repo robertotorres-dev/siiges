@@ -21,7 +21,6 @@ TerminarSolicitud.getEstatusSolicitud = function() {
             //$("#btnTerminar").attr("disabled",false)
             //$("#btnGuardar").attr("disabled",false)
           }
-
           if($("#editar").val()==0)
           {
             //$("#btnGuardar").attr("disabled",true);
@@ -31,10 +30,12 @@ TerminarSolicitud.getEstatusSolicitud = function() {
       }
       // Si es el primer guardado de la solicitud, no tiene estatus y se muestra el mensaje de tiempo fuera de la solicitud
        else
-       {
-        $("#modalConvocatoria").modal()
-        $("#tamanoModalConvocatoria").attr("style","margin-top:80px;")
-        $("#mensajeConvocatoriaExpirada").addClass("alert alert-danger")
+      {
+        if ($("#type").val() == 1) {
+          $("#modalConvocatoria").modal()
+          $("#tamanoModalConvocatoria").attr("style","margin-top:80px;")
+          $("#mensajeConvocatoriaExpirada").addClass("alert alert-danger")
+        }
       }
    },
    error : function(respuesta,errmsg,err) {
@@ -515,7 +516,6 @@ EditarSolicitud.getSolicitud = function() {
              }
             }
             var asignaturas = respuesta.data.asignaturas;
-            console.log(respuesta.data.asignaturas);
             if( asignaturas != undefined ){
               for (var n = 0; n < asignaturas.length; n++) {
                 var filaAsignatura;
@@ -679,7 +679,6 @@ EditarSolicitud.getSolicitud = function() {
                 }
               }
             }
-
           }//Termina Programa
 
           //Datos del plantel
@@ -851,8 +850,6 @@ EditarSolicitud.getSolicitud = function() {
                 }
 
             }
-
-
 
           }//Termina plantel
 

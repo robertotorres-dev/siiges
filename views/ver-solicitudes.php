@@ -310,7 +310,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     </div>
                   </div>
                   <!-- Director -->
-                  <?php if( $_GET['tps'] == 1 || $_GET['tps'] == 2 ) { ?>
+                  <?php if( $_GET['tps'] == 1 || $_GET['tps'] == 2 || $_GET['tps'] == 3 ) { ?>
                   <div class="panel panel-default">
                     <div class="panel-heading">
                       <h4 class="panel-tittle">
@@ -576,7 +576,6 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     </div>
                   </div>
 
-                  <?php if( $_GET['tps'] == 1 || $_GET['tps'] == 2  ) {  ?>
                   <!-- Estudios de pertinencia y oferta/demanda -->
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -661,7 +660,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                       </div>
                     </div>
                   </div>
-
+                  <?php if( $_GET['tps'] == 1 || $_GET['tps'] == 2  ) {  ?>
                   <!-- Perfil de ingreso/egreso -->
                   <div class="panel panel-default">
                     <div class="panel-heading">

@@ -247,7 +247,6 @@ session_start();
     $resultado["message"] = "OK";
     $url = "";
 
-
     $aux = new Utileria( );
     $_POST = $aux->limpiarEntrada( $_POST );
     if(isset($_POST["solicitud_id"]))
@@ -570,7 +569,7 @@ session_start();
                 $resultado["data"]["documentos"]["propuesta_hemerobibliografica"] =$res_propuestaHemerobibliografica["data"][0];
               }
 
-              if ($res_solicitud["tipo_solicitud_id"] != 3) {
+              if ($res_solicitud["tipo_solicitud_id"] != 3 && isset($resultado["data"]["programa"]["trayectoria"])) {
                 $informeResultados = new Documento();
                 $res_informeResultados = $informeResultados->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["TRAYECTORIA"],"entidad_id"=>$resultado["data"]["programa"]["trayectoria"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["archivo_informe_resultados_trayectoria_educativa"],"deleted_at"),"*");
                 if (sizeof($res_informeResultados["data"])>0)

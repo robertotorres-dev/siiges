@@ -1365,7 +1365,6 @@ $(document).ready(function ($) {
                   $("#modalidad_id").attr("disabled",true);
               }
               console.log('Todo listo para cargar la informacion necesaria');
-
               //Carga la informacion del plantel seleccionado previamente en mis solicitudes
               if( $("#informacionCargar").val() == 1  && $("#datosNecesarios").val() > 0){
                     document.getElementById("cargando").style.display = "block";

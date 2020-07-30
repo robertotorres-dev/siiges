@@ -88,140 +88,138 @@
 
 			<!-- CUERPO PRINCIPAL -->
 			<form name="form1" method="post" action="../controllers/control-grupo.php">
-			<div class="col-sm-12 col-md-12 col-lg-12">
-				<!-- TÍTULO -->
-				<h2 id="txtNombre"><?php echo $titulo; ?></h2>
-				<hr class="red">
-				<div class="row">
-          <div class="col-sm-12">
-						<legend><?php echo $resultadoPrograma["data"]["nombre"]; ?></legend>
+				<div class="col-sm-12 col-md-12 col-lg-12">
+					<!-- TÍTULO -->
+					<h2 id="txtNombre"><?php echo $titulo; ?></h2>
+					<hr class="red">
+					<div class="row">
+						<div class="col-sm-12">
+							<legend><?php echo $resultadoPrograma["data"]["nombre"]; ?></legend>
+						</div>
 					</div>
-				</div>
-				<!-- NOTIFICACIÓN -->
-				<?php if( isset( $_GET["codigo"] ) && $_GET["codigo"]==200 ){ ?>
-        <div class="alert alert-success">
-					<p>Registro guardado.</p>
-        </div>
-        <?php } ?>
-				<?php if( isset( $_GET["codigo"] ) && $_GET["codigo"]==404 ){ ?>
-        <div class="alert alert-danger">
-					<p>La matr&iacute;cula ingresada no existe.</p>
-        </div>
-        <?php } ?>
-				<!-- CONTENIDO -->
-				<div class="row">
-          <div class="col-sm-4">
-            <div class="form-group">
-							<label class="control-label" for="id">Id</label>
-							<input type="text" id="id" name="id" value="<?php echo (isset($resultadoGrupo["data"]["id"])) ? $resultadoGrupo["data"]["id"] : ""; ?>" maxlength="11" class="form-control" readonly />
+					<!-- NOTIFICACIÓN -->
+					<?php if( isset( $_GET["codigo"] ) && $_GET["codigo"]==200 ){ ?>
+					<div class="alert alert-success">
+						<p>Registro guardado.</p>
+					</div>
+					<?php } ?>
+					<?php if( isset( $_GET["codigo"] ) && $_GET["codigo"]==404 ){ ?>
+					<div class="alert alert-danger">
+						<p>La matr&iacute;cula ingresada no existe.</p>
+					</div>
+					<?php } ?>
+					<!-- CONTENIDO -->
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="control-label" for="id">Id</label>
+								<input type="text" id="id" name="id" value="<?php echo (isset($resultadoGrupo["data"]["id"])) ? $resultadoGrupo["data"]["id"] : ""; ?>" maxlength="11" class="form-control" readonly />
+							</div>
 						</div>
-          </div>
-					<div class="col-sm-4">
-            <div class="form-group">
-							<label class="control-label" for="ciclo_escolar_id">Ciclo Escolar Id</label>
-							<input type="text" id="ciclo_escolar_id" name="ciclo_escolar_id" value="<?php echo $_GET["ciclo_id"]; ?>" maxlength="11" class="form-control" required readonly />
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="control-label" for="ciclo_escolar_id">Ciclo Escolar Id</label>
+								<input type="text" id="ciclo_escolar_id" name="ciclo_escolar_id" value="<?php echo $_GET["ciclo_id"]; ?>" maxlength="11" class="form-control" required readonly />
+							</div>
 						</div>
-          </div>
-					<div class="col-sm-4">
-          </div>
-        </div>
-				<div class="row">
-          <div class="col-sm-4">
-            <div class="form-group">
-							<label class="control-label" for="grado">Grado</label>
-							<input type="text" id="grado" name="grado" value="<?php echo $_GET["grado"]; ?>" maxlength="11" class="form-control" required readonly />
+						<div class="col-sm-4">
 						</div>
-          </div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="control-label" for="grado">Grado</label>
+								<input type="text" id="grado" name="grado" value="<?php echo $_GET["grado"]; ?>" maxlength="11" class="form-control" required readonly />
+							</div>
+						</div>
+						<?php
+						if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
+						?>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="control-label" for="grupo">Grupo</label>
+								<select id="grupo" name="grupo" value="<?php echo (isset($resultadoGrupo["data"]["grupo"])) ? $resultadoGrupo["data"]["grupo"] : ""; ?>" maxlength="255" class="form-control" required >
+									<option value=""> </option>
+									<option value="UNICO" <?php if (isset($resultadoGrupo["data"]["grupo"])) { if( $resultadoGrupo["data"]["grupo"]=="UNICO" ) { echo "selected"; }} ?>>UNICO</option>
+								</select>
+							</div>
+						</div>
+						<?php }
+						else
+						{ ?>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="control-label" for="grupo">Grupo</label>
+								<input type="text" id="grupo" name="grupo" value="<?php echo (isset($resultadoGrupo["data"]["grupo"])) ? $resultadoGrupo["data"]["grupo"] : ""; ?>" maxlength="255" class="form-control" required />
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="txt-label1" for="turno_id">Turno</label>
+								<select id="turno_id" name="turno_id" class="selectpicker" data-live-search="true" data-width="100%" required>
+									<option value=""> </option>
+									<?php
+										$turno = new Turno( );
+										$turno->setAttributes( array( ) );
+										$resultadoTurno = $turno->consultarTodos( );
+
+										$max = count( $resultadoTurno["data"] );
+
+										for( $i=0; $i<$max; $i++ )
+										{
+											if( $resultadoTurno["data"][$i]["id"]==$resultadoGrupo["data"]["turno_id"] )
+											{
+											echo "<option value='".$resultadoTurno["data"][$i]["id"]."' selected>".$resultadoTurno["data"][$i]["nombre"]."</option>";
+											}
+											else
+											{
+											echo "<option value='".$resultadoTurno["data"][$i]["id"]."'>".$resultadoTurno["data"][$i]["nombre"]."</option>";
+											}
+										}
+									?>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="control-label" for="generacion">Generaci&oacute;n</label>
+								<input type="text" id="generacion" name="generacion" value="<?php echo (isset($resultadoGrupo["data"]["generacion"])) ? $resultadoGrupo["data"]["generacion"] : ""; ?>" maxlength="255" class="form-control" required />
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="control-label" for="generacion_fecha_inicio">Fecha de Inicio de Generaci&oacute;n</label>
+								<input type="text" id="generacion_fecha_inicio" name="generacion_fecha_inicio" value="<?php echo (isset($resultadoGrupo["data"]["generacion_fecha_inicio"])) ? $resultadoGrupo["data"]["generacion_fecha_inicio"] : ""; ?>" maxlength="10" class="form-control" required />
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="control-label" for="generacion_fecha_fin">Fecha de Fin de Generaci&oacute;n</label>
+								<input type="text" id="generacion_fecha_fin" name="generacion_fecha_fin" value="<?php echo (isset($resultadoGrupo["data"]["generacion_fecha_fin"])) ? $resultadoGrupo["data"]["generacion_fecha_fin"] : ""; ?>" maxlength="10" class="form-control" />
+							</div>
+						</div>
+					</div>
 					<?php
-					if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
+						}
+						if( $_GET["proceso"]!="consulta" )
+						{
 					?>
-					<div class="col-sm-4">
-            <div class="form-group">
-							<label class="control-label" for="grupo">Grupo</label>
-							<select id="grupo" name="grupo" value="<?php echo (isset($resultadoGrupo["data"]["grupo"])) ? $resultadoGrupo["data"]["grupo"] : ""; ?>" maxlength="255" class="form-control" required >
-								<option value=""> </option>
-								<option value="UNICO" <?php if (isset($resultadoGrupo["data"]["grupo"])) { if( $resultadoGrupo["data"]["grupo"]=="UNICO" ) { echo "selected"; }} ?>>UNICO</option>
-							</select>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="form-group">
+								<input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" />
+								<input type="hidden"  name="webService" value="guardar" />
+								<input type="hidden"  name="url" value="../views/ce-grupos.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&codigo=200" />
+							</div>
 						</div>
-          </div>
-					<?php }
-					else
-					{ ?>
-
-					<div class="col-sm-4">
-            <div class="form-group">
-							<label class="control-label" for="grupo">Grupo</label>
-							<input type="text" id="grupo" name="grupo" value="<?php echo (isset($resultadoGrupo["data"]["grupo"])) ? $resultadoGrupo["data"]["grupo"] : ""; ?>" maxlength="255" class="form-control" required />
-						</div>
-          </div>
-					<div class="col-sm-4">
-            <div class="form-group">
-							<label class="txt-label1" for="turno_id">Turno</label>
-							<select id="turno_id" name="turno_id" class="selectpicker" data-live-search="true" data-width="100%" required>
-								<option value=""> </option>
-								<?php
-									$turno = new Turno( );
-									$turno->setAttributes( array( ) );
-									$resultadoTurno = $turno->consultarTodos( );
-
-									$max = count( $resultadoTurno["data"] );
-
-									for( $i=0; $i<$max; $i++ )
-									{
-										if( $resultadoTurno["data"][$i]["id"]==$resultadoGrupo["data"]["turno_id"] )
-										{
-										  echo "<option value='".$resultadoTurno["data"][$i]["id"]."' selected>".$resultadoTurno["data"][$i]["nombre"]."</option>";
-										}
-										else
-										{
-										  echo "<option value='".$resultadoTurno["data"][$i]["id"]."'>".$resultadoTurno["data"][$i]["nombre"]."</option>";
-										}
-									}
-								?>
-							</select>
-						</div>
-          </div>
-        </div>
-				<div class="row">
-          <div class="col-sm-4">
-            <div class="form-group">
-							<label class="control-label" for="generacion">Generaci&oacute;n</label>
-							<input type="text" id="generacion" name="generacion" value="<?php echo (isset($resultadoGrupo["data"]["generacion"])) ? $resultadoGrupo["data"]["generacion"] : ""; ?>" maxlength="255" class="form-control" required />
-						</div>
-          </div>
-					<div class="col-sm-4">
-            <div class="form-group">
-							<label class="control-label" for="generacion_fecha_inicio">Fecha de Inicio de Generaci&oacute;n</label>
-							<input type="text" id="generacion_fecha_inicio" name="generacion_fecha_inicio" value="<?php echo (isset($resultadoGrupo["data"]["generacion_fecha_inicio"])) ? $resultadoGrupo["data"]["generacion_fecha_inicio"] : ""; ?>" maxlength="10" class="form-control" required />
-						</div>
-          </div>
-					<div class="col-sm-4">
-            <div class="form-group">
-							<label class="control-label" for="generacion_fecha_fin">Fecha de Fin de Generaci&oacute;n</label>
-							<input type="text" id="generacion_fecha_fin" name="generacion_fecha_fin" value="<?php echo (isset($resultadoGrupo["data"]["generacion_fecha_fin"])) ? $resultadoGrupo["data"]["generacion_fecha_fin"] : ""; ?>" maxlength="10" class="form-control" />
-						</div>
-          </div>
-        </div>
-				<?php
-					}
-					if( $_GET["proceso"]!="consulta" )
-					{
-				?>
-				<div class="row">
-          <div class="col-sm-12">
-            <div class="form-group">
-							<input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" />
-							<input type="hidden"  name="webService" value="guardar" />
-							<input type="hidden"  name="url" value="../views/ce-grupos.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&codigo=200" />
-						</div>
-          </div>
-        </div>
-				<?php
-					}
-				?>
-			</div>
+					</div>
+					<?php
+						}
+					?>
+				</div>
 			</form>
-
 		</section>
 	</div>
 
