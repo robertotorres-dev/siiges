@@ -2001,7 +2001,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                       </div>
                     </div>
                   </div>
-                  <?php if($_GET['tps'] == 1){ ?>
+                  <?php if($_GET['tps'] == 1 || $_GET['tps'] == 3){ ?>
                   <!-- Programas impartidos -->
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -2443,15 +2443,6 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     <br>
                     <a id="enlace-vinculacion" class="enlaces" href="" target="_blank" >Ver archivo</a>
                   </div>
-                  <!-- Programa de superacion -->
-                  <div class="col-sm-12 col-md-8">
-                    <label class="control-label" for="">Programa de superación</label><br>
-                  </div>
-                  <div class="col-sm-12 col-md-4" id="contendorsuperacion" style="display: none">
-                    <br>
-                    <br>
-                    <a id="enlace-superacion" class="enlaces" href="" target="_blank" >Ver archivo</a>
-                  </div>
                   <!-- Plan mejora -->
                   <div class="col-sm-12 col-md-8">
                     <label class="control-label" for="">Plan de mejora</label><br>
@@ -2471,6 +2462,15 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     <a id="enlace-reglamento" class="enlaces" href="" target="_blank" >Ver archivo</a>
                   </div>
                   <?php } ?>
+                  <!-- Programa de superacion -->
+                  <div class="col-sm-12 col-md-8">
+                    <label class="control-label" for="">Programa de superación</label><br>
+                  </div>
+                  <div class="col-sm-12 col-md-4" id="contendorsuperacion" style="display: none">
+                    <br>
+                    <br>
+                    <a id="enlace-superacion" class="enlaces" href="" target="_blank" >Ver archivo</a>
+                  </div>
                 </div>
               </div>
 

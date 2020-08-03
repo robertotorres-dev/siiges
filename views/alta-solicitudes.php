@@ -2063,7 +2063,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                       </div>
                     </div>
                   </div>
-                  <?php if($_GET["tipo"] == 1){ ?>
+                  <?php if($_GET["tipo"] == 1 || $_GET["tipo"] == 3){ ?>
                   <!-- Programas impartidos -->
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -2444,11 +2444,6 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     <label class="control-label" for="">Proyecto de vinculación y movilidad</label><br>
                     <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PROGRAMA-proyecto_vinculacion" class="form-control"><br>
                   </div>
-                  <!-- Programa de superacion -->
-                  <div class="col-sm-12 col-md-8">
-                    <label class="control-label" for="">Programa de superación</label><br>
-                    <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PROGRAMA-programa_superacion" class="form-control"><br>
-                  </div>
                   <!-- Plan mejora -->
                   <div class="col-sm-12 col-md-8">
                     <label class="control-label" for="">Plan de mejora</label><br>
@@ -2465,6 +2460,11 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PROGRAMA-forma_migratoria" class="form-control"><br>
                   </div>
                   <?php } ?>
+                  <!-- Programa de superacion -->
+                  <div class="col-sm-12 col-md-8">
+                    <label class="control-label" for="">Programa de superación</label><br>
+                    <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PROGRAMA-programa_superacion" class="form-control"><br>
+                  </div>
                 </div>
               </div>
 
