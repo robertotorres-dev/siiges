@@ -1428,7 +1428,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     </div>
                   </div>
                   <?php } ?>
-                  <?php if( ( $_GET['tps'] == 1 &&  $_GET['modalidad'] != 1 ) || ($_GET['tps'] == 2 && $_GET['modalidad'] != 1 ) ) {  ?>
+                  <?php if( ( $_GET['tps'] == 1 &&  $_GET['modalidad'] != 1 ) || ($_GET['tps'] == 2 && $_GET['modalidad'] != 1 ) || ($_GET['tps'] == 3 && $_GET['modalidad'] != 1 ) ) {  ?>
 
                   <!-- Licencias -->
                   <div id="mixta-licencia" class="panel panel-default">

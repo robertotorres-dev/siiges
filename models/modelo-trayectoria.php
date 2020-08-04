@@ -12,7 +12,7 @@
     protected $id;
     protected $programa_seguimiento;
     protected $tipo_tutoria;
-    protected $estadistica_titulacion;
+    protected $estadisticas_titulacion;
     protected $funcion_tutorial;
     protected $modalidades_titulacion;
     protected $tasa_egreso;

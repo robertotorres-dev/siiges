@@ -345,11 +345,10 @@ Solicitud.opciones= function(){
           }
         }
 
-
-        if($("#tipo_solicitud").val() == 1){
+        if($("#tipo_solicitud").val() == 1 || $("#tipo_solicitud").val() == 3){
           $("#opcion-modalidad").show();
         }
-  }else {
+  } else {
     document.getElementById("cargando").style.display = "block";
     $("#opcion-modalidad").hide();
     $("#plantelregistrado").hide();
@@ -358,8 +357,9 @@ Solicitud.opciones= function(){
     Solicitud.promesaProgramas.done(function(){
       var dor = document.getElementById("cargando").style.display = "none";
       var programas = Solicitud.programasRegistrados;
+      console.log(programas);
       var slcPlantel = $("#programas_ids");
-      if( programas != undefined  && programas.length > 0){
+      if( programas != undefined && programas.length > 0){
         console.log(programas);
         for(var i = 0; i<programas.length;i++){
           slcPlantel.append('<option value ="'+programas[i].id+'">'+ programas[i].nombre+" ubicado en: #"+programas[i].domicilio.numero_exterior+" "+programas[i].domicilio.calle+'</option>');
@@ -1378,23 +1378,25 @@ $(document).ready(function ($) {
                     });
               }
               //Carga la informacion del programa seleccionado previamente en mis solicitudes
-              if( ($("#informacionCargar").val() == 2 && $("#datosNecesarios").val() > 0) || ($("#informacionCargar").val() == 3 && $("#datosNecesarios").val() > 0) || ($("#informacionCargar").val() == 4 && $("#datosNecesarios").val() > 0) ){
-                  document.getElementById("cargando").style.display = "block";
-                  Solicitud.modificacionPrograma();
-                  Solicitud.promesaModificacionPrograma.done(function(){
-                    console.log("datos del programa se cargaron");
-                    document.getElementById("cargando").style.display = "none";
-                    // Solicitud.getDatosPlantel(Solicitud.plantelId);
-                    if( $("#informacionCargar").val() == 2){
-                      $("#tipo").val("2");
-                    }else{
-                      $("#tipo").val(Solicitud.tipo_solicitud );
-                    }
-                    if($("#informacionCargar").val() == 4){
-                      Solicitud.inputsDeshabilitados();
-                    }
-
-                  });
+              if ($("#type").val() == 2) {
+                if( ($("#informacionCargar").val() == 2 && $("#datosNecesarios").val() > 0) || ($("#informacionCargar").val() == 3 && $("#datosNecesarios").val() > 0) || ($("#informacionCargar").val() == 4 && $("#datosNecesarios").val() > 0) ){
+                    document.getElementById("cargando").style.display = "block";
+                    Solicitud.modificacionPrograma();
+                    Solicitud.promesaModificacionPrograma.done(function(){
+                      console.log("datos del programa se cargaron");
+                      document.getElementById("cargando").style.display = "none";
+                      // Solicitud.getDatosPlantel(Solicitud.plantelId);
+                      if( $("#informacionCargar").val() == 2){
+                        $("#tipo").val("2");
+                      }else{
+                        $("#tipo").val(Solicitud.tipo_solicitud );
+                      }
+                      if($("#informacionCargar").val() == 4){
+                        Solicitud.inputsDeshabilitados();
+                      }
+  
+                    });
+                }
               }
               })
             .fail(function(){
