@@ -65,39 +65,39 @@
 			$resultado = parent::eliminarCatalogo( TABLA_CALIFICACIONES );
 			return $resultado;
     }
-		
-		
+
+
 		// Método para consultar alumno en asignatura
     public function consultarAlumnoAsignatura( )
     {
       $sql = "select * from " . TABLA_CALIFICACIONES . " where alumno_id='$this->alumno_id' and grupo_id='$this->grupo_id' and asignatura_id='$this->asignatura_id' and tipo='$this->tipo' and deleted_at is null order by id";
-			
+
 			$resultado = parent::consultarSQLCatalogo( $sql );
 			return $resultado;
     }
-		
-		
+
+
 		// Método para consultar calificaciones de alumno
     public function consultarCalificacionesAlumno( )
     {
       $sql = "select * from " . TABLA_CALIFICACIONES . " where alumno_id='$this->alumno_id' and deleted_at is null order by id";
-			
+
 			$resultado = parent::consultarSQLCatalogo( $sql );
 			return $resultado;
     }
-		
-		
+
+
 		// Método para eliminar alumno de asignaturas
     public function eliminarAlumnoGrupoAsignaturas( )
     {
       $this->deleted_at = date( "Y-m-d H:i:s" );
-			
+
 			$sql = "update " . TABLA_CALIFICACIONES . " set deleted_at='$this->deleted_at' where alumno_id='$this->alumno_id' and grupo_id='$this->grupo_id'";
 			$res = $this->mysqli->query( $sql );
-      $max = $res->num_rows;
-			
+      //$max = $res->num_rows;
+
 			$this->mysqli->close( );
-			
+
 			return array(
 			"status"=>"200",
 			"message"=>"OK",

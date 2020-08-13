@@ -8,6 +8,7 @@
   require_once "../models/modelo-alumno-grupo.php";
   require_once "../utilities/utileria-general.php";
 
+  session_start( );
 	function retornarWebService( $url, $resultado )
 	{
     if( $url!="" )
@@ -121,7 +122,7 @@
 				$parametros3["id"] = $resultadoCalificacion["data"][0]["id"];
 				$parametros3["calificacion"] = $_POST["calificacion"][$j];
 				$parametros3["fecha_examen"] = $_POST["fecha_examen"][$j];
-				
+
 				$calificacion2 = new Calificacion( );
 				$calificacion2->setAttributes( $parametros3 );
 				$resultadoCalificacion2 = $calificacion2->guardar( );
@@ -177,7 +178,7 @@
 					$calificacion2->setAttributes( $parametros3 );
 					$resultadoCalificacion2 = $calificacion2->consultarAlumnoAsignatura( );
 
-					$parametros4["id"] = $resultadoCalificacion2["data"][0]["id"];
+					$parametros4["id"] = isset($resultadoCalificacion2["data"][0]["id"]) ? $resultadoCalificacion2["data"][0]["id"] : "";
 					$parametros4["alumno_id"] = $resultadoAlumnoGrupo["data"][$i]["alumno_id"];
 					$parametros4["grupo_id"] = $resultadoAlumnoGrupo["data"][$i]["grupo_id"];
 					$parametros4["asignatura_id"] = $_POST["asignatura_id"];

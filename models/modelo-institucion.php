@@ -18,6 +18,7 @@
     protected $mision;
     protected $valores_institucionales;
     protected $es_nombre_autorizado;
+    protected $clave_ies;
 		// Constructor
 		public function __construct( )
     {

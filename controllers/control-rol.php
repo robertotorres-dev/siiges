@@ -7,7 +7,7 @@
   require_once "../utilities/utileria-general.php";
   require_once "../models/modelo-bitacora.php";
 
-
+  session_start( );
 	function retornarWebService( $url, $resultado )
 	{
     if( $url!="" )
@@ -31,11 +31,11 @@
 		$obj->setAttributes( array( ) );
 		$resultado = $obj->consultarTodos( );
     // Registro en bitacora
-      $bitacora = new Bitacora();
-      $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
-      $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"roles","accion"=>"consultarTodos","lugar"=>"control-rol"]);
-      $result = $bitacora->guardar();
-		retornarWebService( $_POST["url"], $resultado );
+    $bitacora = new Bitacora();
+    $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
+    $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"roles","accion"=>"consultarTodos","lugar"=>"control-rol"]);
+    $result = $bitacora->guardar();
+		retornarWebService( $_POST["url"], $resultado, $usuarioId );
   }
 
   // Web service para consultar registro por id

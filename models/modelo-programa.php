@@ -54,6 +54,7 @@
     protected $calificacion_minima;
     protected $calificacion_maxima;
     protected $calificacion_aprobatoria;
+    protected $calificacion_decimal;
 
 		// Constructor
 		public function __construct( )

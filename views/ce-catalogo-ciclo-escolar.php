@@ -77,7 +77,6 @@
 					<!-- BARRA DE NAVEGACION -->
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
-						<li><a href="home.php">SIIGES</a></li>
 						<li><a href="ce-programas.php">Programas de Estudios</a></li>
 						<li><a href="ce-ciclos-escolares.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Ciclos Escolares</a></li>
 						<li class="active"><?php echo $titulo; ?></li>
@@ -110,23 +109,23 @@
 							<input type="text" id="programa_id" name="programa_id" value="<?php echo $_GET["programa_id"]; ?>" maxlength="11" class="form-control" required readonly />
 						</div>
           </div>
-					<div class="col-sm-4">
-          </div>
         </div>
 				<div class="row">
           <div class="col-sm-4">
             <div class="form-group">
 							<?php if(Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] ){ ?>
-
 							<label class="control-label" for="nombre">Equivalencias</label>
 							<select id="nombre" name="nombre" value="<?php echo (isset($resultadoCicloEscolar)) ? $resultadoCicloEscolar["data"]["nombre"] : ""; ?>" maxlength="255" class="form-control" required >
 								<option value=""> </option>
 								<option value="EQUIV" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="EQUIV" ) { echo "selected"; }} ?>>EQUIV</option>
 							</select>
-							<?php } else { ?>
+						<?php } else { ?>
 							<label class="control-label" for="nombre">Nombre de Ciclo Escolar</label>
 							<select id="nombre" name="nombre" value="<?php echo (isset($resultadoCicloEscolar)) ? $resultadoCicloEscolar["data"]["nombre"] : ""; ?>" maxlength="255" class="form-control" required >
 								<option value=""> </option>
+								<option value="2015A" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2015A" ) { echo "selected"; }} ?>>2015A</option>
+								<option value="2015B" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2015B" ) { echo "selected"; }} ?>>2015B</option>
+								<option value="2015C" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2015C" ) { echo "selected"; }} ?>>2015C</option>
 								<option value="2016A" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2016A" ) { echo "selected"; }} ?>>2016A</option>
 								<option value="2016B" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2016B" ) { echo "selected"; }} ?>>2016B</option>
 								<option value="2016C" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2016C" ) { echo "selected"; }} ?>>2016C</option>

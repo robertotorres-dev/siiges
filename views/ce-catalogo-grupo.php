@@ -167,10 +167,12 @@
 
 										for( $i=0; $i<$max; $i++ )
 										{
-											if( $resultadoTurno["data"][$i]["id"]==$resultadoGrupo["data"]["turno_id"] )
-											{
-											echo "<option value='".$resultadoTurno["data"][$i]["id"]."' selected>".$resultadoTurno["data"][$i]["nombre"]."</option>";
-											}
+										  if (isset($resultadoGrupo["data"]["turno_id"])) {
+												if( $resultadoTurno["data"][$i]["id"]==$resultadoGrupo["data"]["turno_id"] )
+												{
+													echo "<option value='".$resultadoTurno["data"][$i]["id"]."' selected>".$resultadoTurno["data"][$i]["nombre"]."</option>";
+												}
+										  }
 											else
 											{
 											echo "<option value='".$resultadoTurno["data"][$i]["id"]."'>".$resultadoTurno["data"][$i]["nombre"]."</option>";

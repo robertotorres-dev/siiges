@@ -8,6 +8,7 @@
   require_once "../utilities/utileria-general.php";
   require_once "../models/modelo-programa.php";
 
+  session_start( );
 	function retornarWebService( $url, $resultado )
 	{
     if( $url!="" )

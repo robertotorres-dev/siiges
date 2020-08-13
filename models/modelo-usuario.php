@@ -154,7 +154,7 @@
 				unset( $sql );
       }
 			*/
-			
+
 			$sql = "select * from " . TABLA_USUARIOS . " where binary usuario='$this->usuario' and binary contrasena='$this->contrasena' and estatus>1 and deleted_at is null";
 			$res = $this->mysqli->query( $sql );
       $max = $res->num_rows;
@@ -235,7 +235,7 @@
 
 			$res->close( );
       $this->mysqli->close( );
-			
+
 			return $resultado;
     }
 
@@ -260,13 +260,13 @@
 				unset( $sql );
       }
 			*/
-			
+
 			$sql = "select * from " . TABLA_USUARIOS . " where usuario='$this->usuario' and estatus>0 ";
       if( $opcion )
       {
         $sql = "select * from " . TABLA_USUARIOS . " where usuario='$this->usuario'";
       }
-			
+
 			$res = $this->mysqli->query( $sql );
       $max = $res->num_rows;
 
@@ -320,14 +320,14 @@
 				unset( $sql );
       }
 			*/
-			
+
 			$sql = "update " . TABLA_USUARIOS . " set contrasena='$this->contrasena' where md5(usuario)='$this->usuario' and estatus>0";
 			$res = $this->mysqli->query( $sql );
-      $max = $res->num_rows;
-			
+      //$max = $res->num_rows;
+
 			$this->mysqli->close( );
-			
-			return $resultado;
+
+			return $res;
     }
 
 

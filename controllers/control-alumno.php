@@ -8,6 +8,7 @@
   require_once "../models/modelo-persona.php";
   require_once "../utilities/utileria-general.php";
 
+  session_start( );
 	function retornarWebService( $url, $resultado )
 	{
     if( $url!="" )
@@ -104,7 +105,7 @@
 		$alumno->setAttributes( $parametros );
     $resultadoAlumno = $alumno->consultarMatricula( );
 
-		if( $resultadoAlumno["data"][0]["id"] )
+		if( isset($resultadoAlumno["data"][0]["id"]) )
 		{
 		  header( "Location: ../views/ce-catalogo-alumno.php?programa_id=".$_POST["programa_id"]."&alumno_id=".$_POST["id"]."&proceso=".$_POST["proceso"]."&codigo=404" );
 			exit( );
@@ -134,7 +135,7 @@
 		$parametros3["persona_id"] = $resultadoPersona["data"]["id"];
 		$parametros3["situacion_id"] = $_POST["situacion_id"];
 		$parametros3["programa_id"] = $_POST["programa_id"];
-    $parametros3["tipo_tramite_id"] = $_POST["tipo_tramite_id"];
+    $parametros3["tipo_tramite_id"] = isset($_POST["tipo_tramite_id"]) ? $_POST["tipo_tramite_id"] : "" ;
 		$parametros3["matricula"] = $_POST["matricula"];
 		$parametros3["adeudo_materias"] = 0;
 		$parametros3["estatus"] = 1;

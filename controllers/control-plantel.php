@@ -144,10 +144,10 @@
     $resultado = $plantel->guardar();
 
     // Registro en bitacora
-      $bitacora = new Bitacora();
-      $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
-      $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"planteles","accion"=>"guardarInformacion","lugar"=>"control-plantel"]);
-      $result = $bitacora->guardar();
+    $bitacora = new Bitacora();
+    $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
+    $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"planteles","accion"=>"guardarInformacion","lugar"=>"control-plantel"]);
+    $result = $bitacora->guardar();
     retornarWebService( $_POST["url"], $resultado );
   }
 
@@ -170,7 +170,13 @@
     $parametros["id"] = $_POST["plantel_id"];
     $plantel = new Plantel();
     $plantel->setAttributes($parametros);
-    $plantel->guardar();
+    $resultado = $plantel->guardar();
+
+    // Registro en bitacora
+    $bitacora = new Bitacora();
+    $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
+    $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"planteles","accion"=>"actualizarInformacion","lugar"=>"control-plantel"]);
+    $result = $bitacora->guardar();
     retornarWebService( $_POST["url"], $resultado );
   }
 
