@@ -451,7 +451,8 @@ EditarSolicitud.getSolicitud = function() {
                   $('#espejos tr:last').after(filaEspejo);
                 }
               }
-              if(mixta.licencias_software !=""){
+              console.log(mixta.licencias_software);
+              if(mixta.licencias_software != ""){
                 var licencias = JSON.parse(mixta.licencias_software);
                 for( var li = 0; li < licencias.length; li++) {
                   var filaLicencia;

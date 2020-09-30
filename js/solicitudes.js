@@ -328,7 +328,7 @@ Solicitud.redirigir = function(){
 };
 //Muestra y solicita información requerida para iniciar una solicitud (selects en mis-solicitudes)
 Solicitud.opciones= function(){
-  if( $("#tipo_solicitud").val() == 1 ||  $("#tipo_solicitud").val() == 3 || $("#tipo_solicitud").val() == 4  ){
+  if( $("#tipo_solicitud").val() == 1 || $("#tipo_solicitud").val() == 4  ){
         //Muestra select de Planteles
         $("#div-progrmas").hide();
         $("#opcion-modalidad").hide();
@@ -345,13 +345,30 @@ Solicitud.opciones= function(){
           }
         }
 
-        if($("#tipo_solicitud").val() == 1 || $("#tipo_solicitud").val() == 3){
+        if($("#tipo_solicitud").val() == 1){
           $("#opcion-modalidad").show();
         }
-  } else {
+  } else if($("#tipo_solicitud").val() == 2){
     document.getElementById("cargando").style.display = "block";
     $("#opcion-modalidad").hide();
     $("#plantelregistrado").hide();
+    //Cargar programas
+    Solicitud.getProgramasBasicos();
+    Solicitud.promesaProgramas.done(function(){
+      var dor = document.getElementById("cargando").style.display = "none";
+      var programas = Solicitud.programasRegistrados;
+      var slcPlantel = $("#programas_ids");
+      if( programas != undefined && programas.length > 0){
+        for(var i = 0; i<programas.length;i++){
+          slcPlantel.append('<option value ="'+programas[i].id+'">'+ programas[i].nombre+" ubicado en: #"+programas[i].domicilio.numero_exterior+" "+programas[i].domicilio.calle+'</option>');
+        }
+        $("#div-programas").show();
+      }
+      });
+  } else if ($("#tipo_solicitud").val() == 3) {
+    document.getElementById("cargando").style.display = "block";
+    $("#opcion-modalidad").hide();
+
     //Cargar programas
     Solicitud.getProgramasBasicos();
     Solicitud.promesaProgramas.done(function(){
@@ -367,6 +384,22 @@ Solicitud.opciones= function(){
         $("#div-programas").show();
       }
       });
+
+    //Muestra select de Planteles
+    $("#div-progrmas").hide();
+    $("#opcion-modalidad").hide();
+    $("#div-programas").hide();
+    //Agrega las opciones
+    var planteles = Solicitud.plantelesRespuesta;
+    var plantel = $("#planteles");
+    if(planteles != undefined){
+      $("#planteles").empty();
+      $("#plantelregistrado").show();
+      $("#planteles").append("<option value=''>Seleccione una opción</option>");
+      for (var i = 0; i < planteles.length; i++) {
+        plantel.append('<option value ="'+planteles[i].id+'">'+ planteles[i].domicilio.calle+" "+planteles[i].domicilio.numero_exterior+'</option>');
+      }
+    }
   }
 
 };
@@ -668,6 +701,7 @@ Solicitud.getProgramasBasicos = function(){
       dataType: "json",
       data : {webService:"informacionBasica",url:""},
       success: function(respuesta){
+        console.log(respuesta);
         if(respuesta.data != ""){
           Solicitud.programasRegistrados = respuesta.data.programas;
         }
@@ -1366,6 +1400,9 @@ $(document).ready(function ($) {
               }
               console.log('Todo listo para cargar la informacion necesaria');
               //Carga la informacion del plantel seleccionado previamente en mis solicitudes
+              console.log($("#informacionCargar").val());
+              console.log($("#datosNecesarios").val());
+              console.log($("#tipo").val());
               if( $("#informacionCargar").val() == 1  && $("#datosNecesarios").val() > 0){
                     document.getElementById("cargando").style.display = "block";
                     console.log("cargar plantel con id:"+$("#datosNecesarios").val());
@@ -1378,7 +1415,8 @@ $(document).ready(function ($) {
                     });
               }
               //Carga la informacion del programa seleccionado previamente en mis solicitudes
-              if ($("#type").val() == 2) {
+              if ($("#tipo").val() == 2 || $("#tipo").val() == 3) {
+                //infomacion cargar de tipo 3 no trae el valor 2, trae el valor 1, corregir
                 if( ($("#informacionCargar").val() == 2 && $("#datosNecesarios").val() > 0) || ($("#informacionCargar").val() == 3 && $("#datosNecesarios").val() > 0) || ($("#informacionCargar").val() == 4 && $("#datosNecesarios").val() > 0) ){
                     document.getElementById("cargando").style.display = "block";
                     Solicitud.modificacionPrograma();
@@ -1394,7 +1432,7 @@ $(document).ready(function ($) {
                       if($("#informacionCargar").val() == 4){
                         Solicitud.inputsDeshabilitados();
                       }
-  
+
                     });
                 }
               }

@@ -934,6 +934,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                       <option value="Septimo semestre">Septimo</option>
                                       <option value="Octavo semestre">Octavo</option>
                                       <option value="Noveno semestre">Noveno</option>
+                                      <option value="Decimo semestre">Decimo</option>
                                     </optgroup>
                                     <optgroup label="Cuatrimestres">
                                       <option value="Primer cuatrimestre">Primero</option>

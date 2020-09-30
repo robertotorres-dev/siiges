@@ -139,7 +139,8 @@
                     <option value="Sexto semestre" <?php if($resultadoAsignatura["data"][$i]["grado"]==="Sexto semestre"){echo "Selected";}?>>Sexto</option>
                     <option value="Septimo semestre" <?php if($resultadoAsignatura["data"][$i]["grado"]==="Septimo semestre"){echo "Selected";}?>>S&eacuteptimo</option>
                     <option value="Octavo semestre" <?php if($resultadoAsignatura["data"][$i]["grado"]==="Octavo semestre"){echo "Selected";}?>>Octavo</option>
-                    <option value="Noveno semestre" <?php if($resultadoAsignatura["data"][$i]["grado"]==="Noveno semestre"){echo "Selected";}?>>Noveno</option>
+										<option value="Noveno semestre" <?php if($resultadoAsignatura["data"][$i]["grado"]==="Noveno semestre"){echo "Selected";}?>>Noveno</option>
+                    <option value="Decimo semestre" <?php if($resultadoAsignatura["data"][$i]["grado"]==="Decimo semestre"){echo "Selected";}?>>Decimo</option>
                   </optgroup>
                   <optgroup label="Cuatrimestres">
                     <option value="Primer cuatrimestre" <?php if($resultadoAsignatura["data"][$i]["grado"]==="Primer cuatrimestre"){echo "Selected";}?>>Primero</option>

@@ -692,7 +692,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     </div>
                   </div>
 
-                  
+
                   <!-- Estudios de pertinencia y oferta/demanda -->
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -994,6 +994,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                       <option value="Septimo semestre">Septimo</option>
                                       <option value="Octavo semestre">Octavo</option>
                                       <option value="Noveno semestre">Noveno</option>
+                                      <option value="Decimo semestre">Decimo</option>
                                     </optgroup>
                                     <optgroup label="Cuatrimestres">
                                       <option value="Primer cuatrimestre">Primero</option>
@@ -2663,7 +2664,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                 <input type="hidden" id="editar" value="<?=$_GET["editar"]?>">
                 <input type="hidden" id="id_solicitud"  name="SOLICITUD-id" value="<?= $_GET["solicitud"] ?>">
                 <input type="hidden" id="estatus_solicitud" name="SOLICITUD-estatus_solicitud_id" value="1" />
-                <input type="hidden" id="type" name="SOLICITUD-tipo_solicitud_id" value="<?= $_GET["tps"] ?>" />
+                <input type="hidden" id="tipo" name="SOLICITUD-tipo_solicitud_id" value="<?= $_GET["tps"] ?>" />
                 <input type="hidden" id="id_usuario" value="<?=$_SESSION["id"]?>" />
                 <?php if ([$_SESSION][0]["rol_id"] == 3){?>
                 <!-- Fin de convocatoria 2019 -->
