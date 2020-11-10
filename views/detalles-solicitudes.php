@@ -204,15 +204,17 @@
 
 					<h2>Descarga de documentos</h2>
 					<hr class="red">
+					
 					<div class="form-group col-sm-6 col-md-4">
 						<h4>Formatos Administrativos</h4>
 						<a target="_blank" href= <?= "formatos/fda01.php?id=".$_GET["solicitud"] ?>>FDA 01</a><br>
 						<a target="_blank" href= <?= "formatos/fda02.php?id=".$_GET["solicitud"] ?>>FDA 02</a><br>
 						<a target="_blank" href= <?= "formatos/fda03.php?id=".$_GET["solicitud"] ?> id="fda03" >FDA 03</a><br>
-						<a target="_blank" href= <?= "formatos/fda04.php?id=".$_GET["solicitud"] ?>>FDA 04</a><br>
-						<a target="_blank" href= <?= "formatos/fda05.php?id=".$_GET["solicitud"] ?>>FDA 05</a><br>
-						<a target="_blank" href= <?= "formatos/fda06.php?id=".$_GET["solicitud"] ?>>FDA 06</a><br>
+						<a target="_blank" id="fda04"></a><br>
+						<a target="_blank" id="fda05"></a><br>
+						<a target="_blank" id="fda06"></a><br>
 					</div>
+					
 					<div class="form-group col-sm-6 col-md-4">
 						<h4>Formatos Pedagógicos</h4>
 						<a target="_blank" href= <?= "formatos/fdp01.php?id=".$_GET["solicitud"] ?>>FDP 01</a><br>
@@ -222,7 +224,7 @@
 						<a target="_blank" href= <?= "formatos/fdp05.php?id=".$_GET["solicitud"] ?>>FDP 05</a><br>
 						<a target="_blank" href= <?= "formatos/fdp06.php?id=".$_GET["solicitud"] ?>>FDP 06</a><br>
 						<a target="_blank" href= <?= "formatos/fdp07.php?id=".$_GET["solicitud"] ?>>FDP 07</a><br>
-						<a target="_blank" href= <?= "formatos/fdp08.php?id=".$_GET["solicitud"] ?>>FDP 08</a><br>
+						<a target="_blank" href="" id="fdp08"></a><br>
 					</div>
 					<?php if(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] || Rol::ROL_GESTOR == $_SESSION["rol_id"]): ?>
 						<div class="form-group col-sm-6 col-md-4">

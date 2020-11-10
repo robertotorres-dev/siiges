@@ -196,9 +196,50 @@ Solicitudes.getDetalles = function(){
       success: function(respuesta){
 
         if(respuesta.data != ""){
-                   console.log(respuesta);
+          console.log(respuesta);
           respuesta = respuesta.data;
-          var solicitud = respuesta.solicitud;
+          const solicitud = respuesta.solicitud;
+          //Comprobamos que tenga formato correcto
+          const fechaAlta = solicitud.alta.substring(0,10).split("-");
+          const fecha1 = new Date(parseInt(fechaAlta[0]),parseInt(fechaAlta[1]-1),parseInt(fechaAlta[2]))
+          //Al mes se resta 1
+          const fechaConvocatoria2020 = {
+            fechaInicio: new Date(2020,07,24),
+            fechaFin: new Date(2020,11,20)
+          }
+          if (fecha1 < fechaConvocatoria2020.fechaInicio) {
+            const fda04 = document.getElementById('fda04');
+            const fda05 = document.getElementById('fda05');
+            const fda06 = document.getElementById('fda06');
+            const fdp08 = document.getElementById('fdp08');
+
+            fda04.setAttribute('href', `formatos/fda04.php?id=${solicitud.id}`);
+            fda04.innerHTML = 'FDA 04';
+            
+            fda05.setAttribute('href', `formatos/fda05.php?id=${solicitud.id}`);
+            fda05.innerHTML = 'FDA 05';
+
+            fda06.setAttribute('href', `formatos/fda06.php?id=${solicitud.id}`);
+            fda06.innerHTML = 'FDA 06';
+
+            fdp08.setAttribute('href', `formatos/fdp08.php?id=${solicitud.id}`);
+            fdp08.innerHTML = 'FDP 08';
+
+            console.log("Convocatoria anterior");
+          } else if(fecha1 >= fechaConvocatoria2020.fechaInicio && fecha1 <= fechaConvocatoria2020.fechaFin) {
+            const fda04 = document.getElementById('fda04');
+            const fda05 = document.getElementById('fda05');
+            const fda06 = document.getElementById('fda06');
+            const fdp08 = document.getElementById('fdp08');
+
+            fda04.setAttribute('href', `formatos/fda04-2020.php?id=${solicitud.id}`);
+            fda04.innerHTML = 'FDA 04';
+            
+            fda05.setAttribute('href', `formatos/fda05-2020.php?id=${solicitud.id}`);
+            fda05.innerHTML = 'FDA 05';
+
+            console.log("Convocatoria 2020"); 
+          }
           if( solicitud != undefined ){
             $("#tipo_solicitud").val(solicitud.tipo);
             $("#alta_solicitud").val(solicitud.alta.substring(0,10));
