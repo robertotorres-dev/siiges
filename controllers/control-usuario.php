@@ -142,11 +142,11 @@
         $resultadoPersona = $persona->consultarId( );
 
         $destino = $resultadoPersona["data"]["correo"];
-        $asunto = "Restablecer acceso SIIGA";
+        $asunto = "Restablecer acceso SIIGES";
         $usuario = $resultado["usuario"];
         $contrasena = $resultado["contrasena"];
         $enlace = "<a href='https://siiges.com/restablecer-contrasena.php?key=" . md5( $usuario ) . "&reset=" . $contrasena . "'>Click para restablecer su acceso</a>";
-        $mensaje = "Este correo fue enviado debido a que se solicito restablecer su acceso a el portal web SIIGA." .
+        $mensaje = "Este correo fue enviado debido a que se solicito restablecer su acceso a el portal web SIIGES." .
         "En caso de que usted no lo haya solicitado solo ignore este correo. De caso sontrario de clic en el enlace: " . $enlace;
 
         $resultado = Utileria::enviarCorreo( $destino, $asunto, $mensaje );

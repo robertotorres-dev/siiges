@@ -2494,6 +2494,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                 <input type="hidden" id="datosNecesarios" value="<?= $_GET["dt"] ?>">
                 <input type="hidden" id="auxmodalidad" value="<?= $_GET["modalidad"] ?>">
                 <input type="hidden" id="masDatos" value="<?= $_GET["odt"] ?>">
+                <input type="hidden" id="datosPlantel" value="<?= $_GET["dp"] ?>">
               </div>
 
             </div>

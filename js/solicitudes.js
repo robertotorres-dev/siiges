@@ -307,8 +307,22 @@ Solicitud.redirigir = function(){
       }
 
       if( $("#tipo_solicitud").val() == 3 ||  $("#tipo_solicitud").val() == 4){
+
+        if(  $("#programas_ids").val() > 0 ){
+          var resultado =   $(Solicitud.programasRegistrados).filter(
+          function(i,n){
+            return n.id == $("#programas_ids").val();
+          });
+          resultado = resultado[0];
+          console.log(resultado);
+        }else{
+          $("#enlace-solicitud").attr("href","#");
+          Solicitud.mostrarMensaje("error","Debe de seleccionar un programa de estudios");
+          $( "#programas_ids" ).focus();
+        }
+
           if(  $("#planteles").val() > 0 ){
-            $("#enlace-solicitud").attr("href","alta-solicitudes.php?tipo="+$("#tipo_solicitud").val()+"&modalidad=0"+"&op=1&dt="+$("#planteles").val());
+            $("#enlace-solicitud").attr("href","alta-solicitudes.php?tipo="+$("#tipo_solicitud").val()+"&modalidad="+ resultado.modalidad_id +"&op=2&dt="+resultado.id+"&odt=1"+"&dp="+$("#planteles").val());
           }else{
             $("#enlace-solicitud").attr("href","#");
             Solicitud.mostrarMensaje("error","Debe de seleccionar un plantel para poder realizar el tramite");
@@ -768,117 +782,120 @@ Solicitud.modificacionPrograma =  function(){
                 Solicitud.tipo_solicitud = programa.solicitud.tipo_solicitud_id;
 
               }
-              if( programa.plantel != undefined){
-                  var plantel = programa.plantel;
-                  Solicitud.plantelId = plantel.id;
-                  $("#plantel-id").val(plantel.id);
-                  $("#plantel-id").attr("name","PLANTEL-id");
-                  $("id-institucion").val(plantel.institucion_id);
-                  for( var campo in plantel ){
-                    if (plantel.hasOwnProperty(campo)) {
-                        $("#"+campo).val(plantel[campo]);
-                    }
-                  }
-                  //Domicilio
-                  if( plantel.domicilio != undefined){
-                    var Objdomicilio = plantel.domicilio;
-                    $("#coordenadas").val(Objdomicilio.latitud+","+Objdomicilio.longitud);
-                    for (var camposD in Objdomicilio) {
-                      if (Objdomicilio.hasOwnProperty(camposD)) {
-                        $("#"+camposD).val(Objdomicilio[camposD]);
+              if ($("#tipo").val()===2) {
+                if( programa.plantel != undefined){
+                  console.log(programa.plantel);
+                    var plantel = programa.plantel;
+                    Solicitud.plantelId = plantel.id;
+                    $("#plantel-id").val(plantel.id);
+                    $("#plantel-id").attr("name","PLANTEL-id");
+                    $("id-institucion").val(plantel.institucion_id);
+                    for( var campo in plantel ){
+                      if (plantel.hasOwnProperty(campo)) {
+                          $("#"+campo).val(plantel[campo]);
                       }
                     }
-                  }
-                  //Director
-                  if( plantel.director != undefined){
-                    var director = plantel.director;
-                    $("#id-director").val(director.id);
-                    $("#id-director").attr("name","DIRECTOR-id");
-                    $("#nombre_director").val(director.nombre);
-                    $("#apellido_paterno_director").val(director.apellido_paterno);
-                    $("#apellido_materno_director").val(director.apellido_materno);
-                    $("#nacionalidad_director").val(director.nacionalidad);
-                    $("#curp_director").val(director.curp);
-                    $("#sexo_director").val(director.sexo);
-                    //Formaciones de director
-                    if( director.formaciones != undefined){
-                      var formaciones = director.formaciones;
-                      for (var j = 0; j < formaciones.length; j++) {
-                        var filaFormacion;
-                        if($("#informacionCargar").val() != 4){
-                          var b = document.createElement("INPUT");
-                          b.setAttribute("type","hidden");
-                          b.setAttribute("id",'fromacionesDirector'+nfilaFormacion);
-                          b.setAttribute("name","DIRECTOR-formaciones[]");
-                          b.setAttribute("value",JSON.stringify({ "id":formaciones[j].id ,"nivel": formaciones[j].nivel,"nombre": formaciones[j].nombre,"descripcion": formaciones[j].descripcion,"institucion":"NO SE GUARDA DATO" }));
-                          __('inputsFormacionDirector').appendChild(b);
-                          filaFormacion = '<tr id="formacion' + nfilaFormacion + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ "NO SE GUARDA DATO" +'</td><td>'+  formaciones[j].descripcion+'</td><td><button type="button" name="removeFormacion" id="' + nfilaFormacion + '" class="btn btn-danger" onclick="eliminarFormacion(this)">Quitar</button></td></tr>';
-                        }else{
-                          filaFormacion = '<tr id="formacion' + nfilaFormacion + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ "NO SE GUARDA DATO" +'</td><td>'+  formaciones[j].descripcion+'</td></tr>';
+                    //Domicilio
+                    if( plantel.domicilio != undefined){
+                      var Objdomicilio = plantel.domicilio;
+                      $("#coordenadas").val(Objdomicilio.latitud+","+Objdomicilio.longitud);
+                      for (var camposD in Objdomicilio) {
+                        if (Objdomicilio.hasOwnProperty(camposD)) {
+                          $("#"+camposD).val(Objdomicilio[camposD]);
                         }
-                        //Aumentar contador;
-                        nfilaFormacion++;
-                        $('#formacion_director tr:last').after(filaFormacion);
                       }
                     }
-                    //Experiencias director
-                    if( director.experiencias != undefined ){
-                      var experiencias = director.experiencias;
-                      for( var k = 0; k <  experiencias.length; k++){
-                        var filaExperiencia;
-                        var tipoExperiencia;
-                        if(  experiencias[k].tipo == 1 ){
-                          tipoExperiencia = "Docente";
-                        }else if(  experiencias[k].tipo == 2 ){
-                          tipoExperiencia = "Profesional";
-                        }else{
-                          tipoExperiencia = "Directiva";
+                    //Director
+                    if( plantel.director != undefined){
+                      var director = plantel.director;
+                      $("#id-director").val(director.id);
+                      $("#id-director").attr("name","DIRECTOR-id");
+                      $("#nombre_director").val(director.nombre);
+                      $("#apellido_paterno_director").val(director.apellido_paterno);
+                      $("#apellido_materno_director").val(director.apellido_materno);
+                      $("#nacionalidad_director").val(director.nacionalidad);
+                      $("#curp_director").val(director.curp);
+                      $("#sexo_director").val(director.sexo);
+                      //Formaciones de director
+                      if( director.formaciones != undefined){
+                        var formaciones = director.formaciones;
+                        for (var j = 0; j < formaciones.length; j++) {
+                          var filaFormacion;
+                          if($("#informacionCargar").val() != 4){
+                            var b = document.createElement("INPUT");
+                            b.setAttribute("type","hidden");
+                            b.setAttribute("id",'fromacionesDirector'+nfilaFormacion);
+                            b.setAttribute("name","DIRECTOR-formaciones[]");
+                            b.setAttribute("value",JSON.stringify({ "id":formaciones[j].id ,"nivel": formaciones[j].nivel,"nombre": formaciones[j].nombre,"descripcion": formaciones[j].descripcion,"institucion":"NO SE GUARDA DATO" }));
+                            __('inputsFormacionDirector').appendChild(b);
+                            filaFormacion = '<tr id="formacion' + nfilaFormacion + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ "NO SE GUARDA DATO" +'</td><td>'+  formaciones[j].descripcion+'</td><td><button type="button" name="removeFormacion" id="' + nfilaFormacion + '" class="btn btn-danger" onclick="eliminarFormacion(this)">Quitar</button></td></tr>';
+                          }else{
+                            filaFormacion = '<tr id="formacion' + nfilaFormacion + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ "NO SE GUARDA DATO" +'</td><td>'+  formaciones[j].descripcion+'</td></tr>';
+                          }
+                          //Aumentar contador;
+                          nfilaFormacion++;
+                          $('#formacion_director tr:last').after(filaFormacion);
                         }
-                        if($("#informacionCargar").val() != 4){
-                          var c = document.createElement("INPUT");
-                          c.setAttribute("type","hidden");
-                          c.setAttribute("id",'experienciaDirector'+nfila);
-                          c.setAttribute("name","DIRECTOR-experiencias[]");
-                          c.setAttribute("value",JSON.stringify({ "id":experiencias[k].id,"nombre": experiencias[k].nombre,"tipo": experiencias[k].tipo,"funcion": experiencias[k].funcion,"institucion": experiencias[k].institucion,"periodo": experiencias[k].periodo }));
-                          __('inputsExperienciaDirector').appendChild(c);
-                          filaExperiencia = '<tr id="experiencia' + nfila + '"><td>' + tipoExperiencia + '</td><td>' +  experiencias[k].nombre+ '</td><td>'+  experiencias[k].funcion +'</td><td>'+ experiencias[k].institucion+'</td><td>'+  experiencias[k].periodo +'</td><td><button type="button" name="removeFormacion" id="' + nfila + '" class="btn btn-danger" onclick="eliminarExperiencia(this)">Quitar</button></td></tr>';
-
-                        }else{
-                          filaExperiencia = '<tr id="experiencia' + nfila + '"><td>' + tipoExperiencia + '</td><td>' +  experiencias[k].nombre+ '</td><td>'+  experiencias[k].funcion +'</td><td>'+ experiencias[k].institucion+'</td><td>'+  experiencias[k].periodo +'</td></tr>';
-                        }
-                        nfila++;
-                        $('#experiencia_director tr:last').after(filaExperiencia);
-
                       }
-                    }
-                    //Publicaciones director
-                    if( director.publicaciones != undefined){
-                      var publicaciones = director.publicaciones;
-                      for( var l=0; l <  publicaciones.length;l++){
-                          var filaPublicacion;
-                        if( publicaciones[l].otros==null){
-                           publicaciones[l].otros ="";
+                      //Experiencias director
+                      if( director.experiencias != undefined ){
+                        var experiencias = director.experiencias;
+                        for( var k = 0; k <  experiencias.length; k++){
+                          var filaExperiencia;
+                          var tipoExperiencia;
+                          if(  experiencias[k].tipo == 1 ){
+                            tipoExperiencia = "Docente";
+                          }else if(  experiencias[k].tipo == 2 ){
+                            tipoExperiencia = "Profesional";
+                          }else{
+                            tipoExperiencia = "Directiva";
+                          }
+                          if($("#informacionCargar").val() != 4){
+                            var c = document.createElement("INPUT");
+                            c.setAttribute("type","hidden");
+                            c.setAttribute("id",'experienciaDirector'+nfila);
+                            c.setAttribute("name","DIRECTOR-experiencias[]");
+                            c.setAttribute("value",JSON.stringify({ "id":experiencias[k].id,"nombre": experiencias[k].nombre,"tipo": experiencias[k].tipo,"funcion": experiencias[k].funcion,"institucion": experiencias[k].institucion,"periodo": experiencias[k].periodo }));
+                            __('inputsExperienciaDirector').appendChild(c);
+                            filaExperiencia = '<tr id="experiencia' + nfila + '"><td>' + tipoExperiencia + '</td><td>' +  experiencias[k].nombre+ '</td><td>'+  experiencias[k].funcion +'</td><td>'+ experiencias[k].institucion+'</td><td>'+  experiencias[k].periodo +'</td><td><button type="button" name="removeFormacion" id="' + nfila + '" class="btn btn-danger" onclick="eliminarExperiencia(this)">Quitar</button></td></tr>';
+  
+                          }else{
+                            filaExperiencia = '<tr id="experiencia' + nfila + '"><td>' + tipoExperiencia + '</td><td>' +  experiencias[k].nombre+ '</td><td>'+  experiencias[k].funcion +'</td><td>'+ experiencias[k].institucion+'</td><td>'+  experiencias[k].periodo +'</td></tr>';
+                          }
+                          nfila++;
+                          $('#experiencia_director tr:last').after(filaExperiencia);
+  
                         }
-                        if($("#informacionCargar").val() != 4){
-                          var d = document.createElement("INPUT");
-                          d.setAttribute("type","hidden");
-                          d.setAttribute("id",'publicacionesDirector'+nfila);
-                          d.setAttribute("name","DIRECTOR-publicaciones[]");
-                          d.setAttribute("value",JSON.stringify({ "id": publicaciones[l].id, "anio": publicaciones[l].anio,"volumen": publicaciones[l].volumen,"pais": publicaciones[l].pais,"titulo": publicaciones[l].titulo,"editorial": publicaciones[l].editorial,"otros": publicaciones[l].otros}));
-                          __('inputsPublicacionesDirector').appendChild(d);
-                          filaPublicacion = '<tr id="publicacion' + nfila + '"><td>' +  publicaciones[l].titulo + '</td><td>' +  publicaciones[l].volumen + '</td><td>'+  publicaciones[l].editorial +'</td><td>'+ publicaciones[l].anio+'</td><td>'+  publicaciones[l].pais+'</td><td>'+ publicaciones[l].otros+'</td><td><button type="button" name="removePublicacion" id="' + nfila + '" class="btn btn-danger" onclick="eliminarPublicacion(this)">Quitar</button></td></tr>';
-
-                        }else{
-                          filaPublicacion = '<tr id="publicacion' + nfila + '"><td>' +  publicaciones[l].titulo + '</td><td>' +  publicaciones[l].volumen + '</td><td>'+  publicaciones[l].editorial +'</td><td>'+ publicaciones[l].anio+'</td><td>'+  publicaciones[l].pais+'</td><td>'+ publicaciones[l].otros+'</td></tr>';
-                        }
-                        //Consttuir fila
-                        nfila++;
-                        $('#publicaciones_director tr:last').after(filaPublicacion);
                       }
+                      //Publicaciones director
+                      if( director.publicaciones != undefined){
+                        var publicaciones = director.publicaciones;
+                        for( var l=0; l <  publicaciones.length;l++){
+                            var filaPublicacion;
+                          if( publicaciones[l].otros==null){
+                             publicaciones[l].otros ="";
+                          }
+                          if($("#informacionCargar").val() != 4){
+                            var d = document.createElement("INPUT");
+                            d.setAttribute("type","hidden");
+                            d.setAttribute("id",'publicacionesDirector'+nfila);
+                            d.setAttribute("name","DIRECTOR-publicaciones[]");
+                            d.setAttribute("value",JSON.stringify({ "id": publicaciones[l].id, "anio": publicaciones[l].anio,"volumen": publicaciones[l].volumen,"pais": publicaciones[l].pais,"titulo": publicaciones[l].titulo,"editorial": publicaciones[l].editorial,"otros": publicaciones[l].otros}));
+                            __('inputsPublicacionesDirector').appendChild(d);
+                            filaPublicacion = '<tr id="publicacion' + nfila + '"><td>' +  publicaciones[l].titulo + '</td><td>' +  publicaciones[l].volumen + '</td><td>'+  publicaciones[l].editorial +'</td><td>'+ publicaciones[l].anio+'</td><td>'+  publicaciones[l].pais+'</td><td>'+ publicaciones[l].otros+'</td><td><button type="button" name="removePublicacion" id="' + nfila + '" class="btn btn-danger" onclick="eliminarPublicacion(this)">Quitar</button></td></tr>';
+  
+                          }else{
+                            filaPublicacion = '<tr id="publicacion' + nfila + '"><td>' +  publicaciones[l].titulo + '</td><td>' +  publicaciones[l].volumen + '</td><td>'+  publicaciones[l].editorial +'</td><td>'+ publicaciones[l].anio+'</td><td>'+  publicaciones[l].pais+'</td><td>'+ publicaciones[l].otros+'</td></tr>';
+                          }
+                          //Consttuir fila
+                          nfila++;
+                          $('#publicaciones_director tr:last').after(filaPublicacion);
+                        }
+                      }
+  
                     }
-
-                  }
-
+  
+                }
               }
               //Tipo se puede cambiar segun cuando se requiera
               if( programa.diligencias != undefined  || $("#informacionCargar").val() == 4 && programa.diligencias != undefined){
@@ -1416,14 +1433,25 @@ $(document).ready(function ($) {
               }
               //Carga la informacion del programa seleccionado previamente en mis solicitudes
               if ($("#tipo").val() == 2 || $("#tipo").val() == 3) {
+                if ($("#datosPlantel").val() > 0) {
+                  Solicitud.plantelId = $("#datosPlantel").val();
+                  Solicitud.tipo = 3;
+                }
                 //infomacion cargar de tipo 3 no trae el valor 2, trae el valor 1, corregir
                 if( ($("#informacionCargar").val() == 2 && $("#datosNecesarios").val() > 0) || ($("#informacionCargar").val() == 3 && $("#datosNecesarios").val() > 0) || ($("#informacionCargar").val() == 4 && $("#datosNecesarios").val() > 0) ){
-                    document.getElementById("cargando").style.display = "block";
-                    Solicitud.modificacionPrograma();
-                    Solicitud.promesaModificacionPrograma.done(function(){
-                      console.log("datos del programa se cargaron");
-                      document.getElementById("cargando").style.display = "none";
-                      // Solicitud.getDatosPlantel(Solicitud.plantelId);
+                  document.getElementById("cargando").style.display = "block";
+                  Solicitud.modificacionPrograma();
+                  Solicitud.promesaModificacionPrograma.done(function(){
+                    console.log("datos del programa se cargaron");
+                    if (Solicitud.tipo === 3) {
+                      Solicitud.getDatosPlantel(Solicitud.plantelId);
+                      Solicitud.promesaPlantel.done(function(){
+                        console.log("datos del plantel se cargaron");
+                        document.getElementById("cargando").style.display = "none";
+                        $("#modalInicial").modal();
+                        $("#tamanoModales").attr("style","margin-top:80px;");
+                      });
+                    }
                       if( $("#informacionCargar").val() == 2){
                         $("#tipo").val("2");
                       }else{

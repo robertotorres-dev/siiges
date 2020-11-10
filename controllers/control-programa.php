@@ -131,6 +131,7 @@
               $programa = new Programa();
               $res_programa = $programa->consultarPor("programas",array("id"=>$_POST["programaId"],"deleted_at"),array("id","plantel_id"));
               $res_programa  =   $res_programa["data"];
+              //print_r($res_programa);
               if( sizeof($res_programa) > 0  ){
                   $res_programa = $res_programa[0];
                   if( $_SESSION["rol_id"] > 6 || $_SESSION["rol_id"] == 2 ){
