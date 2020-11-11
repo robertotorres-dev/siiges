@@ -1757,7 +1757,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             <input  id="clave_centro_trabajo" type="text" name="PLANTEL-clave_centro_trabajo" class="form-control PLANTEL" value="" placeholder="En caso de contar">
                           </div>
                           <div class="col-sm-12 col-md-8">
-                            <label class="control-label" for="">Correo(s) electrónico(s):</label><br>
+                            <label class="control-label" for="">Correo(s) electrónico(s)<sub>(1 correo por dominio institucional y 2 sin dominio)</sub>:</label><br>
                             <input type="email" id="email1" name="PLANTEL-email1" class="form-control PLANTEL" value="" placeholder="correo@dominio.com">
                             <br>
                             <input type="email" id="email2" name="PLANTEL-email2" class="form-control PLANTEL" value="" placeholder="correo@dominio.com">
@@ -2471,7 +2471,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     <a id="enlace-identificacionRepresentante" class="enlaces" href="" target="_blank" >Ver archivo</a>
                   </div>
                   <!-- Comprobante de pago -->
-                  <div class="col-sm-12 col-md-8">
+                  <div class="col-sm-12 col-md-8" id="comprobante_pago">
                     <label class="control-label" for="">Comprobante de pago</label><br>
                     <input type="hidden" id="pago-id" name="SOLICITUD-comprobante_pago-id" value="">
                     <input type="file" onchange="Solicitud.verificarArchivo(this)" name="SOLICITUD-comprobante_pago" class="form-control"><br>
@@ -2596,7 +2596,19 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     <a id="enlace-horarios" class="enlaces" href="" target="_blank" >Ver archivo</a>
                   </div>
                   <?php } ?>
-
+                  <?php if( $_GET["tps"] != 1 ) { ?>
+                  <!-- Acuerdo anterior -->
+                  <div class="col-sm-12 col-md-8">
+                    <label class="control-label" for="">Acuerdo anterior</label><br>
+                    <input type="hidden" id="acuerdoAnterior-id" name="PROGRAMA-acuerdo_anterior-id" value="">
+                    <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PROGRAMA-acuerdo_anterior" class="form-control"><br>
+                  </div>
+                  <div class="col-sm-12 col-md-4" id="contendoracuerdo" style="display: none">
+                    <br>
+                    <br>
+                    <a id="enlace-acuerdo" class="enlaces" href="" target="_blank" >Ver archivo</a>
+                  </div>
+                  <?php } ?>
                   <?php if( $_GET['tps'] == 1 ||  $_GET['tps'] == 2 ){?>
                   <!-- Vinculacion y movilidad -->
                   <div class="col-sm-12 col-md-8">
@@ -2658,7 +2670,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
               <!-- Controles formulario  -->
               <div class="col-sm-12 col-md-12">
                 <input type="hidden" id="webService" name="webService" value="guardarSolicitud" />
-                <input type="hidden" id="url" name="url" value="../views/mis-solicitudes.php" />
+                <!-- <input type="hidden" id="url" name="url" value="../views/mis-solicitudes.php" /> -->
                 <!-- TODO: asignar estatus y tipo de solicitud -->
                 <input type="hidden"   name="opcion_guardado" value="2">
                 <input type="hidden" id="editar" value="<?=$_GET["editar"]?>">

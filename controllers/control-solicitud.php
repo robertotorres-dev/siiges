@@ -917,6 +917,7 @@ session_start();
             $parametrosDocumento["archivo"] = $uploadFile;
             $documento->setAttributes($parametrosDocumento);
             $documento->guardar();
+            print_r($documento);
         }
       }
 

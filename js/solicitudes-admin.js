@@ -204,7 +204,7 @@ Solicitudes.getDetalles = function(){
           const fecha1 = new Date(parseInt(fechaAlta[0]),parseInt(fechaAlta[1]-1),parseInt(fechaAlta[2]))
           //Al mes se resta 1
           const fechaConvocatoria2020 = {
-            fechaInicio: new Date(2020,07,24),
+            fechaInicio: new Date(2020,10,09),
             fechaFin: new Date(2020,11,20)
           }
           if (fecha1 < fechaConvocatoria2020.fechaInicio) {

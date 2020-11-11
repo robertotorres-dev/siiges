@@ -1682,7 +1682,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             <input  id="clave_centro_trabajo" type="text" name="PLANTEL-clave_centro_trabajo" class="form-control PLANTEL" value="" placeholder="En caso de contar">
                           </div>
                           <div class="col-sm-12 col-md-8">
-                            <label class="control-label" for="">Correo(s) electrónico(s):</label><br>
+                            <label class="control-label" for="">Correo(s) electrónico(s)<sub>(1 correo por dominio institucional y 2 sin dominio)</sub>:</label><br>
                             <input type="email" id="email1" name="PLANTEL-email1" class="form-control PLANTEL" value="" placeholder="correo@dominio.com">
                             <br>
                             <input type="email" id="email2" name="PLANTEL-email2" class="form-control PLANTEL" value="" placeholder="correo@dominio.com">
@@ -2438,7 +2438,13 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PROGRAMA-propuesta_horario" class="form-control"><br>
                   </div>
                   <?php } ?>
-
+                  <?php if( $_GET["tipo"] != 1 ) { ?>
+                  <!-- Acuerdo anterior -->
+                  <div class="col-sm-12 col-md-8">
+                    <label class="control-label" for="">Acuerdo anterior</label><br>
+                    <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PROGRAMA-acuerdo_anterior" class="form-control"><br>
+                  </div>
+                  <?php } ?>
                   <?php if( $_GET["tipo"] == 1 ||  $_GET["tipo"] == 2 ){?>
                   <!-- Vinculacion y movilidad -->
                   <div class="col-sm-12 col-md-8">

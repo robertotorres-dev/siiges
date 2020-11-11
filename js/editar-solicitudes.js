@@ -55,9 +55,29 @@ EditarSolicitud.getSolicitud = function() {
         if( respuesta.status == "202")
         {
           //location.href = respuesta.data;
-          console.log(respuesta);
         }
         if(respuesta.data != ""){
+          //Comprobamos que tenga formato correcto
+          const fechaAlta = respuesta.data.programa.solicitud.created_at.substring(0,10).split("-");
+          const fecha1 = new Date(parseInt(fechaAlta[0]),parseInt(fechaAlta[1]-1),parseInt(fechaAlta[2]))
+          //Al mes se resta 1
+          const fechaConvocatoria2020 = {
+            fechaInicio: new Date(2020,10,09),
+            fechaFin: new Date(2020,11,20)
+          }
+          console.log(fecha1);
+          console.log(fechaConvocatoria2020.fechaInicio);
+          if (fecha1 >= fechaConvocatoria2020.fechaInicio && fecha1 <= fechaConvocatoria2020.fechaFin) {
+            const comprobante_pago = document.getElementById('comprobante_pago');
+            const contenedor_pago = document.getElementById('contendorPago');
+            console.log(comprobante_pago);
+            comprobante_pago.remove();
+            contenedor_pago.remove();
+            
+            console.log("Convocatoria 2020");
+          } else {
+            console.log('Convocatoria anterior');
+          }
           if(respuesta.data.documentos!=undefined)
           {
             var documentos = respuesta.data.documentos;
@@ -218,6 +238,12 @@ EditarSolicitud.getSolicitud = function() {
               $("#horarios-id").val(documentos.propuesta_horario.id);
               $("#contendorhorarios").attr("style","display: block");
               $("#enlace-horarios").attr("href",documentos.propuesta_horario.archivo);
+            }
+            if(documentos.acuerdo_anterior!=undefined)
+            {
+              $("#acuerdoAnterior-id").val(documentos.acuerdo_anterior.id);
+              $("#contendoracuerdo").attr("style","display: block");
+              $("#enlace-acuerdo").attr("href",documentos.acuerdo_anterior.archivo);
             }
             if(documentos.propuesta_calendario!=undefined)
             {

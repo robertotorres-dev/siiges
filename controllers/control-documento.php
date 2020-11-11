@@ -65,7 +65,8 @@
 		{
 			$parametros[$atributo] = $valor;
 		}
-		$obj = new Documento( );
+    $obj = new Documento( );
+    print_r($parametros);
 		$obj->setAttributes( $parametros );
     $resultado = $obj->guardar( );
 	   // Registro en bitacora
@@ -242,6 +243,13 @@
     if (sizeof($res_calendario["data"])>0)
     {
       $resultado["documentos"]["propuesta_calendario"] =$res_calendario["data"][0];
+    }
+
+    $acuerdoAnterior = new Documento();
+    $res_acuerdoAnterior = $acuerdoAnterior->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PROGRAMA"],"entidad_id"=>$id_programa,"tipo_documento"=>Documento::$nombresDocumentos["acuerdo_anterior"],"deleted_at"),"*");
+    if (sizeof($res_acuerdoAnterior["data"])>0)
+    {
+      $resultado["documentos"]["acuerdo_anterior"] =$res_acuerdoAnterior["data"][0];
     }
 
     $vinculacion = new Documento();

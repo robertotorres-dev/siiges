@@ -1620,7 +1620,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             <input  id="clave_centro_trabajo" type="text" name="PLANTEL-clave_centro_trabajo" class="form-control PLANTEL" value="" placeholder="En caso de contar">
                           </div>
                           <div class="col-sm-12 col-md-8">
-                            <label class="control-label" for="">Correo(s) electrónico(s):</label><br>
+                            <label class="control-label" for="">Correo(s) electrónico(s)<sub>(1 correo por dominio institucional y 2 sin dominio)</sub>:</label><br>
                             <input type="email" id="email1" name="PLANTEL-email1" class="form-control PLANTEL" value="" placeholder="correo@dominio.com">
                             <br>
                             <input type="email" id="email2" name="PLANTEL-email2" class="form-control PLANTEL" value="" placeholder="correo@dominio.com">
@@ -2330,7 +2330,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     <a id="enlace-identificacionRepresentante" class="enlaces" href="" target="_blank" >Ver archivo</a>
                   </div>
                   <!-- Comprobante de pago -->
-                  <div class="col-sm-12 col-md-8">
+                  <div class="col-sm-12 col-md-8" id="comprobante_pago">
                     <label class="control-label" for="">Comprobante de pago</label><br>
                   </div>
                   <div class="col-sm-12 col-md-4" id="contendorPago" style="display: none">
@@ -2431,6 +2431,18 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     <br>
                     <br>
                     <a id="enlace-horarios" class="enlaces" href="" target="_blank" >Ver archivo</a>
+                  </div>
+                  <?php } ?>
+
+                  <?php if( $_GET["tipo"] != 1 ) { ?>
+                  <!-- Acuerdo anterior -->
+                  <div class="col-sm-12 col-md-8">
+                    <label class="control-label" for="">Acuerdo anterior</label><br>
+                  </div>
+                  <div class="col-sm-12 col-md-4" id="contendoracuerdo" style="display: none">
+                    <br>
+                    <br>
+                    <a id="enlace-acuerdo" class="enlaces" href="" target="_blank" >Ver archivo</a>
                   </div>
                   <?php } ?>
 

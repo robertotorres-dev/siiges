@@ -65,6 +65,7 @@ tipo_entidad = id_tabla
                                               "propuesta_horario"=>32,
                                               "forma_migratoria"=>33,
                                               "acta_constitutiva"=>34,
+                                              "acuerdo_anterior"=>35,
                                             );
 
     public static $dir_subida = '../uploads/';

@@ -696,6 +696,14 @@ session_start();
 
               }
 
+              $acuerdoAnterior = new Documento();
+              $res_acuerdoAnterior = $acuerdoAnterior->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PROGRAMA"],"entidad_id"=>$resultado["data"]["programa"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["acuerdo_anterior"],"deleted_at"),"*");
+              if (sizeof($res_acuerdoAnterior["data"])>0)
+              {
+                $resultado["data"]["documentos"]["acuerdo_anterior"] =$res_acuerdoAnterior["data"][0];
+
+              }
+
               $vinculacion = new Documento();
               $res_vinculacion = $vinculacion->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["PROGRAMA"],"entidad_id"=>$resultado["data"]["programa"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["proyecto_vinculacion"],"deleted_at"),"*");
               if (sizeof($res_vinculacion["data"])>0)
@@ -735,6 +743,7 @@ session_start();
                 $resultado["data"]["documentos"]["propuesta_horario"] =$res_horarios["data"][0];
 
               }
+
             }else
             {
               $resultado["status"] = "202";

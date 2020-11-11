@@ -100,7 +100,7 @@ session_start();
 									<input id="clave_centro_trabajo" type="text" name="clave_centro_trabajo" class="form-control" value="" placeholder="En caso de contar">
 								</div>
 								<div class="form-group col-sm-12 col-md-12">
-									<label class="control-label" for="">Correo(s) electrónico(s):</label><br>
+									<label class="control-label" for="">Correo(s) electrónico(s)<sub>(1 correo por dominio institucional y 2 sin dominio)</sub>:</label><br>
 									<input type="email" id="email1" name="email1" class="form-control" value="" placeholder="correo@dominio.com">
 									<br>
 									<input type="email" id="email2" name="email2" class="form-control" value="" placeholder="correo@dominio.com">
