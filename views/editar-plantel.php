@@ -132,6 +132,16 @@ session_start();
 									<input type="url" id="paginaweb" name="paginaweb" class="form-control" value="" placeholder="www.universidad.com">
 								</div>
 
+								<!-- Rector -->
+								<div class="form-group col-sm-12 col-md-12">
+									<label class="control-label" for="">Rector</label><br>
+									<input type="hidden" id="rector_id" name="rector_id" value="">
+									<input type="text" id="nombre_rector" name="nombre_rector" class="form-control" value="" placeholder="Nombre del rector" required><br>
+									<input type="text" id="apellido_paterno_rector" name="apellido_paterno_rector" class="form-control" value="" placeholder="Apellido paterno del rector" required><br>
+									<input type="text" id="apellido_materno_rector" name="apellido_materno_rector" class="form-control" value="" placeholder="Apellido materno del rector" required>
+								</div>
+								
+								<!-- Director -->
 								<div class="form-group col-sm-12 col-md-12">
 									<label class="control-label" for="">Director</label><br>
 									<input type="hidden" id="director_id" name="director_id" value="">

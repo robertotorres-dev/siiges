@@ -15,6 +15,7 @@
     protected $institucion_id;
     protected $domicilio_id;
     protected $persona_id;
+    protected $rector_id;
     protected $email1;
     protected $email2;
     protected $email3;

@@ -71,9 +71,14 @@
     $resultado = $obj->consultarId( );
     $domicilio = new Domicilio();
     if($resultado["status"]!="404"){
+      //print_r($resultado);
       $resultado['data']['domicilio'] = $domicilio->consultarPor('domicilios',array('id'=>$resultado['data']['domicilio_id']),'*');
       $usuario = new Usuario();
-      $resultado['data']['director'] = $usuario->consultarPor('personas',array('id'=>$resultado['data']['persona_id']),"*");
+      $usuario2 = new Usuario();
+      if ($resultado['data']['rector_id']) {
+        $resultado['data']['rector'] = $usuario->consultarPor('personas',array('id'=>$resultado['data']['rector_id']),"*");
+      }
+      $resultado['data']['director'] = $usuario2->consultarPor('personas',array('id'=>$resultado['data']['persona_id']),"*");
       unset($obj);
       unset($domicilio);
     }
@@ -134,11 +139,19 @@
     $domicilio = new Domicilio();
     $domicilio->setAttributes($parametros);
     $res_domicilio = $domicilio->guardar();
+
+    $rector = new Persona();
+    $rector->setAttributes(array("domicilio_id"=>$res_domicilio["data"]["id"],"nombre"=>$_POST["nombre_rector"],"apellido_paterno"=>$_POST["apellido_paterno_rector"],"apellido_materno"=>$_POST["apellido_materno_rector"]));
+    $res_rector = $rector->guardar();
+    
     $director = new Persona();
     $director->setAttributes(array("domicilio_id"=>$res_domicilio["data"]["id"],"nombre"=>$_POST["nombre"],"apellido_paterno"=>$_POST["apellido_paterno"],"apellido_materno"=>$_POST["apellido_materno"]));
     $res_director = $director->guardar();
+    
     $parametros["domicilio_id"]=$res_domicilio["data"]["id"];
+    $parametros["rector_id"]=$res_rector["data"]["id"];
     $parametros["persona_id"]=$res_director["data"]["id"];
+
     $plantel = new Plantel();
     $plantel->setAttributes($parametros);
     $resultado = $plantel->guardar();
@@ -163,11 +176,23 @@
     $domicilio = new Domicilio();
     $domicilio->setAttributes($parametros);
     $domicilio->guardar();
+    
+    print_r($parametros);
+    $parametros_rector["id"] = $_POST["rector_id"];
+    $parametros_rector["nombre"] = $_POST["nombre_rector"];
+    $parametros_rector["apellido_paterno"] = $_POST["apellido_paterno_rector"];
+    $parametros_rector["apellido_materno"] = $_POST["apellido_materno_rector"];
+    $rector = new Persona();
+    $rector->setAttributes($parametros_rector);
+    $res_rector = $rector->guardar();
+
     $parametros["id"] = $_POST["director_id"];
     $director = new Persona();
     $director->setAttributes($parametros);
     $director->guardar();
+    
     $parametros["id"] = $_POST["plantel_id"];
+    $parametros["rector_id"]=$res_rector["data"]["id"];
     $plantel = new Plantel();
     $plantel->setAttributes($parametros);
     $resultado = $plantel->guardar();
