@@ -323,12 +323,134 @@ Utileria::validarSesion( basename( __FILE__ ) );
                       </div>
                     </div>
                   </div>
-                  <!-- Director -->
                   <?php if( $_GET['tps'] == 1 || $_GET['tps'] == 2 || $_GET['tps'] == 3 ) { ?>
+
+                  <!-- Rector -->
                   <div class="panel panel-default">
                     <div class="panel-heading">
                       <h4 class="panel-tittle">
-                        <a data-parent="#acordion" data-toggle="collapse" href="#director" aria-expanded="false" aria-controls="director" class="collapsed">Director propuesto</a>
+                        <a data-parent="#acordion" data-toggle="collapse" href="#rector" aria-expanded="false" aria-controls="rector" class="collapsed">Rector </a>
+                        <button type="button" class="collpase-button collapsed" data-parent="#acordion" data-toggle="collapse" href="#rector" aria-expanded="false"></button>
+                      </h4>
+                    </div>
+                    <div id="rector" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        <!-- Datos generales  -->
+                        <div class="form-group">
+                          <div class="col-sm-col-md-12">
+                            <h2>Datos generales rector</h2>
+                            <input type="hidden" id="id-rector" value="">
+                            <hr class="red">
+                          </div>
+                          <div class="col-sm-6 col-md-6">
+                            <label class="control-label" for="">Nombre(s)</label><br>
+                            <input type="text" id="nombre_rector" name="RECTOR-nombre" class="form-control " campo="Nombre del rector" ubicacion="Datos generales apartado Rector" value="" placeholder="Nombre del rector" >
+                          </div>
+                          <div class="col-sm-6 col-md-6">
+                            <label class="control-label" for="">Apellido paterno</label><br>
+                            <input type="text" id="apellido_paterno_rector" name="RECTOR-apellido_paterno" class="form-control " campo="Apellido paterno del rector" ubicacion="Datos generales apartado Rector" value="" placeholder="Apellido paterno del rector" >
+                          </div>
+                          <div class="col-sm-6 col-md-6">
+                            <label class="control-label" for="">Apellido materno</label><br>
+                            <input type="text" id="apellido_materno_rector" name="RECTOR-apellido_materno" class="form-control" value="" placeholder="Apellido materno del rector" >
+                          </div>
+                          <div class="col-sm-6 col-md-2">
+                            <label class="control-label" for="">Nacionalidad</label><br>
+                            <input type="text" id="nacionalidad_rector" name="RECTOR-nacionalidad" class="form-control " campo="Nacionalidad del rector" ubicacion="Datos generales apartado Rector" value="" placeholder="Mexicano" >
+                          </div>
+                          <div class="col-sm-6 col-md-4">
+                            <label class="control-label" for="">Clave CURP</label><br>
+                            <input type="text" id="curp_rector" name="RECTOR-curp" class="form-control" value="" placeholder="CURP del rector" >
+                          </div>
+                          <div class="col-sm-6 col-md-3">
+                            <label class="control-label" for="">Género</label><br>
+                            <select class="form-control " campo="Genero del rector" ubicacion="Datos generales apartado rector" id="sexo_rector" name="RECTOR-sexo">
+                              <option value="">Seleccione una opción</option>
+                              <option value="Masculino">Masculino</option>
+                              <option value="Femenino">Femenino</option>
+                            </select>
+                            <br>
+                          </div>
+                          <div class="col-sm-6 col-md-3">
+                            <label class="control-label" for="">Correo Electrónico</label><br>
+                            <input type="text" id="correo_rector" name="RECTOR-correo" class="form-control" campo="Correo del rector" ubicacion="Datos generales apartado Rector" value="" placeholder="correo@mail.com" >
+                          </div>
+                          <div class="col-sm-6 col-md-4">
+                            <label class="control-label" for="">Teléfono celular</label><br>
+                            <input type="text" id="celular_rector" name="RECTOR-celular" class="form-control" campo="Celular del rector" ubicacion="Datos generales apartado Rector" value="" placeholder="(33) 00 00 00 00" >
+                          </div>
+                        </div>
+                        <!-- Formación del rector -->
+                        <div class="form-group">
+                          <div class="col-sm-col-md-12">
+                            <h2>Formación rector</h2>
+                            <hr class="red">
+                          </div>
+                          <!-- Inputs para POST -->
+                          <div id="inputsFormacionRector"></div>
+                          <!-- Mensajes -->
+                          <div id="mensajesFromacionRector"></div>
+                          <!-- Campos para llenar la tabla  -->
+                          <div class=" form-group col-sm-12 col-md-12">
+                            <div class="col-sm-12 col-md-4">
+                                <label>Nivel educativo *</label>
+                                <select class="form-control" id="nivel_educativo_rector">
+                                  <option value="">Seleccione una opción</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-md-8">
+                                <label>Nombre de los estudios *</label>
+                                <input id="estudios_rector" class="form-control" type="text" placeholder="Nombre de los estudios"><br>
+                            </div>
+                            <div class="col-sm-12 col-md-8">
+                                <label>Nombre de la institución *</label>
+                                <input id="institucion_estudios_rector" class="form-control" type="text" placeholder="Nombre de la institución"><br>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <label>Documento *</label>
+                                <select class="form-control" id="documento_acredita_rector">
+                                  <option value="">Seleccione una opción</option>
+                                  <option value="TÍtulo">TÍtulo</option>
+                                  <option value="Cedula">Cedula</option>
+                                  <option value="Constancia">Constancia</option>
+                                </select>
+                                <br>
+                            </div>
+                            <div class="col-sm-12 col-md-5">
+                               <button class="btn btn-secundary" type="button" name="button" onclick="agregarFormacionRector()">Agregar formación</button>
+                            </div>
+                          </div>
+                          <!-- Tabla que muestra los campos -->
+                          <div class="col-sm-12 col-md-12">
+                            <div class="table-responsive">
+                              <table  class="table  table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th class="size" scope="col">Nivel educativo</th>
+                                    <th class="size" scope="col">Nombre de los estudios</th>
+                                    <th class="size" scope="col">Nombre de la institución</th>
+                                    <th class="size" scope="col">Documento que lo acredita</th>
+                                    <th class="size" scope="col">Acción</th>
+                                  </tr>
+                                </thead>
+                                <tbody id="formacion_rector">
+                                  <tr>
+                                  </tr>
+                                </tbody>
+                              </table><br><br>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <!-- Director -->
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-tittle">
+                        <a data-parent="#acordion" data-toggle="collapse" href="#director" aria-expanded="false" aria-controls="director" class="collapsed">Director </a>
                         <button type="button" class="collpase-button collapsed" data-parent="#acordion" data-toggle="collapse" href="#director" aria-expanded="false"></button>
                       </h4>
                     </div>
@@ -360,7 +482,6 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           <div class="col-sm-6 col-md-4">
                             <label class="control-label" for="">Clave CURP</label><br>
                             <input type="text" id="curp_director" name="DIRECTOR-curp" class="form-control" value="" placeholder="CURP del director" >
-
                           </div>
                           <div class="col-sm-6 col-md-3">
                             <label class="control-label" for="">Género</label><br>
@@ -370,6 +491,14 @@ Utileria::validarSesion( basename( __FILE__ ) );
                               <option value="Femenino">Femenino</option>
                             </select>
                             <br>
+                          </div>
+                          <div class="col-sm-6 col-md-3">
+                            <label class="control-label" for="">Correo Electrónico</label><br>
+                            <input type="text" id="correo_director" name="DIRECTOR-correo" class="form-control" campo="Correo del director" ubicacion="Datos generales apartado Director" value="" placeholder="correo@mail.com" >
+                          </div>
+                          <div class="col-sm-6 col-md-4">
+                            <label class="control-label" for="">Teléfono celular</label><br>
+                            <input type="text" id="celular_director" name="DIRECTOR-celular" class="form-control" campo="Celular del director" ubicacion="Datos generales apartado Director" value="" placeholder="(33) 00 00 00 00" >
                           </div>
                         </div>
                         <!-- Formación del director -->
@@ -409,7 +538,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                 <br>
                             </div>
                             <div class="col-sm-12 col-md-5">
-                               <button class="btn btn-secundary" type="button" name="button" onclick="agregarFormacion()">Agregar formación</button>
+                               <button class="btn btn-secundary" type="button" name="button" onclick="agregarFormacionDirector()">Agregar formación</button>
                             </div>
                           </div>
                           <!-- Tabla que muestra los campos -->
@@ -2670,7 +2799,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
               <!-- Controles formulario  -->
               <div class="col-sm-12 col-md-12">
                 <input type="hidden" id="webService" name="webService" value="guardarSolicitud" />
-                <!-- <input type="hidden" id="url" name="url" value="../views/mis-solicitudes.php" /> -->
+                <input type="hidden" id="url" name="url" value="../views/mis-solicitudes.php" />
                 <!-- TODO: asignar estatus y tipo de solicitud -->
                 <input type="hidden"   name="opcion_guardado" value="2">
                 <input type="hidden" id="editar" value="<?=$_GET["editar"]?>">

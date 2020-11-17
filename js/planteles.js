@@ -69,7 +69,6 @@ Planteles.getInformacion = function(){
           if(respuesta.status==404){
             window.location.replace("http://localhost/siiga/views/institucion-planteles.php");
           }else {
-            console.log(respuesta.data);
             var domicilio = respuesta.data.domicilio.data[0];
             $("#domicilio_id").val(domicilio.id);
             $("#numero_exterior").val(domicilio.numero_exterior);
@@ -93,11 +92,13 @@ Planteles.getInformacion = function(){
             $("#telefono3").val(plantel.telefono3);
             $("#redes_sociales").val(plantel.redes_sociales);
             $("#paginaweb").val(plantel.paginaweb);
-            var rector = respuesta.data.rector.data[0];
-            $("#rector_id").val(rector.id);
-            $("#nombre_rector").val(rector.nombre);
-            $("#apellido_materno_rector").val(rector.apellido_materno);
-            $("#apellido_paterno_rector").val(rector.apellido_paterno);
+            if ( respuesta.data.rector ) {
+              var rector = respuesta.data.rector.data[0];
+              $("#rector_id").val(rector.id);
+              $("#nombre_rector").val(rector.nombre);
+              $("#apellido_materno_rector").val(rector.apellido_materno);
+              $("#apellido_paterno_rector").val(rector.apellido_paterno);
+            }
             var director = respuesta.data.director.data[0];
             $("#director_id").val(director.id);
             $("#nombre").val(director.nombre);

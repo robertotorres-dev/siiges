@@ -219,8 +219,10 @@
         $plantel = new Plantel();
         $plantel->setAttributes( array("id"=>$_POST["plantelId"]) );
         $respuestaPlantel = $plantel->informacionRelacionada();
+        
         if( $respuestaPlantel["status"] == "200" && $respuestaPlantel["data"]["institucion_id"] == $res_institucion["data"][0]["id"]){
           $resultado["data"]["institucion"] = $res_institucion["data"][0];
+          
           $ratificacion = new RatificacionNombre();
           $resultado_ratificacion = $ratificacion->consultarPor("ratificacion_nombres",array( "institucion_id" =>  $res_institucion["data"][0]["id"] )  ,"*");
           if( sizeof(  $resultado_ratificacion["data"] ) > 0 ){

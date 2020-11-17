@@ -126,19 +126,22 @@ class PDF extends FPDF
 
   $this->SetFont('Arial','',7);
   //print_r($datos);
-  foreach ($datos as $registro) {
-    $registro = (array) $registro;
-    foreach ($header as $key => $value) {
-      if($this->checkNewPage()){
-        $this->Ln(25);
+  if (is_array($datos) || is_object($datos))
+  {
+    foreach ($datos as $registro) {
+      $registro = (array) $registro;
+      foreach ($header as $key => $value) {
+        if($this->checkNewPage()){
+          $this->Ln(25);
+        }
+
+        $x_axis=$this->getx();
+        $c_height = $this->vcell($c_width[$key],$c_height,$x_axis,$registro[$key],$length[$key]);
+
       }
 
-      $x_axis=$this->getx();
-      $c_height = $this->vcell($c_width[$key],$c_height,$x_axis,$registro[$key],$length[$key]);
-
+      $this->Ln();
     }
-
-    $this->Ln();
   }
   // exit();
  }
@@ -193,7 +196,7 @@ class PDF extends FPDF
    $antecendente = $antecendente->consultarId();
    $antecendente = !empty($antecendente["data"])?$antecendente["data"]:false;
    if(!$antecendente){
-     $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Nivel no encontrado.","data"=>[]]);
+     $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Antecedente no encontrado.","data"=>[]]);
      header("Location: ../home.php");exit();
    }
    $this->programa["antecedente"] = $antecendente;
@@ -232,7 +235,7 @@ class PDF extends FPDF
      $this->objTurno = $this->objTurno->consultarId();
      $this->objTurno = !empty($this->objTurno["data"])?$this->objTurno["data"]:false;
      if(!$this->objTurno){
-       $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Nivel no encontrado.","data"=>[]]);
+       $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Turno no encontrado.","data"=>[]]);
        header("Location: ../home.php");exit();
      }
      $this->turno .= $this->objTurno["nombre"].", ";
@@ -643,7 +646,7 @@ class PDF extends FPDF
    }
  }
 
- function getDirector($solicitud_id = null){
+ function getRector($solicitud_id = null){
 
    $this->solicitud = new Solicitud();
    $this->solicitud->setAttributes(["id"=>$solicitud_id]);
@@ -681,61 +684,127 @@ class PDF extends FPDF
      header("Location: ../home.php");exit();
    }
 
-   $this->director = new Persona();
-   $this->director->setAttributes(["id"=>$this->plantel["persona_id"]]);
-   $this->director = $this->director->consultarId();
-   $this->director = !empty($this->director["data"])?$this->director["data"]:false;
-   if(!$this->director){
-     $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Director no encontrado.","data"=>[]]);
+   $this->rector = new Persona();
+   $this->rector->setAttributes(["id"=>$this->plantel["rector_id"]]);
+   $this->rector = $this->rector->consultarId();
+   $this->rector = !empty($this->rector["data"])?$this->rector["data"]:false;
+   if(!$this->rector){
+     $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Rector no encontrado.","data"=>[]]);
      header("Location: ../home.php");exit();
    }
 
-   $this->formaciones = new Formacion();
-   $this->formaciones = $this->formaciones->consultarPor("formaciones",array("persona_id"=>$this->director["id"], "deleted_at"),"*");
-   $this->formaciones = !empty($this->formaciones["data"])?$this->formaciones["data"]:false;
-
-   foreach ($this->formaciones as $key => $formacion) {
-     $nivel = new Nivel();
-     $nivel->setAttributes(["id"=>$formacion["nivel"]]);
-     $nivel = $nivel->consultarId();
-     $nivel = !empty($nivel["data"])?$nivel["data"]:false;
-
-     $this->formaciones[$key]["nivel"] = $nivel["descripcion"];
-   }
-
-   $this->experiencias = new Experiencia();
-   $this->experiencias = $this->experiencias->consultarPor("experiencias",array("persona_id"=>$this->director["id"], "deleted_at"),"*");
-   $this->experiencias = !empty($this->experiencias["data"])?$this->experiencias["data"]:false;
-
-   $this->experienciaDocente = [];
-   $this->experienciaProDir = [];
-   if ($this->experiencias) {
-     foreach ($this->experiencias as $key => $experiencia) {
-       if(Experiencia::EXPERIENCIA_DOCENTE == $experiencia["tipo"]){
-         array_push($this->experienciaDocente,$experiencia);
-       }else{
-         array_push($this->experienciaProDir,$experiencia);
-
-       }
-     }
-   }
-
-
-   $publicaciones = new Publicacion();
-   $publicaciones = $publicaciones->consultarPor("publicaciones",["persona_id"=>$this->director["id"]],"*");
-   $publicaciones = !empty($publicaciones["data"])?$publicaciones["data"]:false;
-
-   $this->publicaciones = [];
-   if ($publicaciones) {
-     foreach ($publicaciones as $key => $publicacion) {
-       $p = [
-         "titulo"=> $publicacion["titulo"],
-         "detalles"=> $publicacion["volumen"]." ".$publicacion["editorial"]." ".$publicacion["anio"]." ".$publicacion["pais"]." ".$publicacion["otros"]
-       ];
-       array_push($this->publicaciones,$p);
+   $this->formaciones1 = new Formacion();
+   $this->formaciones1 = $this->formaciones1->consultarPor("formaciones",array("persona_id"=>$this->rector["id"], "deleted_at"),"*");
+   $this->formaciones1 = !empty($this->formaciones1["data"])?$this->formaciones1["data"]:false;
+   if ($this->formaciones1) {
+     foreach ($this->formaciones1 as $key => $formacion) {
+       $nivel = new Nivel();
+       $nivel->setAttributes(["id"=>$formacion["nivel"]]);
+       $nivel = $nivel->consultarId();
+       $nivel = !empty($nivel["data"])?$nivel["data"]:false;
+  
+       $this->formaciones1[$key]["nivel"] = $nivel["descripcion"];
      }
    }
  }
+
+ function getDirector($solicitud_id = null){
+
+  $this->solicitud = new Solicitud();
+  $this->solicitud->setAttributes(["id"=>$solicitud_id]);
+  $this->solicitud = $this->solicitud->consultarId();
+  $this->solicitud = !empty($this->solicitud["data"])?$this->solicitud["data"]:false;
+  if(!$this->solicitud){
+    $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Solicitud no encontrada.","data"=>[]]);
+    header("Location: ../home.php");exit();
+  }
+
+  $this->representante = new Usuario();
+  $this->representante->setAttributes(["id"=>$this->solicitud["usuario_id"]]);
+  $this->representante = $this->representante->consultarId();
+  $this->representante = !empty($this->representante["data"])?$this->representante["data"]:false;
+  if(!$this->representante){
+    $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Usuario representante no encontrado.","data"=>[]]);
+    header("Location: ../home.php");exit();
+  }
+
+
+  $this->programa = new Programa();
+  $this->programa = $this->programa->consultarPor("programas",["solicitud_id"=>$solicitud_id],"*");
+  $this->programa = !empty($this->programa["data"])?$this->programa["data"][0]:false;
+  if(!$this->programa){
+    $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Programa no encontrado.","data"=>[]]);
+    header("Location: ../home.php");exit();
+  }
+
+  $this->plantel = new Plantel();
+  $this->plantel->setAttributes(["id"=>$this->programa["plantel_id"]]);
+  $this->plantel = $this->plantel->consultarId();
+  $this->plantel = !empty($this->plantel["data"])?$this->plantel["data"]:false;
+  if(!$this->plantel){
+    $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Plantel no encontrado.","data"=>[]]);
+    header("Location: ../home.php");exit();
+  }
+
+  $this->director = new Persona();
+  $this->director->setAttributes(["id"=>$this->plantel["persona_id"]]);
+  $this->director = $this->director->consultarId();
+  $this->director = !empty($this->director["data"])?$this->director["data"]:false;
+  if(!$this->director){
+    $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Director no encontrado.","data"=>[]]);
+    header("Location: ../home.php");exit();
+  }
+
+  $this->formaciones2 = new Formacion();
+  $this->formaciones2 = $this->formaciones2->consultarPor("formaciones",array("persona_id"=>$this->director["id"], "deleted_at"),"*");
+  $this->formaciones2 = !empty($this->formaciones2["data"])?$this->formaciones2["data"]:false;
+  if ($this->formaciones2) {
+    foreach ($this->formaciones2 as $key => $formacion) {
+      $nivel = new Nivel();
+      $nivel->setAttributes(["id"=>$formacion["nivel"]]);
+      $nivel = $nivel->consultarId();
+      $nivel = !empty($nivel["data"])?$nivel["data"]:false;
+ 
+      $this->formaciones2[$key]["nivel"] = $nivel["descripcion"];
+    }
+  }
+
+  $this->experiencias = new Experiencia();
+  $this->experiencias = $this->experiencias->consultarPor("experiencias",array("persona_id"=>$this->director["id"], "deleted_at"),"*");
+  $this->experiencias = !empty($this->experiencias["data"])?$this->experiencias["data"]:false;
+
+  $this->experienciaDocente = [];
+  $this->experienciaProDir = [];
+  if ($this->experiencias) {
+    foreach ($this->experiencias as $key => $experiencia) {
+      if(Experiencia::EXPERIENCIA_DOCENTE == $experiencia["tipo"]){
+        array_push($this->experienciaDocente,$experiencia);
+      }else{
+        array_push($this->experienciaProDir,$experiencia);
+
+      }
+    }
+  }
+
+
+  $publicaciones = new Publicacion();
+  $publicaciones = $publicaciones->consultarPor("publicaciones",["persona_id"=>$this->director["id"]],"*");
+  $publicaciones = !empty($publicaciones["data"])?$publicaciones["data"]:false;
+
+  $this->publicaciones = [];
+  if ($publicaciones) {
+    foreach ($publicaciones as $key => $publicacion) {
+      $p = [
+        "titulo"=> $publicacion["titulo"],
+        "detalles"=> $publicacion["volumen"]." ".$publicacion["editorial"]." ".$publicacion["anio"]." ".$publicacion["pais"]." ".$publicacion["otros"]
+      ];
+      array_push($this->publicaciones,$p);
+    }
+  }
+}
+
+
+
 
 }
 ?>

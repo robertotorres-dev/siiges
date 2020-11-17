@@ -111,6 +111,29 @@
               $resultado["data"]["domicilio"]=$result->fetch_assoc();
                $result->free();
             }
+            
+            //Agregar rector
+            $result = $this->mysqli->query("select * from personas where id=".$resultado['data']['rector_id']."");
+            if( isset($result->num_rows) && $result->num_rows > 0){
+              $resultado["data"]["rector"]=$result->fetch_assoc();
+              $result->free();
+            }
+
+            //Formaciones de rector
+            if (isset($resultado["data"]["rector"])) {
+              $formacion = new Persona();
+              $formaciones = $formacion->consultarPor("formaciones",array("persona_id"=>$resultado["data"]["rector"]["id"],"deleted_at"),"*");
+              if( sizeof($formaciones["data"]) > 0 ){
+                foreach ($formaciones["data"] as $posicionFormacion => $arregloformacion) {
+                    $nivel_temp = new Nivel();
+                    $nivel_temp->setAttributes( array( 'id' => $arregloformacion["nivel"] )  );
+                    $respuesta_temp = $nivel_temp->consultarId();
+                    $formaciones["data"][$posicionFormacion]["grado"] = $respuesta_temp["data"];
+                }
+                $resultado["data"]["rector"]["formaciones"] = $formaciones["data"];
+              }
+            }
+            
             //Agregar director
             $result = $this->mysqli->query("select * from personas where id=".$resultado['data']['persona_id']."");
             if($result->num_rows > 0){

@@ -40,6 +40,7 @@ Solicitud.getNiveles = function(){
        dataType: "json",
        data:{webService:"consultarTodos",url:""},
        success : function(respuesta){
+         var nivelesRector = $('#nivel_educativo_rector');
          var nivelesDirector = $('#nivel_educativo_director');
          var nivelPrograma = $('#nivel_id');
          var antecedente = $('#antecedente_academico');
@@ -48,6 +49,7 @@ Solicitud.getNiveles = function(){
          var otros = $('#nivelOtrosProgramas');
          for (var i = 0; i < respuesta.data.length-1; i++) {
            if(i>0){
+             nivelesRector.append('<option value ="'+respuesta.data[i].id+'">'+respuesta.data[i].descripcion+'</option>');
              nivelesDirector.append('<option value ="'+respuesta.data[i].id+'">'+respuesta.data[i].descripcion+'</option>');
              nivelPrograma.append('<option value ="'+respuesta.data[i].id+'">'+respuesta.data[i].descripcion+'</option>');
              docenteNivel.append('<option value ="'+respuesta.data[i].id+'">'+respuesta.data[i].descripcion+'</option>');
@@ -502,6 +504,7 @@ Solicitud.getDatosPlantel = function(idplantel){
           if(respuesta.data != "" ){
 
             if(respuesta.data.plantel != undefined){
+              console.log(respuesta.data);
               var object = respuesta.data.plantel;
               $("#plantel-id").val(object.id);
               $("#plantel-id").attr("name","PLANTEL-id");
@@ -509,8 +512,11 @@ Solicitud.getDatosPlantel = function(idplantel){
               for (var variable in object) {
                 if (object.hasOwnProperty(variable)) {
                   $("#"+variable).val(object[variable]);
+                  console.log(variable);
+                  console.log(object);
+                  
                   //Datos de ubicacion
-                    if(variable == "domicilio"){
+                  if(variable == "domicilio"){
                     var Objdomicilio = object[variable];
                     $("#id_domiclio_plantel").val(Objdomicilio.id);
                     $("#id_domiclio_plantel").attr("name","DOMICILIOPLANTEL-id");
@@ -522,6 +528,39 @@ Solicitud.getDatosPlantel = function(idplantel){
                       }
                     }
                   }
+
+                  //Rector
+                  if(variable == "rector" && $("#tipo").val() == 1){
+                    var Objrector = object[variable];
+                    $("#id-rector").val(Objrector.id);
+                    $("#id-rector").attr("name","RECTOR-id");
+
+                    for (var campos in Objrector) {
+
+                      if (Objrector.hasOwnProperty(campos)) {
+                        $("#"+campos+"_rector").val(Objrector[campos]);
+                        //Formaciones
+                        if(campos == "formaciones"){
+                          var formaciones = Objdirector[campos];
+                          $('#inputsFormacionDirector').empty();
+                          $('#formacion_director tr:not(:first)').remove();
+                          for (var j = 0; j < formaciones.length; j++) {
+                            var b = document.createElement("INPUT");
+                            b.setAttribute("type","hidden");
+                            b.setAttribute("id",'fromacionesRector'+nfilaFormacion);
+                            b.setAttribute("name","RECTOR-formaciones[]");
+                            b.setAttribute("value",JSON.stringify({ "id": formaciones[j].id,"nivel": formaciones[j].nivel,"nombre": formaciones[j].nombre,"descripcion": formaciones[j].descripcion,"institucion":"NO SE GUARDA DATO" }));
+                            __('inputsFormacionRector').appendChild(b);
+                            var filaFormacion = '<tr id="formacion' + nfilaFormacion + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ "NO SE GUARDA DATO" +'</td><td>'+  formaciones[j].descripcion+'</td><td><button type="button" name="removeFormacion" id="' + nfilaFormacion + '" class="btn btn-danger" onclick="eliminarFormacion(this)">Quitar</button></td></tr>';
+                            //Aumentar contador;
+                            nfilaFormacion++;
+                            $('#formacion_rector tr:last').after(filaFormacion);
+                          }
+                        }
+                      }
+                    }
+                  }
+
                   //Director
                   if(variable == "director" && $("#tipo").val() == 1){
                     var Objdirector = object[variable];
@@ -575,9 +614,6 @@ Solicitud.getDatosPlantel = function(idplantel){
                             $('#experiencia_director tr:last').after(filaExperiencia);
 
                           }
-
-
-
                         }
                         //PUBLICACIONES
                         if( campos=="publicaciones"){
@@ -599,13 +635,9 @@ Solicitud.getDatosPlantel = function(idplantel){
                             nfila++;
                             $('#publicaciones_director tr:last').after(filaPublicacion);
                           }
-
                         }
-
                       }
-
                     }
-
                   }
                   //Dictamenes
                     if( object.dictamenes != undefined && $("#tipo").val() != 4){

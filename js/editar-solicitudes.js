@@ -70,7 +70,6 @@ EditarSolicitud.getSolicitud = function() {
           if (fecha1 >= fechaConvocatoria2020.fechaInicio && fecha1 <= fechaConvocatoria2020.fechaFin) {
             const comprobante_pago = document.getElementById('comprobante_pago');
             const contenedor_pago = document.getElementById('contendorPago');
-            console.log(comprobante_pago);
             comprobante_pago.remove();
             contenedor_pago.remove();
             
@@ -309,6 +308,43 @@ EditarSolicitud.getSolicitud = function() {
               nfilaPersonal =  diligencias[i].id +1;
             }
           }
+          console.log(respuesta.data.programa.plantel);
+          
+          //Datos del rector
+          if( respuesta.data.programa.plantel.rector != undefined){
+            var rector = respuesta.data.programa.plantel.rector;
+            $("#id-rector").val(rector.id);
+            $("#id-rector").attr("name","RECTOR-id");
+            $("#nombre_rector").val(rector.nombre);
+            $("#apellido_paterno_rector").val(rector.apellido_paterno);
+            $("#apellido_materno_rector").val(rector.apellido_materno);
+            $("#nacionalidad_rector").val(rector.nacionalidad);
+            $("#curp_rector").val(rector.curp);
+            $("#sexo_rector").val(rector.sexo);
+            $("#correo_rector").val(rector.correo);
+            $("#celular_rector").val(rector.celular);
+            //Formaciones de rector
+            if( rector.formaciones != undefined){
+              var formaciones = rector.formaciones;
+              for (var j = 0; j < formaciones.length; j++) {
+                var filaFormacion;
+                if($("#informacionCargar").val() != 4){
+                  var b = document.createElement("INPUT");
+                  b.setAttribute("type","hidden");
+                  b.setAttribute("id",'fromacionesRector'+formaciones[j].id);
+                  b.setAttribute("name","RECTOR-formaciones[]");
+                  b.setAttribute("value",JSON.stringify({ "id":formaciones[j].id ,"nivel": formaciones[j].nivel,"nombre": formaciones[j].nombre,"descripcion": formaciones[j].descripcion,"institucion":formaciones[j].institucion }));
+                  __('inputsFormacionRector').appendChild(b);
+                  filaFormacion = '<tr id="formacion' + formaciones[j].id + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ formaciones[j].institucion +'</td><td>'+  formaciones[j].descripcion+'</td><td><button type="button" name="removeFormacion" id="fromacionesRector-' + formaciones[j].id + '_formacion" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
+                }
+                //Aumentar contador;
+                nfilaFormacion = formaciones[j].id+1;
+                $('#formacion_rector tr:last').after(filaFormacion);
+              }
+            }
+            
+          }
+          
           //Datos del director
           if( respuesta.data.programa.plantel.director != undefined){
             var director = respuesta.data.programa.plantel.director;
@@ -320,6 +356,8 @@ EditarSolicitud.getSolicitud = function() {
             $("#nacionalidad_director").val(director.nacionalidad);
             $("#curp_director").val(director.curp);
             $("#sexo_director").val(director.sexo);
+            $("#correo_director").val(director.correo);
+            $("#celular_director").val(director.celular);
             //Formaciones de director
             if( director.formaciones != undefined){
               var formaciones = director.formaciones;
@@ -382,19 +420,16 @@ EditarSolicitud.getSolicitud = function() {
                   d.setAttribute("value",JSON.stringify({ "id": publicaciones[l].id, "anio": publicaciones[l].anio,"volumen": publicaciones[l].volumen,"pais": publicaciones[l].pais,"titulo": publicaciones[l].titulo,"editorial": publicaciones[l].editorial,"otros": publicaciones[l].otros}));
                   __('inputsPublicacionesDirector').appendChild(d);
                   filaPublicacion = '<tr id="publicacion' + publicaciones[l].id + '"><td>' +  publicaciones[l].titulo + '</td><td>' +  publicaciones[l].volumen + '</td><td>'+  publicaciones[l].editorial +'</td><td>'+ publicaciones[l].anio+'</td><td>'+  publicaciones[l].pais+'</td><td>'+ publicaciones[l].otros+'</td><td><button type="button" name="removePublicacion" id="publicacionesDirector-' + publicaciones[l].id + '_publicacion" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
-
                 }
                 //Consttuir fila
                 $('#publicaciones_director tr:last').after(filaPublicacion);
                 nfilaPu = publicaciones[l].id +1 ;
               }
             }
-
           }
 
           //Datos del programa
           if( programa != undefined){
-            console.log(programa);
             $("#id_solicitud").val(programa.solicitud_id);
             $("#id_solicitud").attr("name","SOLICITUD-id");
             //Propiedades de programa

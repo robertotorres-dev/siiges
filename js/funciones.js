@@ -282,7 +282,39 @@ function eliminarPersonal(fila){
    console.log(__('inputsSeguimiento'));
 }
 
-function agregarFormacion() {
+function agregarFormacionRector() {
+  var nivel = __('nivel_educativo_rector').value;
+  var carrera = __('estudios_rector').value;
+  var institucion = __('institucion_estudios_rector').value;
+  var documento = __('documento_acredita_rector').value;
+  var mensaje = $("#mensajesFromacionRector");
+
+  if(nivel.length==0||carrera.length==0||institucion.length==0||documento.length==0){
+    mensaje.addClass("alert alert-danger").show();
+    mensaje.html('Llene todos los campos obligatorios *');
+  }else{
+     mensaje.removeClass("alert alert-danger").hide();
+     //Almacenar valores en inputs
+      var a = document.createElement("INPUT");
+      a.setAttribute("type","hidden");
+      a.setAttribute("id",'fromacionesRector'+nfilaFormacion);
+      a.setAttribute("name","RECTOR-formaciones[]");
+      a.setAttribute("value",JSON.stringify({ "id":null, "nivel":nivel,"nombre":carrera,"descripcion":documento,"institucion":institucion }));
+      __('inputsFormacionRector').appendChild(a);
+      var niveltxt = $('#nivel_educativo_rector option:selected').text();
+      //Constuir fila
+      var fila = '<tr id="formacion' + nfilaFormacion + '"><td>' + niveltxt + '</td><td>' + carrera + '</td><td>'+ institucion +'</td><td>'+ documento +'</td><td><button type="button" name="removeFormacion" id="' + nfilaFormacion + '" class="btn btn-danger" onclick="eliminarFormacionRector(this)">Quitar</button></td></tr>';
+      //Aumentar contador;
+      nfilaFormacion++;
+      $('#formacion_rector tr:last').after(fila);
+      //Limpiar entradas
+      __('nivel_educativo_rector').value="";__('estudios_rector').value="";
+      __('institucion_estudios_rector').value="";__('documento_acredita_rector').value="";
+      console.log(__('inputsFormacionRector'));
+  }
+}
+
+function agregarFormacionDirector() {
   var nivel = __('nivel_educativo_director').value;
   var carrera = __('estudios_director').value;
   var institucion = __('institucion_estudios_director').value;
@@ -303,7 +335,7 @@ function agregarFormacion() {
       __('inputsFormacionDirector').appendChild(a);
       var niveltxt = $('#nivel_educativo_director option:selected').text();
       //Constuir fila
-      var fila = '<tr id="formacion' + nfilaFormacion + '"><td>' + niveltxt + '</td><td>' + carrera + '</td><td>'+ institucion +'</td><td>'+ documento +'</td><td><button type="button" name="removeFormacion" id="' + nfilaFormacion + '" class="btn btn-danger" onclick="eliminarFormacion(this)">Quitar</button></td></tr>';
+      var fila = '<tr id="formacion' + nfilaFormacion + '"><td>' + niveltxt + '</td><td>' + carrera + '</td><td>'+ institucion +'</td><td>'+ documento +'</td><td><button type="button" name="removeFormacion" id="' + nfilaFormacion + '" class="btn btn-danger" onclick="eliminarFormacionDirector(this)">Quitar</button></td></tr>';
       //Aumentar contador;
       nfilaFormacion++;
       $('#formacion_director tr:last').after(fila);
@@ -313,7 +345,16 @@ function agregarFormacion() {
       console.log(__('inputsFormacionDirector'));
   }
 }
-function eliminarFormacion(fila) {
+
+function eliminarFormacionRector(fila) {
+  var id = fila.id;
+  var input = 'fromacionesRector'+id;
+    $('#formacion'+id+'').remove();
+  __('inputsFormacionRector').removeChild(__(input));
+  console.log(__('inputsFormacionRector'));
+}
+
+function eliminarFormacionDirector(fila) {
   var id = fila.id;
   var input = 'fromacionesDirector'+id;
     $('#formacion'+id+'').remove();

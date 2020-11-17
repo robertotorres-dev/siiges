@@ -204,14 +204,18 @@ Solicitudes.getDetalles = function(){
           const fecha1 = new Date(parseInt(fechaAlta[0]),parseInt(fechaAlta[1]-1),parseInt(fechaAlta[2]))
           //Al mes se resta 1
           const fechaConvocatoria2020 = {
-            fechaInicio: new Date(2020,10,09),
+            fechaInicio: new Date(2016,10,09),
             fechaFin: new Date(2020,11,20)
           }
           if (fecha1 < fechaConvocatoria2020.fechaInicio) {
+            const fda02 = document.getElementById('fda02');
             const fda04 = document.getElementById('fda04');
             const fda05 = document.getElementById('fda05');
             const fda06 = document.getElementById('fda06');
             const fdp08 = document.getElementById('fdp08');
+
+            fda02.setAttribute('href', `formatos/fda02.php?id=${solicitud.id}`);
+            fda02.innerHTML = 'FDA 02';
 
             fda04.setAttribute('href', `formatos/fda04.php?id=${solicitud.id}`);
             fda04.innerHTML = 'FDA 04';
@@ -227,10 +231,14 @@ Solicitudes.getDetalles = function(){
 
             console.log("Convocatoria anterior");
           } else if(fecha1 >= fechaConvocatoria2020.fechaInicio && fecha1 <= fechaConvocatoria2020.fechaFin) {
+            const fda02 = document.getElementById('fda02');
             const fda04 = document.getElementById('fda04');
             const fda05 = document.getElementById('fda05');
             const fda06 = document.getElementById('fda06');
             const fdp08 = document.getElementById('fdp08');
+
+            fda02.setAttribute('href', `formatos/fda02-2020.php?id=${solicitud.id}`);
+            fda02.innerHTML = 'FDA 02';
 
             fda04.setAttribute('href', `formatos/fda04-2020.php?id=${solicitud.id}`);
             fda04.innerHTML = 'FDA 04';

@@ -208,7 +208,7 @@
 					<div class="form-group col-sm-6 col-md-4">
 						<h4>Formatos Administrativos</h4>
 						<a target="_blank" href= <?= "formatos/fda01.php?id=".$_GET["solicitud"] ?>>FDA 01</a><br>
-						<a target="_blank" href= <?= "formatos/fda02.php?id=".$_GET["solicitud"] ?>>FDA 02</a><br>
+						<a target="_blank" id="fda02"></a><br>
 						<a target="_blank" href= <?= "formatos/fda03.php?id=".$_GET["solicitud"] ?> id="fda03" >FDA 03</a><br>
 						<a target="_blank" id="fda04"></a><br>
 						<a target="_blank" id="fda05"></a><br>

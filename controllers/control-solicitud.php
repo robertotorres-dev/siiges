@@ -147,6 +147,9 @@ session_start();
       if(strstr($atributo, '-', true) == "RATIFICACION" ){
         $parametrosRatificacion[substr(strstr($atributo, '-'),1)] = $valor;
       }
+      if(strstr($atributo, '-', true) == "RECTOR" ){
+        $parametrosRector[substr(strstr($atributo, '-'),1)] = $valor;
+      }
       if(strstr($atributo, '-', true) == "DIRECTOR" ){
         $parametrosDirector[substr(strstr($atributo, '-'),1)] = $valor;
       }
@@ -210,730 +213,720 @@ session_start();
     $errores = "";
     $entidadesIds = [];
     $idUsuario = "";
+
     //Actuliazar información del representante
     $personaRepresentante = new Persona();
     $personaRepresentante->setAttributes($parametrosRepresentante);
     $personaRepresentante->guardar();
     $domicilioRepresentante = new Domicilio();
+
     if($parametrosRepresentante["domicilio_id"]==1){
       $domicilioRepresentante->setAttributes(array("calle"=>$parametrosRepresentante["calle"],"numero_exterior"=>$parametrosRepresentante["numero_exterior"],"numero_interior"=>$parametrosRepresentante["numero_interior"],"colonia"=>$parametrosRepresentante["colonia"],"municipio"=>$parametrosRepresentante["municipio"],"estado"=>"Jalisco","codigo_postal"=>$parametrosRepresentante["codigo_postal"],"pais"=>"México"));
-    }else{
-        $parametrosRepresentante["id"] = $parametrosRepresentante["domicilio_id"];
-        $domicilioRepresentante->setAttributes($parametrosRepresentante);
+    
+    } else {
+      $parametrosRepresentante["id"] = $parametrosRepresentante["domicilio_id"];
+      $domicilioRepresentante->setAttributes($parametrosRepresentante);
     }
 
     $res_domicilio = $domicilioRepresentante->guardar();
     $actualizarDomicilio = new Persona();
     $actualizarDomicilio->setAttributes(array("id"=>$parametrosRepresentante["id"],"domicilio_id"=>$res_domicilio["data"]["id"]));
     $actualizarDomicilio->guardar();
+    
     // Institucion
-      try {
-        // Solo los representantes legales pueden crear una nueva solicitud
-        if(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] || Rol::ROL_GESTOR  == $_SESSION["rol_id"]){
-          $parametrosInstitucion["usuario_id"] =  $_SESSION["id"];
-          if(Rol::ROL_GESTOR  == $_SESSION["rol_id"])
-          {
-            $gestor = new Usuario();
-            $representanteGestor = $gestor->consultarPor("usuario_usuarios", array("secundario_id"=>$_SESSION["id"]) , "*");
-            $id_usuario = $representanteGestor["data"][0]["principal_id"];
-            $parametrosInstitucion["usuario_id"] =  $id_usuario;
-          }
-        }else if(!isset($parametrosInstitucion["usuario_id"])){
-          // representante es el usuario_id
-          // No permite continual
-          throw new Exception("INSTITUCION - representante no existe.");
+    try {
+      // Solo los representantes legales pueden crear una nueva solicitud
+      if(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] || Rol::ROL_GESTOR  == $_SESSION["rol_id"]){
+        $parametrosInstitucion["usuario_id"] =  $_SESSION["id"];
+        if(Rol::ROL_GESTOR  == $_SESSION["rol_id"])
+        {
+          $gestor = new Usuario();
+          $representanteGestor = $gestor->consultarPor("usuario_usuarios", array("secundario_id"=>$_SESSION["id"]) , "*");
+          $id_usuario = $representanteGestor["data"][0]["principal_id"];
+          $parametrosInstitucion["usuario_id"] =  $id_usuario;
         }
+      } else if(!isset($parametrosInstitucion["usuario_id"])){
+        // representante es el usuario_id
+        // No permite continual
+        throw new Exception("INSTITUCION - representante no existe.");
+      }
+      $institucion = new Institucion( );
+      $institucion->setAttributes($parametrosInstitucion);
+      $institucion = $institucion->guardar();
+      $entidadesIds["INSTITUCION"] = isset($institucion["data"]["id"])?$institucion["data"]["id"]:false;
+      $entidadesIds["REPRESENTANTE"] = $parametrosInstitucion["usuario_id"];
+      
+      // Ratificacion
+      if(!$entidadesIds["INSTITUCION"]){
+        throw new Exception("INSTITUCION - error al guardar");
+      } else {
         $institucion = new Institucion( );
-        $institucion->setAttributes($parametrosInstitucion);
-        $institucion = $institucion->guardar();
-        $entidadesIds["INSTITUCION"] = isset($institucion["data"]["id"])?$institucion["data"]["id"]:false;
-        $entidadesIds["REPRESENTANTE"] = $parametrosInstitucion["usuario_id"];
-        // Ratificacion
+        $institucion->setAttributes(["id"=>$entidadesIds["INSTITUCION"]]);
+        $institucion = $institucion->consultarId();
+        $institucion = isset($institucion["data"])?$institucion["data"]:false;
+        
+        // Si no tiene nombre autorizado se requiere ratificacion de nombre
+        if(!$institucion["es_nombre_autorizado"]){
+          
+          // Al menos es necesario un nombre propuesto
+          if(!empty($parametrosRatificacion["nombre_propuesto1"]) ||
+            !empty($parametrosRatificacion["nombre_propuesto2"]) ||
+            !empty($parametrosRatificacion["nombre_propuesto3"])){
+            $ratificacion = new RatificacionNombre( );
+            $parametrosRatificacion["institucion_id"] = $entidadesIds["INSTITUCION"];
+            $ratificacion->setAttributes($parametrosRatificacion);
+            $ratificacion = $ratificacion->guardar();
+            $entidadesIds["RATIFICACION"] = isset($ratificacion["data"]["id"])?$ratificacion["data"]["id"]:false;
+            if(!$entidadesIds["RATIFICACION"]) throw new Exception("RATIFICACION - error al guardar");
+          
+          } else {
+            $errores .= "<br>"."RATIFICACION - Almenos se necesita un nombre propuesto.";
+          }
+        }
+        
+        // Domicilio
+        if(empty($parametrosDomicilioPlantel["calle"])){
+          $entidadesIds["DOMICILIO"] = false;
+        }else{
+          $domicilio = new Domicilio( );
+          $domicilio->setAttributes($parametrosDomicilioPlantel);
+          $domicilio = $domicilio->guardar();
+          $entidadesIds["DOMICILIO"] = isset($domicilio["data"]["id"])?$domicilio["data"]["id"]:false;
+        }
 
-          if(!$entidadesIds["INSTITUCION"]){
-            throw new Exception("INSTITUCION - error al guardar");
-          }else {
-              $institucion = new Institucion( );
-              $institucion->setAttributes(["id"=>$entidadesIds["INSTITUCION"]]);
-              $institucion = $institucion->consultarId();
-              $institucion = isset($institucion["data"])?$institucion["data"]:false;
-              // Si no tiene nombre autorizado se requiere ratificacion de nombre
-              if(!$institucion["es_nombre_autorizado"]){
-                // Al menos es necesario un nombre propuesto
-                if(!empty($parametrosRatificacion["nombre_propuesto1"]) ||
-                    !empty($parametrosRatificacion["nombre_propuesto2"]) ||
-                    !empty($parametrosRatificacion["nombre_propuesto3"])){
-                    $ratificacion = new RatificacionNombre( );
-                    $parametrosRatificacion["institucion_id"] = $entidadesIds["INSTITUCION"];
-                    $ratificacion->setAttributes($parametrosRatificacion);
-                    $ratificacion = $ratificacion->guardar();
-                    $entidadesIds["RATIFICACION"] = isset($ratificacion["data"]["id"])?$ratificacion["data"]["id"]:false;
-                    if(!$entidadesIds["RATIFICACION"]) throw new Exception("RATIFICACION - error al guardar");
-                }else{
-                  $errores .= "<br>"."RATIFICACION - Almenos se necesita un nombre propuesto.";
+        // Rector
+        if(!$entidadesIds["DOMICILIO"]){
+          $entidadesIds["RECTOR"] = false;
+          throw new Exception("DOMICILIO - error al guardar");
+        } else if(!empty($parametrosRector["nombre"])) {
+          $rector = new Persona( );
+          $parametrosRector["domicilio_id"] = $entidadesIds["DOMICILIO"];
+          $parametrosRector["fotografia"]= Persona::FOTO_DEFAULT;
+          $rector->setAttributes($parametrosRector);
+          $rector = $rector->guardar();
+          $entidadesIds["RECTOR"] = isset($rector["data"]["id"])?$rector["data"]["id"]:false;
+
+          if ($entidadesIds["RECTOR"]) {
+            // Formaciones Rector
+            $formaciones = isset($parametrosRector["formaciones"])?$parametrosRector["formaciones"]:[];
+            foreach ($formaciones as $cadena) {
+              $cadena = str_replace('\\', '', $cadena);
+              $formacion = json_decode($cadena);
+              $objFormacion = new Formacion();
+              if(isset($formacion->borrar) && $formacion->borrar == 1) {
+                $objFormacion->setAttributes(array("id"=>$formacion->id));
+                $objFormacion->eliminar();
+              }else {
+                $formacion->persona_id = $rector["data"]["id"];
+                $objFormacion->setAttributes((array)$formacion);
+                $objFormacion->guardar();
+              }
+            }
+          }
+        }
+
+        // Director
+        //echo $_POST["SOLICITUD-tipo_solicitud_id"];
+        if(!$entidadesIds["DOMICILIO"]){
+          $entidadesIds["DIRECTOR"] = false;
+          throw new Exception("DOMICILIO - error al guardar");
+        } else if(!empty($parametrosDirector["nombre"])) {
+
+          $director = new Persona( );
+          $parametrosDirector["domicilio_id"] = $entidadesIds["DOMICILIO"];
+          $parametrosDirector["fotografia"]= Persona::FOTO_DEFAULT;
+          $director->setAttributes($parametrosDirector);
+          $director = $director->guardar();
+          $entidadesIds["DIRECTOR"] = isset($director["data"]["id"])?$director["data"]["id"]:false;
+
+          if(!$entidadesIds["DIRECTOR"]){
+
+            throw new Exception("DIRECTOR - error al guardar");
+          
+          } else {
+
+            // Publicaciones Director
+            $publicaciones = isset($parametrosDirector["publicaciones"])?$parametrosDirector["publicaciones"]:[];
+            foreach ($publicaciones as $cadena) {
+              $cadena = str_replace('\\', '', $cadena);
+              $publicacion = json_decode($cadena);
+              $objPublicacion = new Publicacion();
+              if(isset($publicacion->borrar) && $publicacion->borrar == 1) {
+                $objPublicacion->setAttributes(array("id"=>$publicacion->id));
+                $objPublicacion->eliminar();
+              } else {
+                $publicacion->persona_id = $entidadesIds["DIRECTOR"];
+                $objPublicacion->setAttributes((array)$publicacion);
+                $objPublicacion->guardar();
+              }
+            }
+
+            // Formaciones Director
+            $formaciones = isset($parametrosDirector["formaciones"])?$parametrosDirector["formaciones"]:[];
+            foreach ($formaciones as $cadena) {
+              $cadena = str_replace('\\', '', $cadena);
+              $formacion = json_decode($cadena);
+              $objFormacion = new Formacion();
+              if(isset($formacion->borrar) && $formacion->borrar == 1) {
+                $objFormacion->setAttributes(array("id"=>$formacion->id));
+                $objFormacion->eliminar();
+              }else {
+                $formacion->persona_id = $director["data"]["id"];
+                $objFormacion->setAttributes((array)$formacion);
+                $objFormacion->guardar();
+              }
+            }
+
+            // Experiencia Director
+            $experiencias = isset($parametrosDirector["experiencias"])?$parametrosDirector["experiencias"]:[];
+            foreach ($experiencias as $cadena) {
+              $cadena = str_replace('\\', '', $cadena);
+              $experiencia = json_decode($cadena);
+              $objExperiencia = new Experiencia();
+              if(isset($experiencia->borrar) && $experiencia->borrar == 1) {
+                $objExperiencia->setAttributes(array("id"=>$experiencia->id));
+                $objExperiencia->eliminar();
+              } else {
+                $experiencia->persona_id = $director["data"]["id"];
+                $objExperiencia->setAttributes((array)$experiencia);
+                $objExperiencia->guardar();
+              }
+            }
+          }
+                  
+          //Plantel
+          $plantel = new Plantel( );
+          $parametrosPlantel["institucion_id"] = $entidadesIds["INSTITUCION"];
+          $parametrosPlantel["domicilio_id"] = $entidadesIds["DOMICILIO"];
+          $parametrosPlantel["rector_id"] = $entidadesIds["RECTOR"];
+          $parametrosPlantel["persona_id"] = $entidadesIds["DIRECTOR"];
+          $plantel->setAttributes($parametrosPlantel);
+          $plantel = $plantel->guardar();
+          $entidadesIds["PLANTEL"] = isset($plantel["data"]["id"])?$plantel["data"]["id"]:false;
+
+          if(!$entidadesIds["PLANTEL"]){
+            throw new Exception("PLANTEL - error al guardar");
+          } else {
+
+            //Edificios
+            foreach ($parametrosEdificio as $key => $nivel) {
+              $plantelEdificio = new PlantelEdificioNivel( );
+              $niveles["edificio_nivel_id"] = $nivel;
+              $niveles["plantel_id"] = $entidadesIds["PLANTEL"];
+              $objEdificio = new PlantelEdificioNivel();
+              $resObjEdificio = $objEdificio->consultarPor("planteles_edificios_niveles",array("plantel_id"=>$entidadesIds["PLANTEL"],"edificio_nivel_id"=>$nivel),"id");
+              if(sizeof($resObjEdificio["data"])>0) {
+                $niveles["id"] = $resObjEdificio["data"][0]["id"];
+              }
+              $plantelEdificio->setAttributes($niveles);
+              $plantelEdificio->guardar();
+            }
+
+            //Elimna los edificios
+            if($opcion_guardado==2) {
+              $edificio = new PlantelEdificioNivel();
+              $edificiosActuales = $edificio->consultarPor("planteles_edificios_niveles",array("plantel_id"=>$entidadesIds["PLANTEL"],"deleted_at"),"id,edificio_nivel_id");
+              foreach ($edificiosActuales["data"] as $key => $campo) {
+                $existe = in_array($campo["edificio_nivel_id"],$parametrosEdificio);
+                if(!$existe) {
+                  $edificioBorrar = new PlantelEdificioNivel();
+                  $edificioBorrar->setAttributes(array("id"=>$campo["id"]));
+                  $edificioBorrar->eliminar();
                 }
               }
-              // Domicilio
-              if(empty($parametrosDomicilioPlantel["calle"])){
-                $entidadesIds["DOMICILIO"] = false;
-              }else{
-                $domicilio = new Domicilio( );
-                $domicilio->setAttributes($parametrosDomicilioPlantel);
-                $domicilio = $domicilio->guardar();
-                $entidadesIds["DOMICILIO"] = isset($domicilio["data"]["id"])?$domicilio["data"]["id"]:false;
+            }
+
+            // Dictamenes Plantel
+            $dictamenes = isset($parametrosDictamenPlantel["dictamenes"])?$parametrosDictamenPlantel["dictamenes"]:[];
+            foreach ($dictamenes as $cadena) {
+              $cadena = str_replace('\\', '', $cadena);
+              $dictamenPlantel = json_decode($cadena);
+              $dictamenPlantel->plantel_id = $entidadesIds["PLANTEL"];
+              $objPlantelDictamen = new PlantelDictamen();
+              $objPlantelDictamen->setAttributes((array)$dictamenPlantel);
+              $objPlantelDictamen->guardar();
+            }
+
+            // Seguridad Plantel
+            if (isset($parametrosSeguridad)) {
+              foreach ($parametrosSeguridad as $key => $value) {
+                $seguridad["plantel_id"] = $entidadesIds["PLANTEL"];
+                $seguridad["seguridad_sistema_id"] = SeguridadSistema::$seguridad[$key];
+                $seguridad["cantidad"] = $value;
+                $actualizarSeguridad = new PlantelSeguridadSistema();
+                $res_actulizarSeguridad =  $actualizarSeguridad->consultarPor("planteles_seguridad_sistemas",array("plantel_id"=>$entidadesIds["PLANTEL"],"seguridad_sistema_id"=>$seguridad["seguridad_sistema_id"]),"id");
+                if(sizeof($res_actulizarSeguridad["data"])>0) {
+                  $seguridad["id"] =$res_actulizarSeguridad["data"][0]["id"];
+                }
+
+                $objPlantelSeguridad = new PlantelSeguridadSistema();
+                $objPlantelSeguridad->setAttributes($seguridad);
+                $objPlantelSeguridad->guardar();
               }
-              // Director
-                //echo $_POST["SOLICITUD-tipo_solicitud_id"];
-                if(!$entidadesIds["DOMICILIO"]){
-                  $entidadesIds["DIRECTOR"] = false;
-                  throw new Exception("DOMICILIO - error al guardar");
-                }else if(!empty($parametrosDirector["nombre"])){
-                    $director = new Persona( );
-                    $parametrosDirector["domicilio_id"] = $entidadesIds["DOMICILIO"];
-                    $parametrosDirector["fotografia"]= Persona::FOTO_DEFAULT;
-                    /* print_r($parametrosDirector);
-                    echo "<br>"; */
-                    $director->setAttributes($parametrosDirector);
-                    $director = $director->guardar();
-                    /* print_r($director);
-                    echo "<br>"; */
-                    $entidadesIds["DIRECTOR"] = isset($director["data"]["id"])?$director["data"]["id"]:false;
-                    /* echo "<br>";
-                    print_r($entidadesIds["DIRECTOR"]); */
-                    if(!$entidadesIds["DIRECTOR"]){
-                      throw new Exception("DIRECTOR - error al guardar");
-                    }else{
+            }
+                          
+            // Higiene Plantel
+            if (isset($parametrosSeguridad)){
+              foreach ($parametrosHigiene as $key => $value) {
+                $higiene["plantel_id"] = $entidadesIds["PLANTEL"];
+                $higiene["higiene_id"] = Higiene::$higiene[$key];
+                $higiene["cantidad"] = $value;
+                $actualizarHigiene = new PlantelHigiene();
+                $res_actulizarHigiene = $actualizarHigiene->consultarPor("planteles_higienes",array("plantel_id"=>$higiene["plantel_id"],"higiene_id"=>$higiene["higiene_id"]),"id");
+                if(sizeof($res_actulizarHigiene["data"])>0) {
+                  $higiene["id"] = $res_actulizarHigiene["data"][0]["id"];
+                }
 
-                        // Publicaciones Director
-                        $publicaciones = isset($parametrosDirector["publicaciones"])?$parametrosDirector["publicaciones"]:[];
-                        foreach ($publicaciones as $cadena) {
-                          $cadena = str_replace('\\', '', $cadena);
-                          $publicacion = json_decode($cadena);
-                          $objPublicacion = new Publicacion();
-                          if(isset($publicacion->borrar) && $publicacion->borrar == 1)
-                          {
-                            $objPublicacion->setAttributes(array("id"=>$publicacion->id));
-                            $objPublicacion->eliminar();
-                          }else
-                          {
-                            $publicacion->persona_id = $entidadesIds["DIRECTOR"];
-                            $objPublicacion->setAttributes((array)$publicacion);
-                            $objPublicacion->guardar();
-                          }
+                $objPlanteHigiene = new PlantelHigiene();
+                $objPlanteHigiene->setAttributes($higiene);
+                $objPlanteHigiene->guardar();
+              }
+            }
 
+            // Salud Plantel
+            $institucionesSalud = isset($parametrosSalud["nombresInstitucionSalud"])?$parametrosSalud["nombresInstitucionSalud"]:[];
+            foreach ($institucionesSalud as $cadena) {
+              $cadena = str_replace('\\', '', $cadena);
+              $salud = json_decode($cadena);
+              $salud->plantel_id = $entidadesIds["PLANTEL"];
+              $objSalud = new SaludInstitucion();
+              $objSalud->setAttributes((array)$salud);
+              $objSalud->guardar();
+            }
+
+            // Infraestructura Plantel
+            $asignaturaInfraestructura = [];
+            $infraestructuras = isset($parametrosIfraestructura["infraestructuras"])?$parametrosIfraestructura["infraestructuras"]:[];
+            foreach ($infraestructuras as $cadena) {
+              $cadena = str_replace('\\', '', $cadena);
+              $infraestructura = json_decode($cadena);
+              $objInfraestructura = new Infraestructura();
+              
+              if(isset($infraestructura->borrar)&&$infraestructura->borrar==1) {
+                $objInfraestructura->setAttributes(array("id"=>$infraestructura->id));
+                $objInfraestructura->eliminar();
+              } else {
+                $infraestructura->plantel_id = $entidadesIds["PLANTEL"];
+                
+                if(isset($_POST["SOLICITUD-id"])){
+                  $infraestructura->solicitud_id = $_POST["SOLICITUD-id"];
+                }
+                $objInfraestructura->setAttributes((array)$infraestructura);
+                $resultadoInfraestructura = $objInfraestructura->guardar();
+                
+                if(!isset($resultadoInfraestructura["data"]["id"])){
+                  $errores .= "INFRAESTRUCTURA - error al guardar";
+                } else {
+                  if ($infraestructura->asignaturas !== 'USO COMÚN') {
+                    foreach ($infraestructura->asignaturas as $asignatura) {
+                      $asignaturaInfraestructura[$asignatura] = $resultadoInfraestructura["data"]["id"];
+                    }
+                  }
+                }
+              }
+            }
+          }
+                  
+          // Solicitud
+          try {
+            if(!isset($_POST["SOLICITUD-tipo_solicitud_id"])){
+              $entidadesIds["SOLICITUD"] = false;
+              throw new Exception("SOLICITUD - tipo de solicitud no seleccionada");
+            }else{
+              $solicitud = new Solicitud();
+              if(isset($_POST["SOLICITUD-id"])){
+                $parametrosSolicitud["id"] = $_POST["SOLICITUD-id"];
+              }
+              $parametrosSolicitud["tipo_solicitud_id"] = $_POST["SOLICITUD-tipo_solicitud_id"];
+              $parametrosSolicitud["usuario_id"] = $parametrosInstitucion["usuario_id"];
+              //$parametrosSolicitud["fecha"]
+              $parametrosSolicitud["estatus_solicitud_id"] = isset($_POST["SOLICITUD-estatus_solicitud_id"])?$_POST["SOLICITUD-estatus_solicitud_id"]:Solicitud::NUEVA;
+              $solicitud->setAttributes($parametrosSolicitud);
+              $solicitud = $solicitud->guardar();
+
+              if($parametrosSolicitud["estatus_solicitud_id"] == 2) {
+                $solicutd_estatus = new  SolicitudEstatus();
+                $solicutd_estatus->setAttributes(array("estatus_solicitud_id"=>$parametrosSolicitud["estatus_solicitud_id"],"solicitud_id"=>$_POST["SOLICITUD-id"]));
+                // var_dump(  $solicutd_estatus);
+
+                $estatusSolicitud = new  SolicitudEstatus();
+                $resEstatus = $estatusSolicitud->consultarPor("solicitudes_estatus_solicitudes",array("solicitud_id"=>$_POST["SOLICITUD-id"],"estatus_solicitud_id"=>5),"*");
+                
+                if(sizeof($resEstatus["data"]) == 2) {
+                  $evaluacionN = sizeof($resEstatus["data"]);
+                  $solicutd_estatus->setAttributes(array("estatus_solicitud_id"=>4,"solicitud_id"=>$_POST["SOLICITUD-id"],$evaluacionN));
+                  $solicitudN = new Solicitud();
+                  $solicitudN->setAttributes(array("id"=>$_POST["SOLICITUD-id"],"estatus_solicitud_id"=>4));
+                  $solicitudN->guardar();
+                }
+
+                if(sizeof($resEstatus["data"]) == 3) {
+                  $solicutd_estatus->setAttributes(array("id"=>$idEstatus["id"],"estatus_solicitud_id"=>100,"solicitud_id"=>$_POST["SOLICITUD-id"],$evaluacionN));
+                }
+                $solicutd_estatus->guardar();
+              }
+              $entidadesIds["SOLICITUD"] = isset($solicitud["data"]["id"])?$solicitud["data"]["id"]:false;
+            }
+
+            // Actualización de folio
+            if(!$entidadesIds["SOLICITUD"]){
+              throw new Exception("SOLICITUD - error al guardar");
+            } else {
+              $consecutivo = new Solicitud();
+              $parametrosConsecutivo["id"] = $entidadesIds["SOLICITUD"];
+              // Construccion del folio
+              if(isset($_POST["PROGRAMA-nivel_id"]) && !empty($_POST["PROGRAMA-nivel_id"])){
+                $parametrosConsecutivo["folio"] = Nivel::$niveles[$_POST["PROGRAMA-nivel_id"]].date("Y").str_pad($entidadesIds["SOLICITUD"], 3, "0", STR_PAD_LEFT);
+              }
+              // Guardado de folio
+              $consecutivo->setAttributes($parametrosConsecutivo);
+              $consecutivo->guardar();
+            }
+                      
+            // Personas Diligencias
+            // ya se valido anteriormente la solicitud y el domicilio
+            $personasDiligencias = isset($parametrosDiligencias["personasDiligencias"])?$parametrosDiligencias["personasDiligencias"]:[];
+            foreach ($personasDiligencias as $cadena) {
+
+              $cadena = str_replace('\\', '', $cadena);
+              $cadena = json_decode($cadena);
+              $persona = $cadena;
+              if(isset($cadena->borrar) && $cadena->borrar==1) {
+                $diligenciaBorrar =  new SolicitudUsuario();
+                $res_diligenciaBorrar = $diligenciaBorrar->consultarPor("solicitudes_usuarios",array("solicitud_id"=>$entidadesIds["SOLICITUD"],"usuario_id"=>$cadena->id),"id");
+                $diligenciaActualizar = new SolicitudUsuario();
+                $diligenciaActualizar->setAttributes(array("id"=>$res_diligenciaBorrar["data"][0]["id"]));
+                $diligenciaActualizar->eliminar();
+              } else {
+                if($cadena->id===null) {
+                  $persona->domicilio_id = $entidadesIds["DOMICILIO"];
+                  $persona->fotografia = Persona::FOTO_DEFAULT;
+                  $persona->rfc = $persona->horario;
+                  $diligencia = new Persona( );
+                  $diligencia->setAttributes((array)$persona);
+                  $diligencia = $diligencia->guardar();
+
+                  if(!isset($diligencia["data"]["id"])){
+                    $errores .= "DILIGENCIA - error al guardar";
+                  } else {
+                    $parametrosInforma["solicitud_id"] = $entidadesIds["SOLICITUD"];
+                    $parametrosInforma["usuario_id"] = $diligencia["data"]["id"];
+                    $objSolucitudUsuario = new SolicitudUsuario();
+                    $objSolucitudUsuario->setAttributes($parametrosInforma);
+                    $resultado = $objSolucitudUsuario->guardar();
+                  }
+                }
+              }
+            }
+
+            // Coordinador
+            // ya se validó anteriormente el domicilio
+            $coordinador = new Persona( );
+            $parametrosCoordinador["domicilio_id"] = $entidadesIds["DOMICILIO"];
+            $parametrosCoordinador["fotografia"]= Persona::FOTO_DEFAULT;  
+            $parametrosCoordinador["titulo_cargo"]= (isset($parametrosCoordinador["formacion"])) ? $parametrosCoordinador["formacion"] : "";
+            $coordinador->setAttributes($parametrosCoordinador);
+            $coordinador = $coordinador->guardar();
+            $entidadesIds["COORDINADOR"] = isset($coordinador["data"]["id"])?$coordinador["data"]["id"]:false;
+            
+            // otros rvoes
+            $otrosRvoes = [];
+            $rvoes = isset($parametrosPrograma["otrosRVOE"])?$parametrosPrograma["otrosRVOE"]:[];
+
+            foreach ($rvoes as $cadena) {
+              $cadena = str_replace('\\', '', $cadena);
+              $otro = json_decode($cadena);
+              array_push($otrosRvoes,$otro);
+            }
+            $otrosRvoes = json_encode($otrosRvoes, JSON_UNESCAPED_UNICODE);
+                      
+            // Programa
+            try {
+              $details = "";
+              $details .= !$entidadesIds["COORDINADOR"]?"COORDINADOR no existe, ":"";
+              $details .= empty($parametrosPrograma["ciclo_id"])?"CICLO no existe, ":"";
+              $details .= empty($parametrosPrograma["nivel_id"])?"NIVEL no existe, ":"";
+              $details .= empty($parametrosPrograma["modalidad_id"])?"MODALIDAD no existe, ":"";
+              if($details != ""){
+                $entidadesIds["PROGRAMA"] = false;
+                throw new Exception("PROGRAMA - No se puede guardar por falta de datos: ".$details);
+              } else {
+                $programa = new Programa( );
+                $parametrosPrograma["evaluador_id"] = Evaluador::NO_DEFINIDO;
+                $parametrosPrograma["solicitud_id"]= $entidadesIds["SOLICITUD"];
+                $parametrosPrograma["plantel_id"]= $entidadesIds["PLANTEL"];
+                $parametrosPrograma["persona_id"]= $entidadesIds["COORDINADOR"];
+                $parametrosPrograma["otros_rvoes"]= $otrosRvoes;
+                $parametrosPrograma["perfil_ingreso"] = json_encode(array('conocimientos' => (isset($parametrosPrograma["perfil_ingreso_conocimientos"])) ? $parametrosPrograma["perfil_ingreso_conocimientos"] : "", 'habilidades' => (isset($parametrosPrograma["perfil_ingreso_habilidades"])) ? $parametrosPrograma["perfil_ingreso_habilidades"] : "", 'aptitudes' => (isset($parametrosPrograma["perfil_ingreso_aptitudes"])) ? $parametrosPrograma["perfil_ingreso_aptitudes"] : ""),JSON_UNESCAPED_UNICODE);
+                $parametrosPrograma["perfil_egreso"]= json_encode(array('conocimientos' => (isset($parametrosPrograma["perfil_egreso_conocimientos"])) ? $parametrosPrograma["perfil_egreso_conocimientos"] : "", 'habilidades' => (isset($parametrosPrograma["perfil_egreso_habilidades"])) ? $parametrosPrograma["perfil_egreso_habilidades"] : "", 'aptitudes' => (isset($parametrosPrograma["perfil_egreso_aptitudes"])) ? $parametrosPrograma["perfil_egreso_aptitudes"] : ""),JSON_UNESCAPED_UNICODE);
+                $programa->setAttributes($parametrosPrograma);
+                $programa = $programa->guardar();
+                $entidadesIds["PROGRAMA"] = isset($programa["data"]["id"])?$programa["data"]["id"]:false;
+              }
+                        
+              // Programa Turnos
+              try{
+                if(!$entidadesIds["PROGRAMA"]){
+                  throw new Exception("PROGRAMA - error al guardar");
+                }else{
+                  $turnos = isset($parametrosPrograma["turnos"])?$parametrosPrograma["turnos"]:[];
+                  foreach ($turnos as $turno_id) {
+                    $programaTurnos = new ProgramaTurno();
+                    $consultarTurnos = new ProgramaTurno();
+                    $res_turno = $consultarTurnos->consultarPor("programas_turnos",array("programa_id"=>$entidadesIds["PROGRAMA"],"turno_id"=>$turno_id,"deleted_at"),"*");
+                    if(sizeof($res_turno["data"])>0) {
+                      $parametros["id"] =$res_turno["data"][0]["id"];
+                    }
+                    $parametros["programa_id"] =$entidadesIds["PROGRAMA"];
+                    $parametros["turno_id"] = $turno_id;
+                    $programaTurnos->setAttributes($parametros);
+                    $programaTurnos->guardar();
+                  }
+                }
+                          
+                // Docentes
+                // ya se valido anteriormente el domicilio
+                $asignaturaDocentes = [];
+                $docentes = isset($parametrosDocente["docentes"])?$parametrosDocente["docentes"]:[];
+                foreach ($docentes as $cadena) {
+                  $cadena = str_replace('\\', '', $cadena);
+                  $docente = json_decode($cadena);
+                  
+                  if(isset($docente->borrar)&& $docente->borrar==1) {
+                    $docenteBorrar = new Docente();
+                    $docenteBorrar->setAttributes(array("id"=>$docente->id));
+                    $res_docenteBorrar = $docenteBorrar->eliminar();
+                  } else {
+                    $docente->domicilio_id = $entidadesIds["DOMICILIO"];
+                    $docente->fotografia = Persona::FOTO_DEFAULT;
+                    $personaDocente = new Persona();
+                    
+                    if (!isset($docente->id)) {
+                      $personaDocente->setAttributes((array)$docente);
+                      $personaDocente = $personaDocente->guardar();
+                    } else {
+                      $res_docente = new Docente();
+                      $res_docente->setAttributes(array("id"=>$docente->id));
+                      $res_docente = $res_docente->consultarId();
+                      $personaDocente->setAttributes(array("id"=>$res_docente["data"]["persona_id"]));
+                      $personaDocente = $personaDocente->consultarId();
+                    }
+                    // Revisa si la persona Docente se guarda
+                    if(!isset($personaDocente["data"]["id"])){
+                      $errores .= "PERSONA DOCENTE - error al guardar";
+                    } else {
+                      // Guardar docente
+                      $docente->persona_id = $personaDocente["data"]["id"];
+                      $objDocente = new Docente();
+
+                      if (!isset($docente->id)) {
+                        $objDocente->setAttributes((array)$docente);
+                        $resultadoDocente = $objDocente->guardar();
+                      } else {
+                        $objDocente->setAttributes(array("id"=>$docente->id));
+                        $resultadoDocente = $objDocente->consultarId();
+                      }
+                      if(!isset($resultadoDocente["data"]["id"])){
+                        $errores .= "DOCENTE - error al guardar";
+                      } else {
+                        // Relacion Docente con asignatura
+                        foreach ($docente->asignaturas as $asignatura) {
+                          $asignaturaDocentes[$asignatura] = $resultadoDocente["data"]["id"];
                         }
-
-                        // Formaciones Director
-                        $formaciones = isset($parametrosDirector["formaciones"])?$parametrosDirector["formaciones"]:[];
-                        foreach ($formaciones as $cadena) {
-                          $cadena = str_replace('\\', '', $cadena);
-                          $formacion = json_decode($cadena);
+                      }
+                      // Guarda formaciones del docente
+                      if (isset($docente->formaciones)) {
+                        foreach ($docente->formaciones as $formacion) {
                           $objFormacion = new Formacion();
-                          if(isset($formacion->borrar) && $formacion->borrar == 1)
-                          {
-                            $objFormacion->setAttributes(array("id"=>$formacion->id));
-                            $objFormacion->eliminar();
-                          }else
-                          {
-                            $formacion->persona_id = $director["data"]["id"];
+                          $formacion->persona_id = $personaDocente["data"]["id"];
+                          if (is_numeric($formacion->nivel)) {
                             $objFormacion->setAttributes((array)$formacion);
                             $objFormacion->guardar();
                           }
-
-                        }
-
-                        // Experiencia Director
-                        $experiencias = isset($parametrosDirector["experiencias"])?$parametrosDirector["experiencias"]:[];
-                        foreach ($experiencias as $cadena) {
-                          $cadena = str_replace('\\', '', $cadena);
-                          $experiencia = json_decode($cadena);
-                          $objExperiencia = new Experiencia();
-                          if(isset($experiencia->borrar) && $experiencia->borrar == 1)
-                          {
-                            $objExperiencia->setAttributes(array("id"=>$experiencia->id));
-                            $objExperiencia->eliminar();
-                          }else
-                          {
-                            $experiencia->persona_id = $director["data"]["id"];
-                            $objExperiencia->setAttributes((array)$experiencia);
-                            $objExperiencia->guardar();
-                          }
-
                         }
                       }
-                  
-                    //Plantel
-                    $plantel = new Plantel( );
-                    $parametrosPlantel["institucion_id"] = $entidadesIds["INSTITUCION"];
-                    $parametrosPlantel["domicilio_id"] = $entidadesIds["DOMICILIO"];
-                    $parametrosPlantel["persona_id"] = $entidadesIds["DIRECTOR"];
-                    $plantel->setAttributes($parametrosPlantel);
-                    $plantel = $plantel->guardar();
-                    $entidadesIds["PLANTEL"] = isset($plantel["data"]["id"])?$plantel["data"]["id"]:false;
-
-                    if(!$entidadesIds["PLANTEL"]){
-                      throw new Exception("PLANTEL - error al guardar");
-                    }else {
-
-                      //Edificios
-                      foreach ($parametrosEdificio as $key => $nivel) {
-                        $plantelEdificio = new PlantelEdificioNivel( );
-                        $niveles["edificio_nivel_id"] = $nivel;
-                        $niveles["plantel_id"] = $entidadesIds["PLANTEL"];
-                        $objEdificio = new PlantelEdificioNivel();
-                        $resObjEdificio = $objEdificio->consultarPor("planteles_edificios_niveles",array("plantel_id"=>$entidadesIds["PLANTEL"],"edificio_nivel_id"=>$nivel),"id");
-                        if(sizeof($resObjEdificio["data"])>0)
-                        {
-                          $niveles["id"] = $resObjEdificio["data"][0]["id"];
-                        }
-                        $plantelEdificio->setAttributes($niveles);
-                        $plantelEdificio->guardar();
-
-                      }
-                          //Elimna los edificios
-                          if($opcion_guardado==2)
-                          {
-                            $edificio = new PlantelEdificioNivel();
-                            $edificiosActuales = $edificio->consultarPor("planteles_edificios_niveles",array("plantel_id"=>$entidadesIds["PLANTEL"],"deleted_at"),"id,edificio_nivel_id");
-                            foreach ($edificiosActuales["data"] as $key => $campo) {
-                              $existe = in_array($campo["edificio_nivel_id"],$parametrosEdificio);
-                              if(!$existe)
-                              {
-                                $edificioBorrar = new PlantelEdificioNivel();
-                                $edificioBorrar->setAttributes(array("id"=>$campo["id"]));
-                                $edificioBorrar->eliminar();
-                              }
-                            }
-                          }
-
-
-                          // Dictamenes Plantel
-                          $dictamenes = isset($parametrosDictamenPlantel["dictamenes"])?$parametrosDictamenPlantel["dictamenes"]:[];
-                          foreach ($dictamenes as $cadena) {
-                            $cadena = str_replace('\\', '', $cadena);
-                            $dictamenPlantel = json_decode($cadena);
-                            $dictamenPlantel->plantel_id = $entidadesIds["PLANTEL"];
-                            $objPlantelDictamen = new PlantelDictamen();
-                            $objPlantelDictamen->setAttributes((array)$dictamenPlantel);
-                            $objPlantelDictamen->guardar();
-                          }
-
-                          // Seguridad Plantel
-
-                          if (isset($parametrosSeguridad)) {
-                            // code...
-                            foreach ($parametrosSeguridad as $key => $value) {
-                              $seguridad["plantel_id"] = $entidadesIds["PLANTEL"];
-                              $seguridad["seguridad_sistema_id"] = SeguridadSistema::$seguridad[$key];
-                              $seguridad["cantidad"] = $value;
-                              $actualizarSeguridad = new PlantelSeguridadSistema();
-                              $res_actulizarSeguridad =  $actualizarSeguridad->consultarPor("planteles_seguridad_sistemas",array("plantel_id"=>$entidadesIds["PLANTEL"],"seguridad_sistema_id"=>$seguridad["seguridad_sistema_id"]),"id");
-                              if(sizeof($res_actulizarSeguridad["data"])>0)
-                              {
-                                $seguridad["id"] =$res_actulizarSeguridad["data"][0]["id"];
-                              }
-                              $objPlantelSeguridad = new PlantelSeguridadSistema();
-                              $objPlantelSeguridad->setAttributes($seguridad);
-                              $objPlantelSeguridad->guardar();
-                            }
-                          }
-                          // Higiene Plantel
-                          if (isset($parametrosSeguridad)){
-                            foreach ($parametrosHigiene as $key => $value) {
-                              $higiene["plantel_id"] = $entidadesIds["PLANTEL"];
-                              $higiene["higiene_id"] = Higiene::$higiene[$key];
-                              $higiene["cantidad"] = $value;
-                              $actualizarHigiene = new PlantelHigiene();
-                              $res_actulizarHigiene = $actualizarHigiene->consultarPor("planteles_higienes",array("plantel_id"=>$higiene["plantel_id"],"higiene_id"=>$higiene["higiene_id"]),"id");
-                              if(sizeof($res_actulizarHigiene["data"])>0)
-                              {
-                                $higiene["id"] = $res_actulizarHigiene["data"][0]["id"];
-                              }
-                              $objPlanteHigiene = new PlantelHigiene();
-                              $objPlanteHigiene->setAttributes($higiene);
-                              $objPlanteHigiene->guardar();
-                            }
-                          }
-
-                          // Salud Plantel
-                          $institucionesSalud = isset($parametrosSalud["nombresInstitucionSalud"])?$parametrosSalud["nombresInstitucionSalud"]:[];
-                          foreach ($institucionesSalud as $cadena) {
-                            $cadena = str_replace('\\', '', $cadena);
-                            $salud = json_decode($cadena);
-                            $salud->plantel_id = $entidadesIds["PLANTEL"];
-                            $objSalud = new SaludInstitucion();
-                            $objSalud->setAttributes((array)$salud);
-                            $objSalud->guardar();
-                          }
-
-                          // Infraestructura Plantel
-                          $asignaturaInfraestructura = [];
-                          $infraestructuras = isset($parametrosIfraestructura["infraestructuras"])?$parametrosIfraestructura["infraestructuras"]:[];
-
-                          foreach ($infraestructuras as $cadena) {
-                            $cadena = str_replace('\\', '', $cadena);
-                            $infraestructura = json_decode($cadena);
-                            $objInfraestructura = new Infraestructura();
-                            if(isset($infraestructura->borrar)&&$infraestructura->borrar==1)
-                            {
-                              $objInfraestructura->setAttributes(array("id"=>$infraestructura->id));
-                              $objInfraestructura->eliminar();
-                            }else
-                            {
-                              $infraestructura->plantel_id = $entidadesIds["PLANTEL"];
-                              if(isset($_POST["SOLICITUD-id"])){
-                                $infraestructura->solicitud_id = $_POST["SOLICITUD-id"];
-                              }
-                              $objInfraestructura->setAttributes((array)$infraestructura);
-                              $resultadoInfraestructura = $objInfraestructura->guardar();
-                              if(!isset($resultadoInfraestructura["data"]["id"])){
-                                $errores .= "INFRAESTRUCTURA - error al guardar";
-                              } else{
-                                // Relación infraestructura  con la asignatura
-                                //Omitir mientras se corrige ERROR
-
-                                if ($infraestructura->asignaturas !== 'USO COMÚN') {
-                                  foreach ($infraestructura->asignaturas as $asignatura) {
-
-                                    $asignaturaInfraestructura[$asignatura] = $resultadoInfraestructura["data"]["id"];
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                        // Solicitud
-                        try {
-                          if(!isset($_POST["SOLICITUD-tipo_solicitud_id"])){
-                            $entidadesIds["SOLICITUD"] = false;
-                            throw new Exception("SOLICITUD - tipo de solicitud no seleccionada");
-                          }else{
-                            $solicitud = new Solicitud();
-                            if(isset($_POST["SOLICITUD-id"])){
-                              $parametrosSolicitud["id"] = $_POST["SOLICITUD-id"];
-                            }
-                            $parametrosSolicitud["tipo_solicitud_id"] = $_POST["SOLICITUD-tipo_solicitud_id"];
-                            $parametrosSolicitud["usuario_id"] = $parametrosInstitucion["usuario_id"];
-                            //$parametrosSolicitud["fecha"]
-                            $parametrosSolicitud["estatus_solicitud_id"] = isset($_POST["SOLICITUD-estatus_solicitud_id"])?$_POST["SOLICITUD-estatus_solicitud_id"]:Solicitud::NUEVA;
-                            $solicitud->setAttributes($parametrosSolicitud);
-                            $solicitud = $solicitud->guardar();
-                            if($parametrosSolicitud["estatus_solicitud_id"] == 2)
-                            {
-                              $solicutd_estatus = new  SolicitudEstatus();
-                              $solicutd_estatus->setAttributes(array("estatus_solicitud_id"=>$parametrosSolicitud["estatus_solicitud_id"],"solicitud_id"=>$_POST["SOLICITUD-id"]));
-                              // var_dump(  $solicutd_estatus);
-
-                              $estatusSolicitud = new  SolicitudEstatus();
-                              $resEstatus = $estatusSolicitud->consultarPor("solicitudes_estatus_solicitudes",array("solicitud_id"=>$_POST["SOLICITUD-id"],"estatus_solicitud_id"=>5),"*");
-                              if(sizeof($resEstatus["data"]) == 2)
-                              {
-                                $evaluacionN = sizeof($resEstatus["data"]);
-                                $solicutd_estatus->setAttributes(array("estatus_solicitud_id"=>4,"solicitud_id"=>$_POST["SOLICITUD-id"],$evaluacionN));
-                                $solicitudN = new Solicitud();
-                                $solicitudN->setAttributes(array("id"=>$_POST["SOLICITUD-id"],"estatus_solicitud_id"=>4));
-                                $solicitudN->guardar();
-                              }
-                              if(sizeof($resEstatus["data"]) == 3)
-                              {
-                                $solicutd_estatus->setAttributes(array("id"=>$idEstatus["id"],"estatus_solicitud_id"=>100,"solicitud_id"=>$_POST["SOLICITUD-id"],$evaluacionN));
-                              }
-
-                              $solicutd_estatus->guardar();
-
-                            }
-                            $entidadesIds["SOLICITUD"] = isset($solicitud["data"]["id"])?$solicitud["data"]["id"]:false;
-                          }
-                          // Actualización de folio
-                            if(!$entidadesIds["SOLICITUD"]){
-                              throw new Exception("SOLICITUD - error al guardar");
-                            }else{
-                              $consecutivo = new Solicitud();
-                              $parametrosConsecutivo["id"] = $entidadesIds["SOLICITUD"];
-                              // Construccion del folio
-                              if(isset($_POST["PROGRAMA-nivel_id"]) && !empty($_POST["PROGRAMA-nivel_id"])){
-                                $parametrosConsecutivo["folio"] = Nivel::$niveles[$_POST["PROGRAMA-nivel_id"]].date("Y").str_pad($entidadesIds["SOLICITUD"], 3, "0", STR_PAD_LEFT);
-                              }
-                              // Guardado de folio
-                              $consecutivo->setAttributes($parametrosConsecutivo);
-                              $consecutivo->guardar();
-                            }
-                            // Personas Diligencias
-                            // ya se valido anteriormente la solicitud y el domicilio
-                            $personasDiligencias = isset($parametrosDiligencias["personasDiligencias"])?$parametrosDiligencias["personasDiligencias"]:[];
-                            foreach ($personasDiligencias as $cadena) {
-
-                              $cadena = str_replace('\\', '', $cadena);
-                              $cadena = json_decode($cadena);
-                              $persona = $cadena;
-                              if(isset($cadena->borrar) && $cadena->borrar==1)
-                              {
-                                $diligenciaBorrar =  new SolicitudUsuario();
-                                $res_diligenciaBorrar = $diligenciaBorrar->consultarPor("solicitudes_usuarios",array("solicitud_id"=>$entidadesIds["SOLICITUD"],"usuario_id"=>$cadena->id),"id");
-                                $diligenciaActualizar = new SolicitudUsuario();
-                                $diligenciaActualizar->setAttributes(array("id"=>$res_diligenciaBorrar["data"][0]["id"]));
-                                $diligenciaActualizar->eliminar();
-                              }else
-                              {
-                                if($cadena->id===null)
-                                {
-                                  $persona->domicilio_id = $entidadesIds["DOMICILIO"];
-                                  $persona->fotografia = Persona::FOTO_DEFAULT;
-                                  $persona->rfc = $persona->horario;
-                                  $diligencia = new Persona( );
-                                  $diligencia->setAttributes((array)$persona);
-                                  $diligencia = $diligencia->guardar();
-                                  if(!isset($diligencia["data"]["id"])){
-                                    $errores .= "DILIGENCIA - error al guardar";
-                                  }else{
-                                    $parametrosInforma["solicitud_id"] = $entidadesIds["SOLICITUD"];
-                                    $parametrosInforma["usuario_id"] = $diligencia["data"]["id"];
-                                    $objSolucitudUsuario = new SolicitudUsuario();
-                                    $objSolucitudUsuario->setAttributes($parametrosInforma);
-                                    $resultado = $objSolucitudUsuario->guardar();
-                                  }
-                                }
-                              }
-
-
-                            }
-
-                            // Coordinador
-                            // ya se validó anteriormente el domicilio
-                            $coordinador = new Persona( );
-                            $parametrosCoordinador["domicilio_id"] = $entidadesIds["DOMICILIO"];
-                            $parametrosCoordinador["fotografia"]= Persona::FOTO_DEFAULT;  
-                            $parametrosCoordinador["titulo_cargo"]= (isset($parametrosCoordinador["formacion"])) ? $parametrosCoordinador["formacion"] : "";
-                            $coordinador->setAttributes($parametrosCoordinador);
-                            $coordinador = $coordinador->guardar();
-                            $entidadesIds["COORDINADOR"] = isset($coordinador["data"]["id"])?$coordinador["data"]["id"]:false;
-                            // otros rvoes
-                            $otrosRvoes = [];
-                            $rvoes = isset($parametrosPrograma["otrosRVOE"])?$parametrosPrograma["otrosRVOE"]:[];
-
-                            foreach ($rvoes as $cadena) {
-                              $cadena = str_replace('\\', '', $cadena);
-                              $otro = json_decode($cadena);
-                              array_push($otrosRvoes,$otro);
-
-                            }
-                            $otrosRvoes = json_encode($otrosRvoes, JSON_UNESCAPED_UNICODE);
-                            // Programa
-                            try {
-                              $details = "";
-                              $details .= !$entidadesIds["COORDINADOR"]?"COORDINADOR no existe, ":"";
-                              $details .= empty($parametrosPrograma["ciclo_id"])?"CICLO no existe, ":"";
-                              $details .= empty($parametrosPrograma["nivel_id"])?"NIVEL no existe, ":"";
-                              $details .= empty($parametrosPrograma["modalidad_id"])?"MODALIDAD no existe, ":"";
-                              if($details != ""){
-                                $entidadesIds["PROGRAMA"] = false;
-
-                                throw new Exception("PROGRAMA - No se puede guardar por falta de datos: ".$details);
-                              }else{
-                                $programa = new Programa( );
-                                $parametrosPrograma["evaluador_id"] = Evaluador::NO_DEFINIDO;
-                                $parametrosPrograma["solicitud_id"]= $entidadesIds["SOLICITUD"];
-                                $parametrosPrograma["plantel_id"]= $entidadesIds["PLANTEL"];
-                                $parametrosPrograma["persona_id"]= $entidadesIds["COORDINADOR"];
-                                $parametrosPrograma["otros_rvoes"]= $otrosRvoes;
-                                $parametrosPrograma["perfil_ingreso"] = json_encode(array('conocimientos' => (isset($parametrosPrograma["perfil_ingreso_conocimientos"])) ? $parametrosPrograma["perfil_ingreso_conocimientos"] : "", 'habilidades' => (isset($parametrosPrograma["perfil_ingreso_habilidades"])) ? $parametrosPrograma["perfil_ingreso_habilidades"] : "", 'aptitudes' => (isset($parametrosPrograma["perfil_ingreso_aptitudes"])) ? $parametrosPrograma["perfil_ingreso_aptitudes"] : ""),JSON_UNESCAPED_UNICODE);
-                                $parametrosPrograma["perfil_egreso"]= json_encode(array('conocimientos' => (isset($parametrosPrograma["perfil_egreso_conocimientos"])) ? $parametrosPrograma["perfil_egreso_conocimientos"] : "", 'habilidades' => (isset($parametrosPrograma["perfil_egreso_habilidades"])) ? $parametrosPrograma["perfil_egreso_habilidades"] : "", 'aptitudes' => (isset($parametrosPrograma["perfil_egreso_aptitudes"])) ? $parametrosPrograma["perfil_egreso_aptitudes"] : ""),JSON_UNESCAPED_UNICODE);
-                                $programa->setAttributes($parametrosPrograma);
-                                $programa = $programa->guardar();
-                                $entidadesIds["PROGRAMA"] = isset($programa["data"]["id"])?$programa["data"]["id"]:false;
-                              }
-                              // Programa Turnos
-                              try{
-                                if(!$entidadesIds["PROGRAMA"]){
-                                  throw new Exception("PROGRAMA - error al guardar");
-                                }else{
-                                  $turnos = isset($parametrosPrograma["turnos"])?$parametrosPrograma["turnos"]:[];
-                                  foreach ($turnos as $turno_id) {
-                                    $programaTurnos = new ProgramaTurno();
-                                    $consultarTurnos = new ProgramaTurno();
-                                    $res_turno = $consultarTurnos->consultarPor("programas_turnos",array("programa_id"=>$entidadesIds["PROGRAMA"],"turno_id"=>$turno_id,"deleted_at"),"*");
-                                    if(sizeof($res_turno["data"])>0)
-                                    {
-                                      $parametros["id"] =$res_turno["data"][0]["id"];
-                                    }
-                                    $parametros["programa_id"] =$entidadesIds["PROGRAMA"];
-                                    $parametros["turno_id"] = $turno_id;
-                                    $programaTurnos->setAttributes($parametros);
-                                    $programaTurnos->guardar();
-                                  }
-                                }
-                                // Docentes
-                                // ya se valido anteriormente el domicilio
-                                $asignaturaDocentes = [];
-                                $docentes = isset($parametrosDocente["docentes"])?$parametrosDocente["docentes"]:[];
-                                foreach ($docentes as $cadena) {
-                                  $cadena = str_replace('\\', '', $cadena);
-                                  $docente = json_decode($cadena);
-                                  if(isset($docente->borrar)&& $docente->borrar==1)
-                                  {
-                                    $docenteBorrar = new Docente();
-                                    $docenteBorrar->setAttributes(array("id"=>$docente->id));
-                                    $res_docenteBorrar = $docenteBorrar->eliminar();
-                                  }else
-                                  {
-                                    $docente->domicilio_id = $entidadesIds["DOMICILIO"];
-                                    $docente->fotografia = Persona::FOTO_DEFAULT;
-                                    $personaDocente = new Persona();
-                                    if (!isset($docente->id)) {
-                                      $personaDocente->setAttributes((array)$docente);
-                                      $personaDocente = $personaDocente->guardar();
-                                      //echo "NO EXISTE";
-                                      //print_r($personaDocente);
-                                    } else {
-                                      //echo "EXISTE";
-                                      $res_docente = new Docente();
-                                      $res_docente->setAttributes(array("id"=>$docente->id));
-                                      $res_docente = $res_docente->consultarId();
-                                      //echo "<br>DOCENTE";
-                                      //print_r($res_docente);
-                                      $personaDocente->setAttributes(array("id"=>$res_docente["data"]["persona_id"]));
-                                      $personaDocente = $personaDocente->consultarId();
-                                      //echo "<br>PERSONA";
-                                      //print_r($personaDocente);
-                                    }
-                                    // Revisa si la persona Docente se guarda
-                                    if(!isset($personaDocente["data"]["id"])){
-                                      $errores .= "PERSONA DOCENTE - error al guardar";
-                                    }else{
-                                      // Guardar docente
-                                      $docente->persona_id = $personaDocente["data"]["id"];
-                                      $objDocente = new Docente();
-
-                                      if (!isset($docente->id)) {
-                                        $objDocente->setAttributes((array)$docente);
-                                        $resultadoDocente = $objDocente->guardar();
-                                        //echo "NO EXISTE";
-                                        //print_r($resultadoDocente);
-                                      } else {
-                                        //echo "EXISTE";
-                                        //echo "<br>";
-                                        $objDocente->setAttributes(array("id"=>$docente->id));
-                                        $resultadoDocente = $objDocente->consultarId();
-                                        //print_r($resultadoDocente);
-                                      }
-                                      if(!isset($resultadoDocente["data"]["id"])){
-                                        $errores .= "DOCENTE - error al guardar";
-                                      }else{
-                                        // Relacion Docente con asignatura
-                                        foreach ($docente->asignaturas as $asignatura) {
-                                          $asignaturaDocentes[$asignatura] = $resultadoDocente["data"]["id"];
-                                        }
-                                      }
-                                      // Guarda formaciones del docente
-                                        //echo "FORMACION DEL DOCENTE";
-                                        if (isset($docente->formaciones)) {
-                                          foreach ($docente->formaciones as $formacion) {
-                                            $objFormacion = new Formacion();
-                                            $formacion->persona_id = $personaDocente["data"]["id"];
-                                            if (is_numeric($formacion->nivel)) {
-                                              //print_r($formacion);
-                                              //print_r($formacion->nivel);
-                                              //echo "<br><br>";
-                                              $objFormacion->setAttributes((array)$formacion);
-                                              $objFormacion->guardar();
-                                            }
-                                          }
-                                        }
-                                        //print_r($docente);
-                                        //Termina guardado de formmación del docente
-                                    }//Termina el guardado del docente
-                                  }
-                                }
-
-                                // Asignaturas
-                                // ya se valido anteriormente el programa
-                                $asignaturas = isset($parametrosAsignatura["asignaturas"])?$parametrosAsignatura["asignaturas"]:[];
-
-                                foreach ($asignaturas as $cadena) {
-                                  $cadena = str_replace('\\', '', $cadena);
-                                  $asignatura = json_decode($cadena);
-                                  $objAsignaturas = new Asignatura();
-
-                                  if(isset($asignatura->borrar)&&$asignatura->borrar==1)
-                                  {
-                                    $objAsignaturas->setAttributes(array("id"=>$asignatura->id));
-                                    $objAsignaturas->eliminar();
-                                  }else
-                                  {
-                                    //print_r($asignaturaInfraestructura[$asignatura->clave]);
-                                    if(!isset($asignaturaInfraestructura[$asignatura->clave])){
-                                      $asignatura->infraestructura_id = 83;
-                                    }else{
-                                      $asignatura->infraestructura_id = $asignaturaInfraestructura[$asignatura->clave];
-                                    }
-                                    if(!isset($asignaturaDocentes[$asignatura->clave]) ){
-                                      $asignatura->docente_id = 23;
-                                    }else{
-                                      $asignatura->docente_id = $asignaturaDocentes[$asignatura->clave];
-                                    }
-                                    $asignatura->programa_id = $entidadesIds["PROGRAMA"];
-                                    $objAsignaturas->setAttributes((array)$asignatura);
-                                    $objAsignaturas->guardar();
-                                  }
-
-                                }
-
-                                // Trayectorias
-                                // ya se valido anteriormente el programa
-                                $trayectoria = new Trayectoria( );
-                                $parametrosTrayectoria["programa_id"] = $entidadesIds["PROGRAMA"];
-                                $trayectoria->setAttributes($parametrosTrayectoria);
-                                $trayecotria = $trayectoria->guardar();
-                                $entidadesIds["TRAYECTORIA"] = isset($trayecotria["data"]["id"])?$trayecotria["data"]["id"]:false;
-                                /*
-                                *
-                                * MIXTA NO ESCOLARIZADA
-                                *
-                                */
-                                // Si la modalidad no es escolarizada se requieren los datos de mixta NO escolarizada
-                                if( Modalidad::ESCOLARIZADA == $parametrosPrograma["modalidad_id"]){
-                                  $entidadesIds["MIXTA"] = false;
-                                  throw new Exception("");
-                                }else{
-                                  // Licencias mixta no escolarizada
-                                  $parametrosMixta["programa_id"] = $programa["data"]["id"];
-                                  //print_r($parametrosMixta);
-                                  $res_mixta = new MixtaNoescolarizada( );
-                                  //print_r($parametrosMixta);
-                                  $id_mixta["id"] = $res_mixta->consultarPor("mixta_noescolarizadas", array("programa_id"=>$parametrosMixta["programa_id"]), "id");
-                                  $id_mixta = end($id_mixta["id"]["data"]);
-                                  if(isset($id_mixta)){
-                                    $parametrosMixta["id"] = $id_mixta["id"];
-                                  }
-                                  //print_r($parametrosMixta);
-
-                                  $licencias = [];
-                                  $licenciasMixta = isset($parametrosMixta["licencias"])?$parametrosMixta["licencias"]:[];
-                                  foreach ($licenciasMixta as $cadena) {
-                                    $cadena = str_replace('\\', '', $cadena);
-                                    $licencia = json_decode($cadena);
-                                    array_push($licencias,$licencia);
-                                  }
-                                  $licencias = json_encode($licencias, JSON_UNESCAPED_UNICODE);
-                                  //Mixta no escolarizada
-                                  // ya se valido anteriormente programa
-                                  $mixtaNoescolarizada = new MixtaNoescolarizada( );
-                                  $parametrosMixta["licencias_software"] = $licencias;
-                                  $parametrosMixta["tecnologias_informacion_comunicacion"] =  "INGRESO:".$parametrosMixta["ti_ingreso"].
-                                                                                              "ESTRUCTURA:".$parametrosMixta["ti_estructura"].
-                                                                                              "CONTRATOS:".$parametrosMixta["ti_contratos"];
-
-                                  $parametrosMixta["programa_id"] = $entidadesIds["PROGRAMA"];
-                                  $mixtaNoescolarizada->setAttributes($parametrosMixta);
-                                  $mixtaNoescolarizada = $mixtaNoescolarizada->guardar();
-                                  $entidadesIds["MIXTA"] = isset($mixtaNoescolarizada["data"]["id"])?$mixtaNoescolarizada["data"]["id"]:false;
-                                  if(!$entidadesIds["MIXTA"]){
-                                    throw new Exception("MIXTA - error al guardar");
-                                  }else{
-
-                                    // Espejo Mixta no escolarizada
-                                    $espejos = isset($parametrosEspejo["espejos"])?$parametrosEspejo["espejos"]:[];
-                                    foreach ($espejos as $cadena) {
-                                      $cadena = str_replace('\\', '', $cadena);
-                                      $espejo = json_decode($cadena);
-
-                                      $espejo->mixta_noescolarizada_id = $entidadesIds["MIXTA"];
-                                      $objEspejo = new Espejo();
-                                      $objEspejo->setAttributes((array)$espejo);
-                                      $result = $objEspejo->guardar();
-                                    }
-
-                                    // Respaldo Mixta no escolarizada
-                                    $respaldos = isset($parametrosRespaldo["respaldos"])? $parametrosRespaldo["respaldos"]:[];
-
-                                    foreach ($respaldos as $cadena) {
-                                      $cadena = str_replace('\\', '', $cadena);
-                                      $respaldo = json_decode($cadena);
-
-                                      $respaldo->mixta_noescolarizada_id = $entidadesIds["MIXTA"];
-                                      $objRespaldo = new Respaldo();
-                                      $objRespaldo->setAttributes((array)$respaldo);
-                                      $resultado = $objRespaldo->guardar();
-                                    }
-                                  }
-                                }
-                              }catch (Exception $e) {
-                                $errores .= !empty($e->getMessage())?"1".$e->getMessage():"";
-                              }
-
-                            } catch (Exception $e) {
-                              // RollBack a inserciones hasta le momento
-                              if(isset($entidadesIds["SOLICITUD"])){
-                                $rollBack = new Solicitud();
-                                $rollBack->setAttributes(["id"=>$entidadesIds["SOLICITUD"]]);
-                                $resultado = $rollBack->rollbackSolicitud();
-                              }
-                              $errores .= !empty($e->getMessage())?"2".$e->getMessage():"";
-                            }
-                        } catch (Exception $e) {
-
-                          $errores .= !empty($e->getMessage())?"3".$e->getMessage():"";
-                        }
-                }else{
-                  $errores .= "<br>"."DIRECTOR - Nombre del director es obligatorio";
+                      //Termina guardado de formmación del docente
+                    }//Termina el guardado del docente
+                  }
                 }
+
+                // Asignaturas
+                // ya se valido anteriormente el programa
+                $asignaturas = isset($parametrosAsignatura["asignaturas"])?$parametrosAsignatura["asignaturas"]:[];
+
+                foreach ($asignaturas as $cadena) {
+                  $cadena = str_replace('\\', '', $cadena);
+                  $asignatura = json_decode($cadena);
+                  $objAsignaturas = new Asignatura();
+
+                  if(isset($asignatura->borrar)&&$asignatura->borrar==1) {
+                    $objAsignaturas->setAttributes(array("id"=>$asignatura->id));
+                    $objAsignaturas->eliminar();
+                  } else {
+                    //print_r($asignaturaInfraestructura[$asignatura->clave]);
+                    if(!isset($asignaturaInfraestructura[$asignatura->clave])){
+                      $asignatura->infraestructura_id = 83;
+                    } else {
+                      $asignatura->infraestructura_id = $asignaturaInfraestructura[$asignatura->clave];
+                    }
+                    if(!isset($asignaturaDocentes[$asignatura->clave]) ){
+                      $asignatura->docente_id = 23;
+                    } else {
+                      $asignatura->docente_id = $asignaturaDocentes[$asignatura->clave];
+                    }
+                    $asignatura->programa_id = $entidadesIds["PROGRAMA"];
+                    $objAsignaturas->setAttributes((array)$asignatura);
+                    $objAsignaturas->guardar();
+                  }
+                }
+
+                // Trayectorias
+                // ya se valido anteriormente el programa
+                $trayectoria = new Trayectoria( );
+                $parametrosTrayectoria["programa_id"] = $entidadesIds["PROGRAMA"];
+                $trayectoria->setAttributes($parametrosTrayectoria);
+                $trayecotria = $trayectoria->guardar();
+                $entidadesIds["TRAYECTORIA"] = isset($trayecotria["data"]["id"])?$trayecotria["data"]["id"]:false;
+                
+                
+                /*
+                *
+                * MIXTA NO ESCOLARIZADA
+                *
+                */
+                // Si la modalidad no es escolarizada se requieren los datos de mixta NO escolarizada
+                if( Modalidad::ESCOLARIZADA == $parametrosPrograma["modalidad_id"]){
+                  $entidadesIds["MIXTA"] = false;
+                  throw new Exception("");
+                } else {
+                  // Licencias mixta no escolarizada
+                  $parametrosMixta["programa_id"] = $programa["data"]["id"];
+                  $res_mixta = new MixtaNoescolarizada( );
+                  $id_mixta["id"] = $res_mixta->consultarPor("mixta_noescolarizadas", array("programa_id"=>$parametrosMixta["programa_id"]), "id");
+                  $id_mixta = end($id_mixta["id"]["data"]);
+                  if(isset($id_mixta)){
+                    $parametrosMixta["id"] = $id_mixta["id"];
+                  }
+
+                  $licencias = [];
+                  $licenciasMixta = isset($parametrosMixta["licencias"])?$parametrosMixta["licencias"]:[];
+                  foreach ($licenciasMixta as $cadena) {
+                    $cadena = str_replace('\\', '', $cadena);
+                    $licencia = json_decode($cadena);
+                    array_push($licencias,$licencia);
+                  }
+                  $licencias = json_encode($licencias, JSON_UNESCAPED_UNICODE);
+                  //Mixta no escolarizada
+                  // ya se valido anteriormente programa
+                  $mixtaNoescolarizada = new MixtaNoescolarizada( );
+                  $parametrosMixta["licencias_software"] = $licencias;
+                  $parametrosMixta["tecnologias_informacion_comunicacion"] =  "INGRESO:".$parametrosMixta["ti_ingreso"].
+                                                                              "ESTRUCTURA:".$parametrosMixta["ti_estructura"].
+                                                                              "CONTRATOS:".$parametrosMixta["ti_contratos"];
+                  $parametrosMixta["programa_id"] = $entidadesIds["PROGRAMA"];
+                  $mixtaNoescolarizada->setAttributes($parametrosMixta);
+                  $mixtaNoescolarizada = $mixtaNoescolarizada->guardar();
+                  $entidadesIds["MIXTA"] = isset($mixtaNoescolarizada["data"]["id"])?$mixtaNoescolarizada["data"]["id"]:false;
+                  if(!$entidadesIds["MIXTA"]){
+                    throw new Exception("MIXTA - error al guardar");
+                  } else {
+                    // Espejo Mixta no escolarizada
+                    $espejos = isset($parametrosEspejo["espejos"])?$parametrosEspejo["espejos"]:[];
+                    foreach ($espejos as $cadena) {
+                      $cadena = str_replace('\\', '', $cadena);
+                      $espejo = json_decode($cadena);
+
+                      $espejo->mixta_noescolarizada_id = $entidadesIds["MIXTA"];
+                      $objEspejo = new Espejo();
+                      $objEspejo->setAttributes((array)$espejo);
+                      $result = $objEspejo->guardar();
+                    }
+
+                    // Respaldo Mixta no escolarizada
+                    $respaldos = isset($parametrosRespaldo["respaldos"])? $parametrosRespaldo["respaldos"]:[];
+                    foreach ($respaldos as $cadena) {
+                      $cadena = str_replace('\\', '', $cadena);
+                      $respaldo = json_decode($cadena);
+                      $respaldo->mixta_noescolarizada_id = $entidadesIds["MIXTA"];
+                      $objRespaldo = new Respaldo();
+                      $objRespaldo->setAttributes((array)$respaldo);
+                      $resultado = $objRespaldo->guardar();
+                    }
+                  }
+                }
+              } catch (Exception $e) {
+                $errores .= !empty($e->getMessage())?"1".$e->getMessage():"";
+              }
+            } catch (Exception $e) {
+              // RollBack a inserciones hasta le momento
+              if(isset($entidadesIds["SOLICITUD"])){
+                $rollBack = new Solicitud();
+                $rollBack->setAttributes(["id"=>$entidadesIds["SOLICITUD"]]);
+                $resultado = $rollBack->rollbackSolicitud();
+              }
+              $errores .= !empty($e->getMessage())?"2".$e->getMessage():"";
             }
-      } catch (Exception $e) {
-        $errores .= !empty($e->getMessage())?"4".$e->getMessage():"";
-      }
-
-      // Archivos
-      foreach ($_FILES as $campo => $archivo) {
-
-        $nombreInput = $campo."-id";
-        isset($_POST[$nombreInput])? $idDocumento = $_POST[$nombreInput] : $idDocumento = null;
-
-        $tipoEntidad = strstr($campo, '-', true);
-        $nombreFormulario = substr(strstr($campo, '-'),1);
-        if(empty($archivo["name"])){
-          continue;
-        }
-        if(!isset($entidadesIds[$tipoEntidad])){
-          $errores .= "<br>ARCHIVO - error al guardar archivo: ".$nombreFormulario;
-          continue;
-        }
-
-        $nombreArchivo = $nombreFormulario."_".date("Ymdhi").strrchr( $archivo["name"] , '.' );
-        $primerDirectorio = Documento::$dir_subida."Institucion".$entidadesIds["INSTITUCION"]."/";
-        $segundoDirectorio = $primerDirectorio.$tipoEntidad."/";
-        $uploadFile = $segundoDirectorio.$nombreArchivo;
-        // Creacion de direcotrios
-        !is_dir($primerDirectorio)?mkdir($primerDirectorio, 0755):false;
-        !is_dir($segundoDirectorio)?mkdir($segundoDirectorio, 0755):false;
-
-        // Guardado de archivos
-        if(move_uploaded_file($archivo['tmp_name'],$uploadFile)){
-            $documento = new Documento( );
-            $parametrosDocumento["id"] = $idDocumento;
-            $parametrosDocumento["tipo_entidad"] = Documento::$tipoEntidad[$tipoEntidad];
-            $parametrosDocumento["tipo_documento"] = Documento::$nombresDocumentos[$nombreFormulario];
-            $parametrosDocumento["entidad_id"] = $entidadesIds[$tipoEntidad];
-            $parametrosDocumento["nombre"] = $nombreArchivo;
-            $parametrosDocumento["archivo"] = $uploadFile;
-            $documento->setAttributes($parametrosDocumento);
-            $documento->guardar();
-            print_r($documento);
+          } catch (Exception $e) {
+            $errores .= !empty($e->getMessage())?"3".$e->getMessage():"";
+          }
+        } else {
+          $errores .= "<br>"."DIRECTOR - Nombre del director es obligatorio";
         }
       }
+    } catch (Exception $e) {
+      $errores .= !empty($e->getMessage())?"4".$e->getMessage():"";
+    }
 
-      // Retorno
-      $estatus = $errores != ""?"400":"200";
-      $mensaje = $errores != ""?$errores: "Solicitud creada exitosamente";
-      $datos = ( isset($solicitud["data"]) && !empty($solicitud["data"]) )?$solicitud["data"]:[];
-      $resultado = ["status"=>$estatus,"message"=>$mensaje,"data"=>$datos];
+    // Archivos
+    foreach ($_FILES as $campo => $archivo) {
+      $nombreInput = $campo."-id";
+      isset($_POST[$nombreInput])? $idDocumento = $_POST[$nombreInput] : $idDocumento = null;
 
-      // Registro en bitacora
-      $bitacora = new Bitacora();
-      $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
-      $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"solicitudes","accion"=>"guardarSolicitud","lugar"=>"control-solicitud"]);
-      $result = $bitacora->guardar();
+      $tipoEntidad = strstr($campo, '-', true);
+      $nombreFormulario = substr(strstr($campo, '-'),1);
+      if(empty($archivo["name"])){
+        continue;
+      }
+      if(!isset($entidadesIds[$tipoEntidad])){
+        $errores .= "<br>ARCHIVO - error al guardar archivo: ".$nombreFormulario;
+        continue;
+      }
 
-      retornarWebService( $_POST["url"], $resultado );
+      $nombreArchivo = $nombreFormulario."_".date("Ymdhi").strrchr( $archivo["name"] , '.' );
+      $primerDirectorio = Documento::$dir_subida."Institucion".$entidadesIds["INSTITUCION"]."/";
+      $segundoDirectorio = $primerDirectorio.$tipoEntidad."/";
+      $uploadFile = $segundoDirectorio.$nombreArchivo;
+      // Creacion de direcotrios
+      !is_dir($primerDirectorio)?mkdir($primerDirectorio, 0755):false;
+      !is_dir($segundoDirectorio)?mkdir($segundoDirectorio, 0755):false;
+
+      // Guardado de archivos
+      if(move_uploaded_file($archivo['tmp_name'],$uploadFile)){
+          $documento = new Documento( );
+          $parametrosDocumento["id"] = $idDocumento;
+          $parametrosDocumento["tipo_entidad"] = Documento::$tipoEntidad[$tipoEntidad];
+          $parametrosDocumento["tipo_documento"] = Documento::$nombresDocumentos[$nombreFormulario];
+          $parametrosDocumento["entidad_id"] = $entidadesIds[$tipoEntidad];
+          $parametrosDocumento["nombre"] = $nombreArchivo;
+          $parametrosDocumento["archivo"] = $uploadFile;
+          $documento->setAttributes($parametrosDocumento);
+          $documento->guardar();
+      }
+    }
+
+    // Retorno
+    $estatus = $errores != ""?"400":"200";
+    $mensaje = $errores != ""?$errores: "Solicitud creada exitosamente";
+    $datos = ( isset($solicitud["data"]) && !empty($solicitud["data"]) )?$solicitud["data"]:[];
+    $resultado = ["status"=>$estatus,"message"=>$mensaje,"data"=>$datos];
+
+    // Registro en bitacora
+    $bitacora = new Bitacora();
+    $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
+    $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"solicitudes","accion"=>"guardarSolicitud","lugar"=>"control-solicitud"]);
+    $result = $bitacora->guardar();
+
+    retornarWebService( $_POST["url"], $resultado );
   }
 
   // Web Service para agendar Cita
