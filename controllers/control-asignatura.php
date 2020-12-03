@@ -113,7 +113,7 @@
       $parametros3["horas_docente"] = $_POST["horas_docente"][$i];
       $parametros3["horas_independiente"] = $_POST["horas_independiente"][$i];
       $parametros3["creditos"] = $_POST["creditos"][$i];
-      
+      $parametros3["area"] = $_POST["area"][$i];
       $asignatura = new Asignatura( );
       $asignatura->setAttributes( $parametros3 );
       $resultadoAsignatura = $asignatura->guardar( );

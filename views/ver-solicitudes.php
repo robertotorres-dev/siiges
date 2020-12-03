@@ -612,9 +612,9 @@ Utileria::validarSesion( basename( __FILE__ ) );
                               <label class="control-label" for="">Periodo</label><br>
                               <select class="form-control revision" campo="Periodo del programa" ubicacion="Programas de estudios - Datos generales" id="ciclo_id" name="PROGRAMA-ciclo_id">
                                 <option value="">Seleccione una opción</option>
-                                <option value="1">Semestral</option>
+                                <!-- <option value="1">Semestral</option>
                                 <option value="2">Cuatrimestral</option>
-                								<option value="3">Anual</option>
+                								<option value="3">Anual</option> -->
                 								<option value="4">Semestral curriculum felxible</option>
                 								<option value="5">Cuatrimestral curriculum felxible</option>
                               </select><br>
@@ -952,7 +952,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                 <label>Grado *</label>
                                 <select  class="form-control" id="gradoAsignatura" name="">
                                     <option value="">Seleccione una opción</option>
-                                    <optgroup label="Semestres">
+                                    <!-- <optgroup label="Semestres">
                                       <option value="Primer semestre">Primero</option>
                                       <option value="Segundo semestre">Segundo</option>
                                       <option value="Tercero semestre">Tercero</option>
@@ -976,7 +976,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                       <option value="Noveno cuatrimestre">Noveno</option>
                                       <option value="Decimo cuatrimestre">Decimo</option>
                                       <option value="Undecimo cuatrimestre">Undecimo</option>
-                                    </optgroup>
+                                    </optgroup> -->
                                     <optgroup label="Curriculum Flexible">
                                       <option value="Flexible Cuatrimestral">Listado Cuatrimestral</option>
                                       <option value="Flexible Semestral">Listado Semestral</option>
@@ -994,6 +994,17 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             <div class="col-sm-12 col-md-2">
                                 <label>Créditos *</label>
                                 <input id="credito" class="form-control" type="number" placeholder="No"><br>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label>Área *</label>
+                                <select  class="form-control" id="area" name="">
+                                    <option value="">Seleccione una opción</option>
+                                    <optgroup label="Área">
+                                      <option value="1">Formación General</option>
+                                      <option value="2">Formación Integral</option>
+                                      <option value="3">Profesionalizante</option>
+                                    </optgroup>
+                                </select>
                             </div>
                             <div class="col-sm-12 col-md-12">
                                 <label>Seriación</label>
@@ -1038,7 +1049,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                       <th class="size" scope="col">Horas docente</th>
                                       <th class="size" scope="col">Horas independientes</th>
                                       <th class="size" scope="col">Créditos</th>
-                                      <th class="size" scope="col">Academia</th>
+                                      <th class="size" scope="col">Área</th>
 
                                     </tr>
                                   </thead>
@@ -1088,6 +1099,15 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                   <label>Créditos *</label>
                                   <input id="creditoOptativa" class="form-control" type="number" placeholder="No"><br>
                               </div>
+                              <div class="col-sm-12 col-md-6">
+                                <label>Área *</label>
+                                <select  class="form-control" id="areaOptativa" name="">
+                                  <option value="">Seleccione una opción</option>
+                                  <optgroup label="Área">
+                                    <option value="4">Optativa Especializante</option>
+                                  </optgroup>
+                                </select>
+                              </div>
                               <div class="col-sm-12 col-md-12">
                                   <label>Seriación</label>
                                   <select id="seriacionOptativa" class="selectpicker form-control" data-style="btn-default"  multiple title="Seriacion" disabled="true"><br>
@@ -1133,7 +1153,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                        <th class="size" scope="col">Horas docente</th>
                                        <th class="size" scope="col">Horas independientes</th>
                                        <th class="size" scope="col">Créditos</th>
-                                       <th class="size" scope="col">Academia</th>
+                                       <th class="size" scope="col">Área</th>
 
                                      </tr>
                                    </thead>

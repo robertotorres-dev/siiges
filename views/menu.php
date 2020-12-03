@@ -42,13 +42,14 @@ require_once "../models/modelo-rol.php";
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Control Escolar<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="ce-planteles-institucion.php">Mis programas de Estudio</a></li>
+															<li><a href="ce-planteles-institucion.php">Mis programas de Estudio</a></li>
+                              <li><a target="_blank" href="https://sicyt2.utj.edu.mx/ies/login.jsp">Titulación Electrónica</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-stats"></span>Reportes<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="reportes-revoe-ies.php">Reportes RVOE</a></li>
+                                <li><a href="reportes-rvoe-ies.php">Reportes RVOE</a></li>
                             </ul>
                         </li>
                         <?php endif; ?>

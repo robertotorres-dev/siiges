@@ -32,9 +32,9 @@ TerminarSolicitud.getEstatusSolicitud = function() {
        else
       {
         if ($("#type").val() == 1) {
-          $("#modalConvocatoria").modal()
+          /* $("#modalConvocatoria").modal()
           $("#tamanoModalConvocatoria").attr("style","margin-top:80px;")
-          $("#mensajeConvocatoriaExpirada").addClass("alert alert-danger")
+          $("#mensajeConvocatoriaExpirada").addClass("alert alert-danger") */
         }
       }
    },
@@ -62,8 +62,8 @@ EditarSolicitud.getSolicitud = function() {
           const fecha1 = new Date(parseInt(fechaAlta[0]),parseInt(fechaAlta[1]-1),parseInt(fechaAlta[2]))
           //Al mes se resta 1
           const fechaConvocatoria2020 = {
-            fechaInicio: new Date(2020,10,09),
-            fechaFin: new Date(2020,11,20)
+            fechaInicio: new Date(2020,10,27),
+            fechaFin: new Date(2021,01,01)
           }
           console.log(fecha1);
           console.log(fechaConvocatoria2020.fechaInicio);
@@ -581,18 +581,36 @@ EditarSolicitud.getSolicitud = function() {
             if( asignaturas != undefined ){
               for (var n = 0; n < asignaturas.length; n++) {
                 var filaAsignatura;
+                let area_txt = "";
+                switch (asignaturas[n].area) {
+                  case "1":
+                    area_txt = "Formación General";
+                    break;
+                  case "2":
+                    area_txt = "Formación Integral";
+                    break;
+                  case "3":
+                    area_txt = "Profesionalizante";
+                    break;
+                  case "4":
+                    area_txt = "Optativa Especializante";
+                    break;
+                  default:
+                    area_txt = "N/A";
+                    break;
+                }
+                if(asignaturas[n].seriacion===null){asignaturas[n].seriacion="";}
                 if( asignaturas[n].tipo == 1 ){
-                  if(asignaturas[n].seriacion===null){asignaturas[n].seriacion="";}
                   if($("#informacionCargar").val() != 4){
                     var asig = document.createElement("INPUT");
                     asig.setAttribute("type","hidden");
                     asig.setAttribute("id",'asignatura'+asignaturas[n].id);
                     asig.setAttribute("name","ASIGNATURA-asignaturas[]");
-                    asig.setAttribute("value",JSON.stringify({"id":asignaturas[n].id,"grado":asignaturas[n].grado,"nombre":asignaturas[n].nombre,"clave":asignaturas[n].clave,"creditos":asignaturas[n].creditos,"seriacion":asignaturas[n].seriacion,"horas_docente":asignaturas[n].horas_docente,"horas_independiente":asignaturas[n].horas_independiente,"academia":asignaturas[n].academia,"tipo":asignaturas[n].tipo, "infraestructura_id":asignaturas[n].infraestructura_id}));
+                    asig.setAttribute("value",JSON.stringify({"id":asignaturas[n].id,"grado":asignaturas[n].grado,"nombre":asignaturas[n].nombre,"clave":asignaturas[n].clave,"creditos":asignaturas[n].creditos,"area":asignaturas[n].area,"seriacion":asignaturas[n].seriacion,"horas_docente":asignaturas[n].horas_docente,"horas_independiente":asignaturas[n].horas_independiente,"academia":asignaturas[n].academia,"tipo":asignaturas[n].tipo, "infraestructura_id":asignaturas[n].infraestructura_id}));
                     __('inputsAsignaturas').appendChild(asig);
-                    filaAsignatura = '<tr id="row' + asignaturas[n].id + '"><td>' + asignaturas[n].grado + '</td><td>' + asignaturas[n].nombre + '</td><td>'+asignaturas[n].clave+'</td><td>'+asignaturas[n].seriacion+'</td><td id="hrsdocente'+asignaturas[n].id+'">'+asignaturas[n].horas_docente+'</td><td id="hrsindependiente'+asignaturas[n].id+'">'+asignaturas[n].horas_independiente+'</td><td>'+asignaturas[n].creditos+ '</td><td>'+asignaturas[n].academia+'</td><td><button type="button" clave="'+asignaturas[n].clave+'" name="remove" id="' + asignaturas[n].id + '" class="btn btn-danger" onclick="EditarSolicitud.eliminarMateria(this)">Quitar</button></td></tr>';
+                    filaAsignatura = '<tr id="row' + asignaturas[n].id + '"><td>' + asignaturas[n].grado + '</td><td>' + asignaturas[n].nombre + '</td><td>'+asignaturas[n].clave+'</td><td>'+asignaturas[n].seriacion+'</td><td id="hrsdocente'+asignaturas[n].id+'">'+asignaturas[n].horas_docente+'</td><td id="hrsindependiente'+asignaturas[n].id+'">'+asignaturas[n].horas_independiente+'</td><td>'+asignaturas[n].creditos+ '</td><td>'+area_txt+'</td><td><button type="button" clave="'+asignaturas[n].clave+'" name="remove" id="' + asignaturas[n].id + '" class="btn btn-danger" onclick="EditarSolicitud.eliminarMateria(this)">Quitar</button></td></tr>';
                   }else{
-                    filaAsignatura = '<tr id="row' + asignaturas[n].id + '"><td>' + asignaturas[n].grado + '</td><td>' + asignaturas[n].nombre + '</td><td>'+asignaturas[n].clave+'</td><td>'+asignaturas[n].seriacion+'</td><td id="hrsdocente'+asignaturas[n].id+'">'+asignaturas[n].horas_docente+'</td><td id="hrsindependiente'+asignaturas[n].id+'">'+asignaturas[n].horas_independiente+'</td><td>'+asignaturas[n].creditos+ '</td><td>'+asignaturas[n].academia+'</td></tr>';
+                    filaAsignatura = '<tr id="row' + asignaturas[n].id + '"><td>' + asignaturas[n].grado + '</td><td>' + asignaturas[n].nombre + '</td><td>'+asignaturas[n].clave+'</td><td>'+asignaturas[n].seriacion+'</td><td id="hrsdocente'+asignaturas[n].id+'">'+asignaturas[n].horas_docente+'</td><td id="hrsindependiente'+asignaturas[n].id+'">'+asignaturas[n].horas_independiente+'</td><td>'+asignaturas[n].creditos+ '</td><td>'+area_txt+'</td></tr>';
                   }
                   $("#totalHorasDocentes").val(parseInt( $("#totalHorasDocentes").val() ) + parseInt( asignaturas[n].horas_docente ));
                   $("#totalHorasIndependientes").val(parseInt( $("#totalHorasIndependientes").val() ) + parseInt( asignaturas[n].horas_independiente ));
@@ -614,12 +632,12 @@ EditarSolicitud.getSolicitud = function() {
                     opta.setAttribute("type","hidden");
                     opta.setAttribute("id",'optativas'+asignaturas[n].id);
                     opta.setAttribute("name","ASIGNATURA-asignaturas[]");
-                    opta.setAttribute("value",JSON.stringify({"id":asignaturas[n].id,"grado":asignaturas[n].grado,"nombre":asignaturas[n].nombre,"clave":asignaturas[n].clave,"creditos":asignaturas[n].creditos,"seriacion":asignaturas[n].seriacion,"horas_docente":asignaturas[n].horas_docente,"horas_independiente":asignaturas[n].horas_independiente,"academia":asignaturas[n].academia,"tipo":asignaturas[n].tipo}));
+                    opta.setAttribute("value",JSON.stringify({"id":asignaturas[n].id,"grado":asignaturas[n].grado,"nombre":asignaturas[n].nombre,"clave":asignaturas[n].clave,"creditos":asignaturas[n].creditos,"area":asignaturas[n].area,"seriacion":asignaturas[n].seriacion,"horas_docente":asignaturas[n].horas_docente,"horas_independiente":asignaturas[n].horas_independiente,"academia":asignaturas[n].academia,"tipo":asignaturas[n].tipo}));
                     __('inputsOptativas').appendChild(opta);
-                    filaOptativa = '<tr id="optativa' + asignaturas[n].id + '"><td>' + asignaturas[n].grado + '</td><td>' + asignaturas[n].nombre + '</td><td>'+asignaturas[n].clave+'</td><td>'+asignaturas[n].seriacion+'</td><td id="hrsdocenteOptativa'+asignaturas[n].id+'">'+asignaturas[n].horas_docente+'</td><td id="hrsindependienteOptativa'+asignaturas[n].id+'">'+asignaturas[n].horas_independiente+'</td><td>'+asignaturas[n].creditos+ '</td><td>'+asignaturas[n].academia+'</td><td><button type="button" clave="'+asignaturas[n].clave+'" name="remove" id="' + asignaturas[n].id + '" class="btn btn-danger" onclick="eliminarOptativa(this)">Quitar</button></td></tr>';
+                    filaOptativa = '<tr id="optativa' + asignaturas[n].id + '"><td>' + asignaturas[n].grado + '</td><td>' + asignaturas[n].nombre + '</td><td>'+asignaturas[n].clave+'</td><td>'+asignaturas[n].seriacion+'</td><td id="hrsdocenteOptativa'+asignaturas[n].id+'">'+asignaturas[n].horas_docente+'</td><td id="hrsindependienteOptativa'+asignaturas[n].id+'">'+asignaturas[n].horas_independiente+'</td><td>'+asignaturas[n].creditos+ '</td><td>'+area_txt+'</td><td><button type="button" clave="'+asignaturas[n].clave+'" name="remove" id="' + asignaturas[n].id + '" class="btn btn-danger" onclick="eliminarOptativa(this)">Quitar</button></td></tr>';
 
                   }else{
-                    filaOptativa = '<tr id="row' + asignaturas[n].id + '"><td>' + asignaturas[n].grado + '</td><td>' + asignaturas[n].nombre + '</td><td>'+asignaturas[n].clave+'</td><td>'+asignaturas[n].seriacion+'</td><td id="hrsdocente'+asignaturas[n].id+'">'+asignaturas[n].horas_docente+'</td><td id="hrsindependiente'+asignaturas[n].id+'">'+asignaturas[n].horas_independiente+'</td><td>'+asignaturas[n].creditos+ '</td><td>'+asignaturas[n].academia+'</td></tr>';
+                    filaOptativa = '<tr id="row' + asignaturas[n].id + '"><td>' + asignaturas[n].grado + '</td><td>' + asignaturas[n].nombre + '</td><td>'+asignaturas[n].clave+'</td><td>'+asignaturas[n].seriacion+'</td><td id="hrsdocente'+asignaturas[n].id+'">'+asignaturas[n].horas_docente+'</td><td id="hrsindependiente'+asignaturas[n].id+'">'+asignaturas[n].horas_independiente+'</td><td>'+asignaturas[n].creditos+ '</td><td>'+area_txt+'</td></tr>';
 
                   }
 

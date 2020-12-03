@@ -204,14 +204,15 @@ Solicitudes.getDetalles = function(){
           const fecha1 = new Date(parseInt(fechaAlta[0]),parseInt(fechaAlta[1]-1),parseInt(fechaAlta[2]))
           //Al mes se resta 1
           const fechaConvocatoria2020 = {
-            fechaInicio: new Date(2016,10,09),
-            fechaFin: new Date(2020,11,20)
+            fechaInicio: new Date(2020,10,27),
+            fechaFin: new Date(2021,01,01)
           }
           if (fecha1 < fechaConvocatoria2020.fechaInicio) {
             const fda02 = document.getElementById('fda02');
             const fda04 = document.getElementById('fda04');
             const fda05 = document.getElementById('fda05');
             const fda06 = document.getElementById('fda06');
+            const fdp02 = document.getElementById('fdp02');
             const fdp08 = document.getElementById('fdp08');
 
             fda02.setAttribute('href', `formatos/fda02.php?id=${solicitud.id}`);
@@ -226,8 +227,15 @@ Solicitudes.getDetalles = function(){
             fda06.setAttribute('href', `formatos/fda06.php?id=${solicitud.id}`);
             fda06.innerHTML = 'FDA 06';
 
-            fdp08.setAttribute('href', `formatos/fdp08.php?id=${solicitud.id}`);
-            fdp08.innerHTML = 'FDP 08';
+            if (fdp02) {
+              fdp02.setAttribute('href', `formatos/fdp02.php?id=${solicitud.id}`);
+              fdp02.innerHTML = 'FDP 02';
+            }
+            
+            if (fdp08) {
+              fdp08.setAttribute('href', `formatos/fdp08.php?id=${solicitud.id}`);
+              fdp08.innerHTML = 'FDP 08';
+            }
 
             console.log("Convocatoria anterior");
           } else if(fecha1 >= fechaConvocatoria2020.fechaInicio && fecha1 <= fechaConvocatoria2020.fechaFin) {
@@ -235,6 +243,7 @@ Solicitudes.getDetalles = function(){
             const fda04 = document.getElementById('fda04');
             const fda05 = document.getElementById('fda05');
             const fda06 = document.getElementById('fda06');
+            const fdp02 = document.getElementById('fdp02');
             const fdp08 = document.getElementById('fdp08');
 
             fda02.setAttribute('href', `formatos/fda02-2020.php?id=${solicitud.id}`);
@@ -245,7 +254,10 @@ Solicitudes.getDetalles = function(){
             
             fda05.setAttribute('href', `formatos/fda05-2020.php?id=${solicitud.id}`);
             fda05.innerHTML = 'FDA 05';
-
+            
+            fdp02.setAttribute('href', `formatos/fdp02-2020.php?id=${solicitud.id}`);
+            fdp02.innerHTML = 'FDP 02';
+            
             console.log("Convocatoria 2020"); 
           }
           if( solicitud != undefined ){
@@ -476,7 +488,7 @@ Solicitudes.revisarDocumentacion = function(){
   $("#tamanoModalMensaje").attr("style","margin-top:20px;");
   var mensajes = $("#mensajeDocumentacion");
 
-  if ( $('#fda01').prop('checked') && $('#fda02').prop('checked')  && $('#fda03').prop('checked') && $('#fda04').prop('checked') && $('#fda05').prop('checked') && $('#fda06').prop('checked'))
+  if ( $('#fda01Checkbox').prop('checked') && $('#fda02Checkbox').prop('checked')  && $('#fda03Checkbox').prop('checked') && $('#fda04Checkbox').prop('checked') && $('#fda05Checkbox').prop('checked') && $('#fda06Checkbox').prop('checked'))
   {
     mensajes.removeClass("alert alert-danger");
     mensajes.addClass("alert alert-info");

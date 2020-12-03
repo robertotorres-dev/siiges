@@ -81,12 +81,12 @@ if(isset($_SESSION["resultado"])){
 		</section>
 	</div>
 
-<!-- JS GOB.MX -->
-<script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
-<!-- JS JQUERY -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-<!-- SECCION PARA SCRIPTS -->
-<script src="../js/home.js"></script>
+	<!-- JS GOB.MX -->
+	<script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
+	<!-- JS JQUERY -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+	<!-- SECCION PARA SCRIPTS -->
+	<script src="../js/home.js"></script>
 </body>
 </html>

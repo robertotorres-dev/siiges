@@ -145,19 +145,42 @@
                 $estatus_solicitud_id = 100;
                 $comentarios = "No cumplió con lo solicitado";
              }
-             if($_POST["porcentaje_resultado"] == 80)
+             /* if($_POST["porcentaje_resultado"] == 80)
              {
                 $actualizar_solicitud->setAttributes(array("id"=> $_POST["solicitud_id"],"estatus_solicitud_id"=>200));
                 $estatus_solicitud_id = 200;
                 $comentarios = "Necesita atender observaciones para que se realice otra evaluación";
-             }
-             if($_POST["porcentaje_resultado"] >= 90)
-             {
-                $actualizar_solicitud->setAttributes(array("id"=> $_POST["solicitud_id"],"estatus_solicitud_id"=>6));
-                $estatus_solicitud_id = 6;
-                $comentarios = "Cumplió con lo solicitado";
-
-             }
+             } */
+              $solicitud = new Solicitud( );
+              $solicitud->setAttributes( array( "id"=>$_POST["solicitud_id"] ) );
+              $res_solicitud = $solicitud->consultarId( );
+              if ($res_solicitud["data"]["tipo_solicitud_id"] == 1) {
+                if($_POST["porcentaje_resultado"] == 80)
+                {
+                   $actualizar_solicitud->setAttributes(array("id"=> $_POST["solicitud_id"],"estatus_solicitud_id"=>6));
+                   $estatus_solicitud_id = 6;
+                   $comentarios = "Necesita atender observaciones";
+                }
+                if($_POST["porcentaje_resultado"] >= 90)
+                {
+                   $actualizar_solicitud->setAttributes(array("id"=> $_POST["solicitud_id"],"estatus_solicitud_id"=>6));
+                   $estatus_solicitud_id = 6;
+                   $comentarios = "Cumplió con lo solicitado";
+                }
+              } else {
+                if($_POST["porcentaje_resultado"] == 80)
+                {
+                   $actualizar_solicitud->setAttributes(array("id"=> $_POST["solicitud_id"],"estatus_solicitud_id"=>8));
+                   $estatus_solicitud_id = 8;
+                   $comentarios = "Necesita atender observaciones";
+                }
+                if($_POST["porcentaje_resultado"] >= 90)
+                {
+                   $actualizar_solicitud->setAttributes(array("id"=> $_POST["solicitud_id"],"estatus_solicitud_id"=>8));
+                   $estatus_solicitud_id = 8;
+                   $comentarios = "Cumplió con lo solicitado";
+                }
+              }
              $actualizar_solicitud->guardar();
 
              $act_coment = new SolicitudEstatus();

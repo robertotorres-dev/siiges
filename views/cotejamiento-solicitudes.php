@@ -170,27 +170,27 @@
 					<div class="form-group col-sm-12 col-md-12">
 
 						<div class="col-sm-6 col-md-6">
-							<input id="fda01" type="checkbox" style=" transform: scale(2.0)"> &nbsp; <a target="_blank" href= <?= "formatos/fda01.php?id=".$_GET["solicitud"] ?>>FDA01</a><br>
+							<input id="fda01Checkbox" type="checkbox" style=" transform: scale(2.0)"> &nbsp; <a target="_blank" href= <?= "formatos/fda01.php?id=".$_GET["solicitud"] ?>>FDA 01</a><br>
 							<br>
 						</div>
 						<div class="col-sm-6 col-md-6">
-							<input id="fda02" type="checkbox" style=" transform: scale(2.0)"> &nbsp; <a target="_blank" href= <?= "formatos/fda02.php?id=".$_GET["solicitud"] ?>>FDA02</a><br>
+							<input id="fda02Checkbox" type="checkbox" style=" transform: scale(2.0)"> &nbsp; <a target="_blank" id="fda02"></a><br>
 							<br>
 						</div>
 						<div class="col-sm-6 col-md-6">
-							<input id="fda03" type="checkbox" style=" transform: scale(2.0)"> &nbsp; <a target="_blank" href= <?= "formatos/fda03.php?id=".$_GET["solicitud"] ?> id="fda03l">FDA03</a><br>
+							<input id="fda03Checkbox" type="checkbox" style=" transform: scale(2.0)"> &nbsp; <a target="_blank" href= <?= "formatos/fda03.php?id=".$_GET["solicitud"] ?> id="fda03l">FDA 03</a><br>
 							<br>
 						</div>
 						<div class="col-sm-6 col-md-6">
-							<input id="fda04" type="checkbox" style=" transform: scale(2.0)"> &nbsp; <a target="_blank" href= <?= "formatos/fda04.php?id=".$_GET["solicitud"] ?>>FDA04</a><br>
+							<input id="fda04Checkbox" type="checkbox" style=" transform: scale(2.0)"> &nbsp; <a target="_blank" id="fda04"></a><br>
 							<br>
 						</div>
 						<div class="col-sm-6 col-md-6">
-							<input id="fda05" type="checkbox" style=" transform: scale(2.0)"> &nbsp; <a target="_blank" href= <?= "formatos/fda05.php?id=".$_GET["solicitud"] ?>>FDA05</a><br>
+							<input id="fda05Checkbox" type="checkbox" style=" transform: scale(2.0)"> &nbsp; <a target="_blank" id="fda05"></a><br>
 							<br>
 						</div>
 						<div class="col-sm-6 col-md-6">
-							<input id="fda06" type="checkbox" style=" transform: scale(2.0)"> &nbsp; <a target="_blank" href= <?= "formatos/fda06.php?id=".$_GET["solicitud"] ?>>FDA06</a><br>
+							<input id="fda06Checkbox" type="checkbox" style=" transform: scale(2.0)"> &nbsp; <a target="_blank" id="fda06"></a><br>
 							<br>
 						</div>
 						<div class="col-sm-12 col-md-12">
