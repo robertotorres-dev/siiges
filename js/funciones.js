@@ -871,8 +871,13 @@ function limpiarInputs() {
       mensajes.addClass("alert alert-danger");
       mensajes.html("<p class='text-left'><strong>Los siguientes campos deben de llenarse:</strong></p>"+"<p class='text-left'>"+resultado+"</p>");
     }else{
+      let btnGuardar = document.getElementById('btnGuardar');
+      btnGuardar.classList.remove('active');
+      btnGuardar.classList.add('disabled');
+      btnGuardar.setAttribute("disabled", "");
       $("#estatus").val(1);
       $("#solicitudes").submit();
+
       console.log("Proceder con el guardado");
     }
 

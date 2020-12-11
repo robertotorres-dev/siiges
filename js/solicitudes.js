@@ -1333,7 +1333,7 @@ Solicitud.camposLlenos = function(){
         resultado =  resultado + "Por lo menos un sistema de respaldo"+ "<br>";
     }
     if($("#inputsEspejos > *").length == 0 && $("#auxmodalidad").val() == 2) {
-        resultado =  resultado + "Por lo menos introduca un sistema de espejo"+ "<br>";
+        resultado =  resultado + "Por lo menos introzduca un sistema de espejo"+ "<br>";
     }
   if(resultado.length > 0){
     $("#modalErrores").modal();
@@ -1349,6 +1349,10 @@ Solicitud.camposLlenos = function(){
 };
 //Terminar la solicitud
 Solicitud.terminar = function(){
+    let btnTerminar = document.getElementById('boton-terminar');
+    btnTerminar.classList.remove('active');
+    btnTerminar.classList.add('disabled');
+    btnTerminar.setAttribute("disabled", "");
     $("#estatus_solicitud").val(2);
     $( "#solicitudes" ).submit();
 };
