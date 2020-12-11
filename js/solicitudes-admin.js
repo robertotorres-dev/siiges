@@ -254,9 +254,13 @@ Solicitudes.getDetalles = function(){
             
             fda05.setAttribute('href', `formatos/fda05-2020.php?id=${solicitud.id}`);
             fda05.innerHTML = 'FDA 05';
+
+            fda06.parentNode.remove();
             
-            fdp02.setAttribute('href', `formatos/fdp02-2020.php?id=${solicitud.id}`);
-            fdp02.innerHTML = 'FDP 02';
+            if (fdp02) {
+              fdp02.setAttribute('href', `formatos/fdp02-2020.php?id=${solicitud.id}`);
+              fdp02.innerHTML = 'FDP 02';
+            }
             
             console.log("Convocatoria 2020"); 
           }
@@ -488,30 +492,51 @@ Solicitudes.revisarDocumentacion = function(){
   $("#tamanoModalMensaje").attr("style","margin-top:20px;");
   var mensajes = $("#mensajeDocumentacion");
 
-  if ( $('#fda01Checkbox').prop('checked') && $('#fda02Checkbox').prop('checked')  && $('#fda03Checkbox').prop('checked') && $('#fda04Checkbox').prop('checked') && $('#fda05Checkbox').prop('checked') && $('#fda06Checkbox').prop('checked'))
-  {
+  // En convocatoria 2020 no se recibe el archivo fda06
+  let inputs = document.getElementsByTagName('input');
+  inputs = [...inputs]
+  let checkboxes =  inputs.filter(input => input.type.toLowerCase() == 'checkbox');
+  let i;
+  for (let checkbox of checkboxes) {
+    if (checkbox.checked == true) {
+      i = 1
+    } else {
+      //Checkboxes incompletos
+      i = 0
+      break;
+    }
+  }
+
+  if(i == 1) {
     mensajes.removeClass("alert alert-danger");
     mensajes.addClass("alert alert-info");
     mensajes.html("<p class='text-left'><strong>¿La documentación fue recibida?</strong></p>");
 
     var boton = $('<button/>', {
-    'type': 'button',
-    'class': 'btn btn-primary',
-    'text' : 'SI',
-    'onclick': 'Solicitudes.completarCotejamiento()'
+      'id': 'boton_si',
+      'type': 'button',
+      'class': 'btn btn-primary',
+      'text' : 'SI',
+      'onclick': 'Solicitudes.completarCotejamiento()'
     });
-    $( '#mensaje-footer').append(boton);
-  }else
-  {
+    let btnConfirmar = document.getElementById('boton_si');
+    if (btnConfirmar == null) {
+      $('#mensaje-footer').append(boton);
+    }
+  } else if(i == 0) {
     mensajes.removeClass("alert alert-info");
     mensajes.addClass("alert alert-danger");
     mensajes.html("<p class='text-left'><strong>Toda la documentación debe de ser recibida.</strong></p>");
-
   }
 
 };
 //Confirmar revisión de documentacion
 Solicitudes.completarCotejamiento =function(){
+  let btnConfirmar = document.getElementById('boton_si');
+  btnConfirmar.classList.remove('active');
+  btnConfirmar.classList.add('disabled');
+  btnConfirmar.setAttribute("disabled", "");
+
   $("#form-cotejamiento").submit();
 };
 //Entregar rvoe
