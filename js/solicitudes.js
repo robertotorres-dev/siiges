@@ -376,7 +376,7 @@ Solicitud.opciones= function(){
       var slcPlantel = $("#programas_ids");
       if( programas != undefined && programas.length > 0){
         for(var i = 0; i<programas.length;i++){
-          slcPlantel.append('<option value ="'+programas[i].id+'">'+ programas[i].nombre+" ubicado en: #"+programas[i].domicilio.numero_exterior+" "+programas[i].domicilio.calle+'</option>');
+          slcPlantel.append('<option value ="'+programas[i].id+'">'+"RVOE"+" "+ programas[i].acuerdo_rvoe+" "+programas[i].nombre+" ubicado en: #"+programas[i].domicilio.numero_exterior+" "+programas[i].domicilio.calle+'</option>');
         }
         $("#div-programas").show();
       }
@@ -390,12 +390,10 @@ Solicitud.opciones= function(){
     Solicitud.promesaProgramas.done(function(){
       var dor = document.getElementById("cargando").style.display = "none";
       var programas = Solicitud.programasRegistrados;
-      console.log(programas);
       var slcPlantel = $("#programas_ids");
       if( programas != undefined && programas.length > 0){
-        console.log(programas);
         for(var i = 0; i<programas.length;i++){
-          slcPlantel.append('<option value ="'+programas[i].id+'">'+ programas[i].nombre+" ubicado en: #"+programas[i].domicilio.numero_exterior+" "+programas[i].domicilio.calle+'</option>');
+          slcPlantel.append('<option value ="'+programas[i].id+'">'+"RVOE"+" "+ programas[i].acuerdo_rvoe+" "+ programas[i].nombre+" ubicado en: #"+programas[i].domicilio.numero_exterior+" "+programas[i].domicilio.calle+'</option>');
         }
         $("#div-programas").show();
       }
@@ -442,7 +440,7 @@ Solicitud.getPlantelesBasicos = function(){
         data : { webService:"informacionBasica", url:"", solicitud_id:$("#id_solicitud").val() },
         success: function(respuesta){
           console.log("infomracion basica");
-          console.log(respuesta.data);
+          //console.log(respuesta.data);
           if(respuesta.data.institucion != undefined){
             var institucion = respuesta.data.institucion;
             var ratificacion = respuesta.data.ratificacion;
@@ -703,6 +701,7 @@ Solicitud.getDatosPlantel = function(idplantel){
                        }
                      }
                      //Infraestructura
+                     console.log(object.infraestructura);
                      if( object.infraestructura != undefined && $("#tipo").val() == 1){
                        $('#inputsInfraestructuras').empty();
                        $('#infraestructuras tr:not(:first)').remove();
@@ -768,7 +767,7 @@ Solicitud.modificacionPrograma =  function(){
       dataType: "json",
       data : {webService:"modificacionPrograma",url:"",programaId:$("#datosNecesarios").val(),opcion:$("#masDatos").val()},
       success: function(respuesta){
-        console.log(respuesta.data);
+        //console.log(respuesta.data);
         if(respuesta.data != ""){
             var programa = respuesta.data.programa;
             var asignaturas = respuesta.data.asignaturas;
@@ -816,7 +815,7 @@ Solicitud.modificacionPrograma =  function(){
                 Solicitud.tipo_solicitud = programa.solicitud.tipo_solicitud_id;
 
               }
-              if ($("#tipo").val()===2) {
+              if ($("#tipo").val()==2) {
                 if( programa.plantel != undefined){
                   console.log(programa.plantel);
                     var plantel = programa.plantel;
@@ -1105,6 +1104,7 @@ Solicitud.modificacionPrograma =  function(){
                   }
                 }
                 var infAsignatura = respuesta.data.asignatura_infraestructura;
+                console.log(infAsignatura);
                 if( infAsignatura != undefined ){
                   for (var indasig = 0; indasig < infAsignatura.length; indasig++) {
                       var filaInfAsig;
@@ -1133,6 +1133,7 @@ Solicitud.modificacionPrograma =  function(){
                 }
               }
                 var infComun = respuesta.data.infraestructuraComun;
+                console.log(infComun);
                 if( infComun != undefined ){
                   for (var indInf = 0; indInf < infComun.length; indInf++) {
                     var filaInf;
@@ -1471,7 +1472,6 @@ $(document).ready(function ($) {
               //Carga la informacion del plantel seleccionado previamente en mis solicitudes
               console.log($("#informacionCargar").val());
               console.log($("#datosNecesarios").val());
-              console.log($("#tipo").val());
               if( $("#informacionCargar").val() == 1  && $("#datosNecesarios").val() > 0){
                     document.getElementById("cargando").style.display = "block";
                     console.log("cargar plantel con id:"+$("#datosNecesarios").val());
@@ -1495,25 +1495,28 @@ $(document).ready(function ($) {
                   Solicitud.modificacionPrograma();
                   Solicitud.promesaModificacionPrograma.done(function(){
                     console.log("datos del programa se cargaron");
-                    if (Solicitud.tipo === 3) {
+                    if (Solicitud.tipo == 3) {
                       Solicitud.getDatosPlantel(Solicitud.plantelId);
                       Solicitud.promesaPlantel.done(function(){
                         console.log("datos del plantel se cargaron");
-                        document.getElementById("cargando").style.display = "none";
-                        $("#modalInicial").modal();
-                        $("#tamanoModales").attr("style","margin-top:80px;");
                       });
                     }
-                      if( $("#informacionCargar").val() == 2){
-                        $("#tipo").val("2");
-                      }else{
-                        $("#tipo").val(Solicitud.tipo_solicitud );
-                      }
-                      if($("#informacionCargar").val() == 4){
-                        Solicitud.inputsDeshabilitados();
-                      }
+                    if( $("#informacionCargar").val() == 2){
+                      $("#tipo").val("2");
+                    }else{
+                      $("#tipo").val(Solicitud.tipo_solicitud );
+                    }
+                    if($("#informacionCargar").val() == 4){
+                      Solicitud.inputsDeshabilitados();
+                    }
+                    
+                    console.log($("#tipo").val());
+                    console.log($("#webService").val());
+                    document.getElementById("cargando").style.display = "none";
+                    $("#modalInicial").modal();
+                    $("#tamanoModales").attr("style","margin-top:80px;");
 
-                    });
+                  });
                 }
               }
               })

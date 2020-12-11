@@ -65,8 +65,8 @@ EditarSolicitud.getSolicitud = function() {
             fechaInicio: new Date(2020,10,27),
             fechaFin: new Date(2021,01,01)
           }
-          console.log(fecha1);
-          console.log(fechaConvocatoria2020.fechaInicio);
+          //console.log(fecha1);
+          //console.log(fechaConvocatoria2020.fechaInicio);
           if (fecha1 >= fechaConvocatoria2020.fechaInicio && fecha1 <= fechaConvocatoria2020.fechaFin) {
             const comprobante_pago = document.getElementById('comprobante_pago');
             const contenedor_pago = document.getElementById('contendorPago');
@@ -308,7 +308,6 @@ EditarSolicitud.getSolicitud = function() {
               nfilaPersonal =  diligencias[i].id +1;
             }
           }
-          console.log(respuesta.data.programa.plantel);
           
           //Datos del rector
           if( respuesta.data.programa.plantel.rector != undefined){
@@ -725,12 +724,12 @@ EditarSolicitud.getSolicitud = function() {
                 }
               }
               var infAsignatura = respuesta.data.asignatura_infraestructura;
+              console.log(infAsignatura);
               if( infAsignatura != undefined ){
                 for (var indasig = 0; indasig < infAsignatura.length; indasig++) {
                   if (infAsignatura[indasig].ubicacion == null) {
                     infAsignatura[indasig].ubicacion = "";
                   }
-                  console.log(infAsignatura[indasig])
                   var filaInfAsig;
                   if($("#informacionCargar").val() != 4){
                     var inputInfAsig = document.createElement("INPUT");
@@ -843,10 +842,12 @@ EditarSolicitud.getSolicitud = function() {
 
             //Infraestructura común
             var infComun = respuesta.data.plantel.infraestructura;
+            console.log(infComun);
             if( infComun != undefined )
             {
               for (var indInf = 0; indInf < infComun.length; indInf++) {
                 var filaInf;
+                infComun[indInf].ubicacion = infComun[indInf].ubicacion==null ? "": infComun[indInf].ubicacion;
                 if($("#informacionCargar").val() != 4){
                   var inputInf = document.createElement("INPUT");
                   inputInf.setAttribute("type","hidden");
@@ -1011,9 +1012,21 @@ $(document).ready(function ($) {
     .done(function(){
       var m = document.getElementById("municipio");
       var mun = m.options[m.selectedIndex].text;
+      
       var r = document.getElementById("municipio_representante");
       var mun_r = r.options[r.selectedIndex].text;
-      if (mun !== "Seleccione municipio" && mun_r !== "Seleccione municipio") {
+
+      let nivelPrograma = $("#nivel_id").val();
+      
+      let modalidadPrograma = $("#modalidad_id").val();
+      
+      let turnoPrograma = $("#turno_programa").val();
+      
+      if (mun !== "Seleccione municipio" 
+        && mun_r !== "Seleccione municipio" 
+        && nivelPrograma > 0 
+        && modalidadPrograma > 0
+        && turnoPrograma.length > 0 ) {
         document.getElementById("cargandoOtro").style.display = "none",
         document.getElementById("cargando").style.display = "none"
       };

@@ -326,7 +326,6 @@ session_start();
         }
 
         // Director
-        //echo $_POST["SOLICITUD-tipo_solicitud_id"];
         if(!$entidadesIds["DOMICILIO"]){
           $entidadesIds["DIRECTOR"] = false;
           throw new Exception("DOMICILIO - error al guardar");

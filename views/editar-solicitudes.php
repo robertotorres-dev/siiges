@@ -30,12 +30,8 @@ Utileria::validarSesion( basename( __FILE__ ) );
   	<link rel="stylesheet" type="text/css" href="../css/estilos.css">
   </head>
   <body>
-    <div id="cargando" class="loader">
-
-    </div>
-    <div id="cargandoOtro" class="loader">
-
-    </div>
+    <div id="cargando" class="loader"></div>
+    <div id="cargandoOtro" class="loader"></div>
     <!-- HEADER Y BARRA DE NAVEGACION -->
     <?php require_once "menu.php"; ?>
     <!-- Contenedor -->
@@ -57,14 +53,12 @@ Utileria::validarSesion( basename( __FILE__ ) );
           </ol>
           <h1>Solicitudes</h1>
           <br>
-          <div id="mensaje">
-
-          </div>
+          <div id="mensaje"></div>
           <ul class="nav nav-tabs col-sm-12 col-md-12">
-                <li class="active" ><a data-toggle="tab" href="#tab-01">Datos generales</a></li>
-                <li ><a data-toggle="tab" href="#tab-02">Programa de estudios</a></li>
-                <li><a data-toggle="tab" href="#tab-03">Plantel</a></li>
-                <li><a data-toggle="tab" href="#tab-04">Anexos</a></li>
+              <li class="active" ><a data-toggle="tab" href="#tab-01">Datos generales</a></li>
+              <li ><a data-toggle="tab" href="#tab-02">Programa de estudios</a></li>
+              <li><a data-toggle="tab" href="#tab-03">Plantel</a></li>
+              <li><a data-toggle="tab" href="#tab-04">Anexos</a></li>
           </ul>
           <!-- Mensajes generales para todo el formulario -->
 
@@ -2839,7 +2833,6 @@ Utileria::validarSesion( basename( __FILE__ ) );
                 <input type="hidden" id="auxmodalidad" value="<?= $_GET["modalidad"] ?>">
                 <input type="hidden" id="masDatos" value="<?= $_GET["odt"] ?>">
               </div>
-
             </div>
           </form>
         </div>
