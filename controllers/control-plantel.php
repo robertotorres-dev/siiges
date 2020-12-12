@@ -269,7 +269,6 @@
           $higienes = $plantelHigiene->consultarPor( "planteles_higienes" , array("plantel_id"=>$resultado["data"]["plantel"]["id"]), "*");
           if ( sizeof( $higienes["data"] ) > 0 )
           {
-
             foreach ($higienes["data"] as $indiceHigiene => $arregloHigiene) {
                 $higiene = new Higiene();
                 $higiene->setAttributes( array( 'id' => $arregloHigiene["higiene_id"] ) );
@@ -287,7 +286,7 @@
           }
           //Infraestructura del plantel (No se imparten clase)
           $infraestructura = new Infraestructura();
-          $infraestructuras = $infraestructura->consultarPor("infraestructuras", array( "plantel_id" => $resultado["data"]["plantel"]["id"] ), '*');
+          $infraestructuras = $infraestructura->consultarPor("infraestructuras", array( "plantel_id" => $resultado["data"]["plantel"]["id"] , "deleted_at"), '*');
           $infraestructuras = $infraestructuras["data"];
 
           if( sizeof($infraestructuras) > 0 ){

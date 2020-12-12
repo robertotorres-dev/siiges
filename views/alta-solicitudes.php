@@ -2631,7 +2631,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                 <input type="hidden" id="tipo" name="SOLICITUD-tipo_solicitud_id" value="<?= $_GET["tipo"] ?> " />
                 <input type="hidden" id="id_usuario" value="<?=$_SESSION["id"]?>">
                 <button type="button" class="btn btn-primary pull-right" onclick="Solicitud.camposLlenos()">Terminar solicitud</button>
-                <button type="button" name="" class="btn btn-default pull-right" style="margin-right: 10px;" onclick="limpiarInputs()"> Guardar solicitud</button>
+                <button type="button" id="btnGuardar" name="" class="btn btn-default pull-right" style="margin-right: 10px;" onclick="limpiarInputs()"> Guardar solicitud</button>
                 <!-- Filtrar informacion a cargar  -->
                 <input type="hidden" id="opcionSolicitud" name="opcionSolicitud" value="">
                 <input type="hidden" id="informacionCargar" value="<?= $_GET["op"] ?>">
