@@ -502,8 +502,8 @@ Solicitud.getDatosPlantel = function(idplantel){
           if(respuesta.data != "" ){
 
             if(respuesta.data.plantel != undefined){
-              console.log(respuesta.data);
               var object = respuesta.data.plantel;
+              console.log(object);
               $("#plantel-id").val(object.id);
               $("#plantel-id").attr("name","PLANTEL-id");
               $("#coordenadas").val(object.domicilio.latitud+","+object.domicilio.longitud);
@@ -511,7 +511,6 @@ Solicitud.getDatosPlantel = function(idplantel){
                 if (object.hasOwnProperty(variable)) {
                   $("#"+variable).val(object[variable]);
                   console.log(variable);
-                  console.log(object);
                   
                   //Datos de ubicacion
                   if(variable == "domicilio"){
@@ -701,8 +700,8 @@ Solicitud.getDatosPlantel = function(idplantel){
                        }
                      }
                      //Infraestructura
-                     console.log(object.infraestructura);
                      if( object.infraestructura != undefined && $("#tipo").val() == 1){
+                      console.log(object.infraestructura);
                        $('#inputsInfraestructuras').empty();
                        $('#infraestructuras tr:not(:first)').remove();
                        var infComun = object.infraestructura;
@@ -931,6 +930,7 @@ Solicitud.modificacionPrograma =  function(){
                 }
               }
               //Tipo se puede cambiar segun cuando se requiera
+              console.log(programa.diligencias);
               if( programa.diligencias != undefined  || $("#informacionCargar").val() == 4 && programa.diligencias != undefined){
                 var diligencias = programa.diligencias;
                 console.log("cargar diligencias");

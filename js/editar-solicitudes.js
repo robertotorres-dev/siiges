@@ -283,8 +283,8 @@ EditarSolicitud.getSolicitud = function() {
           var diligencias = respuesta.data.diligencias;
           //Cargar diligencias
           if(diligencias != undefined){
-            for (var i = 0; i < diligencias.length; i++) {
-              var fila;
+            for (let i = 0; i < diligencias.length; i++) {
+              let fila;
               if($("#informacionCargar").val() != 4){
                 var inputDiligencia = document.createElement("INPUT");
                 inputDiligencia.setAttribute("type","hidden");
@@ -299,10 +299,10 @@ EditarSolicitud.getSolicitud = function() {
                                                         "correo":diligencias[i].correo,
                                                         "horario": diligencias[i].rfc
                                                         }));
-                  __('inputsSeguimiento').appendChild(inputDiligencia);
-                  fila = '<tr id="personal' + diligencias[i].id + '"><td>' + diligencias[i].nombre + " "+ diligencias[i].apellido_paterno +" "+ diligencias[i].apellido_materno +'</td><td>' + diligencias[i].titulo_cargo +'</td><td>' + diligencias[i].telefono + '</td><td>'+diligencias[i].celular+'</td><td>'+diligencias[i].correo+'</td><td>'+diligencias[i].rfc+ '</td><td><button type="button"  id="personaDiligencia-' + diligencias[i].id + '_personal" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
-
-
+                __('inputsSeguimiento').appendChild(inputDiligencia);
+                fila = '<tr id="personal' + diligencias[i].id + '"><td>' + diligencias[i].nombre + " "+ diligencias[i].apellido_paterno +" "+ diligencias[i].apellido_materno +'</td><td>' + diligencias[i].titulo_cargo +'</td><td>' + diligencias[i].telefono + '</td><td>'+diligencias[i].celular+'</td><td>'+diligencias[i].correo+'</td><td>'+diligencias[i].rfc+ '</td><td><button type="button"  id="personaDiligencia-' + diligencias[i].id + '_personal" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
+              } else {
+                fila = '<tr id="personal' + diligencias[i].id + '"><td>' + diligencias[i].nombre + " "+ diligencias[i].apellido_paterno +" "+ diligencias[i].apellido_materno +'</td><td>' + diligencias[i].titulo_cargo +'</td><td>' + diligencias[i].telefono + '</td><td>'+diligencias[i].celular+'</td><td>'+diligencias[i].correo+'</td><td>'+diligencias[i].rfc+ '</td></tr>';
               }
               $('#encomiendas tr:last').after(fila);
               nfilaPersonal =  diligencias[i].id +1;
@@ -324,9 +324,9 @@ EditarSolicitud.getSolicitud = function() {
             $("#celular_rector").val(rector.celular);
             //Formaciones de rector
             if( rector.formaciones != undefined){
-              var formaciones = rector.formaciones;
-              for (var j = 0; j < formaciones.length; j++) {
-                var filaFormacion;
+              let formaciones = rector.formaciones;
+              for (let j = 0; j < formaciones.length; j++) {
+                let filaFormacion;
                 if($("#informacionCargar").val() != 4){
                   var b = document.createElement("INPUT");
                   b.setAttribute("type","hidden");
@@ -335,6 +335,8 @@ EditarSolicitud.getSolicitud = function() {
                   b.setAttribute("value",JSON.stringify({ "id":formaciones[j].id ,"nivel": formaciones[j].nivel,"nombre": formaciones[j].nombre,"descripcion": formaciones[j].descripcion,"institucion":formaciones[j].institucion }));
                   __('inputsFormacionRector').appendChild(b);
                   filaFormacion = '<tr id="formacion' + formaciones[j].id + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ formaciones[j].institucion +'</td><td>'+  formaciones[j].descripcion+'</td><td><button type="button" name="removeFormacion" id="fromacionesRector-' + formaciones[j].id + '_formacion" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
+                } else {
+                  filaFormacion = '<tr id="formacion' + formaciones[j].id + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ formaciones[j].institucion +'</td><td>'+  formaciones[j].descripcion+'</td></tr>';
                 }
                 //Aumentar contador;
                 nfilaFormacion = formaciones[j].id+1;
@@ -359,17 +361,19 @@ EditarSolicitud.getSolicitud = function() {
             $("#celular_director").val(director.celular);
             //Formaciones de director
             if( director.formaciones != undefined){
-              var formaciones = director.formaciones;
-              for (var j = 0; j < formaciones.length; j++) {
-                var filaFormacion;
+              let formaciones = director.formaciones;
+              for (let j = 0; j < formaciones.length; j++) {
+                let filaFormacion;
                 if($("#informacionCargar").val() != 4){
-                  var b = document.createElement("INPUT");
+                  let b = document.createElement("INPUT");
                   b.setAttribute("type","hidden");
                   b.setAttribute("id",'fromacionesDirector'+formaciones[j].id);
                   b.setAttribute("name","DIRECTOR-formaciones[]");
                   b.setAttribute("value",JSON.stringify({ "id":formaciones[j].id ,"nivel": formaciones[j].nivel,"nombre": formaciones[j].nombre,"descripcion": formaciones[j].descripcion,"institucion":formaciones[j].institucion }));
                   __('inputsFormacionDirector').appendChild(b);
                   filaFormacion = '<tr id="formacion' + formaciones[j].id + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ formaciones[j].institucion +'</td><td>'+  formaciones[j].descripcion+'</td><td><button type="button" name="removeFormacion" id="fromacionesDirector-' + formaciones[j].id + '_formacion" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
+                } else {
+                  filaFormacion = '<tr id="formacion' + formaciones[j].id + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ formaciones[j].institucion +'</td><td>'+  formaciones[j].descripcion+'</td></tr>';
                 }
                 //Aumentar contador;
                 nfilaFormacion = formaciones[j].id+1;
@@ -378,10 +382,10 @@ EditarSolicitud.getSolicitud = function() {
             }
             //Experiencias director
             if( director.experiencias != undefined ){
-              var experiencias = director.experiencias;
-              for( var k = 0; k <  experiencias.length; k++){
-                var filaExperiencia;
-                var tipoExperiencia;
+              let experiencias = director.experiencias;
+              for( let k = 0; k <  experiencias.length; k++){
+                let filaExperiencia;
+                let tipoExperiencia;
                 if(  experiencias[k].tipo == 1 ){
                   tipoExperiencia = "Docente";
                 }else if(  experiencias[k].tipo == 2 ){
@@ -390,14 +394,15 @@ EditarSolicitud.getSolicitud = function() {
                   tipoExperiencia = "Directiva";
                 }
                 if($("#informacionCargar").val() != 4){
-                  var c = document.createElement("INPUT");
+                  let c = document.createElement("INPUT");
                   c.setAttribute("type","hidden");
                   c.setAttribute("id",'experienciaDirector'+experiencias[k].id);
                   c.setAttribute("name","DIRECTOR-experiencias[]");
                   c.setAttribute("value",JSON.stringify({ "id":experiencias[k].id,"nombre": experiencias[k].nombre,"tipo": experiencias[k].tipo,"funcion": experiencias[k].funcion,"institucion": experiencias[k].institucion,"periodo": experiencias[k].periodo }));
                   __('inputsExperienciaDirector').appendChild(c);
                   filaExperiencia = '<tr id="experiencia' + experiencias[k].id + '"><td>' + tipoExperiencia + '</td><td>' +  experiencias[k].nombre+ '</td><td>'+  experiencias[k].funcion +'</td><td>'+ experiencias[k].institucion+'</td><td>'+  experiencias[k].periodo +'</td><td><button type="button" name="removeFormacion" id="experienciaDirector-' + experiencias[k].id + '_experiencia" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
-
+                } else {
+                  filaExperiencia = '<tr id="experiencia' + experiencias[k].id + '"><td>' + tipoExperiencia + '</td><td>' +  experiencias[k].nombre+ '</td><td>'+  experiencias[k].funcion +'</td><td>'+ experiencias[k].institucion+'</td><td>'+  experiencias[k].periodo +'</td></tr>';
                 }
                 $('#experiencia_director tr:last').after(filaExperiencia);
                nfilaEx =experiencias[k].id +1;
@@ -405,20 +410,22 @@ EditarSolicitud.getSolicitud = function() {
             }
             //Publicaciones director
             if( director.publicaciones != undefined){
-              var publicaciones = director.publicaciones;
-              for( var l=0; l <  publicaciones.length;l++){
-                  var filaPublicacion;
+              let publicaciones = director.publicaciones;
+              for( let l=0; l <  publicaciones.length;l++){
+                  let filaPublicacion;
                 if( publicaciones[l].otros==null){
                    publicaciones[l].otros ="";
                 }
                 if($("#informacionCargar").val() != 4){
-                  var d = document.createElement("INPUT");
+                  let d = document.createElement("INPUT");
                   d.setAttribute("type","hidden");
                   d.setAttribute("id",'publicacionesDirector'+publicaciones[l].id);
                   d.setAttribute("name","DIRECTOR-publicaciones[]");
                   d.setAttribute("value",JSON.stringify({ "id": publicaciones[l].id, "anio": publicaciones[l].anio,"volumen": publicaciones[l].volumen,"pais": publicaciones[l].pais,"titulo": publicaciones[l].titulo,"editorial": publicaciones[l].editorial,"otros": publicaciones[l].otros}));
                   __('inputsPublicacionesDirector').appendChild(d);
                   filaPublicacion = '<tr id="publicacion' + publicaciones[l].id + '"><td>' +  publicaciones[l].titulo + '</td><td>' +  publicaciones[l].volumen + '</td><td>'+  publicaciones[l].editorial +'</td><td>'+ publicaciones[l].anio+'</td><td>'+  publicaciones[l].pais+'</td><td>'+ publicaciones[l].otros+'</td><td><button type="button" name="removePublicacion" id="publicacionesDirector-' + publicaciones[l].id + '_publicacion" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
+                } else {
+                  filaPublicacion = '<tr id="publicacion' + publicaciones[l].id + '"><td>' +  publicaciones[l].titulo + '</td><td>' +  publicaciones[l].volumen + '</td><td>'+  publicaciones[l].editorial +'</td><td>'+ publicaciones[l].anio+'</td><td>'+  publicaciones[l].pais+'</td><td>'+ publicaciones[l].otros+'</td></tr>';
                 }
                 //Consttuir fila
                 $('#publicaciones_director tr:last').after(filaPublicacion);
@@ -511,7 +518,6 @@ EditarSolicitud.getSolicitud = function() {
                   $('#espejos tr:last').after(filaEspejo);
                 }
               }
-              console.log(mixta.licencias_software);
               if(mixta.licencias_software != ""){
                 var licencias = JSON.parse(mixta.licencias_software);
                 for( var li = 0; li < licencias.length; li++) {
