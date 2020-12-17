@@ -276,11 +276,17 @@ EditarSolicitud.getSolicitud = function() {
             }
           }
 
-
           var programa = respuesta.data.programa;
           var plantel = respuesta.data.programa.plantel;
-
+          let solicitud = respuesta.data.solicitud;
           var diligencias = respuesta.data.diligencias;
+
+          //Cargar datos de solicitud
+          if(solicitud != undefined){
+            console.log(solicitud.tipo_solicitud.nombre);
+            $("#tipo-solicitud-txt").html(solicitud.tipo_solicitud.nombre);
+          }
+
           //Cargar diligencias
           if(diligencias != undefined){
             for (let i = 0; i < diligencias.length; i++) {
@@ -1008,36 +1014,41 @@ EditarSolicitud.verImagen = function(enlace){
 
 //Iniciliza las funciones necesarias
 $(document).ready(function ($) {
-  EditarSolicitud.getSolicitud();
-  document.getElementById("cargandoOtro").style.display = "block";
-  //EditarSolicitud.promesaDatosSolicitud.done();
-  $.when(EditarSolicitud.promesaDatosSolicitud)
-  .then(function(){
-    TerminarSolicitud.getEstatusSolicitud();
+  
+  setTimeout(() => {
+    EditarSolicitud.getSolicitud();
+    
+    document.getElementById("cargandoOtro").style.display = "block";
+    //EditarSolicitud.promesaDatosSolicitud.done();
+    $.when(EditarSolicitud.promesaDatosSolicitud)
+    .then(function(){
+      TerminarSolicitud.getEstatusSolicitud();
+        })
+      .done(function(){
+        var m = document.getElementById("municipio");
+        var mun = m.options[m.selectedIndex].text;
+        
+        var r = document.getElementById("municipio_representante");
+        var mun_r = r.options[r.selectedIndex].text;
+  
+        let nivelPrograma = $("#nivel_id").val();
+        
+        let modalidadPrograma = $("#modalidad_id").val();
+        
+        let turnoPrograma = $("#turno_programa").val();
+        
+        if (mun !== "Seleccione municipio" 
+          && mun_r !== "Seleccione municipio" 
+          && nivelPrograma > 0 
+          && modalidadPrograma > 0
+          && turnoPrograma.length > 0 ) {
+          document.getElementById("cargandoOtro").style.display = "none",
+          document.getElementById("cargando").style.display = "none"
+        };
       })
-    .done(function(){
-      var m = document.getElementById("municipio");
-      var mun = m.options[m.selectedIndex].text;
-      
-      var r = document.getElementById("municipio_representante");
-      var mun_r = r.options[r.selectedIndex].text;
+    .fail(function(){
+        console.log("Pero algo fallo");
+      });
+  }, 7000);
 
-      let nivelPrograma = $("#nivel_id").val();
-      
-      let modalidadPrograma = $("#modalidad_id").val();
-      
-      let turnoPrograma = $("#turno_programa").val();
-      
-      if (mun !== "Seleccione municipio" 
-        && mun_r !== "Seleccione municipio" 
-        && nivelPrograma > 0 
-        && modalidadPrograma > 0
-        && turnoPrograma.length > 0 ) {
-        document.getElementById("cargandoOtro").style.display = "none",
-        document.getElementById("cargando").style.display = "none"
-      };
-    })
-  .fail(function(){
-      console.log("Pero algo fallo");
-    });
   });

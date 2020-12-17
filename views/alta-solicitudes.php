@@ -45,7 +45,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
             <li><a href="mis-solicitudes.php">Mis solicitudes</a></li>
             <li class="active">Solicitudes</li>
           </ol>
-          <h1>Solicitudes</h1>
+          <h1 id="tipo-solicitud-txt">Solicitudes</h1>
           <br>
           <!-- Mensajes generales para todo el formulario -->
           <div id="mensaje">
@@ -1454,7 +1454,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <label class="contorl-label">Tasa de egreso</label>
-                            <textarea class="form-control" id="tasa_egreso" name="TRAYECTORIA-tasa_egreso" rows="4" placeholder="Tiempo mínimo para concluir el plan de estudios <br> Tiempo máximo para concluir el plan de estudios <br>Tiempo aproximado de titulación"></textarea><br>
+                            <textarea class="form-control" id="tasa_egreso" name="TRAYECTORIA-tasa_egreso" rows="4" placeholder="Tiempo mínimo para concluir el plan de estudios Tiempo máximo para concluir el plan de estudios Tiempo aproximado de titulación"></textarea><br>
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <label class="contorl-label">Estadísticas titulación</label>

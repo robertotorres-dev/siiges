@@ -19,7 +19,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
   	<meta charset="utf-8">
   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<title>Alta Solicitudes</title>
+  	<title>Consulta de Solicitudes</title>
   	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
   	<!-- CSS GOB.MX -->
   	<link href="../favicon.ico" rel="shortcut icon">
@@ -57,7 +57,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
             <?php }?>
             <li class="active">Solicitudes</li>
           </ol>
-          <h1>Solicitudes</h1>
+          <h1 id="tipo-solicitud-txt">Solicitudes</h1>
           <br>
           <div id="mensaje">
 
@@ -1365,7 +1365,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <label class="contorl-label">Tasa de egreso</label>
-                            <textarea class="form-control" id="tasa_egreso" name="TRAYECTORIA-tasa_egreso" rows="4" placeholder="Tiempo mínimo para concluir el plan de estudios <br> Tiempo máximo para concluir el plan de estudios <br>Tiempo aproximado de titulación"></textarea><br>
+                            <textarea class="form-control" id="tasa_egreso" name="TRAYECTORIA-tasa_egreso" rows="4" placeholder="Tiempo mínimo para concluir el plan de estudios Tiempo máximo para concluir el plan de estudios Tiempo aproximado de titulación"></textarea><br>
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <label class="contorl-label">Estadísticas titulación</label>
