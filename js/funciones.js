@@ -779,7 +779,7 @@ function agregarRespaldo(){
                                           "proceso":proceso,
                                           "periodicidad":periodicidad,
                                           "medios_almacenamiento":medios,
-                                          "descripcion":proceso
+                                          "descripcion":servicio
                                           }));
     __('inputsRespaldos').appendChild(a);
     var fila = '<tr id="respaldo' + nfilaRespaldo + '"><td>' + servicio + '</td><td>' + periodicidad + '</td><td>'+ medios+ '</td><td>'+proceso+'</td><td><button type="button" name="removeRespaldo" id="' + nfilaRespaldo + '" class="btn btn-danger" onclick="eliminarRespaldo(this)">Quitar</button></td></tr>';

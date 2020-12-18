@@ -1200,7 +1200,7 @@ Solicitud.modificacionPrograma =  function(){
                       // filaRespaldo = '<tr id="respaldo' + nfilaRespaldo + '"><td>' + respaldos[indice].proceso + '</td><td>' + respaldos[indice].periodicidad + '</td><td>'+ respaldos[indice].medios_almacenamiento+ '</td><td>'+respaldos[indice].descripcion+'</td></tr>';
 
                     }
-
+                    console.log(filaRespaldo);
                     nfilaRespaldo++;
                     $('#respaldos tr:last').after(filaRespaldo);
                   }

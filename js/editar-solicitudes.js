@@ -473,7 +473,7 @@ EditarSolicitud.getSolicitud = function() {
               if(mixta.respaldos!= undefined && mixta.respaldos.length > 0){
                 var respaldos = mixta.respaldos;
                 for (var indice = 0; indice < respaldos.length; indice++) {
-                  var filaRespaldo;
+                  let filaRespaldo;
                   if($("#informacionCargar").val() != 4){
                     var inputRespaldo = document.createElement("INPUT");
                     inputRespaldo.setAttribute("type","hidden");
@@ -486,13 +486,13 @@ EditarSolicitud.getSolicitud = function() {
                                                           "descripcion":respaldos[indice].descripcion
                                                           }));
                     __('inputsRespaldos').appendChild(inputRespaldo);
-                    filaRespaldo = '<tr id="respaldo' + nfilaRespaldo + '"><td>' + respaldos[indice].proceso + '</td><td>' + respaldos[indice].periodicidad + '</td><td>'+ respaldos[indice].medios_almacenamiento+ '</td><td>'+respaldos[indice].descripcion+'</td><td><button type="button" name="removeRespaldo" id="inputRespaldo-' + nfilaRespaldo + '_respaldo" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
+                    filaRespaldo = '<tr id="respaldo' + nfilaRespaldo + '"><td>' + respaldos[indice].descripcion + '</td><td>' + respaldos[indice].periodicidad + '</td><td>'+ respaldos[indice].medios_almacenamiento+ '</td><td>'+respaldos[indice].proceso+'</td><td><button type="button" name="removeRespaldo" id="inputRespaldo-' + nfilaRespaldo + '_respaldo" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
+                    console.log(filaRespaldo);
                   }else{
-                    filaRespaldo = '<tr id="respaldo' + nfilaRespaldo + '"><td>' + respaldos[indice].proceso + '</td><td>' + respaldos[indice].periodicidad + '</td><td>'+ respaldos[indice].medios_almacenamiento+ '</td><td>'+respaldos[indice].descripcion+'</td></tr>';
-
+                    filaRespaldo = '<tr id="respaldo' + nfilaRespaldo + '"><td>' + respaldos[indice].descripcion + '</td><td>' + respaldos[indice].periodicidad + '</td><td>'+ respaldos[indice].medios_almacenamiento+ '</td><td>'+respaldos[indice].proceso+'</td></tr>';
                   }
-
                   nfilaRespaldo =respaldos[indice].id + 1 ;
+                  console.log(nfilaRespaldo);
                   $('#respaldos tr:last').after(filaRespaldo);
                 }
               }
