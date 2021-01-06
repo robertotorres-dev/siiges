@@ -256,13 +256,20 @@ session_start();
 
       $res_solicitud = $solicitud->consultarPor("solicitudes",array("id"=>$_POST["solicitud_id"],"deleted_at"),"*");
       $res_solicitud = $res_solicitud["data"];
+      
       //Decide que hacer si no existe solicitud
       if(sizeof($res_solicitud)>0 )
       {
         $res_solicitud =$res_solicitud[0];
+        //Consulta el tipo de solicitud por id
+        $tipoSolicitud = new TipoSolicitud();
+        $res_tipo_solicitud = $tipoSolicitud->consultarPor("tipo_solicitudes",array("id"=>$res_solicitud["tipo_solicitud_id"],"deleted_at"),"*");
+        $res_tipo_solicitud = $res_tipo_solicitud["data"];
+        $res_solicitud["tipo_solicitud"] = $res_tipo_solicitud[0]; 
+        
+        $resultado["data"]["solicitud"] = $res_solicitud;
         if($_SESSION["rol_id"] == 4)
         {
-
             $gestor = new Usuario();
             $representanteGestor = $gestor->consultarPor("usuario_usuarios", array("secundario_id"=>$_SESSION["id"]) , "*");
             $representanteGestor = $representanteGestor["data"][0]["principal_id"];
@@ -775,10 +782,10 @@ session_start();
         }
       }
       // Registro en bitacora
-      $bitacora = new Bitacora();
+      /* $bitacora = new Bitacora();
       $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
       $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"solicitudes_usuarios","accion"=>"datosSolicitud","lugar"=>"control-solicitud-usuario"]);
-      $result = $bitacora->guardar();
+      $result = $bitacora->guardar(); */
       retornarWebService( $url, $resultado );
     }
 

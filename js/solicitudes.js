@@ -129,7 +129,6 @@ Solicitud.coordenadas = function () {
     var direccion = $('#calle').val()+" "+ $('#numero_exterior').val()+" "+$('#colonia').val()+" "+$('#codigo_postal').val();
     L.esri.Geocoding.geocode().text(direccion).run(function(err, results, response){
     if(results.results[0].latlng){
-      console.log(results.results[0].latlng);
       var latitud = results.results[0].latlng.lat;
       var longitud = results.results[0].latlng.lng;
       $('#latitud').val(latitud);
@@ -286,7 +285,7 @@ Solicitud.redirigir = function(){
               }
           }else {
                 $("#enlace-solicitud").attr("href","#");
-                Solicitud.mostrarMensaje("error","Tipo de solicicitud y la modalidad del programa de estudios");
+                Solicitud.mostrarMensaje("error","Tipo de solicitud y la modalidad del programa de estudios");
                 $( "#tipo_solicitud" ).focus();
           }
 
@@ -316,7 +315,7 @@ Solicitud.redirigir = function(){
             return n.id == $("#programas_ids").val();
           });
           resultado = resultado[0];
-          console.log(resultado);
+          //console.log(resultado);
         }else{
           $("#enlace-solicitud").attr("href","#");
           Solicitud.mostrarMensaje("error","Debe de seleccionar un programa de estudios");
@@ -335,7 +334,7 @@ Solicitud.redirigir = function(){
 
   }else {
       $("#enlace-solicitud").attr("href","#");
-      Solicitud.mostrarMensaje("error","Tipo de solicicitud y la modalidad del programa de estudios");
+      Solicitud.mostrarMensaje("error","Tipo de solicitud y la modalidad del programa de estudios");
       $( "#tipo_solicitud" ).focus();
   }
 
@@ -503,14 +502,12 @@ Solicitud.getDatosPlantel = function(idplantel){
 
             if(respuesta.data.plantel != undefined){
               var object = respuesta.data.plantel;
-              console.log(object);
               $("#plantel-id").val(object.id);
               $("#plantel-id").attr("name","PLANTEL-id");
               $("#coordenadas").val(object.domicilio.latitud+","+object.domicilio.longitud);
               for (var variable in object) {
                 if (object.hasOwnProperty(variable)) {
                   $("#"+variable).val(object[variable]);
-                  console.log(variable);
                   
                   //Datos de ubicacion
                   if(variable == "domicilio"){
@@ -538,8 +535,6 @@ Solicitud.getDatosPlantel = function(idplantel){
                         $("#"+campos+"_rector").val(Objrector[campos]);
                         //Formaciones
                         if(campos == "formaciones"){
-                          console.log(campos);
-                          console.log(Objrector);
                           let formaciones = Objrector[campos];
                           $('#inputsFormacionRector').empty();
                           $('#formacion_rector tr:not(:first)').remove();
@@ -701,7 +696,6 @@ Solicitud.getDatosPlantel = function(idplantel){
                      }
                      //Infraestructura
                      if( object.infraestructura != undefined && $("#tipo").val() == 1){
-                      console.log(object.infraestructura);
                        $('#inputsInfraestructuras').empty();
                        $('#infraestructuras tr:not(:first)').remove();
                        var infComun = object.infraestructura;
@@ -777,7 +771,6 @@ Solicitud.modificacionPrograma =  function(){
                 $("#institucion-autorizada").show();
                 $("#autorizado").val(institucion.nombre);
               }else{
-                console.log(respuesta.data.ratificacion);
                 $("#nombre_propuesto1").val(respuesta.data.ratificacion.nombre_propuesto1);
                 $("#nombre_propuesto2").val(respuesta.data.ratificacion.nombre_propuesto2);
                 $("#nombre_propuesto3").val(respuesta.data.ratificacion.nombre_propuesto3);
@@ -816,7 +809,6 @@ Solicitud.modificacionPrograma =  function(){
               }
               if ($("#tipo").val()==2) {
                 if( programa.plantel != undefined){
-                  console.log(programa.plantel);
                     var plantel = programa.plantel;
                     Solicitud.plantelId = plantel.id;
                     $("#plantel-id").val(plantel.id);
@@ -930,7 +922,6 @@ Solicitud.modificacionPrograma =  function(){
                 }
               }
               //Tipo se puede cambiar segun cuando se requiera
-              console.log(programa.diligencias);
               if( programa.diligencias != undefined  || $("#informacionCargar").val() == 4 && programa.diligencias != undefined){
                 var diligencias = programa.diligencias;
                 console.log("cargar diligencias");
@@ -1209,7 +1200,7 @@ Solicitud.modificacionPrograma =  function(){
                       // filaRespaldo = '<tr id="respaldo' + nfilaRespaldo + '"><td>' + respaldos[indice].proceso + '</td><td>' + respaldos[indice].periodicidad + '</td><td>'+ respaldos[indice].medios_almacenamiento+ '</td><td>'+respaldos[indice].descripcion+'</td></tr>';
 
                     }
-
+                    console.log(filaRespaldo);
                     nfilaRespaldo++;
                     $('#respaldos tr:last').after(filaRespaldo);
                   }
@@ -1366,7 +1357,6 @@ Solicitud.inputsDeshabilitados = function(){
 };
 //Datos para el modal de borar solicitud
 Solicitud.datosModal = function (registro) {
-  console.log(registro);
     $('#informacion-solicitud').html(
       registro.folio+ " que pertenece al programa de estudios "+
       registro.programa+". Ubicado en el plantel, "+
@@ -1471,11 +1461,12 @@ $(document).ready(function ($) {
               if( $("#tipo").val() == 1 ){
                   $("#modalidad_id").val($("#auxmodalidad").val());
                   $("#modalidad_id").attr("disabled",true);
+                  console.log($("#modalidad_id"));
               }
               console.log('Todo listo para cargar la informacion necesaria');
               //Carga la informacion del plantel seleccionado previamente en mis solicitudes
-              console.log($("#informacionCargar").val());
-              console.log($("#datosNecesarios").val());
+              //console.log($("#informacionCargar").val());
+              //console.log($("#datosNecesarios").val());
               if( $("#informacionCargar").val() == 1  && $("#datosNecesarios").val() > 0){
                     document.getElementById("cargando").style.display = "block";
                     console.log("cargar plantel con id:"+$("#datosNecesarios").val());
@@ -1513,9 +1504,6 @@ $(document).ready(function ($) {
                     if($("#informacionCargar").val() == 4){
                       Solicitud.inputsDeshabilitados();
                     }
-                    
-                    console.log($("#tipo").val());
-                    console.log($("#webService").val());
                     document.getElementById("cargando").style.display = "none";
                     $("#modalInicial").modal();
                     $("#tamanoModales").attr("style","margin-top:80px;");

@@ -255,7 +255,7 @@ Solicitudes.getDetalles = function(){
             fda05.setAttribute('href', `formatos/fda05-2020.php?id=${solicitud.id}`);
             fda05.innerHTML = 'FDA 05';
 
-            fda06.parentNode.remove();
+            fda06.remove();
             
             if (fdp02) {
               fdp02.setAttribute('href', `formatos/fdp02-2020.php?id=${solicitud.id}`);
