@@ -492,7 +492,6 @@ EditarSolicitud.getSolicitud = function() {
                     filaRespaldo = '<tr id="respaldo' + nfilaRespaldo + '"><td>' + respaldos[indice].descripcion + '</td><td>' + respaldos[indice].periodicidad + '</td><td>'+ respaldos[indice].medios_almacenamiento+ '</td><td>'+respaldos[indice].proceso+'</td></tr>';
                   }
                   nfilaRespaldo =respaldos[indice].id + 1 ;
-                  console.log(nfilaRespaldo);
                   $('#respaldos tr:last').after(filaRespaldo);
                 }
               }
@@ -894,7 +893,7 @@ EditarSolicitud.getSolicitud = function() {
                 if($("#informacionCargar").val() != 4){
                 var inputInsSalud = document.createElement("INPUT");
                 inputInsSalud.setAttribute("type","hidden");
-                inputInsSalud.setAttribute("id",'institucionSalud'+instSalud[ind].id);
+                inputInsSalud.setAttribute("id",'inputInstitucionSalud'+instSalud[ind].id);
                 inputInsSalud.setAttribute("name",'SALUD-nombresInstitucionSalud[]');
                 inputInsSalud.setAttribute("value",JSON.stringify({"id":instSalud[ind].id,"nombre":instSalud[ind].nombre, "tiempo":instSalud[ind].tiempo}));
                 if (__('inputsSaludInstituciones')) {
@@ -957,15 +956,24 @@ EditarSolicitud.getSolicitud = function() {
 
 //Eliminar las filas de las tablas
 EditarSolicitud.eliminarFilaTabla = function(fila){
+  console.log(fila);
   var indiceSeparacion = fila.id.indexOf("_");
+  console.log(indiceSeparacion);
   var id = fila.id.substring(fila.id.indexOf("-")+1,indiceSeparacion);
+  console.log(id);
   var filaTabla = fila.id.substr(indiceSeparacion+1);
+  console.log(filaTabla);
   var input = fila.id.substr(0,fila.id.indexOf("-"));
+  console.log(input);
   $('#'+filaTabla+id).remove();
   var json = JSON.parse($("#"+input+id).val());
+  console.log(json);
   $("#"+input+id).attr("value",JSON.stringify({"id":json.id,
                                           "borrar": 1
                                         }));
+  console.log($("#"+input+id).attr("value",JSON.stringify({"id":json.id,
+  "borrar": 1
+  })));
   console.log(input);
 };
 

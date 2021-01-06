@@ -625,15 +625,19 @@ function agregarInstitucionSalud(){
     mensaje.html('Llene todos los campos obligatorios *');
   }else{
     mensaje.removeClass("alert alert-danger").hide();
+    //Convertir tiempo de minutos a horas
+    let hour = Math.floor(tiempo / 60);
+    hour = (hour < 10)? '0' + hour : hour;
+    let minute = Math.floor(tiempo % 60);
+    minute = (minute < 10)? '0' + minute : minute;
+    tiempo = `${hour}:${minute}:00`;
     //Almacenar valores en inputs
     var a = document.createElement("INPUT");
     a.setAttribute("type","hidden");
-    a.setAttribute("id",'institucionSalud'+nfilaPrograma);
+    a.setAttribute("id",'inputInstitucionSalud'+nfilaPrograma);
     a.setAttribute("name",'SALUD-nombresInstitucionSalud[]');
-    tiempo = (tiempo*100);
     a.setAttribute("value",JSON.stringify({"id":null,"nombre":nombre, "tiempo":tiempo}));
     __('inputsSaludInstituciones').appendChild(a);
-    tiempo = (tiempo/100);
     var fila = '<tr id="institucionSalud' + nfilaPrograma + '"><td>' + nombre + '</td><td>'+ tiempo  +'</td><td><button type="button"  id="' + nfilaPrograma + '" class="btn btn-danger" onclick="eliminarInstitucionSalud(this)">Quitar</button></td></tr>';
     nfilaPrograma++;
     $('#institucionesSalud tr:last').after(fila);
@@ -642,12 +646,17 @@ function agregarInstitucionSalud(){
     console.log(__('inputsSaludInstituciones'));
   }
 }
-function eliminarInstitucionSalud(fila){
-  var id = fila.id;
-  var input = 'institucionSalud'+id;
-  __('inputsSaludInstituciones').removeChild(__(input));
-  $('#institucionSalud'+id).remove();
-  console.log(__('inputsSaludInstituciones'));
+function eliminarInstitucionSalud(btn){
+  console.log(btn);
+  var id = btn.id;
+  var fila = $('#institucionSalud'+id);
+  let input = $('#inputInstitucionSalud'+id);
+  console.log(input);
+  console.log(fila);
+  fila.remove();
+  var json = JSON.parse(input.val());
+  console.log(json);
+  input.attr("value",JSON.stringify({"id":json.id, "borrar": 1 }));
 }
 
 function agregarInfraestructura() {

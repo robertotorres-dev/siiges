@@ -487,10 +487,16 @@ session_start();
             foreach ($institucionesSalud as $cadena) {
               $cadena = str_replace('\\', '', $cadena);
               $salud = json_decode($cadena);
-              $salud->plantel_id = $entidadesIds["PLANTEL"];
               $objSalud = new SaludInstitucion();
-              $objSalud->setAttributes((array)$salud);
-              $objSalud->guardar();
+              
+              $salud->plantel_id = $entidadesIds["PLANTEL"];
+              if (isset($salud->borrar)&&$salud->borrar==1) {
+                $objSalud->setAttributes(array("id"=>$salud->id));
+                $objSalud->eliminar();
+              } else {
+                $objSalud->setAttributes((array)$salud);
+                $objSalud->guardar();
+              }
             }
 
             // Infraestructura Plantel
