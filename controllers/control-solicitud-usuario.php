@@ -313,7 +313,7 @@ session_start();
                     //$resultado["data"]["programa"]["mixta"] = $res_mixta["data"][0];
                     $resultado["data"]["programa"]["mixta"] = end($res_mixta["data"]);
                     $respaldo = new Respaldo();
-                    $res_respaldo = $respaldo->consultarPor("respaldos",array("mixta_noescolarizada_id"=>$resultado["data"]["programa"]["mixta"]["id"]),"*");
+                    $res_respaldo = $respaldo->consultarPor("respaldos",array("mixta_noescolarizada_id"=>$resultado["data"]["programa"]["mixta"]["id"], "deleted_at"),"*");
                     if( sizeof($res_respaldo["data"]) > 0 ){
                       $resultado["data"]["programa"]["mixta"]["respaldos"] = $res_respaldo["data"];
                     }
