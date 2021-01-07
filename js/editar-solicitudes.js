@@ -644,7 +644,7 @@ EditarSolicitud.getSolicitud = function() {
                     opta.setAttribute("name","ASIGNATURA-asignaturas[]");
                     opta.setAttribute("value",JSON.stringify({"id":asignaturas[n].id,"grado":asignaturas[n].grado,"nombre":asignaturas[n].nombre,"clave":asignaturas[n].clave,"creditos":asignaturas[n].creditos,"area":asignaturas[n].area,"seriacion":asignaturas[n].seriacion,"horas_docente":asignaturas[n].horas_docente,"horas_independiente":asignaturas[n].horas_independiente,"academia":asignaturas[n].academia,"tipo":asignaturas[n].tipo}));
                     __('inputsOptativas').appendChild(opta);
-                    filaOptativa = '<tr id="optativa' + asignaturas[n].id + '"><td>' + asignaturas[n].grado + '</td><td>' + asignaturas[n].nombre + '</td><td>'+asignaturas[n].clave+'</td><td>'+asignaturas[n].seriacion+'</td><td id="hrsdocenteOptativa'+asignaturas[n].id+'">'+asignaturas[n].horas_docente+'</td><td id="hrsindependienteOptativa'+asignaturas[n].id+'">'+asignaturas[n].horas_independiente+'</td><td>'+asignaturas[n].creditos+ '</td><td>'+area_txt+'</td><td><button type="button" clave="'+asignaturas[n].clave+'" name="remove" id="' + asignaturas[n].id + '" class="btn btn-danger" onclick="eliminarOptativa(this)">Quitar</button></td></tr>';
+                    filaOptativa = '<tr id="optativa' + asignaturas[n].id + '"><td>' + asignaturas[n].grado + '</td><td>' + asignaturas[n].nombre + '</td><td>'+asignaturas[n].clave+'</td><td>'+asignaturas[n].seriacion+'</td><td id="hrsdocenteOptativa'+asignaturas[n].id+'">'+asignaturas[n].horas_docente+'</td><td id="hrsindependienteOptativa'+asignaturas[n].id+'">'+asignaturas[n].horas_independiente+'</td><td>'+asignaturas[n].creditos+ '</td><td>'+area_txt+'</td><td><button type="button" clave="'+asignaturas[n].clave+'" name="remove" id="' + asignaturas[n].id + '" class="btn btn-danger" onclick="EditarSolicitud.eliminarOptativa(this)">Quitar</button></td></tr>';
 
                   }else{
                     filaOptativa = '<tr id="row' + asignaturas[n].id + '"><td>' + asignaturas[n].grado + '</td><td>' + asignaturas[n].nombre + '</td><td>'+asignaturas[n].clave+'</td><td>'+asignaturas[n].seriacion+'</td><td id="hrsdocente'+asignaturas[n].id+'">'+asignaturas[n].horas_docente+'</td><td id="hrsindependiente'+asignaturas[n].id+'">'+asignaturas[n].horas_independiente+'</td><td>'+asignaturas[n].creditos+ '</td><td>'+area_txt+'</td></tr>';
@@ -1005,6 +1005,41 @@ EditarSolicitud.eliminarMateria = function(fila){
   $("#asignaturaInfraestructura").selectpicker('refresh');
   $('#row'+id+'').remove();
   var json = JSON.parse($("#"+input).val());
+  $("#"+input).attr("value",JSON.stringify({"id":json.id,
+                                          "borrar": 1
+                                        }));
+  console.log($("#"+input))
+
+};
+
+//Eliminar materias optativas
+EditarSolicitud.eliminarOptativa = function(fila){
+  let id = fila.id;
+  let optValue = $('#'+id+'').attr("clave");
+  let hrsdocenteOptativa = parseInt(__("hrsdocenteOptativa"+id).innerHTML);
+  let hrsindependienteOptativa = parseInt(__("hrsindependienteOptativa"+id).innerHTML);
+  let total = __('totalHorasDocentesOptativa');
+  let total2 = __('totalHorasIndependientesOptativa');
+  total.value = parseInt(total.value) - hrsdocenteOptativa;
+  total2.value = parseInt(total2.value) - hrsindependienteOptativa;
+  let input = 'optativas'+id;
+
+
+ $("#seriacionOptativa").find('[value="'+optValue+'"]').remove();
+ $("#asignaturaDocente").find('[value="'+optValue+'"]').remove();
+ $("#asignaturaInfraestructura").find('[value="'+optValue+'"]').remove();
+
+  if(__('seriacionOptativa').length == 0){
+     __("seriacionOptativa").disabled = true;
+  }
+ if(__('asignaturaDocente').length == 0){
+    __("asignaturaDocente").disabled=true;
+  }
+  $("#seriacionOptativa").selectpicker('refresh');
+  $("#asignaturaDocente").selectpicker('refresh');
+  $("#asignaturaInfraestructura").selectpicker('refresh');
+  $('#optativa'+id+'').remove();
+  let json = JSON.parse($("#"+input).val());
   $("#"+input).attr("value",JSON.stringify({"id":json.id,
                                           "borrar": 1
                                         }));
