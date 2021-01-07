@@ -442,8 +442,13 @@ session_start();
               $dictamenPlantel = json_decode($cadena);
               $dictamenPlantel->plantel_id = $entidadesIds["PLANTEL"];
               $objPlantelDictamen = new PlantelDictamen();
-              $objPlantelDictamen->setAttributes((array)$dictamenPlantel);
-              $objPlantelDictamen->guardar();
+              if (isset($dictamenPlantel->borrar)&&$dictamenPlantel->borrar==1) {
+                $objPlantelDictamen->setAttributes(array("id"=>$dictamenPlantel->id));
+                $objPlantelDictamen->eliminar();
+              } else {
+                $objPlantelDictamen->setAttributes((array)$dictamenPlantel);
+                $objPlantelDictamen->guardar();
+              }
             }
 
             // Seguridad Plantel

@@ -563,13 +563,13 @@ function agregarDictamen() {
      console.log(__('inputsDictamenes'));
   }
 }
-function eliminarDictamen(fila){
-  var id = fila.id;
-  var input = 'dictamen'+id;
-  __('inputsDictamenes').removeChild(__(input));
-  $('#dictamen'+id+'').remove();
-  console.log(__('inputsDictamenes'));
-  console.log(input);
+function eliminarDictamen(btn){
+  let id = btn.id;
+  let fila = $('#dictamen'+id);
+  let input = $('#inputDictamen'+id);
+  fila.remove();
+  let json = JSON.parse(input.val());
+  input.attr("value",JSON.stringify({"id":json.id, "borrar": 1 }));
 }
 
 function agregarOtrosProgramas() {
@@ -647,15 +647,11 @@ function agregarInstitucionSalud(){
   }
 }
 function eliminarInstitucionSalud(btn){
-  console.log(btn);
-  var id = btn.id;
-  var fila = $('#institucionSalud'+id);
+  let id = btn.id;
+  let fila = $('#institucionSalud'+id);
   let input = $('#inputInstitucionSalud'+id);
-  console.log(input);
-  console.log(fila);
   fila.remove();
-  var json = JSON.parse(input.val());
-  console.log(json);
+  let json = JSON.parse(input.val());
   input.attr("value",JSON.stringify({"id":json.id, "borrar": 1 }));
 }
 

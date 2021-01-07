@@ -806,7 +806,7 @@ EditarSolicitud.getSolicitud = function() {
                 {
                 var inputDictamen = document.createElement("INPUT");
                 inputDictamen.setAttribute("type","hidden");
-                inputDictamen.setAttribute("id",'dictamen'+dictamenes[dic].id);
+                inputDictamen.setAttribute("id",'inputDictamen'+dictamenes[dic].id);
                 inputDictamen.setAttribute("name","DICTAMEN-dictamenes[]");
                 inputDictamen.setAttribute("value",JSON.stringify({"id":dictamenes[dic].id,"nombre": dictamenes[dic].nombre,"autoridad":dictamenes[dic].autoridad,"fecha_emision":dictamenes[dic].fecha_emision}));
                 if (__('inputsDictamenes')) {
