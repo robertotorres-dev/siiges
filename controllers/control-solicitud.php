@@ -940,7 +940,7 @@ session_start();
     $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"solicitudes","accion"=>"guardarSolicitud","lugar"=>"control-solicitud"]);
     $result = $bitacora->guardar();
 
-    //retornarWebService( $_POST["url"], $resultado );
+    retornarWebService( $_POST["url"], $resultado );
   }
 
   // Web Service para agendar Cita
