@@ -582,15 +582,19 @@ session_start();
             if(!$entidadesIds["SOLICITUD"]){
               throw new Exception("SOLICITUD - error al guardar");
             } else {
-              $consecutivo = new Solicitud();
-              $parametrosConsecutivo["id"] = $entidadesIds["SOLICITUD"];
-              // Construccion del folio
-              if(isset($_POST["PROGRAMA-nivel_id"]) && !empty($_POST["PROGRAMA-nivel_id"])){
-                $parametrosConsecutivo["folio"] = Nivel::$niveles[$_POST["PROGRAMA-nivel_id"]].date("Y").str_pad($entidadesIds["SOLICITUD"], 3, "0", STR_PAD_LEFT);
+              if(!isset($_POST["SOLICITUD-id"])){
+                $consecutivo = new Solicitud();
+                $parametrosConsecutivo["id"] = $entidadesIds["SOLICITUD"];
+                // Construccion del folio
+                if(isset($_POST["PROGRAMA-nivel_id"]) && !empty($_POST["PROGRAMA-nivel_id"])){
+                  $numeroConsecutivo2021 = $entidadesIds["SOLICITUD"]-584;
+                  $parametrosConsecutivo["folio"] = Nivel::$niveles[$_POST["PROGRAMA-nivel_id"]].date("Y").str_pad($numeroConsecutivo2021, 3, "0", STR_PAD_LEFT);
+                }
+                
+                // Guardado de folio
+                $consecutivo->setAttributes($parametrosConsecutivo);
+                $consecutivo->guardar();
               }
-              // Guardado de folio
-              $consecutivo->setAttributes($parametrosConsecutivo);
-              $consecutivo->guardar();
             }
                       
             // Personas Diligencias
@@ -936,7 +940,7 @@ session_start();
     $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"solicitudes","accion"=>"guardarSolicitud","lugar"=>"control-solicitud"]);
     $result = $bitacora->guardar();
 
-    retornarWebService( $_POST["url"], $resultado );
+    //retornarWebService( $_POST["url"], $resultado );
   }
 
   // Web Service para agendar Cita

@@ -13,7 +13,7 @@
     protected $nombre;
     protected $descripcion;
 
-    public static $niveles = [1=>"BA",2=>"LI",3=>"DI",4=>"E",5=>"M",6=>"D",7=>"EC"];
+    public static $niveles = [1=>"BA",2=>"LI",3=>"TSU",4=>"ESP",5=>"M",6=>"D",7=>"EC"];
 
 		// Constructor
 		public function __construct( )
