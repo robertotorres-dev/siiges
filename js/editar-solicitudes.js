@@ -291,6 +291,9 @@ EditarSolicitud.getSolicitud = function() {
           if(diligencias != undefined){
             for (let i = 0; i < diligencias.length; i++) {
               let fila;
+              for (const property in diligencias[i]) {
+                diligencias[i][property] == null ? diligencias[i][property] = "" : diligencias[i].nombre;
+              }
               if($("#informacionCargar").val() != 4){
                 var inputDiligencia = document.createElement("INPUT");
                 inputDiligencia.setAttribute("type","hidden");
