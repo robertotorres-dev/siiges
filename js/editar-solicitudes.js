@@ -292,7 +292,7 @@ EditarSolicitud.getSolicitud = function() {
             for (let i = 0; i < diligencias.length; i++) {
               let fila;
               for (const property in diligencias[i]) {
-                diligencias[i][property] == null ? diligencias[i][property] = "" : diligencias[i].nombre;
+                diligencias[i][property] == null ? diligencias[i][property] = "" : diligencias[i][property];
               }
               if($("#informacionCargar").val() != 4){
                 var inputDiligencia = document.createElement("INPUT");
@@ -421,16 +421,24 @@ EditarSolicitud.getSolicitud = function() {
             if( director.publicaciones != undefined){
               let publicaciones = director.publicaciones;
               for( let l=0; l <  publicaciones.length;l++){
-                  let filaPublicacion;
-                if( publicaciones[l].otros==null){
-                   publicaciones[l].otros ="";
+                let filaPublicacion;
+                for (const property in publicaciones[l]) {
+                  publicaciones[l][property] == null ? publicaciones[l][property] = "" : publicaciones[l][property];
                 }
                 if($("#informacionCargar").val() != 4){
                   let d = document.createElement("INPUT");
                   d.setAttribute("type","hidden");
                   d.setAttribute("id",'publicacionesDirector'+publicaciones[l].id);
                   d.setAttribute("name","DIRECTOR-publicaciones[]");
-                  d.setAttribute("value",JSON.stringify({ "id": publicaciones[l].id, "anio": publicaciones[l].anio,"volumen": publicaciones[l].volumen,"pais": publicaciones[l].pais,"titulo": publicaciones[l].titulo,"editorial": publicaciones[l].editorial,"otros": publicaciones[l].otros}));
+                  d.setAttribute("value",JSON.stringify({ 
+                    "id": publicaciones[l].id, 
+                    "anio": publicaciones[l].anio,
+                    "volumen": publicaciones[l].volumen,
+                    "pais": publicaciones[l].pais,
+                    "titulo": publicaciones[l].titulo,
+                    "editorial": publicaciones[l].editorial,
+                    "otros": publicaciones[l].otros
+                  }));
                   __('inputsPublicacionesDirector').appendChild(d);
                   filaPublicacion = '<tr id="publicacion' + publicaciones[l].id + '"><td>' +  publicaciones[l].titulo + '</td><td>' +  publicaciones[l].volumen + '</td><td>'+  publicaciones[l].editorial +'</td><td>'+ publicaciones[l].anio+'</td><td>'+  publicaciones[l].pais+'</td><td>'+ publicaciones[l].otros+'</td><td><button type="button" name="removePublicacion" id="publicacionesDirector-' + publicaciones[l].id + '_publicacion" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
                 } else {
@@ -475,37 +483,44 @@ EditarSolicitud.getSolicitud = function() {
               }
               if(mixta.respaldos!= undefined && mixta.respaldos.length > 0){
                 var respaldos = mixta.respaldos;
-                for (var indice = 0; indice < respaldos.length; indice++) {
+                for (let indice = 0; indice < respaldos.length; indice++) {
                   let filaRespaldo;
+                  for (const property in respaldos[indice]) {
+                    respaldos[indice][property] == null ? respaldos[indice][property] = "" : respaldos[indice][property];
+                  }
                   if($("#informacionCargar").val() != 4){
                     var inputRespaldo = document.createElement("INPUT");
                     inputRespaldo.setAttribute("type","hidden");
-                    inputRespaldo.setAttribute("id",'inputRespaldo'+nfilaRespaldo);
+                    inputRespaldo.setAttribute("id",'inputRespaldo'+respaldos[indice].id);
                     inputRespaldo.setAttribute("name","RESPALDO-respaldos[]");
-                    inputRespaldo.setAttribute("value",JSON.stringify({"id":respaldos[indice].id,
-                                                          "proceso":respaldos[indice].proceso,
-                                                          "periodicidad":respaldos[indice].periodicidad,
-                                                          "medios_almacenamiento":respaldos[indice].medios_almacenamiento,
-                                                          "descripcion":respaldos[indice].descripcion
-                                                          }));
+                    inputRespaldo.setAttribute("value",JSON.stringify({
+                      "id":respaldos[indice].id,
+                      "proceso":respaldos[indice].proceso,
+                      "periodicidad":respaldos[indice].periodicidad,
+                      "medios_almacenamiento":respaldos[indice].medios_almacenamiento,
+                      "descripcion":respaldos[indice].descripcion
+                    }));
                     __('inputsRespaldos').appendChild(inputRespaldo);
-                    filaRespaldo = '<tr id="respaldo' + nfilaRespaldo + '"><td>' + respaldos[indice].descripcion + '</td><td>' + respaldos[indice].periodicidad + '</td><td>'+ respaldos[indice].medios_almacenamiento+ '</td><td>'+respaldos[indice].proceso+'</td><td><button type="button" name="removeRespaldo" id="inputRespaldo-' + nfilaRespaldo + '_respaldo" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
-                    console.log(filaRespaldo);
+                    filaRespaldo = '<tr id="respaldo' + respaldos[indice].id + '"><td>' + respaldos[indice].descripcion + '</td><td>' + respaldos[indice].periodicidad + '</td><td>'+ respaldos[indice].medios_almacenamiento+ '</td><td>'+respaldos[indice].proceso+'</td><td><button type="button" name="removeRespaldo" id="inputRespaldo-' + respaldos[indice].id + '_respaldo" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
                   }else{
-                    filaRespaldo = '<tr id="respaldo' + nfilaRespaldo + '"><td>' + respaldos[indice].descripcion + '</td><td>' + respaldos[indice].periodicidad + '</td><td>'+ respaldos[indice].medios_almacenamiento+ '</td><td>'+respaldos[indice].proceso+'</td></tr>';
+                    filaRespaldo = '<tr id="respaldo' + respaldos[indice].id + '"><td>' + respaldos[indice].descripcion + '</td><td>' + respaldos[indice].periodicidad + '</td><td>'+ respaldos[indice].medios_almacenamiento+ '</td><td>'+respaldos[indice].proceso+'</td></tr>';
                   }
-                  nfilaRespaldo =respaldos[indice].id + 1 ;
+                  //Construir fila
                   $('#respaldos tr:last').after(filaRespaldo);
+                  nfilaRespaldo =respaldos[indice].id + 1 ;
                 }
               }
               if( mixta.espejos!= undefined && mixta.espejos.length > 0){
                 var espejos = mixta.espejos;
-                for( var posEsp = 0; posEsp < espejos.length; posEsp++){
+                for( let posEsp = 0; posEsp < espejos.length; posEsp++){
                   var filaEspejo;
+                  for (const property in espejos[posEsp]) {
+                    espejos[posEsp][property] == null ? espejos[posEsp][property] = "" : espejos[posEsp][property];
+                  }
                   if($("#informacionCargar").val() != 4){
                     var inputEspejo = document.createElement("INPUT");
                     inputEspejo.setAttribute("type","hidden");
-                    inputEspejo.setAttribute("id",'inputEspejo'+nfilaEspejo);
+                    inputEspejo.setAttribute("id",'inputEspejo'+espejos[posEsp].id);
                     inputEspejo.setAttribute("name","ESPEJO-espejos[]");
                     inputEspejo.setAttribute("value",JSON.stringify({"id":espejos[posEsp].id,
                                                           "proveedor":espejos[posEsp].proveedor,
@@ -515,7 +530,7 @@ EditarSolicitud.getSolicitud = function() {
                                                           "periodicidad":espejos[posEsp].periodicidad
                                                           }));
                     __('inputsEspejos').appendChild(inputEspejo);
-                    filaEspejo = '<tr id="espejo' + espejos[posEsp].id + '"><td>' + espejos[posEsp].proveedor + '</td><td>' + espejos[posEsp].ancho_banda + '</td><td>'+ espejos[posEsp].ubicacion + '</td><td>'+ espejos[posEsp].url_espejo + '</td><td>'+ espejos[posEsp].periodicidad+'</td><td><button type="button" name="removeEspejo" id="inputEspejo' + espejos[posEsp].id + '_espejo" class="btn btn-danger" onclick="EditarSolicitud.iminarFilaTabla(this)">Quitar</button></td></tr>';
+                    filaEspejo = '<tr id="espejo' + espejos[posEsp].id + '"><td>' + espejos[posEsp].proveedor + '</td><td>' + espejos[posEsp].ancho_banda + '</td><td>'+ espejos[posEsp].ubicacion + '</td><td>'+ espejos[posEsp].url_espejo + '</td><td>'+ espejos[posEsp].periodicidad+'</td><td><button type="button" name="removeEspejo" id="inputEspejo-' + espejos[posEsp].id + '_espejo" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
 
                   }else{
                     filaEspejo = '<tr id="espejo' + espejos[posEsp].id + '"><td>' + espejos[posEsp].proveedor + '</td><td>' + espejos[posEsp].ancho_banda + '</td><td>'+ espejos[posEsp].ubicacion + '</td><td>'+ espejos[posEsp].url_espejo + '</td><td>'+ espejos[posEsp].periodicidad+'</td></tr>';
@@ -533,9 +548,10 @@ EditarSolicitud.getSolicitud = function() {
                   if($("#informacionCargar").val() != 4){
                     var inputLicencia = document.createElement("INPUT");
                     inputLicencia.setAttribute("type","hidden");
-                    inputLicencia.setAttribute("id",'inputLicencia'+licencias[li].id);
+                    inputLicencia.setAttribute("id",'licencia'+li);
                     inputLicencia.setAttribute("name","MIXTA-licencias[]");
-                    inputLicencia.setAttribute("value",JSON.stringify({'id':licencias[li].id,'nombre':licencias[li].nombre,
+                    inputLicencia.setAttribute("value",JSON.stringify({
+                                                          'nombre':licencias[li].nombre,
                                                           'contrato':licencias[li].contrato,
                                                           'tipo':licencias[li].tipo,
                                                           'terminos':licencias[li].terminos,
@@ -543,10 +559,10 @@ EditarSolicitud.getSolicitud = function() {
                                                           'enlace':licencias[li].enlace
                                                           }));
                     __('inputsLicencias').appendChild(inputLicencia);
-                    filaLicencia = '<tr id="licencia' + licencias[li].id + '"><td>' + licencias[li].nombre + '</td><td>' + licencias[li].contrato + '</td><td>'+ licencias[li].usuarios+ '</td><td>'+ licencias[li].tipo +'</td><td>'+ licencias[li].terminos + '</td><td>' +licencias[li].enlace +'</td><td><button type="button" name="removeLicencia" id="inputLicencia-' + licencias[li].id + '_licencia" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
+                    filaLicencia = '<tr id="licencia' + li + '"><td>' + licencias[li].nombre + '</td><td>' + licencias[li].contrato + '</td><td>'+ licencias[li].usuarios+ '</td><td>'+ licencias[li].tipo +'</td><td>'+ licencias[li].terminos + '</td><td>' +licencias[li].enlace +'</td><td><button type="button" name="removeLicencia" id="' + li + '" class="btn btn-danger" onclick="eliminarLicencia(this)">Quitar</button></td></tr>';
 
                   }else{
-                    filaLicencia = '<tr id="licencia' + licencias[li].id + '"><td>' + licencias[li].nombre + '</td><td>' + licencias[li].contrato + '</td><td>'+ licencias[li].usuarios+ '</td><td>'+ licencias[li].tipo +'</td><td>'+ licencias[li].terminos + '</td><td>' +licencias[li].enlace +'</td></tr>';
+                    filaLicencia = '<tr id="licencia' + li + '"><td>' + licencias[li].nombre + '</td><td>' + licencias[li].contrato + '</td><td>'+ licencias[li].usuarios+ '</td><td>'+ licencias[li].tipo +'</td><td>'+ licencias[li].terminos + '</td><td>' +licencias[li].enlace +'</td></tr>';
                   }
                   nfilaLicencia=licencias[li].id+1;
                   $('#licencias tr:last').after(filaLicencia);
@@ -928,7 +944,12 @@ EditarSolicitud.getSolicitud = function() {
                   inputOtro.setAttribute("type","hidden");
                   inputOtro.setAttribute("id",'otroPrograma'+posiR);
                   inputOtro.setAttribute("name",'PROGRAMA-otrosRVOE[]');
-                  inputOtro.setAttribute("value",JSON.stringify({"nivel":rvoes[posiR].nivel,"nombre":rvoes[posiR].nombre, "acuerdo":rvoes[posiR].acuerdo,"numero_alumnos":rvoes[posiR].numero_alumnos,"turno":rvoes[posiR].turno}));
+                  inputOtro.setAttribute("value",JSON.stringify({
+                                                    "nivel":rvoes[posiR].nivel,
+                                                    "nombre":rvoes[posiR].nombre, 
+                                                    "acuerdo":rvoes[posiR].acuerdo,
+                                                    "numero_alumnos":rvoes[posiR].numero_alumnos,
+                                                    "turno":rvoes[posiR].turno}));
                   if (__('inputsOtrosProgramas')) {
                     __('inputsOtrosProgramas').appendChild(inputOtro);
                   }
@@ -961,23 +982,18 @@ EditarSolicitud.getSolicitud = function() {
 EditarSolicitud.eliminarFilaTabla = function(fila){
   console.log(fila);
   var indiceSeparacion = fila.id.indexOf("_");
-  console.log(indiceSeparacion);
   var id = fila.id.substring(fila.id.indexOf("-")+1,indiceSeparacion);
-  console.log(id);
   var filaTabla = fila.id.substr(indiceSeparacion+1);
-  console.log(filaTabla);
   var input = fila.id.substr(0,fila.id.indexOf("-"));
   console.log(input);
   $('#'+filaTabla+id).remove();
   var json = JSON.parse($("#"+input+id).val());
-  console.log(json);
   $("#"+input+id).attr("value",JSON.stringify({"id":json.id,
                                           "borrar": 1
                                         }));
   console.log($("#"+input+id).attr("value",JSON.stringify({"id":json.id,
-  "borrar": 1
+    "borrar": 1
   })));
-  console.log(input);
 };
 
 //Eliminar materias

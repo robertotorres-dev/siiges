@@ -318,7 +318,7 @@ session_start();
                       $resultado["data"]["programa"]["mixta"]["respaldos"] = $res_respaldo["data"];
                     }
                     $espejo = new Espejo();
-                    $res_espejo = $espejo->consultarPor("espejos", array("mixta_noescolarizada_id"=>$resultado["data"]["programa"]["mixta"]["id"]), "*");
+                    $res_espejo = $espejo->consultarPor("espejos", array("mixta_noescolarizada_id"=>$resultado["data"]["programa"]["mixta"]["id"], "deleted_at"), "*");
                     if( sizeof($res_espejo["data"]) > 0){
                       $resultado["data"]["programa"]["mixta"]["espejos"] = $res_espejo["data"];
                     }

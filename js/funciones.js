@@ -757,12 +757,22 @@ function agregarLicencia() {
     console.log(__('inputsLicencias'));
   }
 }
+
 function eliminarLicencia(fila) {
     var id = fila.id;
     var input = 'licencia'+id;
+    console.log(input);
+    console.log(__('inputsLicencias'));
     __('inputsLicencias').removeChild(__(input));
     $('#licencia'+id+'').remove();
     console.log(__('inputsLicencias'));
+
+    /* var id = fila.id;
+    var input = 'otroPrograma'+id;
+    __('totalAlumnosOtrosProgramas').value = parseInt(__('totalAlumnosOtrosProgramas').value) - parseInt(__("numeroAlumnos"+id).innerHTML);
+    __('inputsOtrosProgramas').removeChild(__(input));
+    $('#otroPrograma'+id).remove();
+    console.log(__('inputsOtrosProgramas')); */
 }
 
 function agregarRespaldo(){

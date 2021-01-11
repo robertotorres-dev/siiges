@@ -849,11 +849,15 @@ session_start();
                     foreach ($espejos as $cadena) {
                       $cadena = str_replace('\\', '', $cadena);
                       $espejo = json_decode($cadena);
-
                       $espejo->mixta_noescolarizada_id = $entidadesIds["MIXTA"];
                       $objEspejo = new Espejo();
-                      $objEspejo->setAttributes((array)$espejo);
-                      $result = $objEspejo->guardar();
+                      if (isset($espejo->borrar) && $espejo->borrar == 1) {
+                        $objEspejo->setAttributes(array("id"=>$espejo->id));
+                        $objEspejo->eliminar();
+                      } else {
+                        $objEspejo->setAttributes((array)$espejo);
+                        $result = $objEspejo->guardar();
+                      }
                     }
 
                     // Respaldo Mixta no escolarizada
@@ -863,8 +867,13 @@ session_start();
                       $respaldo = json_decode($cadena);
                       $respaldo->mixta_noescolarizada_id = $entidadesIds["MIXTA"];
                       $objRespaldo = new Respaldo();
-                      $objRespaldo->setAttributes((array)$respaldo);
-                      $resultado = $objRespaldo->guardar();
+                      if (isset($respaldo->borrar) && $respaldo->borrar == 1) {
+                        $objRespaldo->setAttributes(array("id"=>$respaldo->id));
+                        $objRespaldo->eliminar();
+                      } else {
+                        $objRespaldo->setAttributes((array)$respaldo);
+                        $resultado = $objRespaldo->guardar();
+                      }
                     }
                   }
                 }

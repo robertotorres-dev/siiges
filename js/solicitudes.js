@@ -1253,7 +1253,7 @@ Solicitud.modificacionPrograma =  function(){
                       filaLicencia = '<tr id="licencia' + nfilaLicencia + '"><td>' + licencias[li].nombre + '</td><td>' + licencias[li].contrato + '</td><td>'+ licencias[li].usuarios+ '</td><td>'+ licencias[li].tipo +'</td><td>'+ licencias[li].terminos + '</td><td>' +licencias[li].enlace +'</td><td><button type="button" name="removeLicencia" id="' + nfilaLicencia + '" class="btn btn-danger" onclick="eliminarLicencia(this)">Quitar</button></td></tr>';
 
                     }else{
-                      // filaLicencia = '<tr id="licencia' + nfilaLicencia + '"><td>' + licencias[li].nombre + '</td><td>' + licencias[li].contrato + '</td><td>'+ licencias[li].usuarios+ '</td><td>'+ licencias[li].tipo +'</td><td>'+ licencias[li].terminos + '</td><td>' +licencias[li].enlace +'</td></tr>';
+                      filaLicencia = '<tr id="licencia' + nfilaLicencia + '"><td>' + licencias[li].nombre + '</td><td>' + licencias[li].contrato + '</td><td>'+ licencias[li].usuarios+ '</td><td>'+ licencias[li].tipo +'</td><td>'+ licencias[li].terminos + '</td><td>' +licencias[li].enlace +'</td></tr>';
                     }
                     nfilaLicencia++;
                     $('#licencias tr:last').after(filaLicencia);

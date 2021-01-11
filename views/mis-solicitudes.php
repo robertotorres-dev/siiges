@@ -72,7 +72,7 @@
 						<div class="form-group col-sm-12 col-md-12">
 							<div class="col-sm-12 col-md-12 col-lg-12">
 								<label class="control-label" for="">Tipo de solicitud:</label><br>
-								<!-- Fin de convocatoria 2019 -->
+								<!-- Fin de convocatoria 2020 -->
 								<select id="tipo_solicitud" class="form-control"  onchange="Solicitud.opciones()"  >
 									<option value="">Selecione una opcion</option>
 								</select>
