@@ -695,6 +695,12 @@ EditarSolicitud.getSolicitud = function() {
                 for (var posicionD = 0; posicionD < docentes.length; posicionD++) {
                   var formacionesD;
                   var formacionestxt;
+                  for (const property in docentes[posicionD]) {
+                    docentes[posicionD][property] == null ? docentes[posicionD][property] = "" : docentes[posicionD][property];
+                  }
+                  for (const property in docentes[posicionD].persona) {
+                    docentes[posicionD].persona[property] == null ? docentes[posicionD].persona[property] = "" : docentes[posicionD].persona[property];
+                  }
                   if( docentes[posicionD].formaciones.length == 2 ){
                     formacionesD = [{"nivel":docentes[posicionD].formaciones[0].grado.descripcion,"nombre":docentes[posicionD].formaciones[0].nombre,"descripcion":docentes[posicionD].formaciones[0].descripcion},{"nivel":docentes[posicionD].formaciones[1].grado.descripcion,"nombre":docentes[posicionD].formaciones[1].nombre,"descripcion":docentes[posicionD].formaciones[1].descripcion}];
                     formacionestxt = docentes[posicionD].formaciones[0].nombre + ": "+ docentes[posicionD].formaciones[0].descripcion+"<br></br>"+docentes[posicionD].formaciones[1].nombre + ": "+ docentes[posicionD].formaciones[0].descripcion;
@@ -716,12 +722,12 @@ EditarSolicitud.getSolicitud = function() {
                     docentes[posicionD].tipo_contratacion = "Otro";
                   }
 
-                  if( docentes[posicionD].antiguedad == null ){
+                  if( docentes[posicionD].antiguedad == "" ){
                     docentes[posicionD].antiguedad = "Ninguna";
                   }
 
-                  if (docentes[posicionD].experiencias == null) {
-                    docentes[posicionD].experiencias = "Ninguna";
+                  if (docentes[posicionD].experiencias == "") {
+                    docentes[posicionD].experiencias = "No se guardó dato";
                   }
                   var filaDocente;
                   if($("#informacionCargar").val() != 4){
@@ -1027,7 +1033,6 @@ EditarSolicitud.eliminarMateria = function(fila){
   $("#"+input).attr("value",JSON.stringify({"id":json.id,
                                           "borrar": 1
                                         }));
-  console.log($("#"+input))
 
 };
 

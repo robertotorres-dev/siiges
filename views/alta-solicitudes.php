@@ -5,7 +5,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
 //====================================================================================================
   if(isset($_GET['tipo'])){
     $_GET["tipo"] = (int)$_GET["tipo"];
-    echo $_GET["tipo"];
+    //echo $_GET["tipo"];
   }
 
   if( !isset($_GET['tipo']) || $_GET['tipo']==null || $_GET['tipo'] > 6 || is_string($_GET['tipo']) ){

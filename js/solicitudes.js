@@ -829,9 +829,42 @@ Solicitud.modificacionPrograma =  function(){
                         }
                       }
                     }
+                    //Rector
+                    if( plantel.rector != undefined){
+                      let rector = plantel.rector;
+                      $("#id-rector").val(rector.id);
+                      $("#id-rector").attr("name","RECTOR-id");
+                      $("#nombre_rector").val(rector.nombre);
+                      $("#apellido_paterno_rector").val(rector.apellido_paterno);
+                      $("#apellido_materno_rector").val(rector.apellido_materno);
+                      $("#nacionalidad_rector").val(rector.nacionalidad);
+                      $("#curp_rector").val(rector.curp);
+                      $("#sexo_rector").val(rector.sexo);
+                      //Formaciones de director
+                      if( rector.formaciones != undefined){
+                        let formaciones = rector.formaciones;
+                        for (let j = 0; j < formaciones.length; j++) {
+                          let filaFormacion;
+                          if($("#informacionCargar").val() != 4){
+                            let b = document.createElement("INPUT");
+                            b.setAttribute("type","hidden");
+                            b.setAttribute("id",'fromacionesRector'+nfilaFormacion);
+                            b.setAttribute("name","RECTOR-formaciones[]");
+                            b.setAttribute("value",JSON.stringify({ "id":formaciones[j].id ,"nivel": formaciones[j].nivel,"nombre": formaciones[j].nombre,"descripcion": formaciones[j].descripcion,"institucion":formaciones[j].institucion }));
+                            __('inputsFormacionRector').appendChild(b);
+                            filaFormacion = '<tr id="formacion' + nfilaFormacion + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ formaciones[j].institucion +'</td><td>'+  formaciones[j].descripcion+'</td><td><button type="button" name="removeFormacion" id="' + nfilaFormacion + '" class="btn btn-danger" onclick="eliminarFormacion(this)">Quitar</button></td></tr>';
+                          }else{
+                            filaFormacion = '<tr id="formacion' + nfilaFormacion + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ formaciones[j].institucion +'</td><td>'+  formaciones[j].descripcion+'</td></tr>';
+                          }
+                          //Aumentar contador;
+                          nfilaFormacion++;
+                          $('#formacion_rector tr:last').after(filaFormacion);
+                        }
+                      }
+                    }
                     //Director
                     if( plantel.director != undefined){
-                      var director = plantel.director;
+                      let director = plantel.director;
                       $("#id-director").val(director.id);
                       $("#id-director").attr("name","DIRECTOR-id");
                       $("#nombre_director").val(director.nombre);
@@ -842,19 +875,19 @@ Solicitud.modificacionPrograma =  function(){
                       $("#sexo_director").val(director.sexo);
                       //Formaciones de director
                       if( director.formaciones != undefined){
-                        var formaciones = director.formaciones;
-                        for (var j = 0; j < formaciones.length; j++) {
-                          var filaFormacion;
+                        let formaciones = director.formaciones;
+                        console.log(formaciones);
+                        for (let j = 0; j < formaciones.length; j++) {
                           if($("#informacionCargar").val() != 4){
-                            var b = document.createElement("INPUT");
+                            let b = document.createElement("INPUT");
                             b.setAttribute("type","hidden");
                             b.setAttribute("id",'fromacionesDirector'+nfilaFormacion);
                             b.setAttribute("name","DIRECTOR-formaciones[]");
-                            b.setAttribute("value",JSON.stringify({ "id":formaciones[j].id ,"nivel": formaciones[j].nivel,"nombre": formaciones[j].nombre,"descripcion": formaciones[j].descripcion,"institucion":"NO SE GUARDA DATO" }));
+                            b.setAttribute("value",JSON.stringify({ "id":formaciones[j].id ,"nivel": formaciones[j].nivel,"nombre": formaciones[j].nombre,"descripcion": formaciones[j].descripcion,"institucion":formaciones[j].institucion }));
                             __('inputsFormacionDirector').appendChild(b);
-                            filaFormacion = '<tr id="formacion' + nfilaFormacion + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ "NO SE GUARDA DATO" +'</td><td>'+  formaciones[j].descripcion+'</td><td><button type="button" name="removeFormacion" id="' + nfilaFormacion + '" class="btn btn-danger" onclick="eliminarFormacion(this)">Quitar</button></td></tr>';
+                            filaFormacion = '<tr id="formacion' + nfilaFormacion + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ formaciones[j].institucion +'</td><td>'+  formaciones[j].descripcion+'</td><td><button type="button" name="removeFormacion" id="' + nfilaFormacion + '" class="btn btn-danger" onclick="eliminarFormacion(this)">Quitar</button></td></tr>';
                           }else{
-                            filaFormacion = '<tr id="formacion' + nfilaFormacion + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ "NO SE GUARDA DATO" +'</td><td>'+  formaciones[j].descripcion+'</td></tr>';
+                            filaFormacion = '<tr id="formacion' + nfilaFormacion + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ formaciones[j].institucion +'</td><td>'+  formaciones[j].descripcion+'</td></tr>';
                           }
                           //Aumentar contador;
                           nfilaFormacion++;
@@ -922,7 +955,7 @@ Solicitud.modificacionPrograma =  function(){
                 }
               }
               //Tipo se puede cambiar segun cuando se requiera
-              if( programa.diligencias != undefined  || $("#informacionCargar").val() == 4 && programa.diligencias != undefined){
+              /* if( programa.diligencias != undefined  || $("#informacionCargar").val() == 4 && programa.diligencias != undefined){
                 var diligencias = programa.diligencias;
                 console.log("cargar diligencias");
                 for (var i = 0; i < diligencias.length; i++) {
@@ -951,7 +984,7 @@ Solicitud.modificacionPrograma =  function(){
                       nfilaPersonal++;
 
                 }
-              }
+              } */
               if( (asignaturas != undefined && $("#tipo").val() == 2) || $("#informacionCargar").val() == 4  && asignaturas != undefined){
                 for (var n = 0; n < asignaturas.length; n++) {
                   var filaAsignatura;
@@ -1041,31 +1074,34 @@ Solicitud.modificacionPrograma =  function(){
                   for (var posicionD = 0; posicionD < docentes.length; posicionD++) {
                       var formacionesD;
                       var formacionestxt;
-                      //console.log(docentes[posicionD].id);
-
+                      for (const property in docentes[posicionD]) {
+                        docentes[posicionD][property] == null ? docentes[posicionD][property] = "" : docentes[posicionD][property];
+                      }
                       if( docentes[posicionD].formaciones.length == 2 ){
-                        formacionesD = [{"nivel":docentes[posicionD].formaciones[0].grado.descripcion,"nombre":docentes[posicionD].formaciones[0].nombre,"descripcion":docentes[posicionD].formaciones[0].descripcion},{"nivel":docentes[posicionD].formaciones[1].grado.descripcion,"nombre":docentes[posicionD].formaciones[1].nombre,"descripcion":docentes[posicionD].formaciones[1].descripcion}];
+                        formacionesD = [{"nivel":docentes[posicionD].formaciones[0].nivel,"nombre":docentes[posicionD].formaciones[0].nombre,"descripcion":docentes[posicionD].formaciones[0].descripcion},{"nivel":docentes[posicionD].formaciones[1].nivel,"nombre":docentes[posicionD].formaciones[1].nombre,"descripcion":docentes[posicionD].formaciones[1].descripcion}];
                         formacionestxt = docentes[posicionD].formaciones[0].nombre + ": "+ docentes[posicionD].formaciones[0].descripcion+"<br></br>"+docentes[posicionD].formaciones[1].nombre + ": "+ docentes[posicionD].formaciones[0].descripcion;
                       }else if(  docentes[posicionD].formaciones.length == 1){
-                        formacionesD = [{"nivel":docentes[posicionD].formaciones[0].grado.descripcion,"nombre":docentes[posicionD].formaciones[0].nombre,"descripcion":docentes[posicionD].formaciones[0].descripcion}];
+                        formacionesD = [{"nivel":docentes[posicionD].formaciones[0].nivel,"nombre":docentes[posicionD].formaciones[0].nombre,"descripcion":docentes[posicionD].formaciones[0].descripcion}];
                         formacionestxt = docentes[posicionD].formaciones[0].nombre + ": "+ docentes[posicionD].formaciones[0].descripcion;
                       }
                       if( docentes[posicionD].tipo_docente == 1 ){
-                        docentes[posicionD].tipo_docente = "Asignatura";
+                        docentes[posicionD].tipo_docente_txt = "Asignatura";
                       }else if(docentes[posicionD].tipo_docente == 2){
-                        docentes[posicionD].tipo_docente = "Tiempo completo";
+                        docentes[posicionD].tipo_docente_txt = "Tiempo completo";
                       }
 
                       if( docentes[posicionD].tipo_contratacion == 1 ){
-                        docentes[posicionD].tipo_contratacion = "Contrato";
+                        docentes[posicionD].tipo_contratacion_txt = "Contrato";
                       }else if(docentes[posicionD].tipo_contratacion == 1){
-                        docentes[posicionD].tipo_contratacion = "Tiempo indefinido";
+                        docentes[posicionD].tipo_contratacion_txt = "Tiempo indefinido";
                       }else{
-                        docentes[posicionD].tipo_contratacion = "Otro";
+                        docentes[posicionD].tipo_contratacion_txt = "Otro";
                       }
-
-                      if( docentes[posicionD].antiguedad == null ){
+                      if( docentes[posicionD].antiguedad == "" ){
                         docentes[posicionD].antiguedad = "Ninguna";
+                      }
+                      if( docentes[posicionD].experiencias == "" ){
+                        docentes[posicionD].experiencias = "No se guardó dato";
                       }
                       var filaDocente;
                       if($("#informacionCargar").val() != 4){
@@ -1080,11 +1116,11 @@ Solicitud.modificacionPrograma =  function(){
                         "tipo_contratacion":docentes[posicionD].tipo_contratacion,
                         "antiguedad": docentes[posicionD].antiguedad,
                         "formaciones": formacionesD,
-                        "experiencias":"NO SE GUARDÓ DATO",
+                        "experiencias":docentes[posicionD].experiencias,
                         "asignaturas":docentes[posicionD].asignaturas
                       }));
                       __('inputsDocentes').appendChild(docenteInput);
-                      filaDocente = '<tr id="docente' + nfila + '"><td class="small">' + docentes[posicionD].persona.nombre + " "+ docentes[posicionD].persona.apellido_paterno+ " " + docentes[posicionD].persona.apellido_materno + '</td><td class="small">'+ docentes[posicionD].tipo_docente  +'</td><td class="small">' +  formacionestxt +'</td><td class="small">'+docentes[posicionD].asignaturas+'</td><td class="small">'+"NO SE GUARDÓ DATO"+'</td><td class="small">'+docentes[posicionD].tipo_contratacion+" - "+docentes[posicionD].antiguedad +'</td><td class="small"><button type="button" name="removePublicacion" id="' + nfila + '" class="btn btn-danger" onclick="eliminarDocente(this)">Quitar</button></td></tr>';
+                      filaDocente = '<tr id="docente' + nfila + '"><td class="small">' + docentes[posicionD].persona.nombre + " "+ docentes[posicionD].persona.apellido_paterno+ " " + docentes[posicionD].persona.apellido_materno + '</td><td class="small">'+ docentes[posicionD].tipo_docente_txt  +'</td><td class="small">' +  formacionestxt +'</td><td class="small">'+docentes[posicionD].asignaturas+'</td><td class="small">'+docentes[posicionD].experiencias+'</td><td class="small">'+docentes[posicionD].tipo_contratacion_txt+" - "+docentes[posicionD].antiguedad +'</td><td class="small"><button type="button" name="removePublicacion" id="' + nfila + '" class="btn btn-danger" onclick="eliminarDocente(this)">Quitar</button></td></tr>';
 
                     }else{
                       // filaDocente = '<tr id="docente' + nfila + '"><td class="small">' + docentes[posicionD].persona.nombre + " "+ docentes[posicionD].persona.apellido_paterno+ " " + docentes[posicionD].persona.apellido_materno + '</td><td class="small">'+ docentes[posicionD].tipo_docente  +'</td><td class="small">' +  formacionestxt +'</td><td class="small">'+docentes[posicionD].asignaturas+'</td><td class="small">'+"NO SE GUARDÓ DATO"+'</td><td class="small">'+docentes[posicionD].tipo_contratacion+" - "+docentes[posicionD].antiguedad +'</td></tr>';
@@ -1112,7 +1148,7 @@ Solicitud.modificacionPrograma =  function(){
                         "recursos":infAsignatura[indasig].recursos,
                         "asignaturas":infAsignatura[indasig].asignaturas
                       }));
-                      __('inputsInfraestructuras').appendChild(inputInfAsig);
+                      //__('inputsInfraestructuras').appendChild(inputInfAsig);
                       filaInfAsig = '<tr id="infraestructura' + nfilaInf + '"><td>' +  infAsignatura[indasig].instalacion.nombre + " " + infAsignatura[indasig].nombre+ '</td><td>'+ infAsignatura[indasig].capacidad  +'</td><td>'+ infAsignatura[indasig].metros +'</td><td>'+ infAsignatura[indasig].recursos + '</td><td>'+ infAsignatura[indasig].ubicacion + '</td><td>'+ infAsignatura[indasig].asignaturas +'</td><td><button type="button"  id="' + nfilaInf + '" class="btn btn-danger" onclick="eliminarInfraestructura(this)">Quitar</button></td></tr>';
 
                     }else{
@@ -1124,6 +1160,7 @@ Solicitud.modificacionPrograma =  function(){
                 }
               }
                 var infComun = respuesta.data.infraestructuraComun;
+                console.log('ALTA de solicitud de modificación/actualización');
                 console.log(infComun);
                 if( infComun != undefined ){
                   for (var indInf = 0; indInf < infComun.length; indInf++) {
@@ -1141,7 +1178,7 @@ Solicitud.modificacionPrograma =  function(){
                                                             "recursos":infComun[indInf].recursos,
                                                             "asignaturas":"USO COMÚN"
                                                             }));
-                      __('inputsInfraestructuras').appendChild(inputInf);
+                      //__('inputsInfraestructuras').appendChild(inputInf);
                       filaInf = '<tr id="infraestructura' + nfilaInf + '"><td>' +  infComun[indInf].instalacion.nombre + " " + infComun[indInf].nombre+ '</td><td>'+ infComun[indInf].capacidad  +'</td><td>'+ infComun[indInf].metros +'</td><td>'+ infComun[indInf].recursos + '</td><td>'+ infComun[indInf].ubicacion + '</td><td>'+ "USO COMÚN NO SE TRATA" +'</td><td><button type="button"  id="' + nfilaInf + '" class="btn btn-danger" onclick="eliminarInfraestructura(this)">Quitar</button></td></tr>';
 
                     }else{
@@ -1153,13 +1190,23 @@ Solicitud.modificacionPrograma =  function(){
                 }
               }
               //Propiedades de programa
-              for(var variable in programa){
+              for(let variable in programa){
                   if( programa.hasOwnProperty(variable) ){
                     if(variable=="nombre"){
                       $("#nombre_programa").val(programa[variable]);
                     }else{
                       $("#"+variable).val(programa[variable]);
                     }
+                  }
+                  if (variable == 'nivel_id') {
+                    $("#"+variable).attr( "disabled", "true" );
+                    let variableHidden = `<input type="hidden" 
+                                            campo="Nivel del programa" 
+                                            ubicacion="Programas de estudio - Datos generales" 
+                                            id="nivel_id"
+                                            name="PROGRAMA-nivel_id"
+                                            value="${parseInt(programa[variable])}"/>`;
+                    $("#"+variable).parent().append(variableHidden);
                   }
               }
               if( programa.modalidad_id > 1  && programa.mixta != undefined){
