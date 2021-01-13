@@ -2828,7 +2828,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                 <button id="btnGuardar" type="button" name="" class="btn btn-default pull-right" style="margin-right: 10px;" onclick="limpiarInputs()" > Guardar solicitud</button>
                 <!-- Filtrar informacion a cargar  -->
                 <input type="hidden" id="opcionSolicitud" name="opcionSolicitud" value="">
-                <input type="hidden" id="informacionCargar" value="2">
+                <!-- <input type="hidden" id="informacionCargar" value="2"> -->
                 <input type="hidden" id="datosNecesarios" value="<?= $_GET["dt"] ?>">
                 <input type="hidden" id="auxmodalidad" value="<?= $_GET["modalidad"] ?>">
                 <input type="hidden" id="masDatos" value="<?= $_GET["odt"] ?>">

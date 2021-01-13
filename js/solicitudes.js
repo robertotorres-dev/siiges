@@ -1532,7 +1532,9 @@ $(document).ready(function ($) {
                   Solicitud.tipo = 3;
                 }
                 //infomacion cargar de tipo 3 no trae el valor 2, trae el valor 1, corregir
+                console.log($("#informacionCargar").val());
                 if( ($("#informacionCargar").val() == 2 && $("#datosNecesarios").val() > 0) || ($("#informacionCargar").val() == 3 && $("#datosNecesarios").val() > 0) || ($("#informacionCargar").val() == 4 && $("#datosNecesarios").val() > 0) ){
+                  $("#informacionCargar").val()
                   document.getElementById("cargando").style.display = "block";
                   Solicitud.modificacionPrograma();
                   Solicitud.promesaModificacionPrograma.done(function(){
