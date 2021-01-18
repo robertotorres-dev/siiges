@@ -2344,7 +2344,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                   </div>
                   <?php } ?>
                   <!-- Infraestructura -->
-                  <?php if($_GET["tipo"] == 1 || $_GET["tipo"] == 2){ ?>
+                  <?php if($_GET["tipo"] == 1 || $_GET["tipo"] == 2 || $_GET['tipo'] == 3){ ?>
                   <div class="panel panel-default">
                     <div class="panel-heading">
                       <h4 class="panel-tittle">
