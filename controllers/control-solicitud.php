@@ -134,7 +134,6 @@ session_start();
   {
     $aux = new Utileria( );
     $_POST = $aux->limpiarEntrada( $_POST );
-
     $parametrosEdificio = [];
     $parametrosDictamenPlantel =[];
     $parametrosSalud = [];

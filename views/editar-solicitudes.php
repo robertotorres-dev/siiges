@@ -755,8 +755,8 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                 <option value="1">Semestral</option>
                                 <option value="2">Cuatrimestral</option>
                 								<option value="3">Anual</option>
-                								<option value="4">Semestral curriculum felxible</option>
-                								<option value="5">Cuatrimestral curriculum felxible</option>
+                								<option value="4">Semestral curriculum flexible</option>
+                								<option value="5">Cuatrimestral curriculum flexible</option>
                               </select><br>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -1079,7 +1079,8 @@ Utileria::validarSesion( basename( __FILE__ ) );
                       </div>
                     </div>
                   </div>
-
+                  <?php } ?>
+                  <?php if( $_GET['tps'] == 1 || $_GET['tps'] == 2 || $_GET['tps'] == 3 ) {  ?>
                   <!-- Asignaturas -->
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -1103,6 +1104,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           <div class=" form-group col-sm-12 col-md-12">
                             <div id="inputsAsignaturas"></div>
                             <div id="mensajesAsignaturas"></div>
+                            <?php if( $_GET['tps'] != 3 ) {  ?>
                             <div class="col-sm-12 col-md-3">
                                 <label>Grado *</label>
                                 <select  class="form-control" id="gradoAsignatura" name="">
@@ -1190,6 +1192,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                 <label > Total Horas independientes:</label><input type="number" id="totalHorasIndependientes" class="form-control" value="0" disabled><br>
                               </div>
                             </div>
+                            <?php } ?>
                           </div>
                           <!-- tabla que muestra los valores -->
                           <div class="col-sm-12 col-md-12">
@@ -1242,6 +1245,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                               <div id="inputsOptativas"></div>
                               <div id="mensajesOptativas"></div>
                               <input type="hidden" id="gradoOptativa" value="Optativa">
+                              <?php if( $_GET['tps'] != 3 ) {  ?>
                               <div class="col-sm-12 col-md-7">
                                   <label>Nombre *</label>
                                   <input id="nombreOptativa" class="form-control" type="text" placeholder="Nombre de la asignatura"><br>
@@ -1294,6 +1298,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                   <label > Total Horas independientes:</label><input type="number" id="totalHorasIndependientesOptativa" class="form-control" value="0" disabled><br>
                                 </div>
                               </div>
+                              <?php } ?>
                             </div>
                            <!-- tabla que muestra los valores -->
                             <div class="col-sm-12 col-md-12">
@@ -1483,13 +1488,12 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                  </table>
                                </div>
                             </div>
-
-
                         </div>
                       </div>
                     </div>
                   </div>
-
+                  <?php } ?>
+                  <?php if( $_GET['tps'] == 1 || $_GET['tps'] == 2 ) {  ?>
                   <!-- Trayectoria educativa-->
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -1759,8 +1763,8 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                 <textarea id="servicioRespaldo" class="form-control" rows="4" placeholder="Descripción del servicio de datos respaldados"></textarea>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label>periodicidad *</label>
-                                <input id="periodicidadRespaldo" class="form-control" placeholder="periodicidad"><br><br><br><br>
+                                <label>Periodicidad *</label>
+                                <input id="periodicidadRespaldo" class="form-control" placeholder="Periodicidad"><br><br><br><br>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label>Medios de almacenamineto *</label>
@@ -1781,7 +1785,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                     <thead>
                                       <tr>
                                         <th class="size" scope="col">Servicio</th>
-                                        <th class="size" scope="col">periodicidad</th>
+                                        <th class="size" scope="col">Periodicidad</th>
                                         <th class="size" scope="col">Medios almacenamiento</th>
                                         <th class="size" scope="col">Proceso</th>
                                         <th class="size" scope="col">Acción</th>
@@ -1833,11 +1837,11 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label>URL</label>
-                                <input id="urlEspejo" class="form-control" placeholder="url del espejo"><br>
+                                <input id="urlEspejo" class="form-control" placeholder="URL del espejo"><br>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label>periodicidad*</label>
-                                <input id="periodicidadEspejo" class="form-control" placeholder="url del espejo"><br>
+                                <label>Periodicidad*</label>
+                                <input id="periodicidadEspejo" class="form-control" placeholder="Periodicidad"><br>
                             </div>
                             <div class="col-sm-12 col-md-3">
                               <br>
@@ -1853,7 +1857,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                         <th class="size" scope="col">Ancho de banda</th>
                                         <th class="size" scope="col">Ubicación</th>
                                         <th class="size" scope="col">Url</th>
-                                        <th class="size" scope="col">periodicidad</th>
+                                        <th class="size" scope="col">Periodicidad</th>
                                         <th class="size" scope="col">Acción</th>
                                       </tr>
                                     </thead>

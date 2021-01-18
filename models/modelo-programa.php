@@ -42,7 +42,7 @@
     protected $antecedente_academico;
     protected $perfil_ingreso;
     protected $perfil_egreso;
-    protected $metodo_induccion;
+    protected $metodos_induccion;
     protected $proceso_seleccion;
     protected $mapa_curricular;
     protected $flexibilidad_curricular;

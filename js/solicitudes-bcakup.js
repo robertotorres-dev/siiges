@@ -201,9 +201,9 @@ Solicitud.getSolicitud = function() {
           b.setAttribute("type","hidden");
           b.setAttribute("id",'fromacionesDirector'+nfilaFormacion);
           b.setAttribute("name","DIRECTOR-formaciones[]");
-          b.setAttribute("value",JSON.stringify({ "nivel":director.formaciones[j].nivel,"nombre":director.formaciones[j].nombre,"descripcion":director.formaciones[j].descripcion,"institucion":"NO SE GUARDA DATO" }));
+          b.setAttribute("value",JSON.stringify({ "nivel":director.formaciones[j].nivel,"nombre":director.formaciones[j].nombre,"descripcion":director.formaciones[j].descripcion,"institucion":director.formaciones[j].institucion }));
           __('inputsFormacionDirector').appendChild(b);
-          var filaFormacion = '<tr id="formacion' + nfilaFormacion + '"><td>' + director.formaciones[j].grado.descripcion + '</td><td>' + director.formaciones[j].nombre+ '</td><td>'+ "NO SE GUARDA DATO" +'</td><td>'+ director.formaciones[j].descripcion+'</td><td><button type="button" name="removeFormacion" id="' + nfilaFormacion + '" class="btn btn-danger" onclick="eliminarFormacion(this)">Quitar</button></td></tr>';
+          var filaFormacion = '<tr id="formacion' + nfilaFormacion + '"><td>' + director.formaciones[j].grado.descripcion + '</td><td>' + director.formaciones[j].nombre+ '</td><td>'+ director.formaciones[j].institucion +'</td><td>'+ director.formaciones[j].descripcion+'</td><td><button type="button" name="removeFormacion" id="' + nfilaFormacion + '" class="btn btn-danger" onclick="eliminarFormacion(this)">Quitar</button></td></tr>';
           //Aumentar contador;
           nfilaFormacion++;
           $('#formacion_director tr:last').after(filaFormacion);
@@ -969,9 +969,9 @@ Solicitud.getDatosPlantel = function(){
                             b.setAttribute("type","hidden");
                             b.setAttribute("id",'fromacionesDirector'+nfilaFormacion);
                             b.setAttribute("name","DIRECTOR-formaciones[]");
-                            b.setAttribute("value",JSON.stringify({ "id": formaciones[j].id,"nivel": formaciones[j].nivel,"nombre": formaciones[j].nombre,"descripcion": formaciones[j].descripcion,"institucion":"NO SE GUARDA DATO" }));
+                            b.setAttribute("value",JSON.stringify({ "id": formaciones[j].id,"nivel": formaciones[j].nivel,"nombre": formaciones[j].nombre,"descripcion": formaciones[j].descripcion,"institucion":formaciones[j].institucion }));
                             __('inputsFormacionDirector').appendChild(b);
-                            var filaFormacion = '<tr id="formacion' + nfilaFormacion + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ "NO SE GUARDA DATO" +'</td><td>'+  formaciones[j].descripcion+'</td><td><button type="button" name="removeFormacion" id="' + nfilaFormacion + '" class="btn btn-danger" onclick="eliminarFormacion(this)">Quitar</button></td></tr>';
+                            var filaFormacion = '<tr id="formacion' + nfilaFormacion + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ formaciones[j].institucion +'</td><td>'+  formaciones[j].descripcion+'</td><td><button type="button" name="removeFormacion" id="' + nfilaFormacion + '" class="btn btn-danger" onclick="eliminarFormacion(this)">Quitar</button></td></tr>';
                             //Aumentar contador;
                             nfilaFormacion++;
                             $('#formacion_director tr:last').after(filaFormacion);
@@ -1203,9 +1203,9 @@ Solicitud.modificacionPrograma =  function(){
                         b.setAttribute("type","hidden");
                         b.setAttribute("id",'fromacionesDirector'+nfilaFormacion);
                         b.setAttribute("name","DIRECTOR-formaciones[]");
-                        b.setAttribute("value",JSON.stringify({ "id":formaciones[j].id ,"nivel": formaciones[j].nivel,"nombre": formaciones[j].nombre,"descripcion": formaciones[j].descripcion,"institucion":"NO SE GUARDA DATO" }));
+                        b.setAttribute("value",JSON.stringify({ "id":formaciones[j].id ,"nivel": formaciones[j].nivel,"nombre": formaciones[j].nombre,"descripcion": formaciones[j].descripcion,"institucion":formaciones[j].institucion }));
                         __('inputsFormacionDirector').appendChild(b);
-                        var filaFormacion = '<tr id="formacion' + nfilaFormacion + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ "NO SE GUARDA DATO" +'</td><td>'+  formaciones[j].descripcion+'</td><td><button type="button" name="removeFormacion" id="' + nfilaFormacion + '" class="btn btn-danger" onclick="eliminarFormacion(this)">Quitar</button></td></tr>';
+                        var filaFormacion = '<tr id="formacion' + nfilaFormacion + '"><td>' +  formaciones[j].grado.descripcion + '</td><td>' +  formaciones[j].nombre+ '</td><td>'+ formaciones[j].institucion +'</td><td>'+  formaciones[j].descripcion+'</td><td><button type="button" name="removeFormacion" id="' + nfilaFormacion + '" class="btn btn-danger" onclick="eliminarFormacion(this)">Quitar</button></td></tr>';
                         //Aumentar contador;
                         nfilaFormacion++;
                         $('#formacion_director tr:last').after(filaFormacion);

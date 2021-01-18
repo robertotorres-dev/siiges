@@ -718,7 +718,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             </div>
                             <div class="col-sm-12 col-md-4">
                               <label class="control-label" for="">Modalidad</label><br>
-                                <input type="hidden" <?php if(1 == $_GET['tipo']): $modalidad = $_GET['modalidad']; echo "name='PROGRAMA-modalidad_id' value='$modalidad'" ; endif;?> >
+                              <input type="hidden" <?php if(1 == $_GET['tipo']): $modalidad = $_GET['modalidad']; echo "name='PROGRAMA-modalidad_id' value='$modalidad'" ; endif;?> >
                               <select class="form-control revision" campo="Modalidad del programa" ubicacion="Programas de estudios - Datos generales" id="modalidad_id" <?php if(1 != $_GET['tipo']): echo "name='PROGRAMA-modalidad_id'"; endif;?>>
                                 <option value="">Seleccione una opción</option>
                               </select><br>
@@ -730,8 +730,8 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                 <option value="1">Semestral</option>
                                 <option value="2">Cuatrimestral</option>
                 								<option value="3">Anual</option>
-                								<option value="4">Semestral curriculum felxible</option>
-                								<option value="5">Cuatrimestral curriculum felxible</option>
+                								<option value="4">Semestral curriculum flexible</option>
+                								<option value="5">Cuatrimestral curriculum flexible</option>
                               </select><br>
                             </div>
                             <div class="col-sm-12 col-md-4">
@@ -1014,7 +1014,8 @@ Utileria::validarSesion( basename( __FILE__ ) );
                       </div>
                     </div>
                   </div>
-
+                  <?php } ?>
+                  <?php if( $_GET['tipo'] == 1 || $_GET['tipo'] == 2 || $_GET['tipo'] == 3 ) {  ?>
                   <!-- Asignaturas -->
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -1038,6 +1039,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           <div class=" form-group col-sm-12 col-md-12">
                             <div id="inputsAsignaturas"></div>
                             <div id="mensajesAsignaturas"></div>
+                            <?php if( $_GET['tipo'] != 3 ) {  ?>
                             <div class="col-sm-12 col-md-3">
                                 <label>Grado *</label>
                                 <select  class="form-control" id="gradoAsignatura" name="">
@@ -1125,6 +1127,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                 <label > Total Horas independientes:</label><input type="number" id="totalHorasIndependientes" class="form-control" value="0" disabled><br>
                               </div>
                             </div>
+                            <?php } ?>
                           </div>
                           <!-- tabla que muestra los valores -->
                           <div class="col-sm-12 col-md-12">
@@ -1150,8 +1153,6 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                 </table>
                               </div>
                           </div>
-
-
                         </div>
                       </div>
                     </div>
@@ -1177,6 +1178,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                               <div id="inputsOptativas"></div>
                               <div id="mensajesOptativas"></div>
                               <input type="hidden" id="gradoOptativa" value="Optativa">
+                              <?php if( $_GET['tipo'] != 3 ) {  ?>
                               <div class="col-sm-12 col-md-7">
                                   <label>Nombre *</label>
                                   <input id="nombreOptativa" class="form-control" type="text" placeholder="Nombre de la asignatura"><br>
@@ -1229,6 +1231,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                   <label > Total Horas independientes:</label><input type="number" id="totalHorasIndependientesOptativa" class="form-control" value="0" disabled><br>
                                 </div>
                               </div>
+                              <?php } ?>
                             </div>
                            <!-- tabla que muestra los valores -->
                             <div class="col-sm-12 col-md-12">
@@ -1418,13 +1421,12 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                  </table>
                                </div>
                             </div>
-
-
                         </div>
                       </div>
                     </div>
                   </div>
-
+                  <?php } ?>
+                  <?php if( $_GET['tipo'] == 1 || $_GET['tipo'] == 2 ) {  ?>
                   <!-- Trayectoria educativa-->
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -1756,7 +1758,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                 <input id="urlEspejo" class="form-control" placeholder="url del espejo"><br>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label>periodicidad*</label>
+                                <label>Periodicidad*</label>
                                 <input id="periodicidadEspejo" class="form-control" placeholder="Periodicidad"><br>
                             </div>
                             <div class="col-sm-12 col-md-3">
@@ -1773,7 +1775,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                                         <th class="size" scope="col">Ancho de banda</th>
                                         <th class="size" scope="col">Ubicación</th>
                                         <th class="size" scope="col">Url</th>
-                                        <th class="size" scope="col">periodicidad</th>
+                                        <th class="size" scope="col">Periodicidad</th>
                                         <th class="size" scope="col">Acción</th>
                                       </tr>
                                     </thead>
