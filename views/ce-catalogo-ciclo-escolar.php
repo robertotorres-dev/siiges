@@ -141,6 +141,9 @@
 								<option value="2020A" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2020A" ) { echo "selected"; }} ?>>2020A</option>
 								<option value="2020B" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2020B" ) { echo "selected"; }} ?>>2020B</option>
 								<option value="2020C" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2020C" ) { echo "selected"; }} ?>>2020C</option>
+								<option value="2021A" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2021A" ) { echo "selected"; }} ?>>2021A</option>
+								<option value="2021B" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2021B" ) { echo "selected"; }} ?>>2021B</option>
+								<option value="2021C" <?php if (isset($resultadoCicloEscolar)) { if( $resultadoCicloEscolar["data"]["nombre"]=="2021C" ) { echo "selected"; }} ?>>2021C</option>
 							</select>
 							<?php } ?>
 						</div>
