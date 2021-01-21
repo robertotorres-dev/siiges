@@ -715,7 +715,9 @@ EditarSolicitud.getSolicitud = function () {
                     "experiencias": docentes[posicionD].experiencias,
                     "asignaturas": docentes[posicionD].asignaturas
                   }));
-                  __('inputsDocentes').appendChild(docenteInput);
+                  if (__('inputsDocentes')) {
+                    __('inputsDocentes').appendChild(docenteInput);
+                  }
                   filaDocente = '<tr id="docente' + docentes[posicionD].id + '"><td class="small">' + docentes[posicionD].persona.nombre + " " + docentes[posicionD].persona.apellido_paterno + " " + docentes[posicionD].persona.apellido_materno + '</td><td class="small">' + docentes[posicionD].tipo_docente + '</td><td class="small">' + formacionestxt + '</td><td class="small">' + docentes[posicionD].asignaturas + '</td><td class="small">' + docentes[posicionD].experiencias + '</td><td class="small">' + docentes[posicionD].tipo_contratacion + " - " + docentes[posicionD].antiguedad + '</td><td class="small"><button type="button" name="removePublicacion" id="inputDocente-' + docentes[posicionD].id + '_docente" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
 
                 } else {

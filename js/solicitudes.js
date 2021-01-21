@@ -233,8 +233,11 @@ Solicitud.getTipos = function () {
     data: { webService: "consultarTodos", url: "" },
     success: function (respuesta) {
       var select = $("#tipo_solicitud");
+      //Solicitudes permanentes
       $.each(respuesta.data, function (key, registro) {
-        select.append('<option value=' + registro.id + '>' + registro.nombre + '</option>');
+        if (registro.id == 3) {
+          select.append('<option value=' + registro.id + '>' + registro.nombre + '</option>');
+        }
       });
     },
     fail: function (jqXHR, textStatus, errorThrown) {
@@ -1109,7 +1112,9 @@ Solicitud.modificacionPrograma = function () {
                     "experiencias": docentes[posicionD].experiencias,
                     "asignaturas": docentes[posicionD].asignaturas
                   }));
-                  __('inputsDocentes').appendChild(docenteInput);
+                  if (__('inputsDocentes')) {
+                    __('inputsDocentes').appendChild(docenteInput);
+                  }
                   filaDocente = '<tr id="docente' + nfila + '"><td class="small">' + docentes[posicionD].persona.nombre + " " + docentes[posicionD].persona.apellido_paterno + " " + docentes[posicionD].persona.apellido_materno + '</td><td class="small">' + docentes[posicionD].tipo_docente_txt + '</td><td class="small">' + formacionestxt + '</td><td class="small">' + docentes[posicionD].asignaturas + '</td><td class="small">' + docentes[posicionD].experiencias + '</td><td class="small">' + docentes[posicionD].tipo_contratacion_txt + " - " + docentes[posicionD].antiguedad + '</td><td class="small"><button type="button" name="removePublicacion" id="' + nfila + '" class="btn btn-danger" onclick="eliminarDocente(this)">Quitar</button></td></tr>';
 
                 } else {
@@ -1187,7 +1192,14 @@ Solicitud.modificacionPrograma = function () {
               if (variable == "nombre") {
                 $("#nombre_programa").val(programa[variable]);
               } else if(variable == "tipo") {
-                
+                //No se carga la variable programa[tipo] en elemento ($("#tipo").val() de solicitud para evitar error
+              } else if ( ($("#tipo").val() == 3) && (variable == "necesidad_profesional" || 
+                variable == "necesidad_institucional" ||
+                variable == "necesidad_social" ||
+                variable == "estudio_oferta_demanda" ||
+                variable == "fuentes_informacion" ||
+                variable == "recursos_operacion") ) {
+                //No se carga la información del programa anterior
               } else {
                 $("#" + variable).val(programa[variable]);
               }

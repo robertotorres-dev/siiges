@@ -1277,7 +1277,8 @@ Utileria::validarSesion( basename( __FILE__ ) );
                       </div>
                     </div>
                   </div>
-
+                  <?php } ?>
+                  <?php if( $_GET['tipo'] == 1 || $_GET['tipo'] == 2 ) {  ?>
                   <!-- Docentes -->
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -1425,8 +1426,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                       </div>
                     </div>
                   </div>
-                  <?php } ?>
-                  <?php if( $_GET['tipo'] == 1 || $_GET['tipo'] == 2 ) {  ?>
+                  
                   <!-- Trayectoria educativa-->
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -1494,7 +1494,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     </div>
                   </div>
                   <?php } ?>
-                  <?php if( ( $_GET['tipo'] == 1 &&  $_GET['modalidad'] != 1 ) || ($_GET['tipo'] == 2 && $_GET['modalidad'] != 1 ) || ($_GET['tipo'] == 3 && $_GET['modalidad'] != 1 ) ) {  ?>
+                  <?php if( ( $_GET['tipo'] == 1 &&  $_GET['modalidad'] != 1 ) || ($_GET['tipo'] == 2 && $_GET['modalidad'] != 1 ) ) {  ?>
 
                   <!-- Licencias -->
                   <div id="mixta-licencia" class="panel panel-default">
@@ -2557,7 +2557,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                   </div>
                   <!-- Salud -->
                   <div class="col-sm-12 col-md-8">
-                    <label class="control-label" for="">Aviso funcionamiento de Secretaría de Salud</label><br>
+                    <label class="control-label" for="">Aviso funcionamiento de Secretaría de Salud ó Carta bajo protesta de decir verdad de NO venta de alimentos.</label><br>
                     <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PLANTEL-secretaria_salud" class="form-control"><br>
                   </div>
                   <!-- Comprobante telefono -->
@@ -2606,12 +2606,12 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     <label class="control-label" for="">Formas de migratorias de los profesores</label><br>
                     <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PROGRAMA-forma_migratoria" class="form-control"><br>
                   </div>
-                  <?php } ?>
                   <!-- Programa de superacion -->
                   <div class="col-sm-12 col-md-8">
                     <label class="control-label" for="">Programa de superación</label><br>
                     <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PROGRAMA-programa_superacion" class="form-control"><br>
                   </div>
+                  <?php } ?>
                 </div>
               </div>
 

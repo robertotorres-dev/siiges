@@ -375,7 +375,9 @@ Solicitud.getSolicitud = function() {
                                                   "experiencias":"NO SE GUARDÓ DATO",
                                                   "asignaturas":docentes[posicionD].asignaturas
                                                   }));
-            __('inputsDocentes').appendChild(docenteInput);
+            if (__('inputsDocentes')) {
+              __('inputsDocentes').appendChild(docenteInput);
+            }
 
             if( docentes[posicionD].tipo_docente == 1 ){
                 docentes[posicionD].tipo_docente = "Asignatura";

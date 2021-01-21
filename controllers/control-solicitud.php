@@ -905,6 +905,8 @@ session_start();
       isset($_POST[$nombreInput])? $idDocumento = $_POST[$nombreInput] : $idDocumento = null;
 
       $tipoEntidad = strstr($campo, '-', true);
+      echo $tipoEntidad;
+      echo '<br>';
       $nombreFormulario = substr(strstr($campo, '-'),1);
       if(empty($archivo["name"])){
         continue;
@@ -921,7 +923,7 @@ session_start();
       // Creacion de direcotrios
       !is_dir($primerDirectorio)?mkdir($primerDirectorio, 0755):false;
       !is_dir($segundoDirectorio)?mkdir($segundoDirectorio, 0755):false;
-
+      
       // Guardado de archivos
       if(move_uploaded_file($archivo['tmp_name'],$uploadFile)){
           $documento = new Documento( );

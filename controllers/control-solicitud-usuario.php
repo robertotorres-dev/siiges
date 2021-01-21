@@ -426,7 +426,7 @@ session_start();
 
               //Ratificación del nombre
               $ratificacion = new RatificacionNombre();
-              $resultado_ratificacion = $ratificacion->consultarPor("ratificacion_nombres",array( "institucion_id" => $resultado["data"]["programa"]["plantel"]["id"],"deleted_at"  )  ,"*");
+              $resultado_ratificacion = $ratificacion->consultarPor("ratificacion_nombres",array( "institucion_id" => $resultado["data"]["programa"]["plantel"]["institucion_id"],"deleted_at"  )  ,"*");
               if( sizeof(  $resultado_ratificacion["data"] ) > 0 ){
                 $resultado["data"]["ratificacion"] =  $resultado_ratificacion["data"][0];
               }
@@ -604,13 +604,13 @@ session_start();
 
 
               $biografia = new Documento();
-              $res_biografia = $biografia->consultarPor("documentos", array("tipo_entidad" => Documento::$tipoEntidad["RATIFICACION"],"entidad_id"=>$resultado["data"]["programa"]["plantel"]["institucion_id"], "tipo_documento"=>Documento::$nombresDocumentos["biografia"], "deleted_at" ), "*");
+              $res_biografia = $biografia->consultarPor("documentos", array("tipo_entidad" => Documento::$tipoEntidad["RATIFICACION"],"entidad_id"=>$resultado["data"]["ratificacion"]["id"], "tipo_documento"=>Documento::$nombresDocumentos["biografia"], "deleted_at" ), "*");
               if (sizeof($res_biografia["data"])>0) {
                 $resultado["data"]["documentos"]["biografia"] = $res_biografia["data"][0];
               }
 
               $bibliografia = new Documento();
-              $res_bibliografia = $bibliografia->consultarPor("documentos", array("tipo_entidad" => Documento::$tipoEntidad["RATIFICACION"],"entidad_id"=>$resultado["data"]["programa"]["plantel"]["institucion_id"], "tipo_documento"=>Documento::$nombresDocumentos["bibliografia"], "deleted_at" ), "*");
+              $res_bibliografia = $bibliografia->consultarPor("documentos", array("tipo_entidad" => Documento::$tipoEntidad["RATIFICACION"],"entidad_id"=>$resultado["data"]["ratificacion"]["id"], "tipo_documento"=>Documento::$nombresDocumentos["bibliografia"], "deleted_at" ), "*");
               if (sizeof($res_bibliografia["data"])>0) {
                 $resultado["data"]["documentos"]["bibliografia"] = $res_bibliografia["data"][0];
               }

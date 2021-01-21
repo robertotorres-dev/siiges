@@ -925,7 +925,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     </div>
                   </div>
                   <?php } ?>
-                  <?php if( $_GET['tipo'] == 1 || $_GET['tipo'] == 2 || $_GET['tipo'] == 3 ) {  ?>
+                  <?php if( $_GET['tps'] == 1 || $_GET['tps'] == 2 || $_GET['tps'] == 3 ) {  ?>
                   <!-- Asignaturas -->
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -1185,7 +1185,8 @@ Utileria::validarSesion( basename( __FILE__ ) );
                       </div>
                     </div>
                   </div>
-
+                  <?php } ?>
+                  <?php if( $_GET['tps'] == 1 || $_GET['tps'] == 2 ) {  ?>
                   <!-- Docentes -->
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -1333,8 +1334,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                       </div>
                     </div>
                   </div>
-                  <?php } ?>
-                  <?php if( $_GET['tipo'] == 1 || $_GET['tipo'] == 2 ) {  ?>
+                  
                   <!-- Trayectoria educativa-->
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -1411,8 +1411,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     </div>
                   </div>
                   <?php } ?>
-                  <?php if( ( $_GET['tps'] == 1 &&  $_GET['modalidad'] != 1 ) || ($_GET['tps'] == 2 && $_GET['modalidad'] != 1 ) || ($_GET['tps'] == 3 && $_GET['modalidad'] != 1 ) ) {  ?>
-
+                  <?php if( ( $_GET['tps'] == 1 &&  $_GET['modalidad'] != 1 ) || ($_GET['tps'] == 2 && $_GET['modalidad'] != 1 ) ) {  ?>
                   <!-- Licencias -->
                   <div id="mixta-licencia" class="panel panel-default">
                     <div class="panel-heading">
@@ -2514,7 +2513,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                   </div>
                   <!-- Salud -->
                   <div class="col-sm-12 col-md-8">
-                    <label class="control-label" for="">Aviso funcionamiento de Secretaría de Salud</label><br>
+                    <label class="control-label" for="">Aviso de funcionamiento de Secretaría de Salud ó Carta bajo protesta de decir verdad de NO venta de alimentos.</label><br>
                   </div>
                   <div class="col-sm-12 col-md-4" id="contendorsalud" style="display: none">
                     <br>
@@ -2593,7 +2592,6 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     <br>
                     <a id="enlace-reglamento" class="enlaces" href="" target="_blank" >Ver archivo</a>
                   </div>
-                  <?php } ?>
                   <!-- Programa de superacion -->
                   <div class="col-sm-12 col-md-8">
                     <label class="control-label" for="">Programa de superación</label><br>
@@ -2603,6 +2601,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     <br>
                     <a id="enlace-superacion" class="enlaces" href="" target="_blank" >Ver archivo</a>
                   </div>
+                  <?php } ?>
                 </div>
               </div>
 
