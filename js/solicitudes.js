@@ -1372,15 +1372,19 @@ Solicitud.camposLlenos = function () {
   if ($("#turno_programa").val() == "") {
     resultado = resultado + "Turno del programa" + "<br>";
   }
-  if ($("#inputsLicencias > *").length == 0 && $("#auxmodalidad").val() == 2) {
-    resultado = resultado + "Por lo menos introduzca una licencia" + "<br>";
+  console.log($("#tipo").val());
+  if ($("#tipo").val() != 3) {
+    if ($("#inputsLicencias > *").length == 0 && $("#auxmodalidad").val() == 2) {
+      resultado = resultado + "Por lo menos introduzca una licencia" + "<br>";
+    }
+    if ($("#inputsRespaldos > *").length == 0 && $("#auxmodalidad").val() == 2) {
+      resultado = resultado + "Por lo menos un sistema de respaldo" + "<br>";
+    }
+    if ($("#inputsEspejos > *").length == 0 && $("#auxmodalidad").val() == 2) {
+      resultado = resultado + "Por lo menos introzduca un sistema de espejo" + "<br>";
+    }
   }
-  if ($("#inputsRespaldos > *").length == 0 && $("#auxmodalidad").val() == 2) {
-    resultado = resultado + "Por lo menos un sistema de respaldo" + "<br>";
-  }
-  if ($("#inputsEspejos > *").length == 0 && $("#auxmodalidad").val() == 2) {
-    resultado = resultado + "Por lo menos introzduca un sistema de espejo" + "<br>";
-  }
+
   if (resultado.length > 0) {
     $("#modalErrores").modal();
     var mensajes = $("#mensajesError");

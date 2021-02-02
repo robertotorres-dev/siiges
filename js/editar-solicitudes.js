@@ -427,6 +427,8 @@ EditarSolicitud.getSolicitud = function () {
             if (programa.hasOwnProperty(variable)) {
               if (variable == "nombre") {
                 $("#nombre_programa").val(programa[variable]);
+              } else if(variable == "tipo") {
+                //No se carga la variable programa[tipo] en elemento ($("#tipo").val() de solicitud para evitar error
               } else {
                 $("#" + variable).val(programa[variable]);
               }
