@@ -1629,33 +1629,56 @@ session_start();
     $resultado["data"] = array();
     $aux = new Utileria( );
     $_POST = $aux->limpiarEntrada( $_POST );
-
+    
     $estatus = new SolicitudEstatus();
     $res_estatus = $estatus->consultarPor("solicitudes_estatus_solicitudes",array("solicitud_id"=>$_POST["id_solicitud"],"estatus_solicitud_id"=>3),"*");
     $id_estatus  = $res_estatus["data"][0];
-
 
     $actu_coment = new SolicitudEstatus();
     $actu_coment->setAttributes(array("id"=>$id_estatus["id"],"comentario"=>$_POST["comentarios"]));
     $actu_coment->guardar();
 
-    $estatus_solicitud = new SolicitudEstatus();
-    $estatus_solicitud->setAttributes(array("estatus_solicitud_id"=>4,"solicitud_id"=>$_POST["id_solicitud"]));
-    $res = $estatus_solicitud->guardar();
+    $solicitud_tipo = new Solicitud;
+    $res_solicitud = $solicitud_tipo->consultarPor("solicitudes",array("id"=>$_POST["id_solicitud"], "deleted_at"), array("id,tipo_solicitud_id"));
+    $tipo_solicitud_id = $res_solicitud["data"][0]["tipo_solicitud_id"];
+    
+    if ($tipo_solicitud_id == 3) {
+      echo $tipo_solicitud_id;
+      $estatus_solicitud = new SolicitudEstatus();
+      $estatus_solicitud->setAttributes(array("estatus_solicitud_id"=>6,"solicitud_id"=>$_POST["id_solicitud"]));
+      $res = $estatus_solicitud->guardar();
+  
+      $solicitud = new Solicitud;
+      $solicitud->setAttributes(array("id"=>$_POST["id_solicitud"],"estatus_solicitud_id"=>6));
+      $solicitud->guardar();
 
-    $solicitud = new Solicitud;
-    $solicitud->setAttributes(array("id"=>$_POST["id_solicitud"],"estatus_solicitud_id"=>4));
-    $solicitud->guardar();
-
-    //Notificación a apps
+      //Notificación a apps
       $usuarioNotificar = new Solicitud();
       $usuarioNotificar->setAttributes(array("id"=>$_POST["id_solicitud"]));
       $resUsuarioNotificar = $usuarioNotificar->consultarId();
       $resUsuarioNotificar = $resUsuarioNotificar["data"];
       $notificacion = new Usuario();
-      $msj = "Su solicitud está por ser asignada para evaluación técnico curricular.";
+      $msj = "Su solicitud está por ser asignada para inspección.";
       $notificacion->notificacionIdUsuario($resUsuarioNotificar["usuario_id"],"Avances",$msj);
-    //
+
+    } else {
+      $estatus_solicitud = new SolicitudEstatus();
+      $estatus_solicitud->setAttributes(array("estatus_solicitud_id"=>4,"solicitud_id"=>$_POST["id_solicitud"]));
+      $res = $estatus_solicitud->guardar();
+  
+      $solicitud->setAttributes(array("id"=>$_POST["id_solicitud"],"estatus_solicitud_id"=>4));
+      $solicitud->guardar();
+      
+      //Notificación a apps
+        $usuarioNotificar = new Solicitud();
+        $usuarioNotificar->setAttributes(array("id"=>$_POST["id_solicitud"]));
+        $resUsuarioNotificar = $usuarioNotificar->consultarId();
+        $resUsuarioNotificar = $resUsuarioNotificar["data"];
+        $notificacion = new Usuario();
+        $msj = "Su solicitud está por ser asignada para evaluación técnico curricular.";
+        $notificacion->notificacionIdUsuario($resUsuarioNotificar["usuario_id"],"Avances",$msj);
+    }
+
 
     if($res["data"]["id"] > 0)
     {
