@@ -235,9 +235,11 @@ Solicitud.getTipos = function () {
       var select = $("#tipo_solicitud");
       //Solicitudes permanentes
       $.each(respuesta.data, function (key, registro) {
-        if (registro.id == 3) {
+        //Oculta las opciones de convocatoria 1 y 2
+        /* if (registro.id == 3) {
           select.append('<option value=' + registro.id + '>' + registro.nombre + '</option>');
-        }
+        } */
+        select.append('<option value=' + registro.id + '>' + registro.nombre + '</option>');
       });
     },
     fail: function (jqXHR, textStatus, errorThrown) {

@@ -22,7 +22,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
   	<meta name="viewport" content="width=device-width, initial-scale=1">
   	<title>Editar Solicitud</title>
   	<!-- CSS GOB.MX -->
-  		<link href="http://localhost/siiga/favicon.ico" rel="shortcut icon">
+    <link href="../favicon.ico" rel="shortcut icon">
   	<link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
 
@@ -772,6 +772,12 @@ Utileria::validarSesion( basename( __FILE__ ) );
                               <label class="control-label" for="">Créditos necesarios para concluir el programa</label><br>
                               <input type="number" id="creditos" name="PROGRAMA-creditos" class="form-control revision" campo="Créditos del programa" ubicacion="Programas de estudios - Datos generales" value="0" placeholder=""><br>
                             </div>
+                            <div class="col-sm-12 col-md-7">
+                              <label class="control-label">Nivel educativo previo *</label>
+                              <select class="form-control " id="antecedente_academico" campo="Antecedente académico de ingreso" name="PROGRAMA-antecedente_academico">
+                                <option value="">Seleccione una opción</option>
+                              </select><br>
+                            </div>
                             <?php if( $_GET['tps'] == 1 || $_GET['tps'] == 2 ) { ?>
                             <div class="col-sm-12 col-md-12">
                               <label class="control-label" for="">Objetivo general</label><br>
@@ -922,12 +928,6 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           <div class="col-sm-12 col-md-12">
                             <h2>Ingreso<h2>
                             <hr class="red">
-                          </div>
-                          <div class="col-sm-12 col-md-7">
-                            <label class="control-label">Nivel educativo previo *</label>
-                            <select class="form-control " id="antecedente_academico" campo="Antecedente académico de ingreso" name="PROGRAMA-antecedente_academico">
-                              <option value="">Seleccione una opción</option>
-                            </select><br>
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <label class="control-label">Métodos de inducción</label>
@@ -2901,8 +2901,8 @@ Utileria::validarSesion( basename( __FILE__ ) );
                     <div id="mensajeConvocatoriaExpirada" class="">
                       <p class="text-justify">
                         <p class="text-center">¡Estimada institución!</p>
-                        El periodo para subir tu solicitud para la convocatoria de RVOE 2019 con vigencia el día 17 de Enero de 2020 ha expirado.<br>
-                        Está atento a las fechas de nuestra próxima convocatoria de RVOE 2020.<br>
+                        El periodo para subir tu solicitud para la convocatoria de RVOE 2020 con vigencia el día 18 de Diciembre de 2020 ha expirado.<br>
+                        Está atento a las fechas de nuestra próxima convocatoria de RVOE 2021.<br>
                       </p>
                     </div>
                 </div>

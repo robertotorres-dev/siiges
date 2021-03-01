@@ -29,10 +29,10 @@ TerminarSolicitud.getEstatusSolicitud = function () {
       }
       // Si es el primer guardado de la solicitud, no tiene estatus y se muestra el mensaje de tiempo fuera de la solicitud
       else {
-        if ($("#type").val() == 1) {
-          /* $("#modalConvocatoria").modal()
+        if ($("#tipo").val() == 1) {
+          $("#modalConvocatoria").modal()
           $("#tamanoModalConvocatoria").attr("style","margin-top:80px;")
-          $("#mensajeConvocatoriaExpirada").addClass("alert alert-danger") */
+          $("#mensajeConvocatoriaExpirada").addClass("alert alert-danger")
         }
       }
     },

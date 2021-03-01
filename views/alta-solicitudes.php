@@ -747,6 +747,12 @@ Utileria::validarSesion( basename( __FILE__ ) );
                               <label class="control-label" for="">Créditos necesarios para concluir el programa</label><br>
                               <input type="number" id="creditos" name="PROGRAMA-creditos" class="form-control revision" campo="Créditos del programa" ubicacion="Programas de estudios - Datos generales" value="0" placeholder=""><br>
                             </div>
+                            <div class="col-sm-12 col-md-7">
+                              <label class="control-label">Nivel educativo previo *</label>
+                              <select class="form-control" id="antecedente_academico" campo="Antecedente académico de ingreso" name="PROGRAMA-antecedente_academico">
+                                <option value="">Seleccione una opción</option>
+                              </select><br>
+                            </div>
                             <?php if( $_GET['tipo'] == 1 || $_GET['tipo'] == 2 ) { ?>
                             <div class="col-sm-12 col-md-12">
                               <label class="control-label" for="">Objetivo general</label><br>
@@ -880,12 +886,6 @@ Utileria::validarSesion( basename( __FILE__ ) );
                           <div class="col-sm-12 col-md-12">
                             <h2>Ingreso<h2>
                             <hr class="red">
-                          </div>
-                          <div class="col-sm-12 col-md-7">
-                            <label class="control-label">Nivel educativo previo *</label>
-                            <select class="form-control" id="antecedente_academico" campo="Antecedente académico de ingreso" name="PROGRAMA-antecedente_academico">
-                              <option value="">Seleccione una opción</option>
-                            </select><br>
                           </div>
                           <div class="col-sm-12 col-md-12">
                             <label class="control-label">Métodos de inducción</label>
