@@ -16,15 +16,12 @@
     protected $nombre_institucion_emisora;
     protected $fecha_expedicion;
     protected $folio;
-    protected $folio_respuesta;
     protected $folio_envio;
-    protected $oficio_respuesta;
     protected $oficio_envio;
     protected $fecha_acreditacion;
     protected $plan_anterior;
     protected $clave_centro_trabajo_emisor;
     protected $fecha_envio;
-    protected $fecha_respuesta;
     protected $situacion_documento;
     protected $observaciones;
     protected $fecha_actualizacion;

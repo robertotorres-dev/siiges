@@ -16,6 +16,7 @@
 	require_once "../models/modelo-domicilio.php";
 	require_once "../models/modelo-estado.php";
 	require_once "../models/modelo-situacion-validacion.php";
+	require_once "../models/modelo-tipo-validacion.php";
 	require_once "../models/modelo-validacion.php";
   require_once "../models/modelo-usuario.php";
 
@@ -51,6 +52,10 @@
 	$situacionValidacion = new SituacionValidacion( );
 	$situacionValidacion->setAttributes( array( ) );
 	$resultadoSituacionValidacion = $situacionValidacion->consultarTodos( );
+
+	$tipoValidacion = new TipoValidacion( );
+	$tipoValidacion->setAttributes( array( ) );
+	$resultadoTipoValidacion = $tipoValidacion->consultarTodos( );
 
 	if( $resultadoPrograma["data"]["nivel_id"]==2 )
 	{
@@ -268,6 +273,14 @@
 					</div>
 				</div>
 				<div class="row">
+					<div class="col-sm-8">
+            <div class="form-group">
+							<label class="control-label" for="archivo_certificado"><?php echo $titulo_certificado1; ?></label>
+							<div><a href="../uploads/certificados/<?php echo $resultadoAlumno["data"]["archivo_certificado"]; ?>" target="_blank"><?php echo $resultadoAlumno["data"]["archivo_certificado"]; ?></a></div>
+						</div>
+          </div>
+				</div>
+				<div class="row">
           <div class="col-sm-4">
             <div class="form-group">
 							<label class="control-label" for="nombre_institucion_emisora">Instituci&oacute;n de Procedencia</label>
@@ -343,20 +356,27 @@
           </div>
         </div>
 				<div class="row">
-          <div class="col-sm-8">
-            <div class="form-group">
-							<label class="control-label" for="archivo_certificado"><?php echo $titulo_certificado1; ?></label>
-							<div><a href="../uploads/certificados/<?php echo $resultadoAlumno["data"]["archivo_certificado"]; ?>" target="_blank"><?php echo $resultadoAlumno["data"]["archivo_certificado"]; ?></a></div>
-						</div>
-          </div>
+          
 					<div class="col-sm-4">
             <div class="form-group">
-							<label class="txt-label1" for="observaciones">Observaci&oacute;n</label>
-							<select id="observaciones" name="observaciones" class="selectpicker" data-live-search="true" data-width="100%" required>
-								<option value=""> </option>
-								<option value="1" <?php echo ($res_validacion["data"][0]["observaciones"] == 1) ? 'selected' : ""; ?> >Por Oficio</option>
-								<option value="2" <?php echo ($res_validacion["data"][0]["observaciones"] == 2) ? 'selected' : ""; ?>>Por Constancia</option>
-								<option value="3" <?php echo ($res_validacion["data"][0]["observaciones"] == 3) ? 'selected' : ""; ?>>Por Llamada</option>
+							<label class="txt-label1" for="tipo_validacion">Tipo de validaci&oacute;n</label>
+							<select id="tipo_validacion" name="tipo_validacion" class="selectpicker" data-live-search="true" data-width="100%" required>
+							<option value=""> </option>
+								<?php
+									$max = count( $resultadoTipoValidacion["data"] );
+
+									for( $i=0; $i<$max; $i++ )
+									{
+										if( $resultadoTipoValidacion["data"][$i]["id"]==$res_validacion["data"][0]["situacion_validacion_id"] )
+										{
+											echo "<option value='".$resultadoTipoValidacion["data"][$i]["id"]."' selected>".$resultadoTipoValidacion["data"][$i]["nombre"]."</option>";
+										}
+										else
+										{
+										  echo "<option value='".$resultadoTipoValidacion["data"][$i]["id"]."'>".$resultadoTipoValidacion["data"][$i]["nombre"]."</option>";
+										}
+									}
+								?>
 							</select>
 						</div>
           </div>
@@ -395,32 +415,6 @@
 							<label class="control-label" for="oficio_envio">Oficio de Validaci&oacute;n</label>
 							<input type="file" id="oficio_envio" name="oficio_envio" accept="application/pdf" class="form-control" />
 							<div><a href="../uploads/validaciones/<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["oficio_envio"] : ""; ?>" target="_blank"><?php echo isset($res_validacion["data"][0]["oficio_envio"]) ? "Oficio de validación" : ""; ?></a></div>
-						</div>
-          </div>
-        </div><div class="row">
-          <div class="col-sm-4">
-            <div class="form-group">
-							<label class="control-label" for="folio_respuesta">Folio de Oficio de Respuesta</label>
-							<input type="text" id="folio_respuesta" name="folio_respuesta" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["folio_respuesta"] : ""; ?>" maxlength="255" class="form-control" required />
-						</div>
-          </div>
-					<div class="col-sm-4">
-            <div class="form-group">
-							<label class="txt-label1" for="fecha_respuesta">Fecha de Oficio de Respuesta</label>
-							<input type="text" id="fecha_respuesta" name="fecha_respuesta" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["fecha_respuesta"] : ""; ?>" maxlength="255" class="form-control" required />
-						</div>
-          </div>
-					<div class="col-sm-4">
-            <div class="form-group">
-						</div>
-          </div>
-        </div>
-				<div class="row">
-          <div class="col-sm-8">
-            <div class="form-group">
-							<label class="control-label" for="oficio_respuesta">Oficio de Respuesta</label>
-							<input type="file" id="oficio_respuesta" name="oficio_respuesta" accept="application/pdf" class="form-control" />
-							<div><a href="../uploads/validaciones/<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["oficio_respuesta"] : ""; ?>" target="_blank"><?php echo isset($res_validacion["data"][0]["oficio_envio"]) ? "Oficio de Respuesta" : ""; ?></a></div>
 						</div>
           </div>
         </div>

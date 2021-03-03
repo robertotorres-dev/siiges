@@ -4,7 +4,7 @@
   */
 
   require_once "../models/modelo-validacion.php";
-    require_once "../models/modelo-bitacora.php";
+  require_once "../models/modelo-bitacora.php";
   require_once "../utilities/utileria-general.php";
 
 	function retornarWebService( $url, $resultado )
@@ -75,19 +75,6 @@
       {
         header( "Location: ../views/ce-validacion-alumno.php?programa_id=".$_POST["programa_id"]."&alumno_id=".$_POST["alumno_id"]."&proceso=edicion"."&codigo=404" );
         exit( );
-      }
-
-      $exito = 0;
-      if( is_uploaded_file( $_FILES["oficio_respuesta"]["tmp_name"] ) )
-      {
-        if( $_FILES["oficio_respuesta"]["size"]<2000000 )
-        {
-          if( $_FILES["oficio_respuesta"]["type"]=="application/pdf" )
-          {
-            move_uploaded_file( $_FILES["oficio_respuesta"]["tmp_name"], "../uploads/validaciones/oficio_respuesta_".$_POST["alumno_id"].".pdf" );
-            $exito = 1;
-          }
-        }
       }
 
       if( $_FILES["oficio_respuesta"]["name"]!=null && $exito==0 )

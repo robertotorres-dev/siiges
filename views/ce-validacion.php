@@ -88,24 +88,28 @@
             <table id="alumnos" class="table table-striped table-bordered" cellspacing="0" width="100%" >
                 <thead>
                 <tr>
-                    <th style="width: 200px; overflow: auto;">Nombre</th>
-                    <th>CURP</th>
-                    <th>Instituci&oacuten</th>
-                    <th>Programa</th>
-                    <th>Estatus</th>
-                    <th>Acciones</th>
+                <th width="5%">Id</th>
+									<th width="5%">Matr&iacute;cula</th>
+									<th width="20%">Apellido Paterno</th>
+	                <th width="20%">Apellido Materno</th>
+									<th width="20%">Nombre</th>
+	                <th width="10%">Estatus</th>
+									<th width="10%">Acciones</th>
+									<th width="10%">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
                   <?php
-    								$alumno = new Alumno( );
-    								$alumno->setAttributes( array( ) );
-    								$resultadoAlumno = $alumno->consultarTodos( );
-										$max = count( $resultadoAlumno["data"] );
-
 										$situacionValidacion = new SituacionValidacion( );
 										$situacionValidacion->setAttributes( array( ) );
 										$resultadoSituacionValidacion = $situacionValidacion->consultarTodos( );
+                    $parametros["programa_id"] = $_GET["programa_id"];
+
+                    $alumno = new Alumno( );
+                    $alumno->setAttributes( $parametros );
+                    $resultadoAlumno = $alumno->consultarAlumnosPrograma( );
+
+                    $max = count( $resultadoAlumno["data"] );
 
     								for( $i=0; $i<$max; $i++ )
     								{
@@ -133,10 +137,11 @@
 
     							?>
     							<tr>
-    								<td><?php echo ($resultadoPersona["data"]["nombre"]." ".$resultadoPersona["data"]["apellido_paterno"]." ".$resultadoPersona["data"]["apellido_materno"]); ?></td>
-    								<td><?php echo $resultadoPersona["data"]["curp"]; ?></td>
-                    <td><?php echo $resultadoInstitucion["data"]["nombre"]; ?></td>
-                    <td><?php echo $resultadoPrograma["data"]["nombre"]; ?></td>
+    								<td><?php echo $resultadoAlumno["data"][$i]["id"]; ?></td>
+    								<td><?php echo $resultadoAlumno["data"][$i]["matricula"]; ?></td>
+                    <td><?php echo $resultadoPersona["data"]["apellido_paterno"]; ?></td>
+                    <td><?php echo $resultadoPersona["data"]["apellido_materno"]; ?></td>
+                    <td><?php echo $resultadoPersona["data"]["nombre"]; ?></td>
                     <td><?php
 
 										$maxSituacion = count( $resultadoSituacionValidacion["data"] );
@@ -151,8 +156,11 @@
 										} ?>
 										</td>
     								<td>
-											<a href="ce-validacion-alumno.php?programa_id=<?php echo $resultadoAlumno["data"][$i]["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=consulta"><span id="" title="Abrir" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
-											<a href="ce-validacion-alumno.php?programa_id=<?php echo $resultadoAlumno["data"][$i]["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a>
+											<a href="ce-catalogo-alumno.php?programa_id=<?php echo $resultadoAlumno["data"][$i]["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=consulta"><span id="" title="Consultar" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
+										</td>
+                    <td>
+											<a href="ce-validacion-alumno.php?programa_id=<?php echo $resultadoAlumno["data"][$i]["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion">Validaci&oacute;n</a>
+											<!-- <a href="ce-validacion-alumno.php?programa_id=<?php echo $resultadoAlumno["data"][$i]["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=consulta"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a> -->
 										</td>
     							</tr>
     							<?php
