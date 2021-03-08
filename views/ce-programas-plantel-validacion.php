@@ -46,9 +46,11 @@
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
 						<li><a href="home.php">SIIGES</a></li>
-						<li><a href="ce-instituciones-validacion.php">Instituciones</a></li>
-						<li><a href="ce-planteles-validacion.php?institucion_id=<?php echo $_GET["institucion_id"]; ?>">Planteles</a></li>
-						<li class="active">Programas de Estudios</li>
+						<?php if(Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || (Rol::ROL_ADMIN == $_SESSION["rol_id"] )): ?>
+							<li><a href="ce-instituciones-validacion.php">Instituciones</a></li>
+							<li><a href="ce-planteles-validacion.php?institucion_id=<?php echo $_GET["institucion_id"]; ?>">Planteles</a></li>
+							<li class="active">Programas de Estudios</li>
+						<?php endif;?>
 					</ol>
 				</div>
 			</div>
@@ -96,7 +98,7 @@
 								<td><?php echo $resultadoPrograma["data"][$i]["vigencia"]; ?></td>
 								<td><?php echo $resultadoPrograma["data"][$i]["acuerdo_rvoe"]; ?></td>
 								<td>
-									<?php if(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] || Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || (Rol::ROL_ADMIN == $_SESSION["rol_id"] )): ?>
+									<?php if(Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || (Rol::ROL_ADMIN == $_SESSION["rol_id"] )): ?>
 									<a href="ce-validacion.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Alumnos</span></a>
 									<?php endif; ?>
 								</td>

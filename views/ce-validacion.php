@@ -14,7 +14,7 @@
 	require_once "../models/modelo-validacion.php";
 	require_once "../models/modelo-situacion-validacion.php";
 
-  /*$programa = new Programa( );
+  $programa = new Programa( );
   $programa->setAttributes( array( "id"=>$_GET["programa_id"] ) );
   $resultadoPrograma = $programa->consultarId( );
 
@@ -24,7 +24,7 @@
 
   $institucion = new Institucion();
   $institucion->setAttributes( array( "id"=>$resultadoPlantel["data"]["institucion_id"] ) );
-  $resultadoInstitucion = $institucion->consultarId();*/
+  $resultadoInstitucion = $institucion->consultarId();
 ?>
 
 
@@ -60,8 +60,11 @@
             </ol>
             <ol class="breadcrumb">
       				<li><a href="home.php"><i class="icon icon-home"></i></a></li>
-      				<li><a href="home.php">SIIGES</a></li>
-      				<li class="active">Validacion</li>
+              <?php if(Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || (Rol::ROL_ADMIN == $_SESSION["rol_id"] )): ?>
+                <li><a href="ce-planteles-validacion.php?institucion_id=<?php echo $resultadoInstitucion["data"]["id"]; ?>">Planteles</a></li>
+                <li><a href="ce-programas-plantel-validacion.php?institucion_id=<?php echo $resultadoInstitucion["data"]["id"] ?>&plantel_id=<?php echo $resultadoPlantel["data"]["id"] ?>">Programas de Estudios</a></li>
+                <li class="active">Alumnos</li>
+						  <?php endif;?>
       			</ol>
           </div>
         </div>
@@ -71,7 +74,7 @@
         <!-- CUERPO PRINCIPAL -->
         <div class=" form-group col-sm-12 col-md-12 col-lg-12">
           <!-- TÍTULO -->
-          <div class="col-sm-12 col-md-12 col-lg-12">
+          <div class="row">
             <input id="usuario_id" type="hidden" name="usuario_id" value="<?= $_SESSION['id'] ?>" >
       			<div id="cargar-todos"></div>
       			<h2>Alumnos</h2>
@@ -159,8 +162,9 @@
 											<a href="ce-catalogo-alumno.php?programa_id=<?php echo $resultadoAlumno["data"][$i]["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=consulta"><span id="" title="Consultar" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
 										</td>
                     <td>
+                    <?php if(Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || (Rol::ROL_ADMIN == $_SESSION["rol_id"] )): ?>
 											<a href="ce-validacion-alumno.php?programa_id=<?php echo $resultadoAlumno["data"][$i]["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion">Validaci&oacute;n</a>
-											<!-- <a href="ce-validacion-alumno.php?programa_id=<?php echo $resultadoAlumno["data"][$i]["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=consulta"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a> -->
+						        <?php endif;?>
 										</td>
     							</tr>
     							<?php

@@ -86,8 +86,8 @@
 								<td><?php echo $resultadoInstitucion["data"][$i]["id"]; ?></td>
 								<td><?php echo $resultadoInstitucion["data"][$i]["nombre"]; ?></td>
 								<td>
-									<a href="ce-planteles-validacion.php?institucion_id=<?php echo $resultadoInstitucion["data"][$i]["id"]; ?>">Planteles</a><br />
 									<?php if(Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || (Rol::ROL_ADMIN == $_SESSION["rol_id"] )): ?>
+									<a href="ce-planteles-validacion.php?institucion_id=<?php echo $resultadoInstitucion["data"][$i]["id"]; ?>">Planteles</a><br />
 									<a href="ce-clave-ies.php?institucion_id=<?php echo $resultadoInstitucion["data"][$i]["id"]; ?>">Clave IES</a>
 									<?php endif;?>
 								</td>

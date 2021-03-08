@@ -5,6 +5,7 @@
 
   require_once "../models/modelo-validacion.php";
   require_once "../models/modelo-bitacora.php";
+  require_once "../models/modelo-documento.php";
   require_once "../utilities/utileria-general.php";
 
 	function retornarWebService( $url, $resultado )
@@ -59,40 +60,45 @@
   {
     if ($_FILES) {
       $exito = 0;
-      if( is_uploaded_file( $_FILES["oficio_envio"]["tmp_name"] ) )
+      if( is_uploaded_file( $_FILES["archivo_validacion"]["tmp_name"] ) )
       {
-        if( $_FILES["oficio_envio"]["size"]<2000000 )
+        if( $_FILES["archivo_validacion"]["size"]<2000000 )
         {
-          if( $_FILES["oficio_envio"]["type"]=="application/pdf" )
+          if( $_FILES["archivo_validacion"]["type"]=="application/pdf" )
           {
-            move_uploaded_file( $_FILES["oficio_envio"]["tmp_name"], "../uploads/validaciones/oficio_envio_".$_POST["alumno_id"].".pdf" );
+            $dir_institucion = 'Institucion'.$_POST["institucion_id"];
+            $dir_plantel = '/PLANTEL'.$_POST["plantel_id"];
+            $dir_validacion = '/validaciones';
+            $directorio = Documento::$dir_subida.$dir_institucion.$dir_plantel.$dir_validacion;
+            !is_dir($directorio)?mkdir($directorio, 0755):false;
+            move_uploaded_file( $_FILES["archivo_validacion"]["tmp_name"], $directorio."/archivo_validacion".$_POST["alumno_id"].".pdf" );
             $exito = 1;
           }
         }
       }
 
-      if( $_FILES["oficio_envio"]["name"]!=null && $exito==0 )
+      if( $_FILES["archivo_validacion"]["name"]!=null && $exito==0 )
       {
         header( "Location: ../views/ce-validacion-alumno.php?programa_id=".$_POST["programa_id"]."&alumno_id=".$_POST["alumno_id"]."&proceso=edicion"."&codigo=404" );
         exit( );
       }
 
-      if( $_FILES["oficio_respuesta"]["name"]!=null && $exito==0 )
+      /* if( $_FILES["oficio_respuesta"]["name"]!=null && $exito==0 )
       {
         header( "Location: ../views/ce-validacion-alumno.php?programa_id=".$_POST["programa_id"]."&alumno_id=".$_POST["alumno_id"]."&proceso=edicion"."&codigo=404" );
         exit( );
-      }
+      } */
     }
 
 		$parametros = array( );
 		$parametros["id"] = $_POST["id"];
     if ($_FILES) {
-      if( $_FILES["oficio_envio"]["name"]!=null ){ $parametros["oficio_envio"] = "oficio_envio_".$_POST["alumno_id"].".pdf"; }
-      if( $_FILES["oficio_respuesta"]["name"]!=null ){ $parametros["oficio_respuesta"] = "oficio_respuesta_".$_POST["alumno_id"].".pdf"; }
+      if( $_FILES["archivo_validacion"]["name"]!=null ){ $parametros["archivo_validacion"] = "archivo_validacion".$_POST["alumno_id"].".pdf"; }
     }
 
     $aux = new Utileria( );
     $_POST = $aux->limpiarEntrada( $_POST );
+    print_r($_POST);
     foreach( $_POST as $atributo=>$valor )
 		{
 			$parametros[$atributo] = $valor;
@@ -100,7 +106,6 @@
 
 		$obj = new Validacion( );
 		$obj->setAttributes( $parametros );
-    print_r($parametros);
     $resultado = $obj->guardar( );
     /*
     // Registro en bitacora

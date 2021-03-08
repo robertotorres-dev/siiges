@@ -10,6 +10,8 @@
 	require_once "../models/modelo-persona.php";
 	require_once "../models/modelo-situacion.php";
 	require_once "../models/modelo-institucion.php";
+	require_once "../models/modelo-situacion-validacion.php";
+	require_once "../models/modelo-validacion.php";
 
 	$programa = new Programa( );
 	$programa->setAttributes( array( "id"=>$_GET["programa_id"] ) );
@@ -22,6 +24,10 @@
 	$institucion = new Institucion();
 	$institucion->setAttributes( array( "id"=>$resultadoPlantel["data"]["institucion_id"] ) );
 	$resultadoInstitucion = $institucion->consultarId();
+
+	$situacionValidacion = new SituacionValidacion( );
+	$situacionValidacion->setAttributes( array( ) );
+	$resultadoSituacionValidacion = $situacionValidacion->consultarTodos( );
 
 ?>
 
@@ -133,6 +139,16 @@
 									$situacion = new Situacion( );
 									$situacion->setAttributes( $parametros3 );
 									$resultadoSituacion = $situacion->consultarId( );
+
+									$validacion = new Validacion( );
+									$res_validacion = $validacion->consultarPor('validaciones', array("alumno_id"=>$resultadoAlumno["data"][$i]["id"], "deleted_at"), '*' );
+
+									$max = count( $resultadoSituacionValidacion["data"] );
+									for( $j=0; $j<$max; $j++ )
+									{
+										$resultadoSituacionValidacion["data"][$j]["id"]==$res_validacion["data"][0]["situacion_validacion_id"] ? $res_validacion["data"][0]["situacion_validacion_txt"] = $resultadoSituacionValidacion["data"][$j]["nombre"] : "" ;
+									}
+									
 							?>
 							<tr>
 								<td><?php echo $resultadoAlumno["data"][$i]["id"]; ?></td>
@@ -140,7 +156,16 @@
 								<td><?php echo $resultadoPersona["data"]["apellido_paterno"]; ?></td>
 								<td><?php echo $resultadoPersona["data"]["apellido_materno"]; ?></td>
 								<td><?php echo $resultadoPersona["data"]["nombre"]; ?></td>
-								<td><?php echo $resultadoSituacion["data"]["nombre"]; ?></td>
+								<td>
+								<?php 
+									echo $resultadoSituacion["data"]["nombre"];
+									
+									if(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] )):
+										echo "<br>";
+										echo $res_validacion["data"][0]["situacion_validacion_txt"];
+									endif;
+								?>
+								</td>
 								<td>
 									<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=consulta"><span id="" title="Abrir" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
 									<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a>
@@ -148,6 +173,10 @@
 								</td>
 								<td>
 									<a href="ce-documentos.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>">Documentos</span></a>
+									<?php if(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] )): ?>
+										<br/>
+										<a href="ce-validacion-alumno.php?programa_id=<?php echo $resultadoAlumno["data"][$i]["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion">Validaci&oacute;n</a>
+									<?php endif;?>
 									<br/>
 									<a href="ce-kardex.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>">Kardex</a>
 								</td>

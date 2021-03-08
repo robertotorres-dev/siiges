@@ -144,10 +144,11 @@
 					<!-- BARRA DE NAVEGACION -->
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
-						<li><a href="home.php">SIIGES</a></li>
-						<li><a href="ce-programas.php">Programas de Estudios</a></li>
-						<li><a href="ce-alumnos.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Alumnos</a></li>
-						<li class="active"><?php echo $titulo; ?></li>
+						<?php if(Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || (Rol::ROL_ADMIN == $_SESSION["rol_id"] )): ?>
+							<li><a href="ce-programas-plantel-validacion.php?institucion_id=<?php echo $resultadoInstitucion["data"]["id"] ?>&plantel_id=<?php echo $resultadoPlantel["data"]["id"] ?>">Programas de Estudios</a></li>
+							<li><a href="ce-validacion.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Alumnos</a></li>
+							<li class="active"><?php echo $titulo; ?></li>
+						<?php endif;?>
 					</ol>
 				</div>
 			</div>
@@ -360,14 +361,14 @@
 					<div class="col-sm-4">
             <div class="form-group">
 							<label class="txt-label1" for="tipo_validacion">Tipo de validaci&oacute;n</label>
-							<select id="tipo_validacion" name="tipo_validacion" class="selectpicker" data-live-search="true" data-width="100%" required>
+							<select id="tipo_validacion_id" name="tipo_validacion_id" class="selectpicker" data-live-search="true" data-width="100%" required>
 							<option value=""> </option>
 								<?php
 									$max = count( $resultadoTipoValidacion["data"] );
 
 									for( $i=0; $i<$max; $i++ )
 									{
-										if( $resultadoTipoValidacion["data"][$i]["id"]==$res_validacion["data"][0]["situacion_validacion_id"] )
+										if( $resultadoTipoValidacion["data"][$i]["id"]==$res_validacion["data"][0]["tipo_validacion_id"] )
 										{
 											echo "<option value='".$resultadoTipoValidacion["data"][$i]["id"]."' selected>".$resultadoTipoValidacion["data"][$i]["nombre"]."</option>";
 										}
@@ -392,29 +393,17 @@
 					</div>
 				</div>
 				<div class="row">
-          <div class="col-sm-4">
-            <div class="form-group">
-							<label class="control-label" for="folio_envio">Folio de Oficio de Vaildaci&oacute;n</label>
-							<input type="text" id="folio_envio" name="folio_envio" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["folio_envio"] : ""; ?>" maxlength="255" class="form-control" required />
-						</div>
-          </div>
-					<div class="col-sm-4">
-            <div class="form-group">
-							<label class="txt-label1" for="fecha_envio">Fecha de Oficio de Validaci&oacute;n</label>
-							<input type="text" id="fecha_envio" name="fecha_envio" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["fecha_envio"] : ""; ?>" maxlength="255" class="form-control" required />
-						</div>
-          </div>
-					<div class="col-sm-4">
-            <div class="form-group">
-						</div>
-          </div>
-        </div>
-				<div class="row">
           <div class="col-sm-8">
             <div class="form-group">
-							<label class="control-label" for="oficio_envio">Oficio de Validaci&oacute;n</label>
-							<input type="file" id="oficio_envio" name="oficio_envio" accept="application/pdf" class="form-control" />
-							<div><a href="../uploads/validaciones/<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["oficio_envio"] : ""; ?>" target="_blank"><?php echo isset($res_validacion["data"][0]["oficio_envio"]) ? "Oficio de validación" : ""; ?></a></div>
+							<label class="control-label" for="archivo_validacion">Archivo de Validaci&oacute;n</label>
+							<input type="file" id="archivo_validacion" name="archivo_validacion" accept="application/pdf" class="form-control" />
+							<div><a href="../uploads/<?php echo $res_validacion["data"] ? "Institucion".$resultadoInstitucion["data"]["id"]."/PLANTEL".$resultadoPlantel["data"]["id"]."/validaciones/".$res_validacion["data"][0]["archivo_validacion"] : ""; ?>" target="_blank"><?php echo isset($res_validacion["data"][0]["archivo_validacion"]) ? "Oficio de validación" : ""; ?></a></div>
+						</div>
+          </div>
+					<div class="col-sm-4">
+            <div class="form-group">
+							<label class="txt-label1" for="fecha_validacion">Fecha de Archivo de Validaci&oacute;n</label>
+							<input type="text" id="fecha_validacion" name="fecha_validacion" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["fecha_validacion"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
         </div>
@@ -433,11 +422,19 @@
           <div class="col-sm-12">
             <div class="form-group">
 							<input type="hidden"  name="id" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["id"] : ""; ?>" />
+							<input type="hidden"  name="institucion_id" value="<?php echo($resultadoInstitucion["data"]["id"]); ?>" />
+							<input type="hidden"  name="plantel_id" value="<?php echo($resultadoPlantel["data"]["id"]); ?>" />
 							<input type="hidden"  name="usuario_id" value="<?php echo isset($_SESSION["id"])?$_SESSION["id"]:-1; ?>" />
-							<input type="hidden"  name="url" value="../views/ce-validacion-alumno.php?programa_id=<?php echo $_GET["programa_id"]."&alumno_id=".$_GET["alumno_id"]."&proceso=edicion"."&codigo=200"; ?> "/>
+							<?php if(Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || (Rol::ROL_ADMIN == $_SESSION["rol_id"] )): ?>
+								<input type="hidden"  name="url" value="../views/ce-validacion.php?programa_id=<?php echo $_GET["programa_id"]."&codigo=200"; ?> "/>
+							<?php endif;?>
+							<?php if(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] )): ?>
+								<input type="hidden"  name="url" value="../views/ce-alumnos.php?programa_id=<?php echo $_GET["programa_id"]."&codigo=200"; ?> "/>
+							<?php endif;?>
 							<input type="hidden"  name="webService" value="guardar" />
 							<input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" />
 						</div>
+						
           </div>
         </div>
 				<?php
@@ -467,7 +464,7 @@
 			dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
 			dateFormat: 'yy-mm-dd'
 		})
-		$("#fecha_envio").datepicker({
+		$("#fecha_validacion").datepicker({
 			firstDay: 1,
 			monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
 			dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],

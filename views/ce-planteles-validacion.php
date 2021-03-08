@@ -54,7 +54,9 @@
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
 						<li><a href="home.php">SIIGES</a></li>
-						<li><a href="ce-instituciones-validacion.php">Instituciones</a></li>
+						<?php if(Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || (Rol::ROL_ADMIN == $_SESSION["rol_id"] )): ?>
+							<li><a href="ce-instituciones-validacion.php">Instituciones</a></li>
+						<?php endif;?>
 						<li class="active">Planteles</li>
 					</ol>
 				</div>
