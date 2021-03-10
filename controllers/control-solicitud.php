@@ -1137,7 +1137,9 @@ session_start();
               if( $campos["estatus_solicitud_id"] >= 2 && $campos["estatus_solicitud_id"]<100){
                 $opciones_edicion  =  "<a title='Detalles de la solicitud' href='detalles-solicitudes.php?solicitud=".$campos["id"].$txt_auxi."'><span class='glyphicon glyphicon-list-alt'></span></a>".$espacio."<a title='Ver solicitud' href='ver-solicitudes.php?solicitud=".$campos["id"]."&tipo=4".$txt_auxi."'><span class='glyphicon glyphicon-eye-open'></span></a>".$espacio."<a title='Eliminar solicitud'  onclick='Solicitudes.modalEliminar(".htmlentities($json).")' href='#'><span class='glyphicon glyphicon-trash'></span></a>";
               }
-
+              if( $campos["estatus_solicitud_id"] == 200){
+                $opciones_edicion  =  "<a title='Detalles de la solicitud' href='detalles-solicitudes.php?solicitud=".$campos["id"].$txt_auxi."'><span class='glyphicon glyphicon-list-alt'></span></a>".$espacio."<a title='Ver solicitud' href='ver-solicitudes.php?solicitud=".$campos["id"]."&tipo=4".$txt_auxi."'><span class='glyphicon glyphicon-eye-open'></span></a>".$espacio."<a title='Eliminar solicitud'  onclick='Solicitudes.modalEliminar(".htmlentities($json).")' href='#'><span class='glyphicon glyphicon-trash'></span></a>";
+              }
               if( $campos["estatus_solicitud_id"] == 100){
                 $opciones_edicion  =  "<a title='Detalles de la solicitud' href='detalles-solicitudes.php?solicitud=".$campos["id"].$txt_auxi."'><span class='glyphicon glyphicon-list-alt'></span></a>".$espacio."<a title='Ver solicitud' href='ver-solicitudes.php?solicitud=".$campos["id"]."&tipo=4".$txt_auxi."'><span class='glyphicon glyphicon-eye-open'></span></a>";
               }
