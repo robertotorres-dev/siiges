@@ -93,18 +93,23 @@
           <div class="col-sm-12">
           </div>
         </div>
+				<!-- Contenido del formulario -->
+				<div id="tabs" class="tab-content col-sm-12 col-md-12">
+
+
+				</div>
 				<div class="row">
           <div class="col-sm-12">
             <table id="tabla-reporte1" class="table table-striped table-bordered" cellspacing="0" width="100%">
 	            <thead>
 								<tr>
-	                <th width="25%">Grado</th>
-									<th width="25%">Asignatura</th>
+	                <th width="15%">Grado</th>
+									<th width="35%">Asignatura</th>
 	                <th width="10%">Clave</th>
-									<th width="10%">Seriaci&oacuten</th>
+									<th width="10%">Seriaci&oacute;n</th>
                   <th width="10%">Docente</th>
                   <th width="10%">Independiente</th>
-                  <th width="10%">Creditos</th>
+                  <th width="10%">Cr&eacute;ditos</th>
 								</tr>
 							</thead>
 	            <tbody>
@@ -180,7 +185,7 @@
             <div class="form-group">
 							<input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" />
 							<input type="hidden"  name="webService" value="guardarAsignaturaPrograma" />
-							<input type="hidden"  name="programa_id" value="<?php echo $_GET["programa_id"]; ?>" />
+							<input type="hidden" id="programa_id" name="programa_id" value="<?php echo $_GET["programa_id"]; ?>" />
 						</div>
           </div>
         </div>
@@ -190,17 +195,18 @@
 		</section>
 	</div>
 
-<!-- JS GOB.MX -->
-<script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
-<!-- JS JQUERY -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- JS DATATABLE -->
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-<!-- JS LIVESELECT -->
-<script src="../js/bootstrap-select.min.js"></script>
-<!-- JS CALENDAR -->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript">
-</script>
+	<!-- JS GOB.MX -->
+	<script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
+	<!-- JS JQUERY -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- JS DATATABLE -->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+	<!-- JS LIVESELECT -->
+	<script src="../js/bootstrap-select.min.js"></script>
+	<!-- JS CALENDAR -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script type="text/javascript"></script>
+	<!-- SECCION PARA SCRIPTS -->
+	<script src="../js/catalogoAsignaturas.js"></script>
 </body>
 </html>

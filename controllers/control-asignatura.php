@@ -53,6 +53,18 @@
 		retornarWebService( $_POST["url"], $resultado );
   }
 
+  // Web service para consultar registro por programa id
+  if( $_POST["webService"]=="consultarPorPrograma" )
+  {
+    $obj = new Asignatura();
+    $aux = new Utileria( );
+    $_POST = $aux->limpiarEntrada( $_POST );
+		$obj->setAttributes( $_POST );
+		$resultadoAsignaturas = $obj->consultarPor('asignaturas', array("programa_id"=>$_POST['programa_id'], "deleted_at"), '*' );
+    
+		retornarWebService( $_POST["url"], $resultadoAsignaturas );
+  }
+
   // Web service para guardar registro
   if( $_POST["webService"]=="guardar" )
   {
