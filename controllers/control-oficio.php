@@ -99,7 +99,7 @@
     $aux = new Utileria( );
     $_POST = $aux->limpiarEntrada( $_POST );
 
-    $oficio = $oficio->consultarPor("oficios",["solicitud_id"=>$_POST["solicitud_id"],"documento"=>$_POST["documento"]],"*");
+    $oficio = $oficio->consultarPor("oficios",array("solicitud_id"=>$_POST["solicitud_id"],"documento"=>$_POST["documento"], "deleted_at"),"*");
     $resultado = !empty($oficio["data"][0])?$oficio["data"][0]:false;
 
     // Registro en bitacora

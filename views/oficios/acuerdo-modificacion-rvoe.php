@@ -30,8 +30,8 @@ $pdf->getProgramaPorSolicitud($_GET["id"]);
 $pdf->getPlantel($pdf->programa["plantel_id"]);
 $pdf->getInstitucion($pdf->plantel["institucion_id"]);
 $pdf->getRepresentante($pdf->institucion["usuario_id"]);
-$pdf->getInspectores($pdf->programa["id"]);
-$pdf->getInspecciones($pdf->programa["id"]);
+//$pdf->getInspectores($pdf->programa["id"]);
+//$pdf->getInspecciones($pdf->programa["id"]);
 
 $registro["solicitud_id"] = $_GET["id"];
 $registro["oficio"] = $_GET["oficio"];
@@ -282,6 +282,10 @@ $pdf->SetFont( "Arial", "", 9 );
 
 if(!$oficio){
   $pdf->guardarOficio($registro);
+  $fecha = date( "Y-m-d H:i:s" );
+  $mensaje = "Documento emitido con fecha de ".date( "Y-m-d" ) . " y oficio ".$registro["oficio"] ;
+  $pdf->actualizarEstatus("10",$registro["solicitud_id"],$mensaje);
+  $pdf->actualizarPrograma($registro["solicitud_id"],$registro["oficio"]);
 }
 
 $pdf->Output( "I", "AcuerdoModificacionRVOE.pdf" );

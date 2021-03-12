@@ -24,8 +24,8 @@ $pdf->getProgramaPorSolicitud($_GET["id"]);
 $pdf->getPlantel($pdf->programa["plantel_id"]);
 $pdf->getInstitucion($pdf->plantel["institucion_id"]);
 $pdf->getRepresentante($pdf->institucion["usuario_id"]);
-$pdf->getInspectores($pdf->programa["id"]);
-$pdf->getInspecciones($pdf->programa["id"]);
+//$pdf->getInspectores($pdf->programa["id"]);
+//$pdf->getInspecciones($pdf->programa["id"]);
 
 
 $registro["solicitud_id"] = $_GET["id"];
@@ -213,6 +213,9 @@ $pdf->Cell( 0, 5,utf8_decode("JMNP/AAZ/lmbh"), 0, 1, "L");
 
 if(!$oficio){
   $pdf->guardarOficio($registro);
+  $fecha = date( "Y-m-d H:i:s" );
+  $mensaje = "Documento emitido con fecha de ".date( "Y-m-d" ) . " y oficio ".$registro["oficio"] ;
+  $pdf->actualizarEstatus("9",$registro["solicitud_id"],$mensaje);
 }
 
 $pdf->Output( "I", "DictamenModificacionRVOE.pdf" );
