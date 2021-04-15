@@ -104,6 +104,52 @@ table > tbody > tr > td > a{
 	border-bottom-left-radius: 10px;
 }
 
+/*PROPIEDADES IMAGENES*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
+
+.image-wrap {
+border: 1px solid #ddd !important;
+border-radius: 4px !important;
+padding: 5px !important;
+width: 300px !important;
+margin: 20px auto;
+}
+
+.image {
+width: 100%;
+padding-top: calc(100% / (16/25));
+background-size: 100%;
+background-position: center;
+background-repeat: no-repeat;
+
+}
+
+.questionmark {
+  color: black !important;
+}
+
+#carta-validacion {
+background-image: url('../images/carta_validacion.jpg');
+}
+
+#oficio-validacion {
+background-image: url('../images/oficio_validacion.jpg');
+}
+
+#cedula {
+background-image: url('../images/cedula_profesional.jpg');
+}
+
+.image:hover {
+background-size: 200%;
+}
+
+
 
 /*PROPIEDADES REGISTRO Y LOGIN*/
 

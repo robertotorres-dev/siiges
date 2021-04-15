@@ -7,6 +7,7 @@
   require_once "../models/modelo-bitacora.php";
   require_once "../models/modelo-alumno.php";
   require_once "../models/modelo-calificacion.php";
+  require_once "../models/modelo-validacion.php";
   require_once "../utilities/utileria-general.php";
 
   session_start( );
@@ -113,6 +114,14 @@
         header( "Location: ../views/ce-inscripcion.php?programa_id=".$_POST["programa_id"]."&ciclo_id=".$_POST["ciclo_id"]."&grado=".$_POST["grado"]."&grupo_id=".$_POST["grupo_id"]."&codigo=403" );
         exit( );
       }
+
+      $validacion = new Validacion( );
+	    $res_validacion = $validacion->consultarPor('validaciones', array("alumno_id"=>$resultadoAlumno["data"][0]["id"], "deleted_at"), '*' );
+      if (!$res_validacion["data"] || $res_validacion["data"][0]["situacion_validacion_id"] != 1 ) {
+        header( "Location: ../views/ce-inscripcion.php?programa_id=".$_POST["programa_id"]."&ciclo_id=".$_POST["ciclo_id"]."&grado=".$_POST["grado"]."&grupo_id=".$_POST["grupo_id"]."&codigo=403" );
+        exit( );
+      }
+
       $parametros2 = array( );
       $parametros2["alumno_id"] = $resultadoAlumno["data"][0]["id"];
       $parametros2["grupo_id"] = $_POST["grupo_id"];

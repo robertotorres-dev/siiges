@@ -31,8 +31,6 @@ if(isset($_SESSION["resultado"])){
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<!-- CSS PROPIO -->
 	<link rel="stylesheet" type="text/css" href="../css/estilos.css">
-	<!-- Zoom CSS -->
-<link rel="stylesheet" type="text/css" href="css/zoom.css">
 </head>
 
 <body>
@@ -85,11 +83,12 @@ if(isset($_SESSION["resultado"])){
 							</ul>
 						</div>
 					</div>
-					<div class="row">
-						<p>
-							<img src="../images/page.jpg" class="rounded mx-auto d-block" alt="...">
-						</p>
+					<div class="row" >
+						<div class="image-wrap">
+							<div id="carta-validacion" class="image"></div>
+						</div>
 					</div>
+					<br><br>
 					<div class="row">
 						<div class="col-sm-12">
 							<h4>Oficio de validaci&oacute;n</h4>
@@ -101,6 +100,11 @@ if(isset($_SESSION["resultado"])){
 							</ul>
 						</div>
 					</div>
+					<div class="row" >
+							<div class="image-wrap">
+								<div id="oficio-validacion" class="image"></div>
+							</div>
+					</div>
 					<div class="row">
 						<div class="col-sm-12">
 							<h4>C&eacute;dula profesional</h4>
@@ -110,6 +114,11 @@ if(isset($_SESSION["resultado"])){
 								<li>Firma de directivos en original o firma electr&oacute;nica</li>
 							</ul>
 						</div>
+					</div>
+					<div class="row" >
+							<div class="image-wrap">
+								<div id="cedula" class="image"></div>
+							</div>
 					</div>
 				</div>
 			</form>
@@ -127,16 +136,7 @@ if(isset($_SESSION["resultado"])){
 <script src="../js/bootstrap-select.min.js"></script>
 <!-- JS CALENDAR -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-<!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-<!-- Zoom Js -->
-<script src="js/zoom.js"></script>
-<script>
-</script>
+<!-- JS PROPIOS -->
 <script src="../js/validacionAlumno.js"></script>
 </body>
 </html>

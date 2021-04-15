@@ -360,9 +360,7 @@
           
 					<div class="col-sm-4">
             <div class="form-group">
-							<label class="txt-label1" for="tipo_validacion">Tipo de validaci&oacute;n
-							<a href="../views/ce-informacion-tipo-validacion.php" target="_blank"><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="left" title="top"></span></a>
-							</label>
+							<label class="txt-label1" for="tipo_validacion">Tipo de validaci&oacute;n</label>
 							<select id="tipo_validacion_id" name="tipo_validacion_id" class="selectpicker" data-live-search="true" data-width="100%" required>
 							<option value=""> </option>
 								<?php
@@ -397,14 +395,22 @@
 				<div class="row">
           <div class="col-sm-8">
             <div class="form-group">
-							<label class="control-label" for="archivo_validacion">Archivo de Validaci&oacute;n</label>
+							<label class="control-label" for="archivo_validacion">Archivo de Validaci&oacute;n
+								<a class="questionmark" href="../views/ce-descripcion-tipo-validacion.php" target="_blank">
+									<span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top" title="Da clic para ver los datalles de cada documento"></span>
+								</a>
+							</label>
 							<input type="file" id="archivo_validacion" name="archivo_validacion" accept="application/pdf" class="form-control" />
 							<div><a href="../uploads/<?php echo $res_validacion["data"] ? "Institucion".$resultadoInstitucion["data"]["id"]."/PLANTEL".$resultadoPlantel["data"]["id"]."/validaciones/".$res_validacion["data"][0]["archivo_validacion"] : ""; ?>" target="_blank"><?php echo isset($res_validacion["data"][0]["archivo_validacion"]) ? "Oficio de validación" : ""; ?></a></div>
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
-							<label class="txt-label1" for="fecha_validacion">Fecha de Archivo de Validaci&oacute;n</label>
+							<label class="txt-label1" for="fecha_validacion">Fecha de Archivo de Validaci&oacute;n
+								<a class="questionmark" href="#">
+									<span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top" title="Fecha en la que la IES realiza la validación del documento"></span>
+								</a>
+							</label>
 							<input type="text" id="fecha_validacion" name="fecha_validacion" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["fecha_validacion"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
@@ -434,7 +440,7 @@
 								<input type="hidden"  name="url" value="../views/ce-alumnos.php?programa_id=<?php echo $_GET["programa_id"]."&codigo=200"; ?> "/>
 							<?php endif;?>
 							<input type="hidden"  name="webService" value="guardar" />
-							<input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" data-toggle="tooltip" data-placement="left" title="Tooltip on left" />
+							<input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" />
 						</div>
 						
           </div>
