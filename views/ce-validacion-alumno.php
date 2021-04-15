@@ -110,7 +110,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>SIIGES</title>
+	<title>Validaci&oacute;n</title>
 	<!-- CSS GOB.MX -->
 	<link href="../favicon.ico" rel="shortcut icon">
 	<link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">
@@ -284,13 +284,13 @@
 				<div class="row">
           <div class="col-sm-4">
             <div class="form-group">
-							<label class="control-label" for="nombre_institucion_emisora">Instituci&oacute;n de Procedencia</label>
+							<label class="control-label" for="nombre_institucion_emisora">Instituci&oacute;n de Procedencia*: </label>
 							<input type="text" id="nombre_institucion_emisora" name="nombre_institucion_emisora" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["nombre_institucion_emisora"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
-							<label class="txt-label1" for="estado">Estado de procedencia</label>
+							<label class="txt-label1" for="estado">Estado de procedencia*: </label>
 							<select id="estado_id" name="estado_id" class="selectpicker" data-live-search="true" data-width="100%" required>
 								<option value=""> </option>
 								<?php
@@ -314,7 +314,7 @@
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
-							<label class="txt-label1" for="clave_centro_trabajo_emisor">CCT de Procedencia</label>
+							<label class="txt-label1" for="clave_centro_trabajo_emisor">CCT de Procedencia*:</label>
 							<input type="text" id="clave_centro_trabajo_emisor" name="clave_centro_trabajo_emisor" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["clave_centro_trabajo_emisor"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
@@ -322,19 +322,19 @@
 				<div class="row">
           <div class="col-sm-4">
             <div class="form-group">
-							<label class="control-label" for="folio">Folio de Certificado</label>
+							<label class="control-label" for="folio">Folio de Certificado*:</label>
 							<input type="text" id="folio" name="folio" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["folio"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
-							<label class="txt-label1" for="fecha_expedicion">Fecha de expedici&oacute;n</label>
+							<label class="txt-label1" for="fecha_expedicion">Fecha de expedici&oacute;n*:</label>
 							<input type="text" id="fecha_expedicion" name="fecha_expedicion" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["fecha_expedicion"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
-							<label class="txt-label1" for="situacion_validacion_id">Situaci&oacute;n de documento</label>
+							<label class="txt-label1" for="situacion_validacion_id">Situaci&oacute;n de documento*: </label>
 							<select id="situacion_validacion_id" name="situacion_validacion_id" class="selectpicker" data-live-search="true" data-width="100%" required>
 								<option value=""> </option>
 								<?php
@@ -360,7 +360,9 @@
           
 					<div class="col-sm-4">
             <div class="form-group">
-							<label class="txt-label1" for="tipo_validacion">Tipo de validaci&oacute;n</label>
+							<label class="txt-label1" for="tipo_validacion">Tipo de validaci&oacute;n
+							<a href="../views/ce-informacion-tipo-validacion.php" target="_blank"><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="left" title="top"></span></a>
+							</label>
 							<select id="tipo_validacion_id" name="tipo_validacion_id" class="selectpicker" data-live-search="true" data-width="100%" required>
 							<option value=""> </option>
 								<?php
@@ -432,7 +434,7 @@
 								<input type="hidden"  name="url" value="../views/ce-alumnos.php?programa_id=<?php echo $_GET["programa_id"]."&codigo=200"; ?> "/>
 							<?php endif;?>
 							<input type="hidden"  name="webService" value="guardar" />
-							<input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" />
+							<input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" data-toggle="tooltip" data-placement="left" title="Tooltip on left" />
 						</div>
 						
           </div>
@@ -457,26 +459,7 @@
 <!-- JS CALENDAR -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-	$(document).ready(function(){
-		$("#fecha_expedicion").datepicker({
-			firstDay: 1,
-			monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
-			dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
-			dateFormat: 'yy-mm-dd'
-		})
-		$("#fecha_validacion").datepicker({
-			firstDay: 1,
-			monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
-			dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
-			dateFormat: 'yy-mm-dd'
-		})
-		$("#fecha_respuesta").datepicker({
-			firstDay: 1,
-			monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
-			dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
-			dateFormat: 'yy-mm-dd'
-		})
-	});
 </script>
+<script src="../js/validacionAlumno.js"></script>
 </body>
 </html>
