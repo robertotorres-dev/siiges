@@ -204,12 +204,12 @@ $pdf->SetTextColor( 127, 127,127 );
 $pdf->SetFont( "Arial", "", 8 );
 $pdf->MultiCell( 0, 3, utf8_decode("NOMBRES DE PERSONAS FÍSICAS: SE DEBERÁ ANEXAR LA BIOGRAFÍA O FUNDAMENTO POR EL QUE SE HACE LA PROPUESTA DE NOMBRE. EN SU CASO, SE ANEXARÁ LA BIBLIOGRAFÍA QUE SIRVA DE FUENTE DE CONSULTA (AUTOR, TÍTULO DE LA OBRA EDITORIAL, LUGAR Y FECHA DE EDICIÓN)."), 0, "J");
 $pdf->Ln( 30 );
-
+$nombreRepresentante = utf8_decode($pdf->nombreRepresentante);
 $pdf->SetTextColor( 0, 0,0 );
 $pdf->SetFont( "Arial", "", 11 );
 $pdf->Cell( 0, 5, "BAJO PROTESTA DE DECIR VERDAD", 0, 1, "C");
 $pdf->SetFont( "Arial", "B", 11 );
-$pdf->Cell( 0, 5, mb_strtoupper(utf8_decode($pdf->nombreRepresentante)), 0, 1, "C");
+$pdf->Cell( 0, 5, strtoupper($nombreRepresentante), 0, 1, "C");
 
 
   $pdf->Output( "I", "FDA03.pdf" );

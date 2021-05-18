@@ -325,7 +325,7 @@ class PDF extends FPDF
    }
 
    $this->diligencias = new SolicitudUsuario();
-   $this->diligencias = $this->diligencias->consultarPor("solicitudes_usuarios",["solicitud_id"=>$this->solicitud["id"]],"*");
+   $this->diligencias = $this->diligencias->consultarPor("solicitudes_usuarios",array("solicitud_id"=>$this->solicitud["id"], "deleted_at"),"*");
    $this->diligencias = !empty($this->diligencias["data"])?$this->diligencias["data"]:false;
    if(!$this->diligencias){
      $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Solicitud usuario no encontrada.","data"=>[]]);

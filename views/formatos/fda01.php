@@ -225,7 +225,7 @@ if(!$usuarioR){
 $nombreRepresentante = $usuarioR["persona"]["nombre"]." ".$usuarioR["persona"]["apellido_paterno"]." ".$usuarioR["persona"]["apellido_materno"];
 
 $diligencias = new SolicitudUsuario();
-$diligencias = $diligencias->consultarPor("solicitudes_usuarios",["solicitud_id"=>$solicitud["id"]],"*");
+$diligencias = $diligencias->consultarPor("solicitudes_usuarios",array("solicitud_id"=>$solicitud["id"], "deleted_at"),"*");
 $diligencias = !empty($diligencias["data"])?$diligencias["data"]:false;
 if(!$diligencias){
   $_SESSION["resultado"] = json_encode(["status"=>"404","message"=>"Personal para diligencias no encontrados.","data"=>[]]);
