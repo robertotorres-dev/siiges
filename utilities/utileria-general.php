@@ -45,8 +45,9 @@
 			$acceso = false;
 			foreach ($modulos as $modulo) {
 				$nombre = $modulo["modulo"]["nombre"];
-				// echo "<br>MODULO:"; var_dump($nombre);
-				// echo " Comparacion:"; var_dump(strpos($file,$nombre));
+			/* 	echo strpos($file,$nombre);
+				echo "<br>MODULO:"; var_dump($nombre);
+				echo " Comparacion:"; var_dump(strpos($file,$nombre)); */
 				if(strpos($file,$nombre) !== false){
 					$acceso = true;
 					break;

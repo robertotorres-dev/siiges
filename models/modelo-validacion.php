@@ -13,19 +13,19 @@
     protected $alumno_id;
     protected $usuario_id;
     protected $estado_id;
-    protected $nombre_institucion_emisora;
-    protected $fecha_expedicion;
+    protected $situacion_validacion_id;
+    protected $tipo_validacion_id;
+    protected $nivel_id;
     protected $folio;
-    protected $folio_validacion;
-    protected $archivo_validacion;
-    protected $fecha_acreditacion;
-    protected $plan_anterior;
+    protected $fecha_expedicion;
+    protected $nombre_institucion_emisora;
     protected $clave_centro_trabajo_emisor;
-    protected $fecha_envio;
-    protected $situacion_documento;
-    protected $observaciones;
-    protected $fecha_actualizacion;
-
+    protected $fecha_inicio_antecedente;
+    protected $fecha_fin_antecedente;
+    protected $cedula_profesional;
+    protected $archivo_validacion;
+    protected $fecha_validacion;
+    
 		// Constructor
 		public function __construct( )
     {

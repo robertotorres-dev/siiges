@@ -15,6 +15,7 @@
 	require_once "../models/modelo-institucion.php";
 	require_once "../models/modelo-domicilio.php";
 	require_once "../models/modelo-estado.php";
+	require_once "../models/modelo-nivel.php";
 	require_once "../models/modelo-situacion-validacion.php";
 	require_once "../models/modelo-tipo-validacion.php";
 	require_once "../models/modelo-validacion.php";
@@ -49,6 +50,10 @@
 	$estado->setAttributes( array( ) );
 	$resultadoEstado = $estado->consultarTodos( );
 
+	$nivel = new Nivel( );
+	$nivel->setAttributes( array( ) );
+	$resultadoNivel = $nivel->consultarTodos( );
+
 	$situacionValidacion = new SituacionValidacion( );
 	$situacionValidacion->setAttributes( array( ) );
 	$resultadoSituacionValidacion = $situacionValidacion->consultarTodos( );
@@ -61,12 +66,14 @@
 	{
 		$titulo_certificado1 = "Archivo Certificado de Bachillerato o equivalente (PDF)";
 		$titulo_certificado2 = "Acreditación Certificado de Bachillerato";
+		$titulo_certificado3 = "Folio de certificado*:";
 	}
 
 	if( $resultadoPrograma["data"]["nivel_id"]>=3 && $resultadoPrograma["data"]["nivel_id"]<=7)
 	{
 		$titulo_certificado1 = "Archivo C&eacute;dula Profesional o T&iacute;tulo (PDF)";
 		$titulo_certificado2 = "Acreditación C&eacute;dula Profesional o T&iacute;tulo";
+		$titulo_certificado3 = "Folio de c&eacute;dula profesional o t&iacute;tulo*:";
 	}
 
 
@@ -148,6 +155,9 @@
 							<li><a href="ce-programas-plantel-validacion.php?institucion_id=<?php echo $resultadoInstitucion["data"]["id"] ?>&plantel_id=<?php echo $resultadoPlantel["data"]["id"] ?>">Programas de Estudios</a></li>
 							<li><a href="ce-validacion.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Alumnos</a></li>
 							<li class="active"><?php echo $titulo; ?></li>
+						<?php endif;?>
+						<?php if(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] )): ?>
+						<li><a href="ce-alumnos.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Alumnos</a></li>
 						<?php endif;?>
 					</ol>
 				</div>
@@ -284,13 +294,13 @@
 				<div class="row">
           <div class="col-sm-4">
             <div class="form-group">
-							<label class="control-label" for="nombre_institucion_emisora">Instituci&oacute;n de Procedencia*: </label>
+							<label class="control-label" for="nombre_institucion_emisora">Instituci&oacute;n de procedencia*: </label>
 							<input type="text" id="nombre_institucion_emisora" name="nombre_institucion_emisora" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["nombre_institucion_emisora"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
-							<label class="txt-label1" for="estado">Estado de procedencia*: </label>
+							<label class="control-label" for="estado">Estado de procedencia*: </label>
 							<select id="estado_id" name="estado_id" class="selectpicker" data-live-search="true" data-width="100%" required>
 								<option value=""> </option>
 								<?php
@@ -314,27 +324,66 @@
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
-							<label class="txt-label1" for="clave_centro_trabajo_emisor">CCT de Procedencia*:</label>
+							<label class="control-label" for="clave_centro_trabajo_emisor">CCT de instituci&oacute;n de procedencia*:</label>
 							<input type="text" id="clave_centro_trabajo_emisor" name="clave_centro_trabajo_emisor" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["clave_centro_trabajo_emisor"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
         </div>
 				<div class="row">
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label class="control-label" for="nivel_id">Nivel de estudios cursado*: </label>
+							<select id="nivel_id" name="nivel_id" class="selectpicker" data-live-search="true" data-width="100%" onchange="crearInputCedula()" required>
+								<option value=""> </option>
+								<?php
+									$max = count( $resultadoNivel["data"] );
+
+									for( $i=0; $i<$max; $i++ )
+									{
+										if ($resultadoNivel["data"][$i]["id"]==1 || $resultadoNivel["data"][$i]["id"]==2 || $resultadoNivel["data"][$i]["id"]==5) {
+											if( $resultadoNivel["data"][$i]["id"]==$res_validacion["data"][0]["nivel_id"] )
+											{
+												echo "<option value='".$resultadoNivel["data"][$i]["id"]."' selected>".$resultadoNivel["data"][$i]["descripcion"]."</option>";
+											}
+											else
+											{
+												echo "<option value='".$resultadoNivel["data"][$i]["id"]."'>".$resultadoNivel["data"][$i]["descripcion"]."</option>";
+											}
+										}
+									}
+								?>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-4">
+            <div class="form-group">
+							<label class="control-label" for="fecha_inicio_antecedente">Fecha de inicio de antecedente*:</label>
+							<input type="text" id="fecha_inicio_antecedente" name="fecha_inicio_antecedente" value="<?php echo isset($res_validacion["data"][0]["fecha_inicio_antecedente"]) ? $res_validacion["data"][0]["fecha_inicio_antecedente"] : ""; ?>" maxlength="255" class="form-control" required />
+						</div>
+          </div>
+					<div class="col-sm-4">
+            <div class="form-group">
+							<label class="control-label" for="fecha_fin_antecedente">Fecha de finalizaci&oacute;n de antecedente*:</label>
+							<input type="text" id="fecha_fin_antecedente" name="fecha_fin_antecedente" value="<?php echo isset($res_validacion["data"][0]["fecha_fin_antecedente"]) ? $res_validacion["data"][0]["fecha_fin_antecedente"] : ""; ?>" maxlength="255" class="form-control" required />
+						</div>
+          </div>
+				</div>
+				<div class="row">
           <div class="col-sm-4">
             <div class="form-group">
-							<label class="control-label" for="folio">Folio de Certificado*:</label>
+							<label class="control-label" for="folio"><?php echo $titulo_certificado3 ?></label>
 							<input type="text" id="folio" name="folio" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["folio"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
-							<label class="txt-label1" for="fecha_expedicion">Fecha de expedici&oacute;n*:</label>
+							<label class="control-label" for="fecha_expedicion">Fecha de expedici&oacute;n*:</label>
 							<input type="text" id="fecha_expedicion" name="fecha_expedicion" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["fecha_expedicion"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
-							<label class="txt-label1" for="situacion_validacion_id">Situaci&oacute;n de documento*: </label>
+							<label class="control-label" for="situacion_validacion_id">Situaci&oacute;n de documento*: </label>
 							<select id="situacion_validacion_id" name="situacion_validacion_id" class="selectpicker" data-live-search="true" data-width="100%" required>
 								<option value=""> </option>
 								<?php
@@ -360,7 +409,7 @@
           
 					<div class="col-sm-4">
             <div class="form-group">
-							<label class="txt-label1" for="tipo_validacion">Tipo de validaci&oacute;n</label>
+							<label class="control-label" for="tipo_validacion">Tipo de validaci&oacute;n*</label>
 							<select id="tipo_validacion_id" name="tipo_validacion_id" class="selectpicker" data-live-search="true" data-width="100%" required>
 							<option value=""> </option>
 								<?php
@@ -395,7 +444,7 @@
 				<div class="row">
           <div class="col-sm-8">
             <div class="form-group">
-							<label class="control-label" for="archivo_validacion">Archivo de Validaci&oacute;n
+							<label class="control-label" for="archivo_validacion">Archivo de validaci&oacute;n* 
 								<a class="questionmark" href="../views/ce-descripcion-tipo-validacion.php" target="_blank">
 									<span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top" title="Da clic para ver los datalles de cada documento"></span>
 								</a>
@@ -406,7 +455,7 @@
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
-							<label class="txt-label1" for="fecha_validacion">Fecha de Archivo de Validaci&oacute;n
+							<label class="control-label" for="fecha_validacion">Fecha de archivo de validaci&oacute;n* 
 								<a class="questionmark" href="#">
 									<span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top" title="Fecha en la que la IES realiza la validación del documento"></span>
 								</a>
@@ -433,6 +482,7 @@
 							<input type="hidden"  name="institucion_id" value="<?php echo($resultadoInstitucion["data"]["id"]); ?>" />
 							<input type="hidden"  name="plantel_id" value="<?php echo($resultadoPlantel["data"]["id"]); ?>" />
 							<input type="hidden"  name="usuario_id" value="<?php echo isset($_SESSION["id"])?$_SESSION["id"]:-1; ?>" />
+							<input type="hidden"  name="estatus" value="1" />
 							<?php if(Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || (Rol::ROL_ADMIN == $_SESSION["rol_id"] )): ?>
 								<input type="hidden"  name="url" value="../views/ce-validacion.php?programa_id=<?php echo $_GET["programa_id"]."&codigo=200"; ?> "/>
 							<?php endif;?>
@@ -440,7 +490,9 @@
 								<input type="hidden"  name="url" value="../views/ce-alumnos.php?programa_id=<?php echo $_GET["programa_id"]."&codigo=200"; ?> "/>
 							<?php endif;?>
 							<input type="hidden"  name="webService" value="guardar" />
+							<?php if( !isset($res_validacion["data"][0]["estatus"]) || $res_validacion["data"][0]["estatus"] != 1 ): ?>
 							<input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" />
+							<?php endif;?>
 						</div>
 						
           </div>

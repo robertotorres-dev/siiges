@@ -1668,6 +1668,7 @@ session_start();
       $estatus_solicitud->setAttributes(array("estatus_solicitud_id"=>4,"solicitud_id"=>$_POST["id_solicitud"]));
       $res = $estatus_solicitud->guardar();
   
+      $solicitud = new Solicitud;
       $solicitud->setAttributes(array("id"=>$_POST["id_solicitud"],"estatus_solicitud_id"=>4));
       $solicitud->guardar();
       

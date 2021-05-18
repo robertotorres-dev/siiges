@@ -145,6 +145,10 @@ background-image: url('../images/oficio_validacion.jpg');
 background-image: url('../images/cedula_profesional.jpg');
 }
 
+#codigo_qr {
+background-image: url('../images/codigo_qr.jpg');
+}
+
 .image:hover {
 background-size: 200%;
 }

@@ -19,6 +19,7 @@ ValidacionAlumno.normalize = function () {
   };
 };
 
+
 $gmx(document).ready(function() {
 
   $('[data-toggle="tooltip"]').tooltip();
@@ -35,26 +36,38 @@ $gmx(document).ready(function() {
     dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
     dateFormat: 'yy-mm-dd'
   })
+  $("#fecha_inicio_antecedente").datepicker({
+    firstDay: 1,
+    monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+    dateFormat: 'yy-mm-dd'
+  })
+  $("#fecha_fin_antecedente").datepicker({
+    firstDay: 1,
+    monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+    dateFormat: 'yy-mm-dd'
+  })
 
-  const images = [document.querySelector('#carta-validacion'), document.querySelector('#oficio-validacion'), document.querySelector('#cedula')];
-  
-  images.forEach(image => {
-    image.addEventListener('mousemove', function (e) {
-      let width = image.offsetWidth;
-      let height = image.offsetHeight;
-      let mouseX = e.offsetX;
-      let mouseY = e.offsetY;
-      
-      let bgPosX = (mouseX / width * 100);
-      let bgPosY = (mouseY / height * 100);
-      
-      image.style.backgroundPosition = `${bgPosX}% ${bgPosY}%`;
+  const images = [document.querySelector('#carta-validacion'), document.querySelector('#oficio-validacion'), document.querySelector('#cedula'), document.querySelector('#codigo_qr')];
+  if (images[0]) {
+    images.forEach(image => {
+      image.addEventListener('mousemove', function (e) {
+        let width = image.offsetWidth;
+        let height = image.offsetHeight;
+        let mouseX = e.offsetX;
+        let mouseY = e.offsetY;
+        
+        let bgPosX = (mouseX / width * 100);
+        let bgPosY = (mouseY / height * 100);
+        
+        image.style.backgroundPosition = `${bgPosX}% ${bgPosY}%`;
+        });
+    
+        image.addEventListener('mouseleave', function () {
+        image.style.backgroundPosition = "center";
       });
-  
-      image.addEventListener('mouseleave', function () {
-      image.style.backgroundPosition = "center";
     });
-  });
-  
+  }
 
 });

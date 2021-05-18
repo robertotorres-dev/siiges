@@ -125,7 +125,6 @@
 								$resultadoAlumno = $alumno->consultarAlumnosPrograma( );
 
 								$max = count( $resultadoAlumno["data"] );
-
 								for( $i=0; $i<$max; $i++ )
 								{
 									$parametros2["id"] = $resultadoAlumno["data"][$i]["persona_id"];
@@ -143,10 +142,12 @@
 									$validacion = new Validacion( );
 									$res_validacion = $validacion->consultarPor('validaciones', array("alumno_id"=>$resultadoAlumno["data"][$i]["id"], "deleted_at"), '*' );
 
-									$max = count( $resultadoSituacionValidacion["data"] );
-									for( $j=0; $j<$max; $j++ )
+									$maxv = count( $resultadoSituacionValidacion["data"] );
+									for( $j=0; $j<$maxv; $j++ )
 									{
-										$resultadoSituacionValidacion["data"][$j]["id"]==$res_validacion["data"][0]["situacion_validacion_id"] ? $res_validacion["data"][0]["situacion_validacion_txt"] = $resultadoSituacionValidacion["data"][$j]["nombre"] : "" ;
+										if (isset($res_validacion["data"][0]["situacion_validacion_id"]) && $resultadoSituacionValidacion["data"][$j]["id"]==$res_validacion["data"][0]["situacion_validacion_id"]) {
+											$res_validacion["data"][0]["situacion_validacion_txt"] = $resultadoSituacionValidacion["data"][$j]["nombre"];
+										}
 									}
 									
 							?>
@@ -162,7 +163,7 @@
 									
 									if(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] )):
 										echo "<br>";
-										echo $res_validacion["data"][0]["situacion_validacion_txt"];
+										echo isset($res_validacion["data"][0]["situacion_validacion_txt"]) ? $res_validacion["data"][0]["situacion_validacion_txt"] : "Sin validar" ;
 									endif;
 								?>
 								</td>

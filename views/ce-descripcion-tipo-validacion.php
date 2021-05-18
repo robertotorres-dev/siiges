@@ -72,13 +72,13 @@ if(isset($_SESSION["resultado"])){
 							<p>Esta carta es por alumno con firma de directivos en original o firma electr&oacute;nica con los siguientes requisitos.</p>
 							<ul>
 								<li>Hoja membretada</li>
-								<li>Datos generales de la IES</li>
+								<li>Datos generales de la escuela de procedencia</li>
 								<li>Datos del alumno a validar</li>
 								<ul>
-									<li>Nombre completo</li>
-									<li>Carrera</li>
+									<li>Nombre completo del alumno</li>
+									<li>Carrera / Bachillerato procedente</li>
 									<li>Generaci&oacute;n</li>
-									<li>Folio</li>
+									<li>Folio del certificado</li>
 								</ul>
 							</ul>
 						</div>
@@ -92,11 +92,19 @@ if(isset($_SESSION["resultado"])){
 					<div class="row">
 						<div class="col-sm-12">
 							<h4>Oficio de validaci&oacute;n</h4>
+							<p>Este oficio es por alumno con firma de directivos en original o firma electr&oacute;nica con los siguientes requisitos.</p>
 							<ul>
 								<li>Hoja membretada</li>
 								<li>N&uacute;mero de oficio</li>
+								<li>Datos generales de la escuela de procedencia</li>
 								<li>Fecha de expedici&oacute;n</li>
-								<li>Firma de directivos en original o firma electr&oacute;nica</li>
+								<li>Datos del alumno a validar</li>
+								<ul>
+									<li>Nombre completo del alumno</li>
+									<li>Carrera / Bachillerato procedente</li>
+									<li>Generaci&oacute;n</li>
+									<li>Folio del certificado</li>
+								</ul>
 							</ul>
 						</div>
 					</div>
@@ -108,7 +116,7 @@ if(isset($_SESSION["resultado"])){
 					<div class="row">
 						<div class="col-sm-12">
 							<h4>C&eacute;dula profesional</h4>
-							<p>Esta se debe presentar &uacute;nicamente para posgradoscon los siguientes requisitos.</p>
+							<p>Esta se debe presentar &uacute;nicamente para posgrados con los siguientes requisitos.</p>
 							<ul>
 								<li>Copia cotejada de la c&eacute;dula profesional estatal o federal</li>
 								<li>Firma de directivos en original o firma electr&oacute;nica</li>
@@ -118,6 +126,28 @@ if(isset($_SESSION["resultado"])){
 					<div class="row" >
 							<div class="image-wrap">
 								<div id="cedula" class="image"></div>
+							</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<h4>C&oacute;digo QR</h4>
+							<p>El c&oacute;digo QR deber&aacute; coincidir con la informaci&oacute;n del alumno a trav&eacute;s de la lectura del mismo y deber&aacute; tener los siguientes requisitos.</p>
+							<ul>
+								<li>C&oacute;digo QR que redirija a la plataforma en d&oacute;nde se encuentra registrado el alumno</li>
+								<li>Datos generales de la escuela de procedencia</li>
+								<li>Datos del alumno a validar</li>
+								<ul>
+									<li>Nombre completo del alumno</li>
+									<li>Carrera / Bachillerato procedente</li>
+									<li>Generaci&oacute;n</li>
+									<li>Folio del certificado</li>
+								</ul>
+							</ul>
+						</div>
+					</div>
+					<div class="row" >
+							<div class="image-wrap">
+								<div id="codigo_qr" class="image"></div>
 							</div>
 					</div>
 				</div>
