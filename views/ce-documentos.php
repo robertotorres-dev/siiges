@@ -8,6 +8,7 @@
 	require_once "../models/modelo-programa.php";
 	require_once "../models/modelo-alumno.php";
 	require_once "../models/modelo-persona.php";
+	require_once "../models/modelo-tipo-tramite.php";
 
 	$programa = new Programa( );
 	$programa->setAttributes( array( "id"=>$_GET["programa_id"] ) );
@@ -146,6 +147,22 @@
 						</div>
           </div>
         </div>
+				<?php
+				if ($resultadoAlumno["data"]["tipo_tramite_id"] == 1):
+					$tipoTramite = new TipoTramite( );
+					$tipoTramite->setAttributes( array( "id"=>$resultadoAlumno["data"]["tipo_tramite_id"] ) );
+					$resultadoTipoTramite = $tipoTramite->consultarId( );
+				?>
+				<div class="row">
+					<div class="col-sm-4">
+            <div class="form-group">
+							<label class="control-label" for="tipo_tramite">Tipo de tr&aacute;mite</label>
+							<input type="text" name="tipo_tramite" value="<?php echo $resultadoTipoTramite["data"]["nombre"]; ?>" maxlength="255" class="form-control" readonly />
+						</div>
+          </div>
+				</div>
+				<?php endif; ?>
+				<br><br>
 				<div class="row">
           <div class="col-sm-8">
             <div class="form-group">

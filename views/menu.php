@@ -42,8 +42,9 @@ require_once "../models/modelo-rol.php";
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Servicios Escolares<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-															<li><a href="ce-planteles-institucion.php">Mis programas de Estudio</a></li>
-                              <li><a target="_blank" href="https://sicyt2.utj.edu.mx/ies/login.jsp">Titulación Electrónica</a></li>
+							    <li><a href="ce-planteles-institucion.php">Mis programas de Estudio</a></li>
+                                <li><a href="ce-planteles-institucion-equivalencia.php">Tr&aacute;mite de Equivalencias</a></li>
+                                <li><a target="_blank" href="https://sicyt2.utj.edu.mx/ies/login.jsp">Titulación Electrónica</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -96,8 +97,8 @@ require_once "../models/modelo-rol.php";
         				        <li class="dropdown">
         				            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Servicios Escolares<span class="caret"></span></a>
         				            <ul class="dropdown-menu" role="menu">
-                              <li><a href="ce-planteles-institucion.php">Mis Programas de Estudios</a></li>
-        				    	        <!-- <li><a href="ce-validacion-ies.php">Validaci&oacuten de alumnos</a></li> -->
+                                        <li><a href="ce-planteles-institucion.php">Mis Programas de Estudios</a></li>
+                                        <li><a href="ce-planteles-institucion-equivalencia.php">Tr&aacute;mite de Equivalencias</a></li>
         				            </ul>
         				        </li>
         				        <?php endif;?>
@@ -146,20 +147,13 @@ require_once "../models/modelo-rol.php";
         				    	        <li><a href="reportes-rvoe.php">Reportes RVOE</a></li>
         				            </ul>
         				        </li>
-                        <li class="dropdown">
-        				            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Revalidaci&oacute;n<span class="caret"></span></a>
-        				            <ul class="dropdown-menu" role="menu">
-                              <li><a href="solicitudes.php">Tr&aacute;mite</a></li>
-        				    	        <li><a href="solicitudes.php">Consulta de tr&aacute;mite</a></li>
-        				            </ul>
-        				        </li>
         				        <?php endif;?>
 
                         <?php if(Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || (Rol::ROL_ADMIN == $_SESSION["rol_id"] )): ?>
         				        <li class="dropdown">
         				            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span>Servicios Escolares<span class="caret"></span></a>
         				            <ul class="dropdown-menu" role="menu">
-                              <li><a href="ce-instituciones.php">Avances Escolares</a></li>
+                                        <li><a href="ce-instituciones.php">Avances Escolares</a></li>
         				    	        <li><a href="ce-instituciones-validacion.php">Validación</a></li>
         				            </ul>
         				        </li>
@@ -167,10 +161,9 @@ require_once "../models/modelo-rol.php";
 
                         <?php if(Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] ): ?>
                         <li class="dropdown">
-        				            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Revalidaci&oacute;n<span class="caret"></span></a>
+        				            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Equivalencias<span class="caret"></span></a>
         				            <ul class="dropdown-menu" role="menu">
-                              <li><a href="ce-instituciones.php">Tr&aacute;mite</a></li>
-        				    	        <li><a href="solicitudes.php">Consulta de tr&aacute;mite</a></li>
+                                        <li><a href="ce-instituciones.php">Tr&aacute;mite</a></li>
         				            </ul>
         				        </li>
         				        <?php endif;?>

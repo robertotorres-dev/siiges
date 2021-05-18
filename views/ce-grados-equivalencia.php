@@ -5,15 +5,23 @@
 
 	//====================================================================================================
 
+	require_once "../models/modelo-programa.php";
+	require_once "../models/modelo-asignatura.php";
 	require_once "../models/modelo-institucion.php";
-	require_once "../models/modelo-plantel.php";
-	require_once "../models/modelo-domicilio.php";
-	require_once "../models/modelo-usuario.php";
-	require_once "../models/modelo-persona.php";
-	
-	$institucion = new Institucion( );
-	$institucion->setAttributes( array( "id"=>$_GET["institucion_id"] ) );
-	$resultadoInstitucion = $institucion->consultarId( );
+
+
+	$programa = new Programa( );
+	$programa->setAttributes( array( "id"=>$_GET["programa_id"] ) );
+	$resultadoPrograma = $programa->consultarId( );
+
+	$plantel = new Plantel( );
+	$plantel->setAttributes( array( "id"=>$resultadoPrograma["data"]["plantel_id"] ) );
+	$resultadoPlantel = $plantel->consultarId();
+
+	$institucion = new Institucion();
+	$institucion->setAttributes( array( "id"=>$resultadoPlantel["data"]["institucion_id"] ) );
+	$resultadoInstitucion = $institucion->consultarId();
+
 ?>
 
 
@@ -54,7 +62,9 @@
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
 						<li><a href="home.php">SIIGES</a></li>
-						<li class="active">Planteles</li>
+						<li><a href="ce-programas-plantel-equivalencia.php?institucion_id=<?php echo $resultadoInstitucion["data"]["id"] ?>&plantel_id=<?php echo $resultadoPlantel["data"]["id"] ?>">Programas de Estudios</a></li>
+						<li><a href="ce-ciclos-escolares-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Ciclos Escolares</a></li>
+						<li class="active">Grados</li>
 					</ol>
 				</div>
 			</div>
@@ -62,13 +72,19 @@
 			<!-- CUERPO PRINCIPAL -->
 			<div class="col-sm-12 col-md-12 col-lg-12">
 				<!-- TÍTULO -->
-				<h2 id="txtNombre">Planteles</h2>
+				<h2 id="txtNombre">Grados</h2>
 				<hr class="red">
 				<div class="row">
           <div class="col-sm-12">
-						<legend><?php echo $resultadoInstitucion["data"]["nombre"]; ?></legend>
+						<legend><?php echo $resultadoPrograma["data"]["nombre"]; ?></legend>
 					</div>
 				</div>
+				<!-- NOTIFICACIÓN -->
+				<?php if( isset( $_GET["codigo"] ) && $_GET["codigo"]==200 ){ ?>
+        <div class="alert alert-success">
+					<p>Registro guardado.</p>
+        </div>
+        <?php } ?>
 				<!-- CONTENIDO -->
 				<div class="row" style="padding-top: 20px;">
           <div class="col-sm-12">
@@ -79,53 +95,30 @@
             <table id="tabla-reporte" class="table table-striped table-bordered" cellspacing="0" width="100%">
 	            <thead>
 								<tr>
-	                <th width="10%">Id</th>
-									<th width="30%">Plantel</th>
-									<th width="20%">Clave de Centro de Trabajo</th>
-									<th width="30%">Representante Legal</th>
-									<th width="10%">Acciones</th>
+	                <th width="90%">Grado</th>
+	                <th width="10%">Acciones</th>
 								</tr>
 							</thead>
 	            <tbody>
 							<?php
-								$parametros["institucion_id"] = $_GET["institucion_id"];
-								
-								$plantel = new Plantel( );
-								$plantel->setAttributes( $parametros );
-								$resultadoPlantel = $plantel->consultarPlantelesInstitucion( );
+								$asignatura = new Asignatura( );
+								$asignatura->setAttributes( array( "programa_id"=>$_GET["programa_id"] ) );
+								$resultadoAsignatura = $asignatura->consultarGradosPrograma( );
 
-								$max = count( $resultadoPlantel["data"] );
+								$max = count( $resultadoAsignatura["data"] );
 
 								for( $i=0; $i<$max; $i++ )
 								{
-									$parametros2["id"] = $resultadoPlantel["data"][$i]["domicilio_id"];
-
-									$domicilio = new Domicilio( );
-									$domicilio->setAttributes( $parametros2 );
-									$resultadoDomicilio = $domicilio->consultarId( );
-									
-									$parametros3["id"] = $resultadoInstitucion["data"]["usuario_id"];
-									
-									$usuario = new Usuario( );
-									$usuario->setAttributes( $parametros3 );
-									$resultadoUsuario = $usuario->consultarId( );
-									
-									$parametros4["id"] = $resultadoUsuario["data"]["persona_id"];
-									
-									$persona = new Persona( );
-									$persona->setAttributes( $parametros4 );
-									$resultadoPersona = $persona->consultarId( );
+									if ($resultadoAsignatura["data"][$i]["grado"] != "Optativa") {
 							?>
 							<tr>
-								<td><?php echo $resultadoPlantel["data"][$i]["id"]; ?></td>
-								<td><?php echo $resultadoDomicilio["data"]["calle"]." ".$resultadoDomicilio["data"]["numero_exterior"].", ". $resultadoDomicilio["data"]["municipio"]; ?></td>
-								<td><?php echo $resultadoPlantel["data"][$i]["clave_centro_trabajo"]; ?></td>
-								<td><?php echo $resultadoPersona["data"]["nombre"]." ".$resultadoPersona["data"]["apellido_paterno"]." ".$resultadoPersona["data"]["apellido_materno"]; ?></td>
+								<td><?php echo $resultadoAsignatura["data"][$i]["grado"]; ?></td>
 								<td>
-									<a href="ce-programas-plantel.php?institucion_id=<?php echo $_GET["institucion_id"]; ?>&plantel_id=<?php echo $resultadoPlantel["data"][$i]["id"]; ?>">Programas</a>
+									<a href="ce-grupos-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $resultadoAsignatura["data"][$i]["grado"]; ?>">Grupos</a>
 								</td>
 							</tr>
 							<?php
+									}
 								}
 							?>
 	            </tbody>
@@ -142,14 +135,5 @@
 <!-- JS JQUERY -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("#tabla-reporte").DataTable({
-			"language":{
-				"url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-			}
-		});
-	});
-</script>
 </body>
 </html>

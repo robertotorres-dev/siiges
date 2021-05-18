@@ -11,46 +11,86 @@
 	require_once "../models/modelo-pais.php";
 	require_once "../models/modelo-situacion.php";
 	require_once "../models/modelo-tipo-tramite.php";
+	require_once "../models/modelo-rol.php";
 
 	$programa = new Programa( );
 	$programa->setAttributes( array( "id"=>$_GET["programa_id"] ) );
 	$resultadoPrograma = $programa->consultarId( );
 
-	if( $_GET["proceso"]=="alta" )
-	{
-		$titulo = "Alta de Alumno";
-	}
+	if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
+		if( $_GET["proceso"]=="alta" )
+		{
+			$titulo = "Alta de Alumno Equivalente";
+		}
 
-	if( $_GET["proceso"]=="consulta" )
-	{
-		$titulo = "Consulta de Alumno";
-
-		$alumno = new Alumno( );
-		$alumno->setAttributes( array( "id"=>$_GET["alumno_id"] ) );
-		$resultadoAlumno = $alumno->consultarId( );
-
-		$persona = new Persona( );
-		$persona->setAttributes( array( "id"=>$resultadoAlumno["data"]["persona_id"] ) );
-		$resultadoPersona = $persona->consultarId( );
-	}
-
-	if( $_GET["proceso"]=="edicion" )
-	{
-		$titulo = "Edici&oacute;n de Alumno";
-
-		$alumno = new Alumno( );
-		$alumno->setAttributes( array( "id"=>$_GET["alumno_id"] ) );
-		$resultadoAlumno = $alumno->consultarId( );
-
-		$persona = new Persona( );
-		$persona->setAttributes( array( "id"=>$resultadoAlumno["data"]["persona_id"] ) );
-		$resultadoPersona = $persona->consultarId( );
-
-		$json = [];
-		$nombre =  $resultadoPersona["data"]["nombre"]." ".$resultadoPersona["data"]["apellido_paterno"]." ".$resultadoPersona["data"]["apellido_materno"];
-		$json["id"] = $resultadoAlumno["data"]["id"];
-		$json["nombre"] = $nombre;
-		$json = json_encode($json);
+		if( $_GET["proceso"]=="consulta" )
+		{
+			$titulo = "Consulta de Alumno Equivalente";
+	
+			$alumno = new Alumno( );
+			$alumno->setAttributes( array( "id"=>$_GET["alumno_id"] ) );
+			$resultadoAlumno = $alumno->consultarId( );
+	
+			$persona = new Persona( );
+			$persona->setAttributes( array( "id"=>$resultadoAlumno["data"]["persona_id"] ) );
+			$resultadoPersona = $persona->consultarId( );
+		}
+	
+		if( $_GET["proceso"]=="edicion" )
+		{
+			$titulo = "Edici&oacute;n de Alumno Equivalente";
+	
+			$alumno = new Alumno( );
+			$alumno->setAttributes( array( "id"=>$_GET["alumno_id"] ) );
+			$resultadoAlumno = $alumno->consultarId( );
+	
+			$persona = new Persona( );
+			$persona->setAttributes( array( "id"=>$resultadoAlumno["data"]["persona_id"] ) );
+			$resultadoPersona = $persona->consultarId( );
+	
+			$json = [];
+			$nombre =  $resultadoPersona["data"]["nombre"]." ".$resultadoPersona["data"]["apellido_paterno"]." ".$resultadoPersona["data"]["apellido_materno"];
+			$json["id"] = $resultadoAlumno["data"]["id"];
+			$json["nombre"] = $nombre;
+			$json = json_encode($json);
+		}
+	} else {
+		if( $_GET["proceso"]=="alta" )
+		{
+			$titulo = "Alta de Alumno";
+		}
+		
+		if( $_GET["proceso"]=="consulta" )
+		{
+			$titulo = "Consulta de Alumno";
+	
+			$alumno = new Alumno( );
+			$alumno->setAttributes( array( "id"=>$_GET["alumno_id"] ) );
+			$resultadoAlumno = $alumno->consultarId( );
+	
+			$persona = new Persona( );
+			$persona->setAttributes( array( "id"=>$resultadoAlumno["data"]["persona_id"] ) );
+			$resultadoPersona = $persona->consultarId( );
+		}
+	
+		if( $_GET["proceso"]=="edicion" )
+		{
+			$titulo = "Edici&oacute;n de Alumno";
+	
+			$alumno = new Alumno( );
+			$alumno->setAttributes( array( "id"=>$_GET["alumno_id"] ) );
+			$resultadoAlumno = $alumno->consultarId( );
+	
+			$persona = new Persona( );
+			$persona->setAttributes( array( "id"=>$resultadoAlumno["data"]["persona_id"] ) );
+			$resultadoPersona = $persona->consultarId( );
+	
+			$json = [];
+			$nombre =  $resultadoPersona["data"]["nombre"]." ".$resultadoPersona["data"]["apellido_paterno"]." ".$resultadoPersona["data"]["apellido_materno"];
+			$json["id"] = $resultadoAlumno["data"]["id"];
+			$json["nombre"] = $nombre;
+			$json = json_encode($json);
+		}
 	}
 ?>
 
@@ -148,13 +188,13 @@
 				<div class="row">
           <div class="col-sm-4">
             <div class="form-group">
-							<label class="control-label" for="nombre">Nombre</label>
+							<label class="control-label" for="nombre">Nombre* </label>
 							<input type="text" id="nombre" name="nombre" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["nombre"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
-							<label class="control-label" for="apellido_paterno">Apellido Paterno</label>
+							<label class="control-label" for="apellido_paterno">Apellido Paterno* </label>
 							<input type="text" id="apellido_paterno" name="apellido_paterno" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["apellido_paterno"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
@@ -168,13 +208,13 @@
 				<div class="row">
           <div class="col-sm-4">
             <div class="form-group">
-							<label class="control-label" for="fecha_nacimiento">Fecha de Nacimiento</label>
+							<label class="control-label" for="fecha_nacimiento">Fecha de Nacimiento* </label>
 							<input type="text" id="fecha_nacimiento" name="fecha_nacimiento" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["fecha_nacimiento"] : ""; ?>" maxlength="10" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
-							<label class="txt-label1" for="sexo">Sexo</label>
+							<label class="txt-label1" for="sexo">Sexo* </label>
 							<select id="sexo" name="sexo" class="selectpicker" data-live-search="true" data-width="100%" required>
 								<option value=""> </option>
 								<option value="Masculino" <?php if (isset($resultadoPersona)) { if( $resultadoPersona["data"]["sexo"]=="Masculino" ) { echo "selected"; }} ?>>Masculino</option>
@@ -184,7 +224,7 @@
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
-							<label class="control-label" for="nacionalidad">Nacionalidad</label>
+							<label class="control-label" for="nacionalidad">Nacionalidad* </label>
 							<input type="text" id="nacionalidad" name="nacionalidad" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["nacionalidad"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
@@ -192,13 +232,13 @@
 				<div class="row">
           <div class="col-sm-4">
             <div class="form-group">
-							<label class="control-label" for="correo">Correo</label>
+							<label class="control-label" for="correo">Correo* </label>
 							<input type="text" id="correo" name="correo" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["correo"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
             <div class="form-group">
-							<label class="control-label" for="telefono">Tel&eacute;fono</label>
+							<label class="control-label" for="telefono">Tel&eacute;fono* </label>
 							<input type="text" id="telefono" name="telefono" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["telefono"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
@@ -212,26 +252,27 @@
 				<div class="row">
           <div class="col-sm-4">
             <div class="form-group">
-							<label class="control-label" for="curp">CURP</label>
+							<label class="control-label" for="curp">CURP* </label>
 							<input type="text" id="curp" name="curp" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["curp"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
 						<div class="form-group">
-							<label class="control-label" for="matricula">Matr&iacute;cula</label>
-							<input type="text" id="matricula" name="matricula" value="<?php echo (isset($resultadoPersona)) ? $resultadoAlumno["data"]["matricula"] : ""; ?>" maxlength="255" class="form-control"
-							<?php if( Rol::ROL_REVALIDACION_EQUIVALENCIA != $_SESSION["rol_id"] ): echo 'required'; endif; ?> />
+							<label class="control-label" for="matricula">Matr&iacute;cula* </label>
+							<input type="text" id="matricula" name="matricula" value="<?php echo (isset($resultadoPersona)) ? $resultadoAlumno["data"]["matricula"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
 					</div>
 					<div class="col-sm-4">
             <div class="form-group">
-							<?php if( Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] ): ?>
+							<?php if( Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] || 
+										(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv") || 
+										(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv")): ?>
 
 							<label class="control-label" for="revalidacion_equivalencia">Tipo de tr&aacute;mite</label>
 							<select onchange="changeFunc(
 							<?php
-							echo (isset($json) ? htmlentities($json) : "");
-							 ?>
+								echo (isset($json) ? htmlentities($json) : '');
+							?>
 							 );" id="tipo_tramite_id" name="tipo_tramite_id" class="selectpicker" data-live-search="true" data-width="100%" required>
 								<option value=""> </option>
 								<?php
@@ -267,7 +308,7 @@
 							<label class="txt-label1" for="situacion_id">Situaci&oacute;n</label>
 							<select onchange="changeFunc(
 							<?php
-							echo (isset($json) ? htmlentities($json) : "");
+							echo (isset($json) ? htmlentities($json) : '');
 							 ?>
 							 );" id="situacion_id" name="situacion_id" class="selectpicker" data-live-search="true" data-width="100%" required>
 								<option value=""> </option>
@@ -319,7 +360,7 @@
 							<label class="txt-label1" for="situacion_id">Situaci&oacute;n</label>
 							<select onchange="changeFunc(
 							<?php
-							echo (isset($json) ? htmlentities($json) : "");
+							echo (isset($json) ? htmlentities($json) : '');
 							 ?>
 							 );" id="situacion_id" name="situacion_id" class="selectpicker" data-live-search="true" data-width="100%" disabled="true" required>
 								<option value=""> </option>
@@ -376,8 +417,11 @@
 							<input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" />
 							<input type="hidden"  name="webService" value="guardarAlumnoPersona" />
 							<input type="hidden"  name="proceso" value="<?php echo $_GET["proceso"]; ?>" />
-							<?php if( Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] ){ ?>
+							<?php if( Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] || 
+										(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv") || 
+										(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv")){ ?>
 							<input type="hidden"  name="url" value="../views/ce-alumnos-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&codigo=200" />
+							<input type="hidden"  name="tramite" value="<?php echo $_GET["tramite"]; ?>" />
 							<?php } else { ?>
 							<input type="hidden"  name="url" value="../views/ce-alumnos.php?programa_id=<?php echo $_GET["programa_id"]; ?>&codigo=200" />
 							<?php } ?>

@@ -76,19 +76,9 @@
 					<!-- BARRA DE NAVEGACION -->
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
-						<?php
-							if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] || 
-							(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv") || 
-							(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv")) {
-						?>
 						<li><a href="ce-ciclos-escolares-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Ciclos Escolares</a></li>
 						<li><a href="ce-grados-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>">Grados</a></li>
 						<li><a href="ce-grupos-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>">Grupos</a></li>
-						<?php	}else{ ?>
-						<li><a href="ce-ciclos-escolares.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Ciclos Escolares</a></li>
-						<li><a href="ce-grados.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>">Grados</a></li>
-						<li><a href="ce-grupos.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>">Grupos</a></li>
-						<?php } ?>
 						<li class="active">Inscripci&oacute;n de Alumnos</li>
 					</ol>
 				</div>
@@ -129,14 +119,6 @@
 								<tr>
 	                <th width="15%">Grado</th>
 									<th width="15%">Grupo</th>
-									<?php
-									if (!(Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] || 
-									(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv") || 
-									(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv"))):
-									 ?>
-	                <th width="15%">Turno</th>
-									<?php
-									endif; ?>
 									<th width="55%">Ciclo</th>
 								</tr>
 							</thead>
@@ -144,14 +126,6 @@
 								<tr>
 									<td><?php echo $resultadoGrupo["data"]["grado"]; ?></td>
 									<td><?php echo $resultadoGrupo["data"]["grupo"]; ?></td>
-									<?php
-									if (!(Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] || 
-									(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv") || 
-									(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv"))):
-									 ?>
-									<td><?php echo $resultadoTurno["data"]["nombre"]; ?></td>
-									<?php
-									endif; ?>
 									<td><?php echo $resultadoCicloEscolar["data"]["nombre"]; ?></td>
 								</tr>
 	            </tbody>
@@ -275,7 +249,6 @@
 							<input type="hidden"  name="ciclo_id" value="<?php echo $_GET['ciclo_id']; ?>" />
 							<input type="hidden"  name="grado" value="<?php echo $_GET['grado']; ?>" />
 							<input type="hidden"  name="grupo_id" value="<?php echo $_GET['grupo_id']; ?>" />
-							<input type="hidden"  name="tramite" value="<?php echo $_GET['tramite']; ?>" />
 						</div>
           </div>
         </div>

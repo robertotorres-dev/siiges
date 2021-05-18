@@ -62,9 +62,6 @@
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
 						<li><a href="home.php">SIIGES</a></li>
-						<?php	if(Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] ):	?>
-							<li><a href="ce-instituciones.php">Instituciones</a></li>
-						<?php endif;?>
 						<li class="active">Planteles</li>
 					</ol>
 				</div>
@@ -133,7 +130,7 @@
 								<td><?php echo $resultadoPlantel["data"][$i]["clave_centro_trabajo"]; ?></td>
 								<td><?php echo $resultadoPersona["data"]["nombre"]." ".$resultadoPersona["data"]["apellido_paterno"]." ".$resultadoPersona["data"]["apellido_materno"]; ?></td>
 								<td>
-									<a href="ce-programas-plantel.php?institucion_id=<?php echo $resultadoInstitucion["data"][0]["id"]; ?>&plantel_id=<?php echo $resultadoPlantel["data"][$i]["id"]; ?>">Programas</a>
+									<a href="ce-programas-plantel-equivalencia.php?institucion_id=<?php echo $resultadoInstitucion["data"][0]["id"]; ?>&plantel_id=<?php echo $resultadoPlantel["data"][$i]["id"]; ?>">Programas</a>
 								</td>
 							</tr>
 							<?php

@@ -5,29 +5,17 @@
 
   require_once "base-catalogo.php";
 
-	define( "TABLA_VALIDACIONES", "validaciones" );
+	define( "TABLA_EQUIVALENCIAS", "equivalencias" );
 
-  class Validacion extends Catalogo
+  class Equivalencia extends Catalogo
   {
     protected $id;
     protected $alumno_id;
-    protected $usuario_id;
-    protected $estado_id;
-    protected $nombre_institucion_emisora;
-    protected $fecha_expedicion;
-    protected $folio;
-    protected $folio_respuesta;
-    protected $folio_envio;
-    protected $oficio_respuesta;
-    protected $oficio_envio;
-    protected $fecha_acreditacion;
-    protected $plan_anterior;
-    protected $clave_centro_trabajo_emisor;
-    protected $fecha_envio;
-    protected $fecha_respuesta;
-    protected $situacion_documento;
-    protected $observaciones;
-    protected $fecha_actualizacion;
+    protected $folio_expediente;
+    protected $archivo_certificado_parcial;
+    protected $archivo_resolucion;
+    protected $folio_resolucion;
+    protected $fecha_resolucion;
 
 		// Constructor
 		public function __construct( )
@@ -49,7 +37,7 @@
 		// Método para consultar todos los registros
     public function consultarTodos( )
     {
-      $resultado = parent::consultarTodosCatalogo( TABLA_VALIDACIONES );
+      $resultado = parent::consultarTodosCatalogo( TABLA_EQUIVALENCIAS );
 			return $resultado;
     }
 
@@ -57,7 +45,7 @@
 		// Método para consultar registro por id
 		public function consultarId( )
     {
-      $resultado = parent::consultarIdCatalogo( TABLA_VALIDACIONES );
+      $resultado = parent::consultarIdCatalogo( TABLA_EQUIVALENCIAS );
 			return $resultado;
     }
 
@@ -65,7 +53,7 @@
 		// Método para guardar registro
 		public function guardar( )
     {
-			$resultado = parent::guardarCatalogo( TABLA_VALIDACIONES );
+			$resultado = parent::guardarCatalogo( TABLA_EQUIVALENCIAS );
 			return $resultado;
     }
 
@@ -73,7 +61,7 @@
 		// Método para eliminar registro
 		public function eliminar( )
     {
-			$resultado = parent::eliminarCatalogo( TABLA_VALIDACIONES );
+			$resultado = parent::eliminarCatalogo( TABLA_EQUIVALENCIAS );
 			return $resultado;
     }
 

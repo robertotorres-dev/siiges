@@ -136,7 +136,7 @@
     $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"calificaciones","accion"=>"guardarCalificacionesGrupoAsignatura","lugar"=>"control-calificacion"]);
     $result = $bitacora->guardar();
 
-		header( "Location: ../views/ce-ordinarios.php?programa_id=".$_POST["programa_id"]."&ciclo_id=".$_POST["ciclo_id"]."&grado=".$_POST["grado"]."&grupo_id=".$_POST["grupo_id"]."&asignatura_id=".$_POST["asignatura_id"]."&codigo=200" );
+		header( "Location: ../views/ce-ordinarios.php?programa_id=".$_POST["programa_id"]."&ciclo_id=".$_POST["ciclo_id"]."&grado=".$_POST["grado"]."&grupo_id=".$_POST["grupo_id"]."&asignatura_id=".$_POST["asignatura_id"]."&codigo=200"."&tramite=".$_POST["tramite"]);
 		exit( );
   }
 
@@ -200,7 +200,7 @@
     $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"calificaciones","accion"=>"guardarCalificacionesGrupoAsignaturaExtra","lugar"=>"control-calificacion"]);
     $result = $bitacora->guardar();
 
-		header( "Location: ../views/ce-extraordinarios.php?programa_id=".$_POST["programa_id"]."&ciclo_id=".$_POST["ciclo_id"]."&grado=".$_POST["grado"]."&grupo_id=".$_POST["grupo_id"]."&asignatura_id=".$_POST["asignatura_id"]."&codigo=200" );
+		header( "Location: ../views/ce-extraordinarios.php?programa_id=".$_POST["programa_id"]."&ciclo_id=".$_POST["ciclo_id"]."&grado=".$_POST["grado"]."&grupo_id=".$_POST["grupo_id"]."&asignatura_id=".$_POST["asignatura_id"]."&codigo=200"."&tramite=".$_POST["tramite"] );
 		exit( );
   }
 

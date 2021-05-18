@@ -6,6 +6,7 @@
   require_once "../models/modelo-alumno.php";
   require_once "../models/modelo-bitacora.php";
   require_once "../models/modelo-persona.php";
+  require_once "../models/modelo-documento.php";
   require_once "../utilities/utileria-general.php";
 
   session_start( );
@@ -107,8 +108,13 @@
 
 		if( isset($resultadoAlumno["data"][0]["id"]) )
 		{
-		  header( "Location: ../views/ce-catalogo-alumno.php?programa_id=".$_POST["programa_id"]."&alumno_id=".$_POST["id"]."&proceso=".$_POST["proceso"]."&codigo=404" );
-			exit( );
+			if ($_POST["tramite"] == "equiv") {
+				header( "Location: ../views/ce-catalogo-alumno.php?programa_id=".$_POST["programa_id"]."&alumno_id=".$_POST["id"]."&proceso=".$_POST["proceso"]."&tramite=".$_POST["tramite"]."&codigo=404" );
+				exit( );
+			} else {
+				header( "Location: ../views/ce-catalogo-alumno.php?programa_id=".$_POST["programa_id"]."&alumno_id=".$_POST["id"]."&proceso=".$_POST["proceso"]."&codigo=404" );
+				exit( );
+			}
 		}
 
 		$parametros2 = array( );
@@ -158,11 +164,14 @@
     $exito = 0;
 		if( is_uploaded_file( $_FILES["archivo_certificado"]["tmp_name"] ) )
 		{
-			if( $_FILES["archivo_certificado"]["size"]<5000000 )
+			if( $_FILES["archivo_certificado"]["size"]<2000000 )
 			{
 				if( $_FILES["archivo_certificado"]["type"]=="application/pdf" )
 				{
-					move_uploaded_file( $_FILES["archivo_certificado"]["tmp_name"], "../uploads/certificados/documento1_".$_POST["id"].".pdf" );
+					$dir_certificados = '/certificados';
+          $directorio = Documento::$dir_subida.$dir_certificados;
+					!is_dir($directorio)?mkdir($directorio, 0755, true):false;
+					move_uploaded_file( $_FILES["archivo_certificado"]["tmp_name"], $directorio."/documento1_".$_POST["id"].".pdf" );
 					$exito = 1;
 				}
 			}
@@ -177,11 +186,14 @@
 		$exito = 0;
 		if( is_uploaded_file( $_FILES["archivo_nacimiento"]["tmp_name"] ) )
 		{
-			if( $_FILES["archivo_nacimiento"]["size"]<5000000 )
+			if( $_FILES["archivo_nacimiento"]["size"]<2000000 )
 			{
 				if( $_FILES["archivo_nacimiento"]["type"]=="application/pdf" )
 				{
-					move_uploaded_file( $_FILES["archivo_nacimiento"]["tmp_name"], "../uploads/certificados/documento2_".$_POST["id"].".pdf" );
+					$dir_certificados = '/certificados';
+          $directorio = Documento::$dir_subida.$dir_certificados;
+					!is_dir($directorio)?mkdir($directorio, 0755, true):false;
+					move_uploaded_file( $_FILES["archivo_nacimiento"]["tmp_name"], $directorio."/documento2_".$_POST["id"].".pdf" );
 					$exito = 1;
 				}
 			}
@@ -196,11 +208,14 @@
 		$exito = 0;
 		if( is_uploaded_file( $_FILES["archivo_curp"]["tmp_name"] ) )
 		{
-			if( $_FILES["archivo_curp"]["size"]<5000000 )
+			if( $_FILES["archivo_curp"]["size"]<2000000 )
 			{
 				if( $_FILES["archivo_curp"]["type"]=="application/pdf" )
 				{
-					move_uploaded_file( $_FILES["archivo_curp"]["tmp_name"], "../uploads/certificados/documento3_".$_POST["id"].".pdf" );
+					$dir_certificados = '/certificados';
+          $directorio = Documento::$dir_subida.$dir_certificados;
+					!is_dir($directorio)?mkdir($directorio, 0755, true):false;
+					move_uploaded_file( $_FILES["archivo_curp"]["tmp_name"], $directorio."/documento3_".$_POST["id"].".pdf" );
 					$exito = 1;
 				}
 			}

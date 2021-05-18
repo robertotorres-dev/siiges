@@ -6,10 +6,10 @@
 	//====================================================================================================
 
 	require_once "../models/modelo-programa.php";
-	require_once "../models/modelo-alumno.php";
-	require_once "../models/modelo-persona.php";
-	require_once "../models/modelo-situacion.php";
+	require_once "../models/modelo-grupo.php";
+	require_once "../models/modelo-turno.php";
 	require_once "../models/modelo-institucion.php";
+
 
 	$programa = new Programa( );
 	$programa->setAttributes( array( "id"=>$_GET["programa_id"] ) );
@@ -62,9 +62,10 @@
 					<!-- BARRA DE NAVEGACION -->
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
-						<li><a href="home.php">SIIGES</a></li>
 						<li><a href="ce-programas-plantel-equivalencia.php?institucion_id=<?php echo $resultadoInstitucion["data"]["id"] ?>&plantel_id=<?php echo $resultadoPlantel["data"]["id"] ?>">Programas de Estudios</a></li>
-						<li class="active">Alumnos</li>
+						<li><a href="ce-ciclos-escolares-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Ciclos Escolares</a></li>
+						<li><a href="ce-grados-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>">Grados</a></li>
+						<li class="active">Grupos</li>
 					</ol>
 				</div>
 			</div>
@@ -72,7 +73,7 @@
 			<!-- CUERPO PRINCIPAL -->
 			<div class="col-sm-12 col-md-12 col-lg-12">
 				<!-- TÍTULO -->
-				<h2 id="txtNombre">Alumnos Equivalentes</h2>
+				<h2 id="txtNombre">Grupos</h2>
 				<hr class="red">
 				<div class="row">
           <div class="col-sm-12">
@@ -88,7 +89,7 @@
 				<!-- CONTENIDO -->
 				<div class="row">
           <div class="col-sm-12">
-						<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&proceso=alta&tramite=equiv" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i> Alta de Alumno</a>
+						<a href="ce-catalogo-grupo-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=&proceso=alta" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i> Alta de Grupo</a>
 					</div>
 				</div>
 				<div class="row" style="padding-top: 20px;">
@@ -100,54 +101,42 @@
             <table id="tabla-reporte" class="table table-striped table-bordered" cellspacing="0" width="100%">
 	            <thead>
 								<tr>
-	                <th width="5%">Id</th>
-									<th width="5%">Matr&iacute;cula</th>
-									<th width="20%">Apellido Paterno</th>
-	                <th width="20%">Apellido Materno</th>
-									<th width="20%">Nombre</th>
-	                <th width="10%">Acciones</th>
+	                <th width="15%">Grado</th>
+									<th width="15%">Grupo</th>
+									<th width="10%">Acciones</th>
 									<th width="10%">Acciones</th>
 								</tr>
 							</thead>
 	            <tbody>
 							<?php
-								$parametros["programa_id"] = $_GET["programa_id"];
+								$parametros["ciclo_escolar_id"] = $_GET["ciclo_id"];
+								$parametros["grado"] = $_GET["grado"];
 
-								$alumno = new Alumno( );
-								$alumno->setAttributes( $parametros );
-								$resultadoAlumno = $alumno->consultarAlumnosTramite( );
+								$grupo = new Grupo( );
+								$grupo->setAttributes( $parametros );
+								$resultadoGruposCicloGrado = $grupo->consultarGruposCicloGrado( );
 
-								$max = count( $resultadoAlumno["data"] );
+								$max = count( $resultadoGruposCicloGrado["data"] );
 
 								for( $i=0; $i<$max; $i++ )
 								{
-									$parametros2["id"] = $resultadoAlumno["data"][$i]["persona_id"];
+									$parametros2["id"] = $resultadoGruposCicloGrado["data"][$i]["turno_id"];
 
-									$persona = new Persona( );
-									$persona->setAttributes( $parametros2 );
-									$resultadoPersona = $persona->consultarId( );
-
-									$parametros3["id"] = $resultadoAlumno["data"][$i]["situacion_id"];
-
-									$situacion = new Situacion( );
-									$situacion->setAttributes( $parametros3 );
-									$resultadoSituacion = $situacion->consultarId( );
+									$turno = new Turno( );
+									$turno->setAttributes( $parametros2 );
+									$resultadoTurno = $turno->consultarId( );
 							?>
 							<tr>
-								<td><?php echo $resultadoAlumno["data"][$i]["id"]; ?></td>
-								<td><?php echo $resultadoAlumno["data"][$i]["matricula"]; ?></td>
-								<td><?php echo $resultadoPersona["data"]["apellido_paterno"]; ?></td>
-								<td><?php echo $resultadoPersona["data"]["apellido_materno"]; ?></td>
-								<td><?php echo $resultadoPersona["data"]["nombre"]; ?></td>
+								<td><?php echo $resultadoGruposCicloGrado["data"][$i]["grado"]; ?></td>
+								<td><?php echo $resultadoGruposCicloGrado["data"][$i]["grupo"]; ?></td>
 								<td>
-									<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=consulta&tramite=equiv"><span id="" title="Abrir" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
-									<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion&tramite=equiv"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a>
-									<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion&tramite=equiv"><span id="" title="Eliminar" class="glyphicon glyphicon-trash col-sm-1 size_icon"></span></a>
+									<a href="ce-catalogo-grupo-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $resultadoGruposCicloGrado["data"][$i]["id"]; ?>&proceso=consulta"><span id="" title="Abrir" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
+									<a href="ce-catalogo-grupo-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $resultadoGruposCicloGrado["data"][$i]["id"]; ?>&proceso=edicion"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a>
+									<a href="#" data-toggle="modal" data-target="#modalEliminar"><span id="" title="Eliminar" class="glyphicon glyphicon-trash col-sm-1 size_icon"></span></a>
 								</td>
 								<td>
-									<a href="ce-equivalencia-expediente.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion">Expediente</span></a>
-									<br>
-									<a href="ce-kardex.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>">Kardex</a>
+									<a href="ce-inscripcion.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $resultadoGruposCicloGrado["data"][$i]["id"]; ?>&tramite=equiv">Inscripci&oacute;n</a><br>
+									<a href="ce-asignaturas.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $resultadoGruposCicloGrado["data"][$i]["id"]; ?>&tramite=equiv">Acreditaci&oacute;n</a>
 								</td>
 							</tr>
 							<?php
@@ -167,14 +156,5 @@
 <!-- JS JQUERY -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("#tabla-reporte").DataTable({
-			"language":{
-				"url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-			}
-		});
-	});
-</script>
 </body>
 </html>

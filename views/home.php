@@ -69,8 +69,8 @@ if(isset($_SESSION["resultado"])){
 				<!-- CONTENIDO -->
 				<div class="row">
           <div class="col-sm-12">
-						<p class="text-justify">Bienvenida/o al Sistema Integral de Información para la Gestión de la Educación Superior, aquí las instituciones con reconocimiento de validez oficial de estudios (RVOE) podrán realizar sus trámites de manera digital de los procesos y trámites ante la dirección general de educación superior, investigación y posgrado de la Secretaria de Innovación, Ciencia y Tecnología.
-						En esta plataforma obtendrás de manera digital y sencilla una administración dinámica de información segura convirtiéndose en un poderoso portal para tu institución educativa. En este portal, los procesos estratégicos y/o módulos tienen una disponibilidad 24/7 otorgando accesibilidad y velocidad en la entrega de contenido al usuario, eliminando los antiguos y complejos procesos de alto uso de papeleo y trámites para lograr la  innovación en procesos de las instituciones educativas ante la Secretaria de Innovación, Ciencia y Tecnología del Gobierno del Estado de Jalisco.</p>
+						<p class="text-justify">Bienvenida/o al Sistema Integral de Información para la Gestión de la Educación Superior, aquí las instituciones con reconocimiento de validez oficial de estudios (RVOE) podrán realizar sus trámites de manera digital de los procesos y trámites ante la Direcci&oacute;n General de Incorporaci&oacute;n y Servicios Escolares de la Subsecretar&iacute;a de Educaci&oacute;n Superior.
+						En esta plataforma obtendrás de manera digital y sencilla una administración dinámica de información segura convirtiéndose en un poderoso portal para tu institución educativa. En este portal, los procesos estratégicos y/o módulos tienen una disponibilidad 24/7 otorgando accesibilidad y velocidad en la entrega de contenido al usuario, eliminando los antiguos y complejos procesos de alto uso de papeleo y trámites para lograr la  innovación en procesos de las instituciones educativas ante la Subsecretar&iacute;a de Educaci&oacute;n Superior del Gobierno del Estado de Jalisco.</p>
           </div>
         </div>
 			</div>

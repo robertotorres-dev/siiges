@@ -63,9 +63,20 @@
 					<!-- BARRA DE NAVEGACION -->
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
-						<li><a href="ce-ciclos-escolares.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Ciclos Escolares</a></li>
-						<li><a href="ce-grados.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>">Grados</a></li>
-						<li><a href="ce-grupos.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>">Grupos</a></li>
+						<?php
+							if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] || 
+							(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv") || 
+							(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv")) {
+						?>
+							<li><a href="ce-ciclos-escolares-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Ciclos Escolares</a></li>
+							<li><a href="ce-grados-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>">Grados</a></li>
+							<li><a href="ce-grupos-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>">Grupos</a></li>
+						<?php	}else{ ?>
+							<li><a href="ce-ciclos-escolares.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Ciclos Escolares</a></li>
+							<li><a href="ce-grados.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>">Grados</a></li>
+							<li><a href="ce-grupos.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>">Grupos</a></li>
+						<?php } ?>
+						
 						<li class="active">Asignaturas</li>
 					</ol>
 				</div>
@@ -94,7 +105,9 @@
 	                <th width="15%">Grado</th>
 									<th width="10%">Grupo</th>
 									<?php
-									if (Rol::ROL_REVALIDACION_EQUIVALENCIA != $_SESSION["rol_id"]):
+									if (!(Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] || 
+									(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv") || 
+									(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv"))):
 									 ?>
 									<th width="10%">Turno</th>
 									<?php
@@ -148,7 +161,9 @@
 								<td><?php echo $resultadoAsignatura["data"][$i]["grado"]; ?></td>
 								<td><?php echo $resultadoGrupo["data"]["grupo"]; ?></td>
 								<?php
-								if (Rol::ROL_REVALIDACION_EQUIVALENCIA != $_SESSION["rol_id"]):
+								if (!(Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] || 
+								(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv") || 
+								(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv"))):
 								 ?>
 								<td><?php echo $resultadoTurno["data"]["nombre"]; ?></td>
 								<?php
@@ -156,8 +171,8 @@
 								<td><?php echo $resultadoAsignatura["data"][$i]["clave"]; ?></td>
 								<td><?php echo $resultadoAsignatura["data"][$i]["nombre"]; ?></td>
 								<td>
-								  <a href="ce-ordinarios.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $_GET["grupo_id"]; ?>&asignatura_id=<?php echo $resultadoAsignatura["data"][$i]["id"] ?>">Ordinarios</a>
-									<a href="ce-extraordinarios.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $_GET["grupo_id"]; ?>&asignatura_id=<?php echo $resultadoAsignatura["data"][$i]["id"] ?>">Extraordinarios</a>
+								  <a href="ce-ordinarios.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $_GET["grupo_id"]; ?>&asignatura_id=<?php echo $resultadoAsignatura["data"][$i]["id"] ?>&tramite=<?php echo $_GET["tramite"] ?>">Ordinarios</a>
+									<a href="ce-extraordinarios.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $_GET["grupo_id"]; ?>&asignatura_id=<?php echo $resultadoAsignatura["data"][$i]["id"] ?>&tramite=<?php echo $_GET["tramite"] ?>">Extraordinarios</a>
 								</td>
 							</tr>
 							<?php

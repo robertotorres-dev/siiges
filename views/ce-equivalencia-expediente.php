@@ -15,6 +15,10 @@
 	require_once "../models/modelo-institucion.php";
 	require_once "../models/modelo-domicilio.php";
 	require_once "../models/modelo-estado.php";
+	require_once "../models/modelo-equivalencia.php";
+
+	$equivalencia = new Equivalencia( );
+	$res_equivalencia = $equivalencia->consultarPor('equivalencias', array("alumno_id"=>$_GET["alumno_id"], "deleted_at"), '*' );
 
 	$programa = new Programa( );
 	$programa->setAttributes( array( "id"=>$_GET["programa_id"] ) );
@@ -27,14 +31,6 @@
 	$institucion = new Institucion( );
 	$institucion->setAttributes( array( "id"=>$resultadoPlantel["data"]["institucion_id"] ) );
 	$resultadoInstitucion = $institucion->consultarId( );
-
-	$domicilio = new Domicilio( );
-	$domicilio->setAttributes( array( "id"=>$resultadoPlantel["data"]["domicilio_id"] ) );
-	$resultadoDomicilio = $domicilio->consultarId( );
-
-	$estado = new Estado( );
-	$estado->setAttributes( array( ) );
-	$resultadoEstado = $estado->consultarTodos( );
 
 	if( $_GET["proceso"]=="consulta" )
 	{
@@ -76,7 +72,6 @@
 
 ?>
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -117,8 +112,8 @@
 					<!-- BARRA DE NAVEGACION -->
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
-						<li><a href="ce-programas.php">Programas de Estudios</a></li>
-						<li><a href="ce-alumnos.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Alumnos</a></li>
+						<li><a href="ce-programas-plantel-equivalencia.php?institucion_id=<?php echo $resultadoInstitucion["data"]["id"] ?>&plantel_id=<?php echo $resultadoPlantel["data"]["id"] ?>">Programas de Estudios</a></li>
+						<li><a href="ce-alumnos-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Alumnos</a></li>
 						<li class="active"><?php echo $titulo; ?></li>
 					</ol>
 				</div>
@@ -132,9 +127,14 @@
 				<hr class="red">
 
 				<!-- NOTIFICACIÓN -->
+				<?php if( isset( $_GET["codigo"] ) && $_GET["codigo"]==200 ){ ?>
+        <div class="alert alert-success">
+					<p>Registro guardado.</p>
+        </div>
+        <?php } ?>
 				<?php if( isset( $_GET["codigo"] ) && $_GET["codigo"]==404 ){ ?>
         <div class="alert alert-danger">
-					<p>La matr&iacute;cula ingresada ya se encuentra registrada.</p>
+					<p>Error en el archivo adjunto.</p>
         </div>
         <?php } ?>
 				<!-- CONTENIDO -->
@@ -197,90 +197,8 @@
 							<input type="text" id="" name="" value="<?php echo (isset($resultadoPersona)) ? $resultadoPrograma["data"]["nombre"] : ""; ?>" maxlength="255" class="form-control" readonly />
 						</div>
           </div>
-					<div class="col-sm-4">
-            <div class="form-group">
-							<label class="control-label" for="expediente">No. de Expediente</label>
-							<input type="text" id="expediente" name="expediente" value="<?php //echo (isset($resultadoPersona)) ? $resultadoPrograma["data"]["nombre"] : ""; ?>" maxlength="255" class="form-control" required />
-						</div>
-          </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
-						<br>
-					</div>
-				</div>
-        <div class="row">
-          <div class="col-sm-12">
-						<legend>Datos de Insituci&oacute;n</legend>
-					</div>
-				</div>
-				<div class="row">
-          <div class="col-sm-4">
-            <div class="form-group">
-							<label class="control-label" for="institucion">Instituci&oacute;n</label>
-							<input type="text" id="" name="" value="<?php echo (isset($resultadoInstitucion)) ? $resultadoInstitucion["data"]["nombre"] : ""; ?>" maxlength="255" class="form-control" readonly />
-						</div>
-          </div>
-					<div class="col-sm-4">
-						<div class="form-group">
-							<label class="control-label" for="plantel">Plantel</label>
-							<input type="text" id="" name="" value="<?php echo (isset($resultadoDomicilio)) ? $resultadoDomicilio["data"]["calle"]." ".$resultadoDomicilio["data"]["numero_exterior"].", ". $resultadoDomicilio["data"]["municipio"] : ""; ?>" maxlength="255" class="form-control" readonly />
-						</div>
-					</div>
-					<div class="col-sm-4">
-            <div class="form-group">
-						</div>
-          </div>
-        </div>
-				<div class="row">
-          <div class="col-sm-12">
-						<br>
-					</div>
-				</div>
-        <div class="row">
-          <div class="col-sm-12">
-						<legend>Datos de Insituci&oacute;n de Procedencia</legend>
-					</div>
-				</div>
-				<div class="row">
-          <div class="col-sm-4">
-            <div class="form-group">
-							<label class="control-label" for="nombre_institucion_procedencia">Instituci&oacute;n de Procedencia</label>
-							<input type="text" id="nombre_institucion_emisora" name="nombre_institucion_procedencia" value="
-							<?php //echo $res_validacion["data"] ? $res_validacion["data"][0]["nombre_institucion_emisora"] : ""; ?>
-							" maxlength="255" class="form-control" required />
-						</div>
-          </div>
-					<div class="col-sm-4">
-            <div class="form-group">
-							<label class="txt-label1" for="estado">Estado de procedencia</label>
-							<select id="estado_id" name="estado_id" class="selectpicker" data-live-search="true" data-width="100%" required>
-								<option value=""> </option>
-								<?php
-
-									$max = count( $resultadoEstado["data"] );
-
-									for( $i=0; $i<$max; $i++ )
-									{
-										if( $resultadoEstado["data"][$i]["id"]==$res_validacion["data"][0]["estado_id"] )
-										{
-											echo "<option value='".$resultadoEstado["data"][$i]["id"]."' selected>".$resultadoEstado["data"][$i]["estado"]."</option>";
-										}
-										else
-										{
-										  echo "<option value='".$resultadoEstado["data"][$i]["id"]."'>".$resultadoEstado["data"][$i]["estado"]."</option>";
-										}
-									}
-								?>
-							</select>
-						</div>
-          </div>
-					<div class="col-sm-4">
-            <div class="form-group">
-						</div>
-          </div>
-        </div>
-				<div class="row">
           <div class="col-sm-12">
 						<br>
 					</div>
@@ -342,41 +260,22 @@
 						<legend>Documentaci&oacute;n para Equivalencia</legend>
 					</div>
 				</div>
-
+				<div class="row">
+					<div class="col-sm-4">
+            <div class="form-group">
+							<label class="control-label" for="folio_expediente">No. de Expediente*</label>
+							<input type="text" id="folio_expediente" name="folio_expediente" value="<?php echo $res_equivalencia["data"] ? $res_equivalencia["data"][0]["folio_expediente"] : ""; ?>" maxlength="255" class="form-control" required />
+						</div>
+          </div>
+				</div>
 				<div class="row">
           <div class="col-sm-8">
             <div class="form-group">
-							<label class="control-label" for="archivo_certificado_parcial">Certificado Parcial o Total (PDF)</label>
+							<label class="control-label" for="archivo_certificado_parcial">Certificado Parcial o Total (PDF)*</label>
 							<input type="file" id="archivo_certificado_parcial" name="archivo_certificado_parcial" accept="application/pdf" class="form-control" />
-							<div><a href="../uploads/equivalencias/alumno#<?php //echo $resultadoAlumno["data"]["archivo_nacimiento"]; ?>" target="_blank"><?php echo $resultadoAlumno["data"]["archivo_nacimiento"]; ?></a></div>
-						</div>
-          </div>
-					<div class="col-sm-4">
-            <div class="form-group">
-						</div>
-          </div>
-        </div>
-
-				<div class="row">
-          <div class="col-sm-8">
-            <div class="form-group">
-							<label class="control-label" for="archivo_predictamen">Predictamen (PDF)</label>
-							<input type="file" id="archivo_predictamen" name="archivo_predictamen" accept="application/pdf" class="form-control" />
-							<div><a href="../uploads/equivalencias/alumno#<?php //echo $resultadoAlumno["data"]["archivo_nacimiento"]; ?>" target="_blank"><?php echo $resultadoAlumno["data"]["archivo_nacimiento"]; ?></a></div>
-						</div>
-          </div>
-					<div class="col-sm-4">
-            <div class="form-group">
-						</div>
-          </div>
-        </div>
-
-				<div class="row">
-          <div class="col-sm-8">
-            <div class="form-group">
-							<label class="control-label" for="archivo_pago_equivalencias">Pago de equivalencias</label>
-							<input type="file" id="archivo_pago_equivalencias" name="archivo_pago_equivalencias" accept="application/pdf" class="form-control" />
-							<div><a href="../uploads/equivalencias/alumno#<?php //echo $resultadoAlumno["data"]["archivo_nacimiento"]; ?>" target="_blank"><?php echo $resultadoAlumno["data"]["archivo_nacimiento"]; ?></a></div>
+							<?php if($res_equivalencia["data"]): ?>
+							<div><a href="<?php echo "../uploads/Institucion".$resultadoInstitucion["data"]["id"]."/PLANTEL".$resultadoPlantel["data"]["id"]."/equivalencias/".$res_equivalencia["data"][0]["archivo_certificado_parcial"]; ?>" target="_blank"><?php echo $res_equivalencia["data"][0]["archivo_certificado_parcial"]; ?></a></div>
+							<?php endif; ?>
 						</div>
           </div>
 					<div class="col-sm-4">
@@ -388,14 +287,15 @@
 				<div class="row">
           <div class="col-sm-4">
             <div class="form-group">
-							<label class="control-label" for="folio_resolucion">Folio de Resoluci&oacute;n Parcial</label>
-							<input type="text" id="folio_resolucion" name="folio_resolucion" value="<?php //echo $res_validacion["data"] ? $res_validacion["data"][0]["folio_envio"] : ""; ?>" maxlength="255" class="form-control" required />
+							<label class="control-label" for="folio_resolucion">Folio de Resoluci&oacute;n Parcial*</label>
+							<input type="text" id="folio_resolucion" name="folio_resolucion" value="<?php echo $res_equivalencia["data"] ? $res_equivalencia["data"][0]["folio_resolucion"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
+
 					<div class="col-sm-4">
-            <div class="form-group">
-							<label class="txt-label1" for="fecha_resolucion">Fecha de Resoluci&oacute;n Parcial</label>
-							<input type="text" id="fecha_resolucion" name="fecha_resolucion" value="<?php //echo $res_validacion["data"] ? $res_validacion["data"][0]["fecha_envio"] : ""; ?>" maxlength="255" class="form-control" required />
+            <div class="form-group datepicker-group">
+							<label class="txt-label1" for="fecha_resolucion">Fecha de Resoluci&oacute;n Parcial*</label>
+							<input type="text" id="fecha_resolucion" name="fecha_resolucion" value="<?php echo $res_equivalencia["data"] ? $res_equivalencia["data"][0]["fecha_resolucion"] : ""; ?>" maxlength="255" class="form-control" required />
 						</div>
           </div>
 					<div class="col-sm-4">
@@ -407,9 +307,11 @@
 				<div class="row">
           <div class="col-sm-8">
             <div class="form-group">
-							<label class="control-label" for="archivo_resolucion">Resoluci&oacute;n Parcial (PDF)</label>
+							<label class="control-label" for="archivo_resolucion">Resoluci&oacute;n Parcial (PDF)*</label>
 							<input type="file" id="archivo_resolucion" name="archivo_resolucion" accept="application/pdf" class="form-control" />
-							<div><a href="../uploads/equivalencias/alumno#/<?php //echo $resultadoAlumno["data"]["archivo_nacimiento"]; ?>" target="_blank"><?php echo $resultadoAlumno["data"]["archivo_nacimiento"]; ?></a></div>
+							<?php if($res_equivalencia["data"]): ?>
+							<div><a href="<?php echo "../uploads/Institucion".$resultadoInstitucion["data"]["id"]."/PLANTEL".$resultadoPlantel["data"]["id"]."/equivalencias/".$res_equivalencia["data"][0]["archivo_resolucion"]; ?>" target="_blank"><?php echo $res_equivalencia["data"][0]["archivo_resolucion"]; ?></a></div>
+							<?php endif; ?>
 						</div>
           </div>
 					<div class="col-sm-4">
@@ -433,8 +335,10 @@
 				<div class="row">
           <div class="col-sm-12">
             <div class="form-group">
-							<input type="hidden"  name="id" value="<?php //echo $res_validacion["data"] ? $res_validacion["data"][0]["id"] : ""; ?>" />
+							<input type="hidden"  name="id" value="<?php echo $res_equivalencia["data"] ? $res_equivalencia["data"][0]["id"] : ""; ?>" />
 							<input type="hidden"  name="usuario_id" value="<?php echo isset($_SESSION["id"])?$_SESSION["id"]:-1; ?>" />
+							<input type="hidden"  name="institucion_id" value="<?php echo $resultadoInstitucion["data"]["id"]; ?>" />
+							<input type="hidden"  name="plantel_id" value="<?php echo $resultadoPlantel["data"]["id"]; ?>" />
 							<input type="hidden"  name="url" value="../views/ce-equivalencia-expediente.php?programa_id=<?php echo $_GET["programa_id"]."&alumno_id=".$_GET["alumno_id"]."&proceso=edicion"."&codigo=200"; ?> "/>
 							<input type="hidden"  name="webService" value="guardar" />
 							<input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" />
