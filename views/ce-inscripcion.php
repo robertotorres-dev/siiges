@@ -275,7 +275,9 @@
 							<input type="hidden"  name="ciclo_id" value="<?php echo $_GET['ciclo_id']; ?>" />
 							<input type="hidden"  name="grado" value="<?php echo $_GET['grado']; ?>" />
 							<input type="hidden"  name="grupo_id" value="<?php echo $_GET['grupo_id']; ?>" />
+							<?php if (isset($_GET['tramite'])): ?>
 							<input type="hidden"  name="tramite" value="<?php echo $_GET['tramite']; ?>" />
+							<?php endif; ?>
 						</div>
           </div>
         </div>

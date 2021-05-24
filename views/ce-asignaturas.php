@@ -170,9 +170,10 @@
 								endif; ?>
 								<td><?php echo $resultadoAsignatura["data"][$i]["clave"]; ?></td>
 								<td><?php echo $resultadoAsignatura["data"][$i]["nombre"]; ?></td>
+								<?php isset($_GET['tramite']) ? $tramite = $_GET['tramite'] : $tramite = ''; ?>
 								<td>
-								  <a href="ce-ordinarios.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $_GET["grupo_id"]; ?>&asignatura_id=<?php echo $resultadoAsignatura["data"][$i]["id"] ?>&tramite=<?php echo $_GET["tramite"] ?>">Ordinarios</a>
-									<a href="ce-extraordinarios.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $_GET["grupo_id"]; ?>&asignatura_id=<?php echo $resultadoAsignatura["data"][$i]["id"] ?>&tramite=<?php echo $_GET["tramite"] ?>">Extraordinarios</a>
+								  <a href="ce-ordinarios.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $_GET["grupo_id"]; ?>&asignatura_id=<?php echo $resultadoAsignatura["data"][$i]["id"] ?>&tramite=<?php echo $tramite ?>">Ordinarios</a>
+									<a href="ce-extraordinarios.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $_GET["grupo_id"]; ?>&asignatura_id=<?php echo $resultadoAsignatura["data"][$i]["id"] ?>&tramite=<?php echo $tramite ?>">Extraordinarios</a>
 								</td>
 							</tr>
 							<?php

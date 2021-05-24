@@ -6,6 +6,7 @@
   require_once "../models/modelo-alumno-grupo.php";
   require_once "../models/modelo-bitacora.php";
   require_once "../models/modelo-alumno.php";
+  require_once "../models/modelo-ciclo-escolar.php";
   require_once "../models/modelo-calificacion.php";
   require_once "../models/modelo-validacion.php";
   require_once "../utilities/utileria-general.php";
@@ -105,6 +106,7 @@
       $alumno = new Alumno( );
       $alumno->setAttributes( $parametros );
       $resultadoAlumno = $alumno->consultarMatricula( );
+
       if( !$resultadoAlumno["data"][0]["id"] )
       {
         header( "Location: ../views/ce-inscripcion.php?programa_id=".$_POST["programa_id"]."&ciclo_id=".$_POST["ciclo_id"]."&grado=".$_POST["grado"]."&grupo_id=".$_POST["grupo_id"]."&codigo=404&tramite=".$_POST["tramite"] );
@@ -115,9 +117,18 @@
         exit( );
       }
 
+      //Validando ciclo escolar
+      $ciclo_ecolar = new CicloEscolar();
+      $aux = new Utileria( );
+      $_POST = $aux->limpiarEntrada( $_POST );
+      $ciclo_ecolar->setAttributes( array( "id"=>$_POST["ciclo_id"] ) );
+      $resultado_ciclo_escolar = $ciclo_ecolar->consultarId( );
+      $ciclo_ecolar_actual = str_split($resultado_ciclo_escolar["data"]["nombre"], 4);
+
+      //Validacion de alumno
       $validacion = new Validacion( );
 	    $res_validacion = $validacion->consultarPor('validaciones', array("alumno_id"=>$resultadoAlumno["data"][0]["id"], "deleted_at"), '*' );
-      if (!$res_validacion["data"] || $res_validacion["data"][0]["situacion_validacion_id"] != 1 ) {
+      if (!$res_validacion["data"] || $res_validacion["data"][0]["situacion_validacion_id"] != 1 ||  $ciclo_ecolar_actual[0] >= 2021) {
         header( "Location: ../views/ce-inscripcion.php?programa_id=".$_POST["programa_id"]."&ciclo_id=".$_POST["ciclo_id"]."&grado=".$_POST["grado"]."&grupo_id=".$_POST["grupo_id"]."&codigo=403&tramite=".$_POST["tramite"] );
         exit( );
       }
