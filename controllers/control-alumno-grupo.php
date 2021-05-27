@@ -118,17 +118,18 @@
       }
 
       //Validando ciclo escolar
-      $ciclo_ecolar = new CicloEscolar();
+      $ciclo_escolar = new CicloEscolar();
       $aux = new Utileria( );
       $_POST = $aux->limpiarEntrada( $_POST );
-      $ciclo_ecolar->setAttributes( array( "id"=>$_POST["ciclo_id"] ) );
-      $resultado_ciclo_escolar = $ciclo_ecolar->consultarId( );
-      $ciclo_ecolar_actual = str_split($resultado_ciclo_escolar["data"]["nombre"], 4);
+      $ciclo_escolar->setAttributes( array( "id"=>$_POST["ciclo_id"] ) );
+      $resultado_ciclo_escolar = $ciclo_escolar->consultarId( );
+      $ciclo_escolar_actual = str_split($resultado_ciclo_escolar["data"]["nombre"], 4);
+
 
       //Validacion de alumno
       $validacion = new Validacion( );
 	    $res_validacion = $validacion->consultarPor('validaciones', array("alumno_id"=>$resultadoAlumno["data"][0]["id"], "deleted_at"), '*' );
-      if (!$res_validacion["data"] || $res_validacion["data"][0]["situacion_validacion_id"] != 1 ||  $ciclo_ecolar_actual[0] >= 2021) {
+      if ((!$res_validacion["data"] || $res_validacion["data"][0]["situacion_validacion_id"] != 1) && intval($ciclo_escolar_actual[0]) >= 2021) {
         header( "Location: ../views/ce-inscripcion.php?programa_id=".$_POST["programa_id"]."&ciclo_id=".$_POST["ciclo_id"]."&grado=".$_POST["grado"]."&grupo_id=".$_POST["grupo_id"]."&codigo=403&tramite=".$_POST["tramite"] );
         exit( );
       }

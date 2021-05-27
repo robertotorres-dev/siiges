@@ -261,7 +261,7 @@
           $resultado["data"]["tipo"] = "nuevo";
           $resultado["message"] = "El registro fue exitoso";
           if(  Usuario::USUARIO_REGISTRADO == $parametros['estatus']){
-            $resultado["message"] .= ", recibirá un correo de confirmación cuando sea activado.";
+            $resultado["message"] .= ", favor de enviar un correo de confirmación a soporte.siiges@jalisco.gob.mx para que su usuario quede activado.";
           }
           unset($usuario);
 
