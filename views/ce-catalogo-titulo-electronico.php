@@ -1,6 +1,9 @@
 <?php
 // Válida los permisos del usuario de la sesión
 require_once "../utilities/utileria-general.php";
+require_once "../models/modelo-institucion.php";
+require_once "../models/modelo-titulo-electronico.php";
+
 Utileria::validarSesion( basename( __FILE__ ) );
 Utileria::validarAccesoModulo( basename( __FILE__ ) );
 
@@ -20,12 +23,16 @@ if(isset($_SESSION["resultado"])){
   	<meta name="viewport" content="width=device-width, initial-scale=1">
   	<title>Cat&aacute;logo T&iacute;tulo Electr&oacute;nico</title>
   	<!-- CSS GOB.MX -->
-    <link href="../favicon.ico" rel="shortcut icon">
-  	<link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">
-  	<!-- CSS DATATABLE -->
-  	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-  	<!-- CSS PROPIO -->
-  	<link rel="stylesheet" type="text/css" href="../css/estilos.css">
+	<link href="../favicon.ico" rel="shortcut icon">
+	<link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">
+	<!-- CSS DATATABLE -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+	<!-- CSS LIVESELECT -->
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap-select.min.css">
+	<!-- CSS CALENDAR -->
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<!-- CSS PROPIO -->
+	<link rel="stylesheet" type="text/css" href="../css/estilos.css">
   </head>
   <body>
     <!-- HEADER Y BARRA DE NAVEGACION -->
@@ -90,16 +97,41 @@ if(isset($_SESSION["resultado"])){
             <table id="usuarios" class="table table-striped table-bordered" cellspacing="0" width="100%" >
                 <thead>
                 <tr>
-                    <th style="width: 130px; overflow: auto;">Nombre</th>
-                    <th>Usuario</th>
-                    <th>Correo</th>
-                    <th>Rol</th>
-                    <th>Fecha Creado</th>
-                    <th>Estatus</th>
-                    <th>Acciones</th>
+                    <th width="30%">Nombre</th>
+                    <th width="30%">Instituci&oacute;n</th>
+                    <th width="10%">Folio de Control</th>
+                    <th width="10%">CURP</th>
+                    <th width="10%">Fecha de expedici&oacute;n</th>
+                    <th width="10%">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
+                  <?php
+                  $titulo = new TitulosElectronicos( );
+                  $titulo->setAttributes( array( ) );
+                  $resultadoTitulo = $titulo->consultarTodos( );
+
+                  $max = count( $resultadoTitulo["data"] );
+
+                  for( $i=0; $i<$max; $i++ )
+                  {
+                    $institucion = new Institucion();
+                    $institucion->setAttributes( array( "id"=>$resultadoTitulo["data"][$i]["institucion_id"] ) );
+                    $res_institucion = $institucion->consultarId( );
+                  ?>
+                  <tr>
+                    <td><?php echo $resultadoTitulo["data"][$i]["primer_apellido"]." ".$resultadoTitulo["data"][$i]["segundo_apellido"]." ".$resultadoTitulo["data"][$i]["nombre"]; ?></td>
+                    <td><?php echo $res_institucion["data"]["nombre"]; ?></td>
+                    <td><?php echo $resultadoTitulo["data"][$i]["folio_control"]; ?></td>
+                    <td><?php echo $resultadoTitulo["data"][$i]["curp"]; ?></td>
+                    <td><?php echo $resultadoTitulo["data"][$i]["fecha_expedicion"]; ?></td>
+                    <td>
+						            <a href= <?= "formatos/fdtitulo.php?id=".$resultadoTitulo["data"][$i]["folio_control"] ?> target="_blank"><span id="" title="PDF" class="glyphicon glyphicon-print col-sm-1 size_icon"></span></a>
+                    </td>
+                  </tr>
+                  <?php
+                    }
+                  ?>
                 </tbody>
             </table>
           </div>
@@ -120,8 +152,20 @@ if(isset($_SESSION["resultado"])){
                       <input class="form-control" type="file" id="archivo-xml" name="archivo-xml">
                       <br>
                       <label class="control-label" for="institucion" required>Instituci&oacute;n de origen* </label>
-                      <select id="institucion" name="institucion" class="selectpicker form-control" data-live-search="true" data-width="100%" required>
+                      <select id="institucion_id" name="institucion_id" class="selectpicker" data-live-search="true" data-width="100%" required>
                         <option value=""> </option>
+                        <?php
+                          $institucion = new Institucion( );
+                          $institucion->setAttributes( array( ) );
+                          $resultadoInstitucion = $institucion->consultarTodos( );
+
+                          $max = count( $resultadoInstitucion["data"] );
+
+                          for( $i=0; $i<$max; $i++ )
+                          {
+                            echo "<option value='".$resultadoInstitucion["data"][$i]["id"]."'>".$resultadoInstitucion["data"][$i]["nombre"]."</option>";
+                          }
+                        ?>
                       </select>
                       <input type="hidden"  name="url" value="../views/ce-catalogo-titulo-electronico.php"/>
                       <input type="hidden"  name="webService" value="guardar" />
@@ -139,7 +183,12 @@ if(isset($_SESSION["resultado"])){
     <script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
     <!-- JS JQUERY -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- JS DATATABLE -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <!-- JS LIVESELECT -->
+    <script src="../js/bootstrap-select.min.js"></script>
+    <!-- JS CALENDAR -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- JS PROPIOS -->
     <script src="../js/tituloElectronico.js"></script>
   </body>
