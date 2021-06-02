@@ -14,6 +14,8 @@
 	require_once "../models/modelo-alumno.php";
 	require_once "../models/modelo-persona.php";
 
+	$tramite = isset($_GET["tramite"]) ? $_GET["tramite"] : "";
+
 	$programa = new Programa( );
 	$programa->setAttributes( array( "id"=>$_GET["programa_id"] ) );
 	$resultadoPrograma = $programa->consultarId( );
@@ -78,8 +80,8 @@
 						<li><i class="icon icon-home"></i></li>
 						<?php
 							if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] || 
-							(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv") || 
-							(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv")) {
+							(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] && $tramite == "equiv") || 
+							(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] && $tramite == "equiv")) {
 						?>
 						<li><a href="ce-ciclos-escolares-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Ciclos Escolares</a></li>
 						<li><a href="ce-grados-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>">Grados</a></li>
@@ -131,8 +133,8 @@
 									<th width="15%">Grupo</th>
 									<?php
 									if (!(Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] || 
-									(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv") || 
-									(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv"))):
+									(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] && $tramite == "equiv") || 
+									(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] && $tramite == "equiv"))):
 									 ?>
 	                <th width="15%">Turno</th>
 									<?php
@@ -146,8 +148,8 @@
 									<td><?php echo $resultadoGrupo["data"]["grupo"]; ?></td>
 									<?php
 									if (!(Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] || 
-									(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv") || 
-									(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv"))):
+									(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] && $tramite == "equiv") || 
+									(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] && $tramite == "equiv"))):
 									 ?>
 									<td><?php echo $resultadoTurno["data"]["nombre"]; ?></td>
 									<?php
