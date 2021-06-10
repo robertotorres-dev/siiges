@@ -30,7 +30,7 @@ tipo_entidad = id_tabla
     );
     public static $tablas = array(1 =>'instituciones',2=>'ratificacion_nombres');
 
-    public static $tipoEntidad = array("INSTITUCION"=>1,"RATIFICACION"=>2,"PERSONA"=>3,"REPRESENTANTE"=>4,"PROGRAMA"=>5,"TRAYECTORIA"=>6,"PLANTEL"=>7,"SOLICITUD"=>8);
+    public static $tipoEntidad = array("INSTITUCION"=>1,"RATIFICACION"=>2,"PERSONA"=>3,"REPRESENTANTE"=>4,"PROGRAMA"=>5,"TRAYECTORIA"=>6,"PLANTEL"=>7,"SOLICITUD"=>8, "EVALUACION"=>9);
     public static $nombresDocumentos = array("logotipo"=>1,
                                               "firma_representante"=>2,
                                               "estudio_pertinencia"=>3,
@@ -66,6 +66,7 @@ tipo_entidad = id_tabla
                                               "forma_migratoria"=>33,
                                               "acta_constitutiva"=>34,
                                               "acuerdo_anterior"=>35,
+                                              "dictamen_evaluacion"=>36,
                                             );
 
     public static $dir_subida = '../uploads/';

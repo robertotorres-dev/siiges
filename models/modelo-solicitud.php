@@ -18,6 +18,7 @@
     protected $estatus_solicitud_id;
     protected $cita;
     protected $folio;
+    protected $convocatoria;
 
     const NUEVA = 1;
 

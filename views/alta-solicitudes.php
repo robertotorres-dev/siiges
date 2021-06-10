@@ -56,6 +56,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                 <li ><a data-toggle="tab" href="#tab-02">Programa de estudios</a></li>
                 <li><a data-toggle="tab" href="#tab-03">Plantel</a></li>
                 <li><a data-toggle="tab" href="#tab-04">Anexos</a></li>
+                <li><a data-toggle="tab" href="#tab-05">Evaluaci&oacute;n curricular</a></li>
           </ul>
 
 
@@ -2493,6 +2494,8 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             <div class="col-sm-12 col-md-8">
                               <label class="control-label" for="">Nombre autorizado:</label><br>
                               <input id="nombre_autorizado" type="text" name="RATIFICACION-nombre_autorizado" class="form-control" value="" placeholder="Nombre autorizado"><br>
+                              <!-- Input de control para solicitudes 2021 -->
+                              <input id="es_nombre_autorizado" type="hidden" class="form-control" value="">
                             </div>
                             <div class="col-sm-12 col-md-8">
                               <label class="control-label" for="">Acuerdo:</label><br>
@@ -2615,6 +2618,21 @@ Utileria::validarSesion( basename( __FILE__ ) );
                 </div>
               </div>
 
+              <!-- Evaluación curricular -->
+              <div class="tab-pane" id="tab-05">
+                <div class="panel-group ficha-collapse" role="tablist" id="acordion5">
+                  <!-- Evaluación -->
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-tittle">
+                        <a data-parent="#acordion5" data-toggle="collapse" href="#evaluacion" aria-expanded="false" aria-controls="evaluacion" class="collapsed">Datos Evaluaci&oacute;n </a>
+                        <button type="button" class="collpase-button collapsed" data-parent="#acordion5" data-toggle="collapse" href="#evaluacion" aria-expanded="false"></button>
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <!-- Mensajes generales para todo el formulario -->
               <div id="mesage">
                 <?php if(isset($resultado) && isset($resultado->status) && $resultado->status != "200"): ?>
@@ -2632,6 +2650,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                 <input type="hidden" id="estatus" name="SOLICITUD-estatus_solicitud_id" value="1" />
                 <input type="hidden" id="tipo" name="SOLICITUD-tipo_solicitud_id" value="<?= $_GET["tipo"] ?> " />
                 <input type="hidden" id="id_usuario" value="<?=$_SESSION["id"]?>">
+                <input type="hidden" id="convocatoria" name="SOLICITUD-convocatoria" value="2021" />
                 <button type="button" class="btn btn-primary pull-right" onclick="Solicitud.camposLlenos()">Terminar solicitud</button>
                 <button type="button" id="btnGuardar" name="" class="btn btn-default pull-right" style="margin-right: 10px;" onclick="limpiarInputs()"> Guardar solicitud</button>
                 <!-- Filtrar informacion a cargar  -->
@@ -2665,7 +2684,6 @@ Utileria::validarSesion( basename( __FILE__ ) );
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
               </div>
             </div>
-
           </div>
         </div>
 

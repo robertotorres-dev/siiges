@@ -32,6 +32,9 @@
   require_once "../models/modelo-espejo.php";
   require_once "../models/modelo-publicacion.php";
   require_once "../models/modelo-programa-turno.php";
+  require_once "../models/modelo-programa-evaluacion.php";
+  require_once "../models/modelo-cumplimiento.php";
+  require_once "../models/modelo-evaluador.php";
   require_once "../models/modelo-edificio-nivel.php";
   require_once "../models/modelo-plantel-edificio-nivel.php";
   require_once "../models/modelo-plantel-seguridad-sistema.php";
@@ -196,9 +199,9 @@ session_start();
           if($estatus == "COMPLETAR SOLICITUD"){
             if($_POST["rol_id"]==4)
             {
-              $opciones_edicion = $editar;
+              $opciones_edicion = $editar.$espacio.$detalles;
             }else {
-              $opciones_edicion = $editar.$espacio.$ver.$espacio.$eliminar;
+              $opciones_edicion = $editar.$espacio.$ver.$espacio.$eliminar.$espacio.$detalles;
             }
           }else if( $estatus == "ATENDER OBSERVACIONES"){
             $opciones_edicion =$detalles.$espacio .$editar;
@@ -510,8 +513,34 @@ session_start();
                 }
                 $resultado["data"]["plantel"]["infraestructura"] = $infraestructura_final;
               }
-              //Documentos
 
+              // Evaluacion curricular
+              $evaluacion = new ProgramaEvaluacion();
+              $programa_evaluacion = $evaluacion->consultarPor("programa_evaluaciones", array( "programa_id" => $resultado["data"]["programa"]["id"],"deleted_at" ), '*');
+              if (isset($programa_evaluacion["data"][0])) {
+                $resultado["data"]["evaluacion"] = $programa_evaluacion["data"][0];
+  
+                //Programa evaluado
+                $datos_programa_evaluacion = new Programa();
+                $datos_programa_evaluacion->setAttributes( array( 'id' => $programa_evaluacion["data"][0]["programa_id"] ) );
+                $res_datos_programa_evaluacion = $datos_programa_evaluacion->consultarId();
+                $resultado["data"]["evaluacion"]["programa"] = $res_datos_programa_evaluacion["data"];
+                
+                
+                // Tipo cumplimiento
+                $tipo_cumplimiento = new Cumplimiento();
+                $tipo_cumplimiento->setAttributes( array( 'id' => $programa_evaluacion["data"][0]["cumplimiento_id"] ) );
+                $res_tipo_cumplimiento = $tipo_cumplimiento->consultarId();
+                $resultado["data"]["evaluacion"]["tipo_cumplimiento"] = $res_tipo_cumplimiento["data"];
+  
+                // Evaluadores
+                $evaluador = new Evaluador();
+                $evaluador->setAttributes( array( 'id' => $programa_evaluacion["data"][0]["evaluador_id"] ) );
+                $res_evaluador = $evaluador->consultarId();
+                $resultado["data"]["evaluacion"]["evaluador"] = $res_evaluador["data"];
+              }
+
+              //Documentos
               $firma = new Documento();
               $res_firma = $firma->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["REPRESENTANTE"],"entidad_id"=>$resultado["data"]["programa"]["solicitud"]["usuario_id"],"tipo_documento"=>Documento::$nombresDocumentos["firma_representante"],"deleted_at"),"*");
               if(sizeof($res_firma["data"])>0)
@@ -740,6 +769,14 @@ session_start();
               if (sizeof($res_reglamento["data"])>0)
               {
                 $resultado["data"]["documentos"]["reglamento_institucional"] =$res_reglamento["data"][0];
+
+              }
+
+              $dictamen_evaluacion = new Documento();
+              $res_dictamen_evaluacion = $dictamen_evaluacion->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["EVALUACION"],"entidad_id"=>$resultado["data"]["evaluacion"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["dictamen_evaluacion"],"deleted_at"),"*");
+              if (sizeof($res_dictamen_evaluacion["data"])>0)
+              {
+                $resultado["data"]["documentos"]["dictamen_evaluacion"] =$res_dictamen_evaluacion["data"][0];
 
               }
 

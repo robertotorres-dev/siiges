@@ -2,6 +2,8 @@
 var EditarSolicitud = {};
 //Si ha tenido observaciones, le permite terminar solicitud
 var TerminarSolicitud = {};
+// Var para almacenar datos de evaluacion
+var Guia = {};
 
 //Función para periodo final de modalConvocatoria
 //Sólo los programas que ya están en observación pueden subir su información
@@ -10,14 +12,18 @@ TerminarSolicitud.getEstatusSolicitud = function () {
     type: "POST",
     url: "../controllers/control-solicitud-estatus.php",
     dataType: "json",
-    data: { webService: "consultarEstatusSolicitud", url: "", solicitud_id: $("#id_solicitud").val() },
+    data: {
+      webService: "consultarEstatusSolicitud",
+      url: "",
+      solicitud_id: $("#id_solicitud").val(),
+    },
     success: function (respuesta) {
       //Si el estatus de la solicitud está en observación entonces si puede entrar a editar su inforamción
       if (respuesta.data.length > 0) {
         for (let i = 0; i < respuesta.data.length; i++) {
-          let estatus = respuesta.data[i].estatus_solicitud_id
+          let estatus = respuesta.data[i].estatus_solicitud_id;
           //Si tiene observaciones, que permita guardarSolicitud y mostrar modal
-          if (estatus === '200') {
+          if (estatus === "200") {
             //$("#btnTerminar").attr("disabled",false)
             //$("#btnGuardar").attr("disabled",false)
           }
@@ -30,17 +36,18 @@ TerminarSolicitud.getEstatusSolicitud = function () {
       // Si es el primer guardado de la solicitud, no tiene estatus y se muestra el mensaje de tiempo fuera de la solicitud
       else {
         if ($("#tipo").val() == 1) {
-          $("#modalConvocatoria").modal()
-          $("#tamanoModalConvocatoria").attr("style","margin-top:80px;")
-          $("#mensajeConvocatoriaExpirada").addClass("alert alert-danger")
+          //Modal para termino de convocatoria
+          /* $("#modalConvocatoria").modal();
+          $("#tamanoModalConvocatoria").attr("style", "margin-top:80px;");
+          $("#mensajeConvocatoriaExpirada").addClass("alert alert-danger"); */
         }
       }
     },
     error: function (respuesta, errmsg, err) {
       console.log(respuesta);
-    }
-  })
-}
+    },
+  });
+};
 
 //Obtener una solicitud en especifico
 EditarSolicitud.getSolicitud = function () {
@@ -48,32 +55,44 @@ EditarSolicitud.getSolicitud = function () {
     type: "POST",
     url: "../controllers/control-solicitud-usuario.php",
     dataType: "json",
-    data: { webService: "datosSolicitud", url: "", solicitud_id: $("#id_solicitud").val() },
+    data: {
+      webService: "datosSolicitud",
+      url: "",
+      solicitud_id: $("#id_solicitud").val(),
+    },
     success: function (respuesta) {
       if (respuesta.status == "202") {
         //location.href = respuesta.data;
       }
       if (respuesta.data != "") {
-        //Comprobamos que tenga formato correcto
-        const fechaAlta = respuesta.data.programa.solicitud.created_at.substring(0, 10).split("-");
-        const fecha1 = new Date(parseInt(fechaAlta[0]), parseInt(fechaAlta[1] - 1), parseInt(fechaAlta[2]))
-        //Al mes se resta 1
-        const fechaConvocatoria2020 = {
-          fechaInicio: new Date(2020, 10, 27),
-          fechaFin: new Date(2021, 01, 01)
-        }
-        //console.log(fecha1);
-        //console.log(fechaConvocatoria2020.fechaInicio);
-        if (fecha1 >= fechaConvocatoria2020.fechaInicio && fecha1 <= fechaConvocatoria2020.fechaFin) {
-          const comprobante_pago = document.getElementById('comprobante_pago');
-          const contenedor_pago = document.getElementById('contendorPago');
+        const convocatoria = Number(respuesta.data.solicitud.convocatoria);
+
+        //No se pide pago después de la convocatoria 2019
+        if (convocatoria > 2019) {
+          const comprobante_pago = document.getElementById("comprobante_pago");
+          const contenedor_pago = document.getElementById("contendorPago");
           comprobante_pago.remove();
           contenedor_pago.remove();
-
-          console.log("Convocatoria 2020");
-        } else {
-          console.log('Convocatoria anterior');
         }
+
+        if (convocatoria >= 2021) {
+          console.log("Convocatoria actual");
+          console.log("Requisito evaluación curricular");
+        }
+
+        //Si es convocatoria 2021, se pide como requisito la evaluacion curricular, de lo contrario, se eliminan los campos
+        const tipo_solicitud = Number(
+          respuesta.data.solicitud.tipo_solicitud_id
+        );
+
+        if (convocatoria <= 2020 || convocatoria == "" || tipo_solicitud == 3) {
+          const tabEvaluacion = document.getElementById("tab-evaluacion");
+          const tab05 = document.getElementById("tab-05");
+          tabEvaluacion.remove();
+          tab05.remove();
+          console.log("Migracion");
+        }
+
         if (respuesta.data.documentos != undefined) {
           var documentos = respuesta.data.documentos;
           if ($("#editar").val() == 0) {
@@ -83,7 +102,10 @@ EditarSolicitud.getSolicitud = function () {
           if (documentos.firma_representante != undefined) {
             $("#firma-id").val(documentos.firma_representante);
             $("#contenedorFirma").attr("style", "display: block");
-            $("#enlace-firma").attr("href", documentos.firma_representante.archivo);
+            $("#enlace-firma").attr(
+              "href",
+              documentos.firma_representante.archivo
+            );
           }
           if (documentos.logotipo != undefined) {
             $("#logotipo-id").val(documentos.logotipo.id);
@@ -93,12 +115,18 @@ EditarSolicitud.getSolicitud = function () {
           if (documentos.estudio_pertinencia != undefined) {
             $("#pertinencia-id").val(documentos.estudio_pertinencia.id);
             $("#contendorPertinencia").attr("style", "display: block");
-            $("#enlace-pertinencia").attr("href", documentos.estudio_pertinencia.archivo);
+            $("#enlace-pertinencia").attr(
+              "href",
+              documentos.estudio_pertinencia.archivo
+            );
           }
           if (documentos.oferta_demanda != undefined) {
             $("#demanda-id").val(documentos.oferta_demanda.id);
             $("#contendorOfertaDemanda").attr("style", "display: block");
-            $("#enlace-ofertaDemanda").attr("href", documentos.oferta_demanda.archivo);
+            $("#enlace-ofertaDemanda").attr(
+              "href",
+              documentos.oferta_demanda.archivo
+            );
           }
 
           if (documentos.convenios != undefined) {
@@ -110,40 +138,66 @@ EditarSolicitud.getSolicitud = function () {
           if (documentos.mapa_curricular != undefined) {
             $("#curricular-id").val(documentos.mapa_curricular.id);
             $("#contendorMapaCurricular").attr("style", "display: block");
-            $("#enlace-mapaCurricular").attr("href", documentos.mapa_curricular.archivo);
+            $("#enlace-mapaCurricular").attr(
+              "href",
+              documentos.mapa_curricular.archivo
+            );
           }
           if (documentos.asignaturas != undefined) {
             $("#asignaturas-id").val(documentos.asignaturas.id);
             $("#contendorAsignaturas").attr("style", "display: block");
-            $("#enlace-asignaturas").attr("href", documentos.asignaturas.archivo);
+            $("#enlace-asignaturas").attr(
+              "href",
+              documentos.asignaturas.archivo
+            );
           }
 
           if (documentos.reglas_academias != undefined) {
             $("#academias-id").val(documentos.reglas_academias.id);
             $("#contendorReglasAcademia").attr("style", "display: block");
-            $("#enlace-reglasAcademia").attr("href", documentos.reglas_academias.archivo);
+            $("#enlace-reglasAcademia").attr(
+              "href",
+              documentos.reglas_academias.archivo
+            );
           }
 
           if (documentos.propuesta_hemerobibliografica != undefined) {
-            $("#propuesta_hemerobibliografica-id").val(documentos.propuesta_hemerobibliografica.id);
-            $("#contendorPropuestaHemerobibliografica").attr("style", "display: block");
-            $("#enlace-propuesta_hemerobibliografica").attr("href", documentos.propuesta_hemerobibliografica.archivo);
+            $("#propuesta_hemerobibliografica-id").val(
+              documentos.propuesta_hemerobibliografica.id
+            );
+            $("#contendorPropuestaHemerobibliografica").attr(
+              "style",
+              "display: block"
+            );
+            $("#enlace-propuesta_hemerobibliografica").attr(
+              "href",
+              documentos.propuesta_hemerobibliografica.archivo
+            );
           }
 
           if (documentos.informe_resultados != undefined) {
             $("#informe-id").val(documentos.informe_resultados.id);
             $("#contendorInformeResultados").attr("style", "display: block");
-            $("#enlace-informeResultados").attr("href", documentos.informe_resultados.archivo);
+            $("#enlace-informeResultados").attr(
+              "href",
+              documentos.informe_resultados.archivo
+            );
           }
           if (documentos.instrumentos_trayectoria != undefined) {
             $("#instrumentos-id").val(documentos.instrumentos_trayectoria.id);
             $("#contendorInstrumentos").attr("style", "display: block");
-            $("#enlace-instrumentos").attr("href", documentos.instrumentos_trayectoria.archivo);
+            $("#enlace-instrumentos").attr(
+              "href",
+              documentos.instrumentos_trayectoria.archivo
+            );
           }
           if (documentos.trayectoria_educativa != undefined) {
             $("#trayectoria-id").val(documentos.trayectoria_educativa.id);
             $("#contendorTrayectoria").attr("style", "display: block");
-            $("#enlace-trayectoria").attr("href", documentos.trayectoria_educativa.archivo);
+            $("#enlace-trayectoria").attr(
+              "href",
+              documentos.trayectoria_educativa.archivo
+            );
           }
           if (documentos.biografia != undefined) {
             $("#biografia-id").val(documentos.biografia.id);
@@ -153,12 +207,23 @@ EditarSolicitud.getSolicitud = function () {
           if (documentos.bibliografia != undefined) {
             $("#bibliografia-id").val(documentos.bibliografia.id);
             $("#contenedorBibliografia").attr("style", "display: block");
-            $("#enlace-bibliografia").attr("href", documentos.bibliografia.archivo);
+            $("#enlace-bibliografia").attr(
+              "href",
+              documentos.bibliografia.archivo
+            );
           }
           if (documentos.identificacion_representante != undefined) {
-            $("#identificacion-id").val(documentos.identificacion_representante.id);
-            $("#contendorIdentificacionRepresentante").attr("style", "display: block");
-            $("#enlace-identificacionRepresentante").attr("href", documentos.identificacion_representante.archivo);
+            $("#identificacion-id").val(
+              documentos.identificacion_representante.id
+            );
+            $("#contendorIdentificacionRepresentante").attr(
+              "style",
+              "display: block"
+            );
+            $("#enlace-identificacionRepresentante").attr(
+              "href",
+              documentos.identificacion_representante.archivo
+            );
           }
           if (documentos.pago != undefined) {
             $("#pago-id").val(documentos.pago.id);
@@ -173,7 +238,10 @@ EditarSolicitud.getSolicitud = function () {
           if (documentos.fotografias != undefined) {
             $("#fotografia-id").val(documentos.fotografias.id);
             $("#contendorFotografias").attr("style", "display: block");
-            $("#enlace-fotografias").attr("href", documentos.fotografias.archivo);
+            $("#enlace-fotografias").attr(
+              "href",
+              documentos.fotografias.archivo
+            );
           }
           if (documentos.plano != undefined) {
             $("#plano-id").val(documentos.plano.id);
@@ -193,42 +261,66 @@ EditarSolicitud.getSolicitud = function () {
           if (documentos.licencia_municipal != undefined) {
             $("#municipal-id").val(documentos.licencia_municipal.id);
             $("#contendormunicipal").attr("style", "display: block");
-            $("#enlace-municipal").attr("href", documentos.licencia_municipal.archivo);
+            $("#enlace-municipal").attr(
+              "href",
+              documentos.licencia_municipal.archivo
+            );
           }
           if (documentos.secretaria_salud != undefined) {
             $("#salud-id").val(documentos.secretaria_salud.id);
             $("#contendorsalud").attr("style", "display: block");
-            $("#enlace-salud").attr("href", documentos.secretaria_salud.archivo);
+            $("#enlace-salud").attr(
+              "href",
+              documentos.secretaria_salud.archivo
+            );
           }
           if (documentos.comprobante_telefono != undefined) {
             $("#telefonos-id").val(documentos.comprobante_telefono.id);
             $("#contendortelefono").attr("style", "display: block");
-            $("#enlace-telefono").attr("href", documentos.comprobante_telefono.archivo);
+            $("#enlace-telefono").attr(
+              "href",
+              documentos.comprobante_telefono.archivo
+            );
           }
           if (documentos.propuesta_horario != undefined) {
             $("#horarios-id").val(documentos.propuesta_horario.id);
             $("#contendorhorarios").attr("style", "display: block");
-            $("#enlace-horarios").attr("href", documentos.propuesta_horario.archivo);
+            $("#enlace-horarios").attr(
+              "href",
+              documentos.propuesta_horario.archivo
+            );
           }
           if (documentos.acuerdo_anterior != undefined) {
             $("#acuerdoAnterior-id").val(documentos.acuerdo_anterior.id);
             $("#contendoracuerdo").attr("style", "display: block");
-            $("#enlace-acuerdo").attr("href", documentos.acuerdo_anterior.archivo);
+            $("#enlace-acuerdo").attr(
+              "href",
+              documentos.acuerdo_anterior.archivo
+            );
           }
           if (documentos.propuesta_calendario != undefined) {
             $("#calendario-id").val(documentos.propuesta_calendario.id);
             $("#contendorcalendario").attr("style", "display: block");
-            $("#enlace-calendario").attr("href", documentos.propuesta_calendario.archivo);
+            $("#enlace-calendario").attr(
+              "href",
+              documentos.propuesta_calendario.archivo
+            );
           }
           if (documentos.proyecto_vinculacion != undefined) {
             $("#vinculacion-id").val(documentos.proyecto_vinculacion.id);
             $("#contendorvinculacion").attr("style", "display: block");
-            $("#enlace-vinculacion").attr("href", documentos.proyecto_vinculacion.archivo);
+            $("#enlace-vinculacion").attr(
+              "href",
+              documentos.proyecto_vinculacion.archivo
+            );
           }
           if (documentos.programa_superacion != undefined) {
             $("#superacion-id").val(documentos.programa_superacion.id);
             $("#contendorsuperacion").attr("style", "display: block");
-            $("#enlace-superacion").attr("href", documentos.programa_superacion.archivo);
+            $("#enlace-superacion").attr(
+              "href",
+              documentos.programa_superacion.archivo
+            );
           }
           if (documentos.plan_mejora != undefined) {
             $("#mejora-id").val(documentos.plan_mejora.id);
@@ -238,7 +330,18 @@ EditarSolicitud.getSolicitud = function () {
           if (documentos.reglamento_institucional != undefined) {
             $("#reglamento-id").val(documentos.reglamento_institucional.id);
             $("#contendorreglamento").attr("style", "display: block");
-            $("#enlace-reglamento").attr("href", documentos.reglamento_institucional.archivo);
+            $("#enlace-reglamento").attr(
+              "href",
+              documentos.reglamento_institucional.archivo
+            );
+          }
+          if (documentos.dictamen_evaluacion != undefined) {
+            $("#dictamen-id").val(documentos.dictamen_evaluacion.id);
+            $("#contendordictamen").attr("style", "display: block");
+            $("#enlace-dictamen").attr(
+              "href",
+              documentos.dictamen_evaluacion.archivo
+            );
           }
         }
 
@@ -249,8 +352,8 @@ EditarSolicitud.getSolicitud = function () {
 
         //Cargar datos de solicitud
         if (solicitud != undefined) {
-          console.log(solicitud.tipo_solicitud.nombre);
           $("#tipo-solicitud-txt").html(solicitud.tipo_solicitud.nombre);
+          $("#convocatoria").val(solicitud.convocatoria);
         }
 
         //Cargar diligencias
@@ -258,29 +361,81 @@ EditarSolicitud.getSolicitud = function () {
           for (let i = 0; i < diligencias.length; i++) {
             let fila;
             for (const property in diligencias[i]) {
-              diligencias[i][property] == null ? diligencias[i][property] = "" : diligencias[i][property];
+              diligencias[i][property] == null
+                ? (diligencias[i][property] = "")
+                : diligencias[i][property];
             }
             if ($("#informacionCargar").val() != 4) {
               var inputDiligencia = document.createElement("INPUT");
               inputDiligencia.setAttribute("type", "hidden");
-              inputDiligencia.setAttribute("id", 'personaDiligencia' + diligencias[i].id);
-              inputDiligencia.setAttribute("name", "DILIGENCIAS-personasDiligencias[]");
-              inputDiligencia.setAttribute("value", JSON.stringify({
-                "id": diligencias[i].id, "nombre": diligencias[i].nombre,
-                "apellido_paterno": diligencias[i].apellido_paterno,
-                "apellido_materno": diligencias[i].apellido_materno,
-                "titulo_cargo": diligencias[i].titulo_cargo,
-                "telefono": diligencias[i].telefono,
-                "celular": diligencias[i].celular,
-                "correo": diligencias[i].correo,
-                "horario": diligencias[i].rfc
-              }));
-              __('inputsSeguimiento').appendChild(inputDiligencia);
-              fila = '<tr id="personal' + diligencias[i].id + '"><td>' + diligencias[i].nombre + " " + diligencias[i].apellido_paterno + " " + diligencias[i].apellido_materno + '</td><td>' + diligencias[i].titulo_cargo + '</td><td>' + diligencias[i].telefono + '</td><td>' + diligencias[i].celular + '</td><td>' + diligencias[i].correo + '</td><td>' + diligencias[i].rfc + '</td><td><button type="button"  id="personaDiligencia-' + diligencias[i].id + '_personal" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
+              inputDiligencia.setAttribute(
+                "id",
+                "personaDiligencia" + diligencias[i].id
+              );
+              inputDiligencia.setAttribute(
+                "name",
+                "DILIGENCIAS-personasDiligencias[]"
+              );
+              inputDiligencia.setAttribute(
+                "value",
+                JSON.stringify({
+                  id: diligencias[i].id,
+                  nombre: diligencias[i].nombre,
+                  apellido_paterno: diligencias[i].apellido_paterno,
+                  apellido_materno: diligencias[i].apellido_materno,
+                  titulo_cargo: diligencias[i].titulo_cargo,
+                  telefono: diligencias[i].telefono,
+                  celular: diligencias[i].celular,
+                  correo: diligencias[i].correo,
+                  horario: diligencias[i].rfc,
+                })
+              );
+              __("inputsSeguimiento").appendChild(inputDiligencia);
+              fila =
+                '<tr id="personal' +
+                diligencias[i].id +
+                '"><td>' +
+                diligencias[i].nombre +
+                " " +
+                diligencias[i].apellido_paterno +
+                " " +
+                diligencias[i].apellido_materno +
+                "</td><td>" +
+                diligencias[i].titulo_cargo +
+                "</td><td>" +
+                diligencias[i].telefono +
+                "</td><td>" +
+                diligencias[i].celular +
+                "</td><td>" +
+                diligencias[i].correo +
+                "</td><td>" +
+                diligencias[i].rfc +
+                '</td><td><button type="button"  id="personaDiligencia-' +
+                diligencias[i].id +
+                '_personal" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
             } else {
-              fila = '<tr id="personal' + diligencias[i].id + '"><td>' + diligencias[i].nombre + " " + diligencias[i].apellido_paterno + " " + diligencias[i].apellido_materno + '</td><td>' + diligencias[i].titulo_cargo + '</td><td>' + diligencias[i].telefono + '</td><td>' + diligencias[i].celular + '</td><td>' + diligencias[i].correo + '</td><td>' + diligencias[i].rfc + '</td></tr>';
+              fila =
+                '<tr id="personal' +
+                diligencias[i].id +
+                '"><td>' +
+                diligencias[i].nombre +
+                " " +
+                diligencias[i].apellido_paterno +
+                " " +
+                diligencias[i].apellido_materno +
+                "</td><td>" +
+                diligencias[i].titulo_cargo +
+                "</td><td>" +
+                diligencias[i].telefono +
+                "</td><td>" +
+                diligencias[i].celular +
+                "</td><td>" +
+                diligencias[i].correo +
+                "</td><td>" +
+                diligencias[i].rfc +
+                "</td></tr>";
             }
-            $('#encomiendas tr:last').after(fila);
+            $("#encomiendas tr:last").after(fila);
             nfilaPersonal = diligencias[i].id + 1;
           }
         }
@@ -306,20 +461,52 @@ EditarSolicitud.getSolicitud = function () {
               if ($("#informacionCargar").val() != 4) {
                 var b = document.createElement("INPUT");
                 b.setAttribute("type", "hidden");
-                b.setAttribute("id", 'fromacionesRector' + formaciones[j].id);
+                b.setAttribute("id", "fromacionesRector" + formaciones[j].id);
                 b.setAttribute("name", "RECTOR-formaciones[]");
-                b.setAttribute("value", JSON.stringify({ "id": formaciones[j].id, "nivel": formaciones[j].nivel, "nombre": formaciones[j].nombre, "descripcion": formaciones[j].descripcion, "institucion": formaciones[j].institucion }));
-                __('inputsFormacionRector').appendChild(b);
-                filaFormacion = '<tr id="formacion' + formaciones[j].id + '"><td>' + formaciones[j].grado.descripcion + '</td><td>' + formaciones[j].nombre + '</td><td>' + formaciones[j].institucion + '</td><td>' + formaciones[j].descripcion + '</td><td><button type="button" name="removeFormacion" id="fromacionesRector-' + formaciones[j].id + '_formacion" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
+                b.setAttribute(
+                  "value",
+                  JSON.stringify({
+                    id: formaciones[j].id,
+                    nivel: formaciones[j].nivel,
+                    nombre: formaciones[j].nombre,
+                    descripcion: formaciones[j].descripcion,
+                    institucion: formaciones[j].institucion,
+                  })
+                );
+                __("inputsFormacionRector").appendChild(b);
+                filaFormacion =
+                  '<tr id="formacion' +
+                  formaciones[j].id +
+                  '"><td>' +
+                  formaciones[j].grado.descripcion +
+                  "</td><td>" +
+                  formaciones[j].nombre +
+                  "</td><td>" +
+                  formaciones[j].institucion +
+                  "</td><td>" +
+                  formaciones[j].descripcion +
+                  '</td><td><button type="button" name="removeFormacion" id="fromacionesRector-' +
+                  formaciones[j].id +
+                  '_formacion" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
               } else {
-                filaFormacion = '<tr id="formacion' + formaciones[j].id + '"><td>' + formaciones[j].grado.descripcion + '</td><td>' + formaciones[j].nombre + '</td><td>' + formaciones[j].institucion + '</td><td>' + formaciones[j].descripcion + '</td></tr>';
+                filaFormacion =
+                  '<tr id="formacion' +
+                  formaciones[j].id +
+                  '"><td>' +
+                  formaciones[j].grado.descripcion +
+                  "</td><td>" +
+                  formaciones[j].nombre +
+                  "</td><td>" +
+                  formaciones[j].institucion +
+                  "</td><td>" +
+                  formaciones[j].descripcion +
+                  "</td></tr>";
               }
               //Aumentar contador;
               nfilaFormacion = formaciones[j].id + 1;
-              $('#formacion_rector tr:last').after(filaFormacion);
+              $("#formacion_rector tr:last").after(filaFormacion);
             }
           }
-
         }
 
         //Datos del director
@@ -343,17 +530,50 @@ EditarSolicitud.getSolicitud = function () {
               if ($("#informacionCargar").val() != 4) {
                 let b = document.createElement("INPUT");
                 b.setAttribute("type", "hidden");
-                b.setAttribute("id", 'fromacionesDirector' + formaciones[j].id);
+                b.setAttribute("id", "fromacionesDirector" + formaciones[j].id);
                 b.setAttribute("name", "DIRECTOR-formaciones[]");
-                b.setAttribute("value", JSON.stringify({ "id": formaciones[j].id, "nivel": formaciones[j].nivel, "nombre": formaciones[j].nombre, "descripcion": formaciones[j].descripcion, "institucion": formaciones[j].institucion }));
-                __('inputsFormacionDirector').appendChild(b);
-                filaFormacion = '<tr id="formacion' + formaciones[j].id + '"><td>' + formaciones[j].grado.descripcion + '</td><td>' + formaciones[j].nombre + '</td><td>' + formaciones[j].institucion + '</td><td>' + formaciones[j].descripcion + '</td><td><button type="button" name="removeFormacion" id="fromacionesDirector-' + formaciones[j].id + '_formacion" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
+                b.setAttribute(
+                  "value",
+                  JSON.stringify({
+                    id: formaciones[j].id,
+                    nivel: formaciones[j].nivel,
+                    nombre: formaciones[j].nombre,
+                    descripcion: formaciones[j].descripcion,
+                    institucion: formaciones[j].institucion,
+                  })
+                );
+                __("inputsFormacionDirector").appendChild(b);
+                filaFormacion =
+                  '<tr id="formacion' +
+                  formaciones[j].id +
+                  '"><td>' +
+                  formaciones[j].grado.descripcion +
+                  "</td><td>" +
+                  formaciones[j].nombre +
+                  "</td><td>" +
+                  formaciones[j].institucion +
+                  "</td><td>" +
+                  formaciones[j].descripcion +
+                  '</td><td><button type="button" name="removeFormacion" id="fromacionesDirector-' +
+                  formaciones[j].id +
+                  '_formacion" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
               } else {
-                filaFormacion = '<tr id="formacion' + formaciones[j].id + '"><td>' + formaciones[j].grado.descripcion + '</td><td>' + formaciones[j].nombre + '</td><td>' + formaciones[j].institucion + '</td><td>' + formaciones[j].descripcion + '</td></tr>';
+                filaFormacion =
+                  '<tr id="formacion' +
+                  formaciones[j].id +
+                  '"><td>' +
+                  formaciones[j].grado.descripcion +
+                  "</td><td>" +
+                  formaciones[j].nombre +
+                  "</td><td>" +
+                  formaciones[j].institucion +
+                  "</td><td>" +
+                  formaciones[j].descripcion +
+                  "</td></tr>";
               }
               //Aumentar contador;
               nfilaFormacion = formaciones[j].id + 1;
-              $('#formacion_director tr:last').after(filaFormacion);
+              $("#formacion_director tr:last").after(filaFormacion);
             }
           }
           //Experiencias director
@@ -372,15 +592,56 @@ EditarSolicitud.getSolicitud = function () {
               if ($("#informacionCargar").val() != 4) {
                 let c = document.createElement("INPUT");
                 c.setAttribute("type", "hidden");
-                c.setAttribute("id", 'experienciaDirector' + experiencias[k].id);
+                c.setAttribute(
+                  "id",
+                  "experienciaDirector" + experiencias[k].id
+                );
                 c.setAttribute("name", "DIRECTOR-experiencias[]");
-                c.setAttribute("value", JSON.stringify({ "id": experiencias[k].id, "nombre": experiencias[k].nombre, "tipo": experiencias[k].tipo, "funcion": experiencias[k].funcion, "institucion": experiencias[k].institucion, "periodo": experiencias[k].periodo }));
-                __('inputsExperienciaDirector').appendChild(c);
-                filaExperiencia = '<tr id="experiencia' + experiencias[k].id + '"><td>' + tipoExperiencia + '</td><td>' + experiencias[k].nombre + '</td><td>' + experiencias[k].funcion + '</td><td>' + experiencias[k].institucion + '</td><td>' + experiencias[k].periodo + '</td><td><button type="button" name="removeFormacion" id="experienciaDirector-' + experiencias[k].id + '_experiencia" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
+                c.setAttribute(
+                  "value",
+                  JSON.stringify({
+                    id: experiencias[k].id,
+                    nombre: experiencias[k].nombre,
+                    tipo: experiencias[k].tipo,
+                    funcion: experiencias[k].funcion,
+                    institucion: experiencias[k].institucion,
+                    periodo: experiencias[k].periodo,
+                  })
+                );
+                __("inputsExperienciaDirector").appendChild(c);
+                filaExperiencia =
+                  '<tr id="experiencia' +
+                  experiencias[k].id +
+                  '"><td>' +
+                  tipoExperiencia +
+                  "</td><td>" +
+                  experiencias[k].nombre +
+                  "</td><td>" +
+                  experiencias[k].funcion +
+                  "</td><td>" +
+                  experiencias[k].institucion +
+                  "</td><td>" +
+                  experiencias[k].periodo +
+                  '</td><td><button type="button" name="removeFormacion" id="experienciaDirector-' +
+                  experiencias[k].id +
+                  '_experiencia" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
               } else {
-                filaExperiencia = '<tr id="experiencia' + experiencias[k].id + '"><td>' + tipoExperiencia + '</td><td>' + experiencias[k].nombre + '</td><td>' + experiencias[k].funcion + '</td><td>' + experiencias[k].institucion + '</td><td>' + experiencias[k].periodo + '</td></tr>';
+                filaExperiencia =
+                  '<tr id="experiencia' +
+                  experiencias[k].id +
+                  '"><td>' +
+                  tipoExperiencia +
+                  "</td><td>" +
+                  experiencias[k].nombre +
+                  "</td><td>" +
+                  experiencias[k].funcion +
+                  "</td><td>" +
+                  experiencias[k].institucion +
+                  "</td><td>" +
+                  experiencias[k].periodo +
+                  "</td></tr>";
               }
-              $('#experiencia_director tr:last').after(filaExperiencia);
+              $("#experiencia_director tr:last").after(filaExperiencia);
               nfilaEx = experiencias[k].id + 1;
             }
           }
@@ -390,29 +651,69 @@ EditarSolicitud.getSolicitud = function () {
             for (let l = 0; l < publicaciones.length; l++) {
               let filaPublicacion;
               for (const property in publicaciones[l]) {
-                publicaciones[l][property] == null ? publicaciones[l][property] = "" : publicaciones[l][property];
+                publicaciones[l][property] == null
+                  ? (publicaciones[l][property] = "")
+                  : publicaciones[l][property];
               }
               if ($("#informacionCargar").val() != 4) {
                 let d = document.createElement("INPUT");
                 d.setAttribute("type", "hidden");
-                d.setAttribute("id", 'publicacionesDirector' + publicaciones[l].id);
+                d.setAttribute(
+                  "id",
+                  "publicacionesDirector" + publicaciones[l].id
+                );
                 d.setAttribute("name", "DIRECTOR-publicaciones[]");
-                d.setAttribute("value", JSON.stringify({
-                  "id": publicaciones[l].id,
-                  "anio": publicaciones[l].anio,
-                  "volumen": publicaciones[l].volumen,
-                  "pais": publicaciones[l].pais,
-                  "titulo": publicaciones[l].titulo,
-                  "editorial": publicaciones[l].editorial,
-                  "otros": publicaciones[l].otros
-                }));
-                __('inputsPublicacionesDirector').appendChild(d);
-                filaPublicacion = '<tr id="publicacion' + publicaciones[l].id + '"><td>' + publicaciones[l].titulo + '</td><td>' + publicaciones[l].volumen + '</td><td>' + publicaciones[l].editorial + '</td><td>' + publicaciones[l].anio + '</td><td>' + publicaciones[l].pais + '</td><td>' + publicaciones[l].otros + '</td><td><button type="button" name="removePublicacion" id="publicacionesDirector-' + publicaciones[l].id + '_publicacion" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
+                d.setAttribute(
+                  "value",
+                  JSON.stringify({
+                    id: publicaciones[l].id,
+                    anio: publicaciones[l].anio,
+                    volumen: publicaciones[l].volumen,
+                    pais: publicaciones[l].pais,
+                    titulo: publicaciones[l].titulo,
+                    editorial: publicaciones[l].editorial,
+                    otros: publicaciones[l].otros,
+                  })
+                );
+                __("inputsPublicacionesDirector").appendChild(d);
+                filaPublicacion =
+                  '<tr id="publicacion' +
+                  publicaciones[l].id +
+                  '"><td>' +
+                  publicaciones[l].titulo +
+                  "</td><td>" +
+                  publicaciones[l].volumen +
+                  "</td><td>" +
+                  publicaciones[l].editorial +
+                  "</td><td>" +
+                  publicaciones[l].anio +
+                  "</td><td>" +
+                  publicaciones[l].pais +
+                  "</td><td>" +
+                  publicaciones[l].otros +
+                  '</td><td><button type="button" name="removePublicacion" id="publicacionesDirector-' +
+                  publicaciones[l].id +
+                  '_publicacion" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
               } else {
-                filaPublicacion = '<tr id="publicacion' + publicaciones[l].id + '"><td>' + publicaciones[l].titulo + '</td><td>' + publicaciones[l].volumen + '</td><td>' + publicaciones[l].editorial + '</td><td>' + publicaciones[l].anio + '</td><td>' + publicaciones[l].pais + '</td><td>' + publicaciones[l].otros + '</td></tr>';
+                filaPublicacion =
+                  '<tr id="publicacion' +
+                  publicaciones[l].id +
+                  '"><td>' +
+                  publicaciones[l].titulo +
+                  "</td><td>" +
+                  publicaciones[l].volumen +
+                  "</td><td>" +
+                  publicaciones[l].editorial +
+                  "</td><td>" +
+                  publicaciones[l].anio +
+                  "</td><td>" +
+                  publicaciones[l].pais +
+                  "</td><td>" +
+                  publicaciones[l].otros +
+                  "</td></tr>";
               }
               //Consttuir fila
-              $('#publicaciones_director tr:last').after(filaPublicacion);
+              $("#publicaciones_director tr:last").after(filaPublicacion);
               nfilaPu = publicaciones[l].id + 1;
             }
           }
@@ -427,7 +728,7 @@ EditarSolicitud.getSolicitud = function () {
             if (programa.hasOwnProperty(variable)) {
               if (variable == "nombre") {
                 $("#nombre_programa").val(programa[variable]);
-              } else if(variable == "tipo") {
+              } else if (variable == "tipo") {
                 //No se carga la variable programa[tipo] en elemento ($("#tipo").val() de solicitud para evitar error
               } else {
                 $("#" + variable).val(programa[variable]);
@@ -447,7 +748,9 @@ EditarSolicitud.getSolicitud = function () {
               var posicionEstructura = tics.indexOf("ESTRUCTURA:");
               var posicionContratos = tics.indexOf("CONTRATOS:");
               $("#ti_ingreso").val(tics.substring(8, posicionEstructura));
-              $("#ti_estructura").val(tics.substring(posicionEstructura + 11, posicionContratos));
+              $("#ti_estructura").val(
+                tics.substring(posicionEstructura + 11, posicionContratos)
+              );
               $("#ti_contratos").val(tics.substring(posicionContratos + 10));
             }
             if (mixta.respaldos != undefined && mixta.respaldos.length > 0) {
@@ -455,27 +758,60 @@ EditarSolicitud.getSolicitud = function () {
               for (let indice = 0; indice < respaldos.length; indice++) {
                 let filaRespaldo;
                 for (const property in respaldos[indice]) {
-                  respaldos[indice][property] == null ? respaldos[indice][property] = "" : respaldos[indice][property];
+                  respaldos[indice][property] == null
+                    ? (respaldos[indice][property] = "")
+                    : respaldos[indice][property];
                 }
                 if ($("#informacionCargar").val() != 4) {
                   var inputRespaldo = document.createElement("INPUT");
                   inputRespaldo.setAttribute("type", "hidden");
-                  inputRespaldo.setAttribute("id", 'inputRespaldo' + respaldos[indice].id);
+                  inputRespaldo.setAttribute(
+                    "id",
+                    "inputRespaldo" + respaldos[indice].id
+                  );
                   inputRespaldo.setAttribute("name", "RESPALDO-respaldos[]");
-                  inputRespaldo.setAttribute("value", JSON.stringify({
-                    "id": respaldos[indice].id,
-                    "proceso": respaldos[indice].proceso,
-                    "periodicidad": respaldos[indice].periodicidad,
-                    "medios_almacenamiento": respaldos[indice].medios_almacenamiento,
-                    "descripcion": respaldos[indice].descripcion
-                  }));
-                  __('inputsRespaldos').appendChild(inputRespaldo);
-                  filaRespaldo = '<tr id="respaldo' + respaldos[indice].id + '"><td>' + respaldos[indice].descripcion + '</td><td>' + respaldos[indice].periodicidad + '</td><td>' + respaldos[indice].medios_almacenamiento + '</td><td>' + respaldos[indice].proceso + '</td><td><button type="button" name="removeRespaldo" id="inputRespaldo-' + respaldos[indice].id + '_respaldo" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
+                  inputRespaldo.setAttribute(
+                    "value",
+                    JSON.stringify({
+                      id: respaldos[indice].id,
+                      proceso: respaldos[indice].proceso,
+                      periodicidad: respaldos[indice].periodicidad,
+                      medios_almacenamiento:
+                        respaldos[indice].medios_almacenamiento,
+                      descripcion: respaldos[indice].descripcion,
+                    })
+                  );
+                  __("inputsRespaldos").appendChild(inputRespaldo);
+                  filaRespaldo =
+                    '<tr id="respaldo' +
+                    respaldos[indice].id +
+                    '"><td>' +
+                    respaldos[indice].descripcion +
+                    "</td><td>" +
+                    respaldos[indice].periodicidad +
+                    "</td><td>" +
+                    respaldos[indice].medios_almacenamiento +
+                    "</td><td>" +
+                    respaldos[indice].proceso +
+                    '</td><td><button type="button" name="removeRespaldo" id="inputRespaldo-' +
+                    respaldos[indice].id +
+                    '_respaldo" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
                 } else {
-                  filaRespaldo = '<tr id="respaldo' + respaldos[indice].id + '"><td>' + respaldos[indice].descripcion + '</td><td>' + respaldos[indice].periodicidad + '</td><td>' + respaldos[indice].medios_almacenamiento + '</td><td>' + respaldos[indice].proceso + '</td></tr>';
+                  filaRespaldo =
+                    '<tr id="respaldo' +
+                    respaldos[indice].id +
+                    '"><td>' +
+                    respaldos[indice].descripcion +
+                    "</td><td>" +
+                    respaldos[indice].periodicidad +
+                    "</td><td>" +
+                    respaldos[indice].medios_almacenamiento +
+                    "</td><td>" +
+                    respaldos[indice].proceso +
+                    "</td></tr>";
                 }
                 //Construir fila
-                $('#respaldos tr:last').after(filaRespaldo);
+                $("#respaldos tr:last").after(filaRespaldo);
                 nfilaRespaldo = respaldos[indice].id + 1;
               }
             }
@@ -484,31 +820,65 @@ EditarSolicitud.getSolicitud = function () {
               for (let posEsp = 0; posEsp < espejos.length; posEsp++) {
                 var filaEspejo;
                 for (const property in espejos[posEsp]) {
-                  espejos[posEsp][property] == null ? espejos[posEsp][property] = "" : espejos[posEsp][property];
+                  espejos[posEsp][property] == null
+                    ? (espejos[posEsp][property] = "")
+                    : espejos[posEsp][property];
                 }
                 if ($("#informacionCargar").val() != 4) {
                   var inputEspejo = document.createElement("INPUT");
                   inputEspejo.setAttribute("type", "hidden");
-                  inputEspejo.setAttribute("id", 'inputEspejo' + espejos[posEsp].id);
+                  inputEspejo.setAttribute(
+                    "id",
+                    "inputEspejo" + espejos[posEsp].id
+                  );
                   inputEspejo.setAttribute("name", "ESPEJO-espejos[]");
-                  inputEspejo.setAttribute("value", JSON.stringify({
-                    "id": espejos[posEsp].id,
-                    "proveedor": espejos[posEsp].proveedor,
-                    "ubicacion": espejos[posEsp].ubicacion,
-                    "ancho_banda": espejos[posEsp].ancho_banda,
-                    "url_espejo": espejos[posEsp].url_espejo,
-                    "periodicidad": espejos[posEsp].periodicidad
-                  }));
-                  __('inputsEspejos').appendChild(inputEspejo);
-                  filaEspejo = '<tr id="espejo' + espejos[posEsp].id + '"><td>' + espejos[posEsp].proveedor + '</td><td>' + espejos[posEsp].ancho_banda + '</td><td>' + espejos[posEsp].ubicacion + '</td><td>' + espejos[posEsp].url_espejo + '</td><td>' + espejos[posEsp].periodicidad + '</td><td><button type="button" name="removeEspejo" id="inputEspejo-' + espejos[posEsp].id + '_espejo" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
-
+                  inputEspejo.setAttribute(
+                    "value",
+                    JSON.stringify({
+                      id: espejos[posEsp].id,
+                      proveedor: espejos[posEsp].proveedor,
+                      ubicacion: espejos[posEsp].ubicacion,
+                      ancho_banda: espejos[posEsp].ancho_banda,
+                      url_espejo: espejos[posEsp].url_espejo,
+                      periodicidad: espejos[posEsp].periodicidad,
+                    })
+                  );
+                  __("inputsEspejos").appendChild(inputEspejo);
+                  filaEspejo =
+                    '<tr id="espejo' +
+                    espejos[posEsp].id +
+                    '"><td>' +
+                    espejos[posEsp].proveedor +
+                    "</td><td>" +
+                    espejos[posEsp].ancho_banda +
+                    "</td><td>" +
+                    espejos[posEsp].ubicacion +
+                    "</td><td>" +
+                    espejos[posEsp].url_espejo +
+                    "</td><td>" +
+                    espejos[posEsp].periodicidad +
+                    '</td><td><button type="button" name="removeEspejo" id="inputEspejo-' +
+                    espejos[posEsp].id +
+                    '_espejo" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
                 } else {
-                  filaEspejo = '<tr id="espejo' + espejos[posEsp].id + '"><td>' + espejos[posEsp].proveedor + '</td><td>' + espejos[posEsp].ancho_banda + '</td><td>' + espejos[posEsp].ubicacion + '</td><td>' + espejos[posEsp].url_espejo + '</td><td>' + espejos[posEsp].periodicidad + '</td></tr>';
-
+                  filaEspejo =
+                    '<tr id="espejo' +
+                    espejos[posEsp].id +
+                    '"><td>' +
+                    espejos[posEsp].proveedor +
+                    "</td><td>" +
+                    espejos[posEsp].ancho_banda +
+                    "</td><td>" +
+                    espejos[posEsp].ubicacion +
+                    "</td><td>" +
+                    espejos[posEsp].url_espejo +
+                    "</td><td>" +
+                    espejos[posEsp].periodicidad +
+                    "</td></tr>";
                 }
 
                 nfilaEspejo = espejos[posEsp].id + 1;
-                $('#espejos tr:last').after(filaEspejo);
+                $("#espejos tr:last").after(filaEspejo);
               }
             }
             if (mixta.licencias_software != "") {
@@ -518,42 +888,81 @@ EditarSolicitud.getSolicitud = function () {
                 if ($("#informacionCargar").val() != 4) {
                   var inputLicencia = document.createElement("INPUT");
                   inputLicencia.setAttribute("type", "hidden");
-                  inputLicencia.setAttribute("id", 'licencia' + li);
+                  inputLicencia.setAttribute("id", "licencia" + li);
                   inputLicencia.setAttribute("name", "MIXTA-licencias[]");
-                  inputLicencia.setAttribute("value", JSON.stringify({
-                    'nombre': licencias[li].nombre,
-                    'contrato': licencias[li].contrato,
-                    'tipo': licencias[li].tipo,
-                    'terminos': licencias[li].terminos,
-                    'usuarios': licencias[li].usuarios,
-                    'enlace': licencias[li].enlace
-                  }));
-                  __('inputsLicencias').appendChild(inputLicencia);
-                  filaLicencia = '<tr id="licencia' + li + '"><td>' + licencias[li].nombre + '</td><td>' + licencias[li].contrato + '</td><td>' + licencias[li].usuarios + '</td><td>' + licencias[li].tipo + '</td><td>' + licencias[li].terminos + '</td><td>' + licencias[li].enlace + '</td><td><button type="button" name="removeLicencia" id="' + li + '" class="btn btn-danger" onclick="eliminarLicencia(this)">Quitar</button></td></tr>';
-
+                  inputLicencia.setAttribute(
+                    "value",
+                    JSON.stringify({
+                      nombre: licencias[li].nombre,
+                      contrato: licencias[li].contrato,
+                      tipo: licencias[li].tipo,
+                      terminos: licencias[li].terminos,
+                      usuarios: licencias[li].usuarios,
+                      enlace: licencias[li].enlace,
+                    })
+                  );
+                  __("inputsLicencias").appendChild(inputLicencia);
+                  filaLicencia =
+                    '<tr id="licencia' +
+                    li +
+                    '"><td>' +
+                    licencias[li].nombre +
+                    "</td><td>" +
+                    licencias[li].contrato +
+                    "</td><td>" +
+                    licencias[li].usuarios +
+                    "</td><td>" +
+                    licencias[li].tipo +
+                    "</td><td>" +
+                    licencias[li].terminos +
+                    "</td><td>" +
+                    licencias[li].enlace +
+                    '</td><td><button type="button" name="removeLicencia" id="' +
+                    li +
+                    '" class="btn btn-danger" onclick="eliminarLicencia(this)">Quitar</button></td></tr>';
                 } else {
-                  filaLicencia = '<tr id="licencia' + li + '"><td>' + licencias[li].nombre + '</td><td>' + licencias[li].contrato + '</td><td>' + licencias[li].usuarios + '</td><td>' + licencias[li].tipo + '</td><td>' + licencias[li].terminos + '</td><td>' + licencias[li].enlace + '</td></tr>';
+                  filaLicencia =
+                    '<tr id="licencia' +
+                    li +
+                    '"><td>' +
+                    licencias[li].nombre +
+                    "</td><td>" +
+                    licencias[li].contrato +
+                    "</td><td>" +
+                    licencias[li].usuarios +
+                    "</td><td>" +
+                    licencias[li].tipo +
+                    "</td><td>" +
+                    licencias[li].terminos +
+                    "</td><td>" +
+                    licencias[li].enlace +
+                    "</td></tr>";
                 }
                 nfilaLicencia = licencias[li].id + 1;
-                $('#licencias tr:last').after(filaLicencia);
+                $("#licencias tr:last").after(filaLicencia);
               }
             }
           }
           if (programa.turnos != undefined) {
-            $("#turno_programa").selectpicker('val', programa.turnos);
+            $("#turno_programa").selectpicker("val", programa.turnos);
             $("#turno_programa").selectpicker("refresh");
-
           }
           if (programa.coordinador != undefined) {
             var inputIdCoordinador = document.createElement("INPUT");
             inputIdCoordinador.setAttribute("type", "hidden");
             inputIdCoordinador.setAttribute("name", "COORDINADOR-id");
             inputIdCoordinador.setAttribute("value", programa.coordinador.id);
-            __('datos-generales-programa').appendChild(inputIdCoordinador);
+            __("datos-generales-programa").appendChild(inputIdCoordinador);
             $("#nombre_coordinador_programa").val(programa.coordinador.nombre);
-            $("#apellido_paterno_coordinador_programa").val(programa.coordinador.apellido_paterno);
-            $("#apellido_materno_coordinador_programa").val(programa.coordinador.apellido_materno);
-            $("#perfil_coordinador_programa").val(programa.coordinador.titulo_cargo);
+            $("#apellido_paterno_coordinador_programa").val(
+              programa.coordinador.apellido_paterno
+            );
+            $("#apellido_materno_coordinador_programa").val(
+              programa.coordinador.apellido_materno
+            );
+            $("#perfil_coordinador_programa").val(
+              programa.coordinador.titulo_cargo
+            );
           }
           if (programa.perfil_ingreso != "") {
             var ingreso = JSON.parse(programa.perfil_ingreso);
@@ -598,85 +1007,331 @@ EditarSolicitud.getSolicitud = function () {
                   area_txt = "N/A";
                   break;
               }
-              if (asignaturas[n].seriacion === null) { asignaturas[n].seriacion = ""; }
+              if (asignaturas[n].seriacion === null) {
+                asignaturas[n].seriacion = "";
+              }
               if (asignaturas[n].tipo == 1) {
                 if ($("#informacionCargar").val() != 4) {
                   var asig = document.createElement("INPUT");
                   asig.setAttribute("type", "hidden");
-                  asig.setAttribute("id", 'asignatura' + asignaturas[n].id);
+                  asig.setAttribute("id", "asignatura" + asignaturas[n].id);
                   asig.setAttribute("name", "ASIGNATURA-asignaturas[]");
-                  asig.setAttribute("value", JSON.stringify({ "id": asignaturas[n].id, "grado": asignaturas[n].grado, "nombre": asignaturas[n].nombre, "clave": asignaturas[n].clave, "creditos": asignaturas[n].creditos, "area": asignaturas[n].area, "seriacion": asignaturas[n].seriacion, "horas_docente": asignaturas[n].horas_docente, "horas_independiente": asignaturas[n].horas_independiente, "academia": asignaturas[n].academia, "tipo": asignaturas[n].tipo, "infraestructura_id": asignaturas[n].infraestructura_id }));
-                  __('inputsAsignaturas').appendChild(asig);
-                  filaAsignatura = '<tr id="row' + asignaturas[n].id + '"><td>' + asignaturas[n].grado + '</td><td>' + asignaturas[n].nombre + '</td><td>' + asignaturas[n].clave + '</td><td>' + asignaturas[n].seriacion + '</td><td id="hrsdocente' + asignaturas[n].id + '">' + asignaturas[n].horas_docente + '</td><td id="hrsindependiente' + asignaturas[n].id + '">' + asignaturas[n].horas_independiente + '</td><td>' + asignaturas[n].creditos + '</td><td>' + area_txt + '</td><td><button type="button" clave="' + asignaturas[n].clave + '" name="remove" id="' + asignaturas[n].id + '" class="btn btn-danger" onclick="EditarSolicitud.eliminarMateria(this)">Quitar</button></td></tr>';
+                  asig.setAttribute(
+                    "value",
+                    JSON.stringify({
+                      id: asignaturas[n].id,
+                      grado: asignaturas[n].grado,
+                      nombre: asignaturas[n].nombre,
+                      clave: asignaturas[n].clave,
+                      creditos: asignaturas[n].creditos,
+                      area: asignaturas[n].area,
+                      seriacion: asignaturas[n].seriacion,
+                      horas_docente: asignaturas[n].horas_docente,
+                      horas_independiente: asignaturas[n].horas_independiente,
+                      academia: asignaturas[n].academia,
+                      tipo: asignaturas[n].tipo,
+                      infraestructura_id: asignaturas[n].infraestructura_id,
+                    })
+                  );
+                  __("inputsAsignaturas").appendChild(asig);
+                  filaAsignatura =
+                    '<tr id="row' +
+                    asignaturas[n].id +
+                    '"><td>' +
+                    asignaturas[n].grado +
+                    "</td><td>" +
+                    asignaturas[n].nombre +
+                    "</td><td>" +
+                    asignaturas[n].clave +
+                    "</td><td>" +
+                    asignaturas[n].seriacion +
+                    '</td><td id="hrsdocente' +
+                    asignaturas[n].id +
+                    '">' +
+                    asignaturas[n].horas_docente +
+                    '</td><td id="hrsindependiente' +
+                    asignaturas[n].id +
+                    '">' +
+                    asignaturas[n].horas_independiente +
+                    "</td><td>" +
+                    asignaturas[n].creditos +
+                    "</td><td>" +
+                    area_txt +
+                    '</td><td><button type="button" clave="' +
+                    asignaturas[n].clave +
+                    '" name="remove" id="' +
+                    asignaturas[n].id +
+                    '" class="btn btn-danger" onclick="EditarSolicitud.eliminarMateria(this)">Quitar</button></td></tr>';
                 } else {
-                  filaAsignatura = '<tr id="row' + asignaturas[n].id + '"><td>' + asignaturas[n].grado + '</td><td>' + asignaturas[n].nombre + '</td><td>' + asignaturas[n].clave + '</td><td>' + asignaturas[n].seriacion + '</td><td id="hrsdocente' + asignaturas[n].id + '">' + asignaturas[n].horas_docente + '</td><td id="hrsindependiente' + asignaturas[n].id + '">' + asignaturas[n].horas_independiente + '</td><td>' + asignaturas[n].creditos + '</td><td>' + area_txt + '</td></tr>';
+                  filaAsignatura =
+                    '<tr id="row' +
+                    asignaturas[n].id +
+                    '"><td>' +
+                    asignaturas[n].grado +
+                    "</td><td>" +
+                    asignaturas[n].nombre +
+                    "</td><td>" +
+                    asignaturas[n].clave +
+                    "</td><td>" +
+                    asignaturas[n].seriacion +
+                    '</td><td id="hrsdocente' +
+                    asignaturas[n].id +
+                    '">' +
+                    asignaturas[n].horas_docente +
+                    '</td><td id="hrsindependiente' +
+                    asignaturas[n].id +
+                    '">' +
+                    asignaturas[n].horas_independiente +
+                    "</td><td>" +
+                    asignaturas[n].creditos +
+                    "</td><td>" +
+                    area_txt +
+                    "</td></tr>";
                 }
-                $("#totalHorasDocentes").val(parseInt($("#totalHorasDocentes").val()) + parseInt(asignaturas[n].horas_docente));
-                $("#totalHorasIndependientes").val(parseInt($("#totalHorasIndependientes").val()) + parseInt(asignaturas[n].horas_independiente));
+                $("#totalHorasDocentes").val(
+                  parseInt($("#totalHorasDocentes").val()) +
+                    parseInt(asignaturas[n].horas_docente)
+                );
+                $("#totalHorasIndependientes").val(
+                  parseInt($("#totalHorasIndependientes").val()) +
+                    parseInt(asignaturas[n].horas_independiente)
+                );
 
                 //Cargar en select
-                $('#asignaturaDocente').attr("disabled", false);
-                $('#asignaturaDocente').append('<option value="' + asignaturas[n].clave + '">' + asignaturas[n].clave + " - " + asignaturas[n].nombre + '</option>').selectpicker('refresh');
-                $('#seriacion').attr("disabled", false);
-                $("#seriacion").append('<option value="' + asignaturas[n].clave + '">' + asignaturas[n].clave + '</option>').selectpicker('refresh');
-                $('#seriacionOptativa').attr("disabled", false);
-                $("#seriacionOptativa").append('<option value="' + asignaturas[n].clave + '">' + asignaturas[n].clave + '</option>').selectpicker('refresh');
-                $("#asignaturaInfraestructura").append('<option value="' + asignaturas[n].clave + '">' + asignaturas[n].clave + " - " + asignaturas[n].nombre + '</option>').selectpicker('refresh');
-                $('#materias tr:last').after(filaAsignatura);
+                $("#asignaturaDocente").attr("disabled", false);
+                $("#asignaturaDocente")
+                  .append(
+                    '<option value="' +
+                      asignaturas[n].clave +
+                      '">' +
+                      asignaturas[n].clave +
+                      " - " +
+                      asignaturas[n].nombre +
+                      "</option>"
+                  )
+                  .selectpicker("refresh");
+                $("#seriacion").attr("disabled", false);
+                $("#seriacion")
+                  .append(
+                    '<option value="' +
+                      asignaturas[n].clave +
+                      '">' +
+                      asignaturas[n].clave +
+                      "</option>"
+                  )
+                  .selectpicker("refresh");
+                $("#seriacionOptativa").attr("disabled", false);
+                $("#seriacionOptativa")
+                  .append(
+                    '<option value="' +
+                      asignaturas[n].clave +
+                      '">' +
+                      asignaturas[n].clave +
+                      "</option>"
+                  )
+                  .selectpicker("refresh");
+                $("#asignaturaInfraestructura")
+                  .append(
+                    '<option value="' +
+                      asignaturas[n].clave +
+                      '">' +
+                      asignaturas[n].clave +
+                      " - " +
+                      asignaturas[n].nombre +
+                      "</option>"
+                  )
+                  .selectpicker("refresh");
+                $("#materias tr:last").after(filaAsignatura);
                 nfilaM = asignaturas[n].id + 1;
               } else {
                 var filaOptativa;
                 if ($("#informacionCargar").val() != 4) {
                   var opta = document.createElement("INPUT");
                   opta.setAttribute("type", "hidden");
-                  opta.setAttribute("id", 'optativas' + asignaturas[n].id);
+                  opta.setAttribute("id", "optativas" + asignaturas[n].id);
                   opta.setAttribute("name", "ASIGNATURA-asignaturas[]");
-                  opta.setAttribute("value", JSON.stringify({ "id": asignaturas[n].id, "grado": asignaturas[n].grado, "nombre": asignaturas[n].nombre, "clave": asignaturas[n].clave, "creditos": asignaturas[n].creditos, "area": asignaturas[n].area, "seriacion": asignaturas[n].seriacion, "horas_docente": asignaturas[n].horas_docente, "horas_independiente": asignaturas[n].horas_independiente, "academia": asignaturas[n].academia, "tipo": asignaturas[n].tipo }));
-                  __('inputsOptativas').appendChild(opta);
-                  filaOptativa = '<tr id="optativa' + asignaturas[n].id + '"><td>' + asignaturas[n].grado + '</td><td>' + asignaturas[n].nombre + '</td><td>' + asignaturas[n].clave + '</td><td>' + asignaturas[n].seriacion + '</td><td id="hrsdocenteOptativa' + asignaturas[n].id + '">' + asignaturas[n].horas_docente + '</td><td id="hrsindependienteOptativa' + asignaturas[n].id + '">' + asignaturas[n].horas_independiente + '</td><td>' + asignaturas[n].creditos + '</td><td>' + area_txt + '</td><td><button type="button" clave="' + asignaturas[n].clave + '" name="remove" id="' + asignaturas[n].id + '" class="btn btn-danger" onclick="EditarSolicitud.eliminarOptativa(this)">Quitar</button></td></tr>';
-
+                  opta.setAttribute(
+                    "value",
+                    JSON.stringify({
+                      id: asignaturas[n].id,
+                      grado: asignaturas[n].grado,
+                      nombre: asignaturas[n].nombre,
+                      clave: asignaturas[n].clave,
+                      creditos: asignaturas[n].creditos,
+                      area: asignaturas[n].area,
+                      seriacion: asignaturas[n].seriacion,
+                      horas_docente: asignaturas[n].horas_docente,
+                      horas_independiente: asignaturas[n].horas_independiente,
+                      academia: asignaturas[n].academia,
+                      tipo: asignaturas[n].tipo,
+                    })
+                  );
+                  __("inputsOptativas").appendChild(opta);
+                  filaOptativa =
+                    '<tr id="optativa' +
+                    asignaturas[n].id +
+                    '"><td>' +
+                    asignaturas[n].grado +
+                    "</td><td>" +
+                    asignaturas[n].nombre +
+                    "</td><td>" +
+                    asignaturas[n].clave +
+                    "</td><td>" +
+                    asignaturas[n].seriacion +
+                    '</td><td id="hrsdocenteOptativa' +
+                    asignaturas[n].id +
+                    '">' +
+                    asignaturas[n].horas_docente +
+                    '</td><td id="hrsindependienteOptativa' +
+                    asignaturas[n].id +
+                    '">' +
+                    asignaturas[n].horas_independiente +
+                    "</td><td>" +
+                    asignaturas[n].creditos +
+                    "</td><td>" +
+                    area_txt +
+                    '</td><td><button type="button" clave="' +
+                    asignaturas[n].clave +
+                    '" name="remove" id="' +
+                    asignaturas[n].id +
+                    '" class="btn btn-danger" onclick="EditarSolicitud.eliminarOptativa(this)">Quitar</button></td></tr>';
                 } else {
-                  filaOptativa = '<tr id="row' + asignaturas[n].id + '"><td>' + asignaturas[n].grado + '</td><td>' + asignaturas[n].nombre + '</td><td>' + asignaturas[n].clave + '</td><td>' + asignaturas[n].seriacion + '</td><td id="hrsdocente' + asignaturas[n].id + '">' + asignaturas[n].horas_docente + '</td><td id="hrsindependiente' + asignaturas[n].id + '">' + asignaturas[n].horas_independiente + '</td><td>' + asignaturas[n].creditos + '</td><td>' + area_txt + '</td></tr>';
-
+                  filaOptativa =
+                    '<tr id="row' +
+                    asignaturas[n].id +
+                    '"><td>' +
+                    asignaturas[n].grado +
+                    "</td><td>" +
+                    asignaturas[n].nombre +
+                    "</td><td>" +
+                    asignaturas[n].clave +
+                    "</td><td>" +
+                    asignaturas[n].seriacion +
+                    '</td><td id="hrsdocente' +
+                    asignaturas[n].id +
+                    '">' +
+                    asignaturas[n].horas_docente +
+                    '</td><td id="hrsindependiente' +
+                    asignaturas[n].id +
+                    '">' +
+                    asignaturas[n].horas_independiente +
+                    "</td><td>" +
+                    asignaturas[n].creditos +
+                    "</td><td>" +
+                    area_txt +
+                    "</td></tr>";
                 }
 
-                $("#totalHorasDocentesOptativa").val(parseInt($("#totalHorasDocentesOptativa").val()) + parseInt(asignaturas[n].horas_docente));
-                $("#totalHorasIndependientesOptativa").val(parseInt($("#totalHorasIndependientesOptativa").val()) + parseInt(asignaturas[n].horas_independiente));
-                $('#materiasOptativas tr:last').after(filaOptativa);
-
+                $("#totalHorasDocentesOptativa").val(
+                  parseInt($("#totalHorasDocentesOptativa").val()) +
+                    parseInt(asignaturas[n].horas_docente)
+                );
+                $("#totalHorasIndependientesOptativa").val(
+                  parseInt($("#totalHorasIndependientesOptativa").val()) +
+                    parseInt(asignaturas[n].horas_independiente)
+                );
+                $("#materiasOptativas tr:last").after(filaOptativa);
 
                 //Cargar en select
-                $('#asignaturaDocente').attr("disabled", false);
-                $('#asignaturaDocente').append('<option value="' + asignaturas[n].clave + '">' + asignaturas[n].clave + " - " + asignaturas[n].nombre + '</option>').selectpicker('refresh');
+                $("#asignaturaDocente").attr("disabled", false);
+                $("#asignaturaDocente")
+                  .append(
+                    '<option value="' +
+                      asignaturas[n].clave +
+                      '">' +
+                      asignaturas[n].clave +
+                      " - " +
+                      asignaturas[n].nombre +
+                      "</option>"
+                  )
+                  .selectpicker("refresh");
 
-                $('#seriacionOptativa').attr("disabled", false);
-                $("#seriacionOptativa").append('<option value="' + asignaturas[n].clave + '">' + asignaturas[n].clave + '</option>').selectpicker('refresh');
+                $("#seriacionOptativa").attr("disabled", false);
+                $("#seriacionOptativa")
+                  .append(
+                    '<option value="' +
+                      asignaturas[n].clave +
+                      '">' +
+                      asignaturas[n].clave +
+                      "</option>"
+                  )
+                  .selectpicker("refresh");
 
                 $("#asignaturaInfraestructura").attr("disabled", false);
-                $("#asignaturaInfraestructura").append('<option value="' + asignaturas[n].clave + '">' + asignaturas[n].clave + " - " + asignaturas[n].nombre + '</option>').selectpicker('refresh');
+                $("#asignaturaInfraestructura")
+                  .append(
+                    '<option value="' +
+                      asignaturas[n].clave +
+                      '">' +
+                      asignaturas[n].clave +
+                      " - " +
+                      asignaturas[n].nombre +
+                      "</option>"
+                  )
+                  .selectpicker("refresh");
                 nfilaMO = asignaturas[n].id + 1;
               }
-
             }
             $("#minimo_horas").val(programa.minimo_horas_optativas);
             $("#minimo_creditos").val(programa.minimo_creditos_optativas);
             var docentes = respuesta.data.docentes;
             if (docentes != undefined) {
-              for (var posicionD = 0; posicionD < docentes.length; posicionD++) {
+              for (
+                var posicionD = 0;
+                posicionD < docentes.length;
+                posicionD++
+              ) {
                 var formacionesD;
                 var formacionestxt;
                 for (const property in docentes[posicionD]) {
-                  docentes[posicionD][property] == null ? docentes[posicionD][property] = "" : docentes[posicionD][property];
+                  docentes[posicionD][property] == null
+                    ? (docentes[posicionD][property] = "")
+                    : docentes[posicionD][property];
                 }
                 for (const property in docentes[posicionD].persona) {
-                  docentes[posicionD].persona[property] == null ? docentes[posicionD].persona[property] = "" : docentes[posicionD].persona[property];
+                  docentes[posicionD].persona[property] == null
+                    ? (docentes[posicionD].persona[property] = "")
+                    : docentes[posicionD].persona[property];
                 }
                 if (docentes[posicionD].formaciones.length == 2) {
-                  formacionesD = [{ "nivel": docentes[posicionD].formaciones[0].grado.descripcion, "nombre": docentes[posicionD].formaciones[0].nombre, "descripcion": docentes[posicionD].formaciones[0].descripcion }, { "nivel": docentes[posicionD].formaciones[1].grado.descripcion, "nombre": docentes[posicionD].formaciones[1].nombre, "descripcion": docentes[posicionD].formaciones[1].descripcion }];
-                  formacionestxt = docentes[posicionD].formaciones[0].nombre + ": " + docentes[posicionD].formaciones[0].descripcion + "<br></br>" + docentes[posicionD].formaciones[1].nombre + ": " + docentes[posicionD].formaciones[0].descripcion;
+                  formacionesD = [
+                    {
+                      nivel:
+                        docentes[posicionD].formaciones[0].grado.descripcion,
+                      nombre: docentes[posicionD].formaciones[0].nombre,
+                      descripcion:
+                        docentes[posicionD].formaciones[0].descripcion,
+                    },
+                    {
+                      nivel:
+                        docentes[posicionD].formaciones[1].grado.descripcion,
+                      nombre: docentes[posicionD].formaciones[1].nombre,
+                      descripcion:
+                        docentes[posicionD].formaciones[1].descripcion,
+                    },
+                  ];
+                  formacionestxt =
+                    docentes[posicionD].formaciones[0].nombre +
+                    ": " +
+                    docentes[posicionD].formaciones[0].descripcion +
+                    "<br></br>" +
+                    docentes[posicionD].formaciones[1].nombre +
+                    ": " +
+                    docentes[posicionD].formaciones[0].descripcion;
                 } else if (docentes[posicionD].formaciones.length == 1) {
-                  formacionesD = [{ "nivel": docentes[posicionD].formaciones[0].grado.descripcion, "nombre": docentes[posicionD].formaciones[0].nombre, "descripcion": docentes[posicionD].formaciones[0].descripcion }];
-                  formacionestxt = docentes[posicionD].formaciones[0].nombre + ": " + docentes[posicionD].formaciones[0].descripcion;
+                  formacionesD = [
+                    {
+                      nivel:
+                        docentes[posicionD].formaciones[0].grado.descripcion,
+                      nombre: docentes[posicionD].formaciones[0].nombre,
+                      descripcion:
+                        docentes[posicionD].formaciones[0].descripcion,
+                    },
+                  ];
+                  formacionestxt =
+                    docentes[posicionD].formaciones[0].nombre +
+                    ": " +
+                    docentes[posicionD].formaciones[0].descripcion;
                 }
                 if (docentes[posicionD].tipo_docente == 1) {
                   docentes[posicionD].tipo_docente = "Asignatura";
@@ -703,37 +1358,84 @@ EditarSolicitud.getSolicitud = function () {
                 if ($("#informacionCargar").val() != 4) {
                   var docenteInput = document.createElement("INPUT");
                   docenteInput.setAttribute("type", "hidden");
-                  docenteInput.setAttribute("id", 'inputDocente' + docentes[posicionD].id);
+                  docenteInput.setAttribute(
+                    "id",
+                    "inputDocente" + docentes[posicionD].id
+                  );
                   docenteInput.setAttribute("name", "DOCENTE-docentes[]");
-                  docenteInput.setAttribute("value", JSON.stringify({
-                    "id": docentes[posicionD].id,
-                    "nombre": docentes[posicionD].persona.nombre,
-                    "apellido_paterno": docentes[posicionD].persona.apellido_paterno,
-                    "apellido_materno": docentes[posicionD].persona.apellido_materno,
-                    "tipo_docente": docentes[posicionD].tipo_docente,
-                    "tipo_contratacion": docentes[posicionD].tipo_contratacion,
-                    "antiguedad": docentes[posicionD].antiguedad,
-                    "formaciones": formacionesD,
-                    "experiencias": docentes[posicionD].experiencias,
-                    "asignaturas": docentes[posicionD].asignaturas
-                  }));
-                  if (__('inputsDocentes')) {
-                    __('inputsDocentes').appendChild(docenteInput);
+                  docenteInput.setAttribute(
+                    "value",
+                    JSON.stringify({
+                      id: docentes[posicionD].id,
+                      nombre: docentes[posicionD].persona.nombre,
+                      apellido_paterno:
+                        docentes[posicionD].persona.apellido_paterno,
+                      apellido_materno:
+                        docentes[posicionD].persona.apellido_materno,
+                      tipo_docente: docentes[posicionD].tipo_docente,
+                      tipo_contratacion: docentes[posicionD].tipo_contratacion,
+                      antiguedad: docentes[posicionD].antiguedad,
+                      formaciones: formacionesD,
+                      experiencias: docentes[posicionD].experiencias,
+                      asignaturas: docentes[posicionD].asignaturas,
+                    })
+                  );
+                  if (__("inputsDocentes")) {
+                    __("inputsDocentes").appendChild(docenteInput);
                   }
-                  filaDocente = '<tr id="docente' + docentes[posicionD].id + '"><td class="small">' + docentes[posicionD].persona.nombre + " " + docentes[posicionD].persona.apellido_paterno + " " + docentes[posicionD].persona.apellido_materno + '</td><td class="small">' + docentes[posicionD].tipo_docente + '</td><td class="small">' + formacionestxt + '</td><td class="small">' + docentes[posicionD].asignaturas + '</td><td class="small">' + docentes[posicionD].experiencias + '</td><td class="small">' + docentes[posicionD].tipo_contratacion + " - " + docentes[posicionD].antiguedad + '</td><td class="small"><button type="button" name="removePublicacion" id="inputDocente-' + docentes[posicionD].id + '_docente" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
-
+                  filaDocente =
+                    '<tr id="docente' +
+                    docentes[posicionD].id +
+                    '"><td class="small">' +
+                    docentes[posicionD].persona.nombre +
+                    " " +
+                    docentes[posicionD].persona.apellido_paterno +
+                    " " +
+                    docentes[posicionD].persona.apellido_materno +
+                    '</td><td class="small">' +
+                    docentes[posicionD].tipo_docente +
+                    '</td><td class="small">' +
+                    formacionestxt +
+                    '</td><td class="small">' +
+                    docentes[posicionD].asignaturas +
+                    '</td><td class="small">' +
+                    docentes[posicionD].experiencias +
+                    '</td><td class="small">' +
+                    docentes[posicionD].tipo_contratacion +
+                    " - " +
+                    docentes[posicionD].antiguedad +
+                    '</td><td class="small"><button type="button" name="removePublicacion" id="inputDocente-' +
+                    docentes[posicionD].id +
+                    '_docente" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
                 } else {
-                  filaDocente = '<tr id="docente' + docentes[posicionD].id + '"><td class="small">' + docentes[posicionD].persona.nombre + " " + docentes[posicionD].persona.apellido_paterno + " " + docentes[posicionD].persona.apellido_materno + '</td><td class="small">' + docentes[posicionD].tipo_docente + '</td><td class="small">' + formacionestxt + '</td><td class="small">' + docentes[posicionD].asignaturas + '</td><td class="small">' + docentes[posicionD].experiencias + '</td><td class="small">' + docentes[posicionD].tipo_contratacion + " - " + docentes[posicionD].antiguedad + '</td></tr>';
-
+                  filaDocente =
+                    '<tr id="docente' +
+                    docentes[posicionD].id +
+                    '"><td class="small">' +
+                    docentes[posicionD].persona.nombre +
+                    " " +
+                    docentes[posicionD].persona.apellido_paterno +
+                    " " +
+                    docentes[posicionD].persona.apellido_materno +
+                    '</td><td class="small">' +
+                    docentes[posicionD].tipo_docente +
+                    '</td><td class="small">' +
+                    formacionestxt +
+                    '</td><td class="small">' +
+                    docentes[posicionD].asignaturas +
+                    '</td><td class="small">' +
+                    docentes[posicionD].experiencias +
+                    '</td><td class="small">' +
+                    docentes[posicionD].tipo_contratacion +
+                    " - " +
+                    docentes[posicionD].antiguedad +
+                    "</td></tr>";
                 }
-                $('#docentes tr:last').after(filaDocente);
+                $("#docentes tr:last").after(filaDocente);
                 nfilaDO = docentes[posicionD].id + 1;
-
-
               }
             }
             var infAsignatura = respuesta.data.asignatura_infraestructura;
-            console.log(infAsignatura);
             if (infAsignatura != undefined) {
               for (var indasig = 0; indasig < infAsignatura.length; indasig++) {
                 if (infAsignatura[indasig].ubicacion == null) {
@@ -743,39 +1445,87 @@ EditarSolicitud.getSolicitud = function () {
                 if ($("#informacionCargar").val() != 4) {
                   var inputInfAsig = document.createElement("INPUT");
                   inputInfAsig.setAttribute("type", "hidden");
-                  inputInfAsig.setAttribute("id", 'inputInfraestructura' + infAsignatura[indasig].id);
-                  inputInfAsig.setAttribute("name", "INFRAESTRUCTURA-infraestructuras[]");
-                  inputInfAsig.setAttribute("value", JSON.stringify({
-                    "id": infAsignatura[indasig].id,
-                    "tipo_instalacion_id": infAsignatura[indasig].tipo_instalacion_id,
-                    "nombre": infAsignatura[indasig].nombre,
-                    "ubicacion": infAsignatura[indasig].ubicacion,
-                    "capacidad": infAsignatura[indasig].capacidad,
-                    "metros": infAsignatura[indasig].metros,
-                    "recursos": infAsignatura[indasig].recursos,
-                    "asignaturas": infAsignatura[indasig].asignaturas
-                  }));
-                  __('inputsInfraestructuras').appendChild(inputInfAsig);
-                  filaInfAsig = '<tr id="infraestructura' + infAsignatura[indasig].id + '"><td>' + infAsignatura[indasig].instalacion.nombre + " " + infAsignatura[indasig].nombre + '</td><td>' + infAsignatura[indasig].capacidad + '</td><td>' + infAsignatura[indasig].metros + '</td><td>' + infAsignatura[indasig].recursos + '</td><td>' + infAsignatura[indasig].ubicacion + '</td><td>' + infAsignatura[indasig].asignaturas + '</td><td><button type="button"  id="inputInfraestructura-' + infAsignatura[indasig].id + '_infraestructura" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
-
+                  inputInfAsig.setAttribute(
+                    "id",
+                    "inputInfraestructura" + infAsignatura[indasig].id
+                  );
+                  inputInfAsig.setAttribute(
+                    "name",
+                    "INFRAESTRUCTURA-infraestructuras[]"
+                  );
+                  inputInfAsig.setAttribute(
+                    "value",
+                    JSON.stringify({
+                      id: infAsignatura[indasig].id,
+                      tipo_instalacion_id:
+                        infAsignatura[indasig].tipo_instalacion_id,
+                      nombre: infAsignatura[indasig].nombre,
+                      ubicacion: infAsignatura[indasig].ubicacion,
+                      capacidad: infAsignatura[indasig].capacidad,
+                      metros: infAsignatura[indasig].metros,
+                      recursos: infAsignatura[indasig].recursos,
+                      asignaturas: infAsignatura[indasig].asignaturas,
+                    })
+                  );
+                  __("inputsInfraestructuras").appendChild(inputInfAsig);
+                  filaInfAsig =
+                    '<tr id="infraestructura' +
+                    infAsignatura[indasig].id +
+                    '"><td>' +
+                    infAsignatura[indasig].instalacion.nombre +
+                    " " +
+                    infAsignatura[indasig].nombre +
+                    "</td><td>" +
+                    infAsignatura[indasig].capacidad +
+                    "</td><td>" +
+                    infAsignatura[indasig].metros +
+                    "</td><td>" +
+                    infAsignatura[indasig].recursos +
+                    "</td><td>" +
+                    infAsignatura[indasig].ubicacion +
+                    "</td><td>" +
+                    infAsignatura[indasig].asignaturas +
+                    '</td><td><button type="button"  id="inputInfraestructura-' +
+                    infAsignatura[indasig].id +
+                    '_infraestructura" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
                 } else {
-                  filaInfAsig = '<tr id="infraestructura' + infAsignatura[indasig].id + '"><td>' + infAsignatura[indasig].instalacion.nombre + " " + infAsignatura[indasig].nombre + '</td><td>' + infAsignatura[indasig].capacidad + '</td><td>' + infAsignatura[indasig].metros + '</td><td>' + infAsignatura[indasig].recursos + '</td><td>' + infAsignatura[indasig].ubicacion + '</td><td>' + infAsignatura[indasig].asignaturas + '</td></tr>';
-
+                  filaInfAsig =
+                    '<tr id="infraestructura' +
+                    infAsignatura[indasig].id +
+                    '"><td>' +
+                    infAsignatura[indasig].instalacion.nombre +
+                    " " +
+                    infAsignatura[indasig].nombre +
+                    "</td><td>" +
+                    infAsignatura[indasig].capacidad +
+                    "</td><td>" +
+                    infAsignatura[indasig].metros +
+                    "</td><td>" +
+                    infAsignatura[indasig].recursos +
+                    "</td><td>" +
+                    infAsignatura[indasig].ubicacion +
+                    "</td><td>" +
+                    infAsignatura[indasig].asignaturas +
+                    "</td></tr>";
                 }
 
-                $('#infraestructuras tr:last').after(filaInfAsig);
+                $("#infraestructuras tr:last").after(filaInfAsig);
                 nfilaInf = infAsignatura[indasig].id + 1;
               }
             }
           }
-        }//Termina Programa
+        } //Termina Programa
 
         //Datos del plantel
         if (plantel != undefined) {
           var objectPlantel = respuesta.data.programa.plantel;
           $("#plantel-id").val(objectPlantel.id);
           $("#plantel-id").attr("name", "PLANTEL-id");
-          $("#coordenadas").val(objectPlantel.domicilio.latitud + "," + objectPlantel.domicilio.longitud);
+          $("#coordenadas").val(
+            objectPlantel.domicilio.latitud +
+              "," +
+              objectPlantel.domicilio.longitud
+          );
           //Propiedades del plantel
           for (var variablePlantel in objectPlantel) {
             if (objectPlantel.hasOwnProperty(variablePlantel)) {
@@ -789,33 +1539,61 @@ EditarSolicitud.getSolicitud = function () {
           for (var campo in Objdomicilio) {
             if (Objdomicilio.hasOwnProperty(campo)) {
               $("#" + campo).val(Objdomicilio[campo]);
-
             }
           }
 
           //Dictamenes
           var dictamenes = respuesta.data.plantel.dictamenes;
           if (dictamenes != null) {
-            $('#inputsDictamenes').empty();
-            $('#dictamenes tr:not(:first)').remove();
+            $("#inputsDictamenes").empty();
+            $("#dictamenes tr:not(:first)").remove();
             for (var dic = 0; dic < dictamenes.length; dic++) {
               var filaDictamen;
               if ($("#informacionCargar").val() != 4) {
                 var inputDictamen = document.createElement("INPUT");
                 inputDictamen.setAttribute("type", "hidden");
-                inputDictamen.setAttribute("id", 'inputDictamen' + dictamenes[dic].id);
+                inputDictamen.setAttribute(
+                  "id",
+                  "inputDictamen" + dictamenes[dic].id
+                );
                 inputDictamen.setAttribute("name", "DICTAMEN-dictamenes[]");
-                inputDictamen.setAttribute("value", JSON.stringify({ "id": dictamenes[dic].id, "nombre": dictamenes[dic].nombre, "autoridad": dictamenes[dic].autoridad, "fecha_emision": dictamenes[dic].fecha_emision }));
-                if (__('inputsDictamenes')) {
-                  __('inputsDictamenes').appendChild(inputDictamen);
+                inputDictamen.setAttribute(
+                  "value",
+                  JSON.stringify({
+                    id: dictamenes[dic].id,
+                    nombre: dictamenes[dic].nombre,
+                    autoridad: dictamenes[dic].autoridad,
+                    fecha_emision: dictamenes[dic].fecha_emision,
+                  })
+                );
+                if (__("inputsDictamenes")) {
+                  __("inputsDictamenes").appendChild(inputDictamen);
                 }
-                filaDictamen = '<tr id="dictamen' + dictamenes[dic].id + '"><td>' + dictamenes[dic].nombre + '</td><td>' + dictamenes[dic].autoridad + '</td><td>' + dictamenes[dic].fecha_emision + '</td><td><button type="button" name="removeDictamen" id="' + dictamenes[dic].id + '" class="btn btn-danger" onclick="eliminarDictamen(this)">Quitar</button></td></tr>';
-
+                filaDictamen =
+                  '<tr id="dictamen' +
+                  dictamenes[dic].id +
+                  '"><td>' +
+                  dictamenes[dic].nombre +
+                  "</td><td>" +
+                  dictamenes[dic].autoridad +
+                  "</td><td>" +
+                  dictamenes[dic].fecha_emision +
+                  '</td><td><button type="button" name="removeDictamen" id="' +
+                  dictamenes[dic].id +
+                  '" class="btn btn-danger" onclick="eliminarDictamen(this)">Quitar</button></td></tr>';
               } else {
-                filaDictamen = '<tr id="dictamen' + dictamenes[dic].id + '"><td>' + dictamenes[dic].nombre + '</td><td>' + dictamenes[dic].autoridad + '</td><td>' + dictamenes[dic].fecha_emision + '</td></tr>';
-
+                filaDictamen =
+                  '<tr id="dictamen' +
+                  dictamenes[dic].id +
+                  '"><td>' +
+                  dictamenes[dic].nombre +
+                  "</td><td>" +
+                  dictamenes[dic].autoridad +
+                  "</td><td>" +
+                  dictamenes[dic].fecha_emision +
+                  "</td></tr>";
               }
-              $('#dictamenes tr:last').after(filaDictamen);
+              $("#dictamenes tr:last").after(filaDictamen);
             }
           }
           //Niveles con los que cuenta el plantel
@@ -831,7 +1609,9 @@ EditarSolicitud.getSolicitud = function () {
           var seguridades = respuesta.data.plantel.seguridades;
           if (seguridades != null) {
             for (var seg = 0; seg < seguridades.length; seg++) {
-              $("#" + seguridades[seg].tipo_seguridad.nombre).val(seguridades[seg].cantidad);
+              $("#" + seguridades[seg].tipo_seguridad.nombre).val(
+                seguridades[seg].cantidad
+              );
               //$("#"+seguridades[seg].tipo_seguridad.nombre).attr("name","SEGURIDAD-"+seguridades[seg].tipo_seguridad.nombre+"-id:"+seguridades[seg].id);
             }
           }
@@ -840,40 +1620,88 @@ EditarSolicitud.getSolicitud = function () {
           var higienes = respuesta.data.plantel.higienes;
           if (higienes != null) {
             for (var hig = 0; hig < higienes.length; hig++) {
-              $("#" + higienes[hig].tipo_higiene.nombre).val(higienes[hig].cantidad);
+              $("#" + higienes[hig].tipo_higiene.nombre).val(
+                higienes[hig].cantidad
+              );
               //$("#"+higienes[hig].tipo_higiene.nombre).attr("name","HIGIENE-"+tipo_higiene.nombre+"-id:"+higienes[hig].id);
             }
           }
 
           //Infraestructura común
           var infComun = respuesta.data.plantel.infraestructura;
-          console.log(infComun);
           if (infComun != undefined) {
             for (var indInf = 0; indInf < infComun.length; indInf++) {
               var filaInf;
-              infComun[indInf].ubicacion = infComun[indInf].ubicacion == null ? "" : infComun[indInf].ubicacion;
+              infComun[indInf].ubicacion =
+                infComun[indInf].ubicacion == null
+                  ? ""
+                  : infComun[indInf].ubicacion;
               if ($("#informacionCargar").val() != 4) {
                 var inputInf = document.createElement("INPUT");
                 inputInf.setAttribute("type", "hidden");
-                inputInf.setAttribute("id", 'inputInfraestructura' + infComun[indInf].id);
-                inputInf.setAttribute("name", "INFRAESTRUCTURA-infraestructuras[]");
-                inputInf.setAttribute("value", JSON.stringify({
-                  "id": infComun[indInf].id, "tipo_instalacion_id": infComun[indInf].tipo_instalacion_id,
-                  "nombre": infComun[indInf].nombre,
-                  "ubicacion": infComun[indInf].ubicacion,
-                  "capacidad": infComun[indInf].capacidad,
-                  "metros": infComun[indInf].metros,
-                  "recursos": infComun[indInf].recursos,
-                  "asignaturas": "USO COMÚN"
-                }));
-                __('inputsInfraestructuras').appendChild(inputInf);
-                filaInf = '<tr id="infraestructura' + infComun[indInf].id + '"><td>' + infComun[indInf].instalacion.nombre + " " + infComun[indInf].nombre + '</td><td>' + infComun[indInf].capacidad + '</td><td>' + infComun[indInf].metros + '</td><td>' + infComun[indInf].recursos + '</td><td>' + infComun[indInf].ubicacion + '</td><td>' + "USO COMÚN NO SE TRATA" + '</td><td><button type="button"  id="inputInfraestructura-' + infComun[indInf].id + '_infraestructura" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
-
+                inputInf.setAttribute(
+                  "id",
+                  "inputInfraestructura" + infComun[indInf].id
+                );
+                inputInf.setAttribute(
+                  "name",
+                  "INFRAESTRUCTURA-infraestructuras[]"
+                );
+                inputInf.setAttribute(
+                  "value",
+                  JSON.stringify({
+                    id: infComun[indInf].id,
+                    tipo_instalacion_id: infComun[indInf].tipo_instalacion_id,
+                    nombre: infComun[indInf].nombre,
+                    ubicacion: infComun[indInf].ubicacion,
+                    capacidad: infComun[indInf].capacidad,
+                    metros: infComun[indInf].metros,
+                    recursos: infComun[indInf].recursos,
+                    asignaturas: "USO COMÚN",
+                  })
+                );
+                __("inputsInfraestructuras").appendChild(inputInf);
+                filaInf =
+                  '<tr id="infraestructura' +
+                  infComun[indInf].id +
+                  '"><td>' +
+                  infComun[indInf].instalacion.nombre +
+                  " " +
+                  infComun[indInf].nombre +
+                  "</td><td>" +
+                  infComun[indInf].capacidad +
+                  "</td><td>" +
+                  infComun[indInf].metros +
+                  "</td><td>" +
+                  infComun[indInf].recursos +
+                  "</td><td>" +
+                  infComun[indInf].ubicacion +
+                  "</td><td>" +
+                  "USO COMÚN NO SE TRATA" +
+                  '</td><td><button type="button"  id="inputInfraestructura-' +
+                  infComun[indInf].id +
+                  '_infraestructura" class="btn btn-danger" onclick="EditarSolicitud.eliminarFilaTabla(this)">Quitar</button></td></tr>';
               } else {
-                filaInf = '<tr id="infraestructura' + infComun[indInf].id + '"><td>' + infComun[indInf].instalacion.nombre + " " + infComun[indInf].nombre + '</td><td>' + infComun[indInf].capacidad + '</td><td>' + infComun[indInf].metros + '</td><td>' + infComun[indInf].recursos + '</td><td>' + infComun[indInf].ubicacion + '</td><td>' + "USO COMÚN NO SE TRATA" + '</td></tr>';
-
+                filaInf =
+                  '<tr id="infraestructura' +
+                  infComun[indInf].id +
+                  '"><td>' +
+                  infComun[indInf].instalacion.nombre +
+                  " " +
+                  infComun[indInf].nombre +
+                  "</td><td>" +
+                  infComun[indInf].capacidad +
+                  "</td><td>" +
+                  infComun[indInf].metros +
+                  "</td><td>" +
+                  infComun[indInf].recursos +
+                  "</td><td>" +
+                  infComun[indInf].ubicacion +
+                  "</td><td>" +
+                  "USO COMÚN NO SE TRATA" +
+                  "</td></tr>";
               }
-              $('#infraestructuras tr:last').after(filaInf);
+              $("#infraestructuras tr:last").after(filaInf);
               nfilaInf = infComun[indInf].id + 1;
             }
           }
@@ -886,17 +1714,46 @@ EditarSolicitud.getSolicitud = function () {
               if ($("#informacionCargar").val() != 4) {
                 var inputInsSalud = document.createElement("INPUT");
                 inputInsSalud.setAttribute("type", "hidden");
-                inputInsSalud.setAttribute("id", 'inputInstitucionSalud' + instSalud[ind].id);
-                inputInsSalud.setAttribute("name", 'SALUD-nombresInstitucionSalud[]');
-                inputInsSalud.setAttribute("value", JSON.stringify({ "id": instSalud[ind].id, "nombre": instSalud[ind].nombre, "tiempo": instSalud[ind].tiempo }));
-                if (__('inputsSaludInstituciones')) {
-                  __('inputsSaludInstituciones').appendChild(inputInsSalud);
+                inputInsSalud.setAttribute(
+                  "id",
+                  "inputInstitucionSalud" + instSalud[ind].id
+                );
+                inputInsSalud.setAttribute(
+                  "name",
+                  "SALUD-nombresInstitucionSalud[]"
+                );
+                inputInsSalud.setAttribute(
+                  "value",
+                  JSON.stringify({
+                    id: instSalud[ind].id,
+                    nombre: instSalud[ind].nombre,
+                    tiempo: instSalud[ind].tiempo,
+                  })
+                );
+                if (__("inputsSaludInstituciones")) {
+                  __("inputsSaludInstituciones").appendChild(inputInsSalud);
                 }
-                filaInstSalud = '<tr id="institucionSalud' + instSalud[ind].id + '"><td>' + instSalud[ind].nombre + '</td><td>' + instSalud[ind].tiempo + '</td><td><button type="button"  id="' + instSalud[ind].id + '" class="btn btn-danger" onclick="eliminarInstitucionSalud(this)">Quitar</button></td></tr>';
+                filaInstSalud =
+                  '<tr id="institucionSalud' +
+                  instSalud[ind].id +
+                  '"><td>' +
+                  instSalud[ind].nombre +
+                  "</td><td>" +
+                  instSalud[ind].tiempo +
+                  '</td><td><button type="button"  id="' +
+                  instSalud[ind].id +
+                  '" class="btn btn-danger" onclick="eliminarInstitucionSalud(this)">Quitar</button></td></tr>';
               } else {
-                filaInstSalud = '<tr id="institucionSalud' + instSalud[ind].id + '"><td>' + instSalud[ind].nombre + '</td><td>' + instSalud[ind].tiempo + '</td></tr>';
+                filaInstSalud =
+                  '<tr id="institucionSalud' +
+                  instSalud[ind].id +
+                  '"><td>' +
+                  instSalud[ind].nombre +
+                  "</td><td>" +
+                  instSalud[ind].tiempo +
+                  "</td></tr>";
               }
-              $('#institucionesSalud tr:last').after(filaInstSalud);
+              $("#institucionesSalud tr:last").after(filaInstSalud);
             }
           }
 
@@ -909,138 +1766,255 @@ EditarSolicitud.getSolicitud = function () {
               var niveltxt = $("#nivelOtrosProgramas").val(rvoes[posiR].nivel);
               niveltxt = $("#nivelOtrosProgramas option:selected").html();
               var turnotxt = rvoes[posiR].turno;
-              if (__('totalAlumnosOtrosProgramas')) {
-                __('totalAlumnosOtrosProgramas').value = parseInt(__('totalAlumnosOtrosProgramas').value) + parseInt(rvoes[posiR].numero_alumnos);
+              if (__("totalAlumnosOtrosProgramas")) {
+                __("totalAlumnosOtrosProgramas").value =
+                  parseInt(__("totalAlumnosOtrosProgramas").value) +
+                  parseInt(rvoes[posiR].numero_alumnos);
               }
               if ($("#informacionCargar").val() != 4) {
                 var inputOtro = document.createElement("INPUT");
                 inputOtro.setAttribute("type", "hidden");
-                inputOtro.setAttribute("id", 'otroPrograma' + posiR);
-                inputOtro.setAttribute("name", 'PROGRAMA-otrosRVOE[]');
-                inputOtro.setAttribute("value", JSON.stringify({
-                  "nivel": rvoes[posiR].nivel,
-                  "nombre": rvoes[posiR].nombre,
-                  "acuerdo": rvoes[posiR].acuerdo,
-                  "numero_alumnos": rvoes[posiR].numero_alumnos,
-                  "turno": rvoes[posiR].turno
-                }));
-                if (__('inputsOtrosProgramas')) {
-                  __('inputsOtrosProgramas').appendChild(inputOtro);
+                inputOtro.setAttribute("id", "otroPrograma" + posiR);
+                inputOtro.setAttribute("name", "PROGRAMA-otrosRVOE[]");
+                inputOtro.setAttribute(
+                  "value",
+                  JSON.stringify({
+                    nivel: rvoes[posiR].nivel,
+                    nombre: rvoes[posiR].nombre,
+                    acuerdo: rvoes[posiR].acuerdo,
+                    numero_alumnos: rvoes[posiR].numero_alumnos,
+                    turno: rvoes[posiR].turno,
+                  })
+                );
+                if (__("inputsOtrosProgramas")) {
+                  __("inputsOtrosProgramas").appendChild(inputOtro);
                 }
-                filaOtro = '<tr id="otroPrograma' + posiR + '"><td>' + niveltxt + '</td><td>' + rvoes[posiR].nombre + '</td><td>' + rvoes[posiR].acuerdo + '</td><td id="numeroAlumnos' + posiR + '">' + rvoes[posiR].numero_alumnos + '</td><td>' + turnotxt + '</td><td><button type="button"  id="' + posiR + '" class="btn btn-danger" onclick="eliminarOtrosProgramas(this)">Quitar</button></td></tr>';
-                if (__('nivelOtrosProgramas')) {
-                  __('nivelOtrosProgramas').value = "";
+                filaOtro =
+                  '<tr id="otroPrograma' +
+                  posiR +
+                  '"><td>' +
+                  niveltxt +
+                  "</td><td>" +
+                  rvoes[posiR].nombre +
+                  "</td><td>" +
+                  rvoes[posiR].acuerdo +
+                  '</td><td id="numeroAlumnos' +
+                  posiR +
+                  '">' +
+                  rvoes[posiR].numero_alumnos +
+                  "</td><td>" +
+                  turnotxt +
+                  '</td><td><button type="button"  id="' +
+                  posiR +
+                  '" class="btn btn-danger" onclick="eliminarOtrosProgramas(this)">Quitar</button></td></tr>';
+                if (__("nivelOtrosProgramas")) {
+                  __("nivelOtrosProgramas").value = "";
                 }
               } else {
-                filaOtro = '<tr id="otroPrograma' + posiR + '"><td>' + niveltxt + '</td><td>' + rvoes[posiR].nombre + '</td><td>' + rvoes[posiR].acuerdo + '</td><td id="numeroAlumnos' + posiR + '">' + rvoes[posiR].numero_alumnos + '</td><td>' + turnotxt + '</td></tr>';
-
+                filaOtro =
+                  '<tr id="otroPrograma' +
+                  posiR +
+                  '"><td>' +
+                  niveltxt +
+                  "</td><td>" +
+                  rvoes[posiR].nombre +
+                  "</td><td>" +
+                  rvoes[posiR].acuerdo +
+                  '</td><td id="numeroAlumnos' +
+                  posiR +
+                  '">' +
+                  rvoes[posiR].numero_alumnos +
+                  "</td><td>" +
+                  turnotxt +
+                  "</td></tr>";
               }
-              $('#otrosProgramas tr:last').after(filaOtro);
-
+              $("#otrosProgramas tr:last").after(filaOtro);
             }
-
           }
+        } //Termina plantel
 
-        }//Termina plantel
+        // Datos de evaluación
+        const evaluacion = respuesta.data.evaluacion;
 
+        if (evaluacion != "" && evaluacion != null) {
+          $("#evaluacion_id").val(evaluacion.id);
+          $("#programa_evaluacion").val(evaluacion.programa.nombre);
+          $("#programa_id_evaluacion").val(evaluacion.programa.id);
+          $("#fecha_evaluacion").val(evaluacion.fecha);
+          $("#cumplimiento_evaluacion").val(evaluacion.cumplimiento);
+          $("#cumplimiento_evaluacion_input").val(evaluacion.cumplimiento);
+          $("#numero_evaluacion").val(evaluacion.numero);
+          $("#cumplimiento_id_evaluacion").val(evaluacion.tipo_cumplimiento.id);
+          $("#tipo_cumplimiento_evaluacion").val(
+            evaluacion.tipo_cumplimiento.nombre
+          );
+          $("#valoracion_evaluacion").val(evaluacion.valoracion);
+          $("#lista_evaluadores").val(evaluacion.evaluador_id);
+          $("#lista_evaluadores").selectpicker("refresh");
+          $("#evaluador_id_evaluacion").val(evaluacion.evaluador_id);
+        }
       }
     },
     error: function (respuesta, errmsg, err) {
-      console.warn(respuesta.responseText)
+      console.warn(respuesta.responseText);
       console.log(respuesta);
-    }
+    },
   });
+};
+
+//Obtener cumplimientos para evaluacion
+EditarSolicitud.getCumplimientos = function () {
+  EditarSolicitud.promesaCumplimientos = $.ajax({
+    type: "POST",
+    url: "../controllers/control-cumplimiento.php",
+    dataType: "json",
+    data: { webService: "consultarTodos", url: "" },
+    success: function (respuesta) {
+      //Cumplimientos
+      Guia.cumplimientos = respuesta.data;
+    },
+    error: function (respuesta, errmsg, err) {
+      console.log(respuesta);
+    },
+  });
+};
+
+//Calcula los resultados
+EditarSolicitud.resultadoEvaluacion = function (respuesta) {
+  const total = Number($("#numero_evaluacion").val());
+
+  // Filtra el cumplimiento de acuerdo a la modalidad del programa
+  var cumplimientosModalidad = Guia.cumplimientos.filter(
+    (obj) => obj.modalidad_id == Number($("#modalidad_id").val())
+  );
+
+  for (var i = 0; i < cumplimientosModalidad.length; i++) {
+    if (
+      total >= cumplimientosModalidad[i].cumplimiento_minimo &&
+      total <= cumplimientosModalidad[i].cumplimiento_maximo
+    ) {
+      $("#cumplimiento_evaluacion").val(
+        cumplimientosModalidad[i].porcentaje_cumplimiento
+      );
+      $("#cumplimiento_evaluacion_input").val(
+        cumplimientosModalidad[i].porcentaje_cumplimiento
+      );
+      $("#cumplimiento_id_evaluacion").val(cumplimientosModalidad[i].id);
+      $("#tipo_cumplimiento_evaluacion").val(cumplimientosModalidad[i].nombre);
+    }
+  }
 };
 
 //Eliminar las filas de las tablas
 EditarSolicitud.eliminarFilaTabla = function (fila) {
-  console.log(fila);
   var indiceSeparacion = fila.id.indexOf("_");
   var id = fila.id.substring(fila.id.indexOf("-") + 1, indiceSeparacion);
   var filaTabla = fila.id.substr(indiceSeparacion + 1);
   var input = fila.id.substr(0, fila.id.indexOf("-"));
-  console.log(input);
-  $('#' + filaTabla + id).remove();
+  $("#" + filaTabla + id).remove();
   var json = JSON.parse($("#" + input + id).val());
-  $("#" + input + id).attr("value", JSON.stringify({
-    "id": json.id,
-    "borrar": 1
-  }));
-  console.log($("#" + input + id).attr("value", JSON.stringify({
-    "id": json.id,
-    "borrar": 1
-  })));
+  $("#" + input + id).attr(
+    "value",
+    JSON.stringify({
+      id: json.id,
+      borrar: 1,
+    })
+  );
+  console.log(
+    $("#" + input + id).attr(
+      "value",
+      JSON.stringify({
+        id: json.id,
+        borrar: 1,
+      })
+    )
+  );
 };
 
 //Eliminar materias
 EditarSolicitud.eliminarMateria = function (fila) {
   var id = fila.id;
-  var optValue = $('#' + id + '').attr("clave");
+  var optValue = $("#" + id + "").attr("clave");
   var horasdocente = parseInt(__("hrsdocente" + id).innerHTML);
   var horasindependiente = parseInt(__("hrsindependiente" + id).innerHTML);
-  var total = __('totalHorasDocentes');
-  var total2 = __('totalHorasIndependientes');
+  var total = __("totalHorasDocentes");
+  var total2 = __("totalHorasIndependientes");
   total.value = parseInt(total.value) - horasdocente;
   total2.value = parseInt(total2.value) - horasindependiente;
-  var input = 'asignatura' + id;
+  var input = "asignatura" + id;
 
+  $("#seriacion")
+    .find('[value="' + optValue + '"]')
+    .remove();
+  $("#asignaturaDocente")
+    .find('[value="' + optValue + '"]')
+    .remove();
+  $("#asignaturaInfraestructura")
+    .find('[value="' + optValue + '"]')
+    .remove();
 
-  $("#seriacion").find('[value="' + optValue + '"]').remove();
-  $("#asignaturaDocente").find('[value="' + optValue + '"]').remove();
-  $("#asignaturaInfraestructura").find('[value="' + optValue + '"]').remove();
-
-  if (__('seriacion').length == 0) {
+  if (__("seriacion").length == 0) {
     __("seriacion").disabled = true;
   }
-  if (__('asignaturaDocente').length == 0) {
+  if (__("asignaturaDocente").length == 0) {
     __("asignaturaDocente").disabled = true;
   }
-  $("#seriacion").selectpicker('refresh');
-  $("#asignaturaDocente").selectpicker('refresh');
-  $("#asignaturaInfraestructura").selectpicker('refresh');
-  $('#row' + id + '').remove();
+  $("#seriacion").selectpicker("refresh");
+  $("#asignaturaDocente").selectpicker("refresh");
+  $("#asignaturaInfraestructura").selectpicker("refresh");
+  $("#row" + id + "").remove();
   var json = JSON.parse($("#" + input).val());
-  $("#" + input).attr("value", JSON.stringify({
-    "id": json.id,
-    "borrar": 1
-  }));
-
+  $("#" + input).attr(
+    "value",
+    JSON.stringify({
+      id: json.id,
+      borrar: 1,
+    })
+  );
 };
 
 //Eliminar materias optativas
 EditarSolicitud.eliminarOptativa = function (fila) {
   let id = fila.id;
-  let optValue = $('#' + id + '').attr("clave");
+  let optValue = $("#" + id + "").attr("clave");
   let hrsdocenteOptativa = parseInt(__("hrsdocenteOptativa" + id).innerHTML);
-  let hrsindependienteOptativa = parseInt(__("hrsindependienteOptativa" + id).innerHTML);
-  let total = __('totalHorasDocentesOptativa');
-  let total2 = __('totalHorasIndependientesOptativa');
+  let hrsindependienteOptativa = parseInt(
+    __("hrsindependienteOptativa" + id).innerHTML
+  );
+  let total = __("totalHorasDocentesOptativa");
+  let total2 = __("totalHorasIndependientesOptativa");
   total.value = parseInt(total.value) - hrsdocenteOptativa;
   total2.value = parseInt(total2.value) - hrsindependienteOptativa;
-  let input = 'optativas' + id;
+  let input = "optativas" + id;
 
+  $("#seriacionOptativa")
+    .find('[value="' + optValue + '"]')
+    .remove();
+  $("#asignaturaDocente")
+    .find('[value="' + optValue + '"]')
+    .remove();
+  $("#asignaturaInfraestructura")
+    .find('[value="' + optValue + '"]')
+    .remove();
 
-  $("#seriacionOptativa").find('[value="' + optValue + '"]').remove();
-  $("#asignaturaDocente").find('[value="' + optValue + '"]').remove();
-  $("#asignaturaInfraestructura").find('[value="' + optValue + '"]').remove();
-
-  if (__('seriacionOptativa').length == 0) {
+  if (__("seriacionOptativa").length == 0) {
     __("seriacionOptativa").disabled = true;
   }
-  if (__('asignaturaDocente').length == 0) {
+  if (__("asignaturaDocente").length == 0) {
     __("asignaturaDocente").disabled = true;
   }
-  $("#seriacionOptativa").selectpicker('refresh');
-  $("#asignaturaDocente").selectpicker('refresh');
-  $("#asignaturaInfraestructura").selectpicker('refresh');
-  $('#optativa' + id + '').remove();
+  $("#seriacionOptativa").selectpicker("refresh");
+  $("#asignaturaDocente").selectpicker("refresh");
+  $("#asignaturaInfraestructura").selectpicker("refresh");
+  $("#optativa" + id + "").remove();
   let json = JSON.parse($("#" + input).val());
-  $("#" + input).attr("value", JSON.stringify({
-    "id": json.id,
-    "borrar": 1
-  }));
-  console.log($("#" + input))
-
+  $("#" + input).attr(
+    "value",
+    JSON.stringify({
+      id: json.id,
+      borrar: 1,
+    })
+  );
 };
 
 //Función para visualizar los documentos cargados
@@ -1048,14 +2022,13 @@ EditarSolicitud.verImagen = function (enlace) {
   $("#modalArchivos").modal();
   $("#tamanoModalArchivo").attr("style", "margin-top:20px;");
   $("#archivo-mostrar").attr("src", enlace);
-
 };
 
 //Iniciliza las funciones necesarias
 $(document).ready(function ($) {
-
   setTimeout(() => {
     EditarSolicitud.getSolicitud();
+    EditarSolicitud.getCumplimientos();
 
     document.getElementById("cargandoOtro").style.display = "block";
     //EditarSolicitud.promesaDatosSolicitud.done();
@@ -1076,18 +2049,19 @@ $(document).ready(function ($) {
 
         let turnoPrograma = $("#turno_programa").val();
 
-        if (mun !== "Seleccione municipio"
-          && mun_r !== "Seleccione municipio"
-          && nivelPrograma > 0
-          && modalidadPrograma > 0
-          && turnoPrograma.length > 0) {
-          document.getElementById("cargandoOtro").style.display = "none",
-            document.getElementById("cargando").style.display = "none"
-        };
+        if (
+          mun !== "Seleccione municipio" &&
+          mun_r !== "Seleccione municipio" &&
+          nivelPrograma > 0 &&
+          modalidadPrograma > 0 &&
+          turnoPrograma.length > 0
+        ) {
+          (document.getElementById("cargandoOtro").style.display = "none"),
+            (document.getElementById("cargando").style.display = "none");
+        }
       })
       .fail(function () {
         console.log("Pero algo fallo");
       });
   }, 7000);
-
 });

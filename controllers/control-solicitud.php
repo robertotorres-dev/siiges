@@ -31,6 +31,7 @@
   require_once "../models/modelo-solicitud-usuario.php";
   require_once "../models/modelo-nivel.php";
   require_once "../models/modelo-evaluador.php";
+  require_once "../models/modelo-programa-evaluacion.php";
   require_once "../models/modelo-programa-turno.php";
   require_once "../models/modelo-asignatura.php";
   require_once "../models/modelo-docente.php";
@@ -205,6 +206,9 @@ session_start();
       }
       if(strstr($atributo, '-', true) == "REPRESENTANTE" ){
         $parametrosRepresentante[substr(strstr($atributo, '-'),1)] = $valor;
+      }
+      if(strstr($atributo, '-', true) == "EVALUACION" ){
+        $parametrosEvaluacion[substr(strstr($atributo, '-'),1)] = $valor;
       }
     }
 
@@ -548,6 +552,9 @@ session_start();
               }
               $parametrosSolicitud["tipo_solicitud_id"] = $_POST["SOLICITUD-tipo_solicitud_id"];
               $parametrosSolicitud["usuario_id"] = $parametrosInstitucion["usuario_id"];
+              print_r($_POST);
+              $parametrosSolicitud["convocatoria"] = $_POST["SOLICITUD-convocatoria"];
+
               //$parametrosSolicitud["fecha"]
               $parametrosSolicitud["estatus_solicitud_id"] = isset($_POST["SOLICITUD-estatus_solicitud_id"])?$_POST["SOLICITUD-estatus_solicitud_id"]:Solicitud::NUEVA;
               $solicitud->setAttributes($parametrosSolicitud);
@@ -665,7 +672,7 @@ session_start();
                 throw new Exception("PROGRAMA - No se puede guardar por falta de datos: ".$details);
               } else {
                 $programa = new Programa( );
-                $parametrosPrograma["evaluador_id"] = Evaluador::NO_DEFINIDO;
+                isset($parametrosEvaluacion["evaluador_id"]) && !empty($parametrosEvaluacion["evaluador_id"]) ? $parametrosPrograma["evaluador_id"] = $parametrosEvaluacion["evaluador_id"] : $parametrosPrograma["evaluador_id"] = Evaluador::NO_DEFINIDO;
                 $parametrosPrograma["solicitud_id"]= $entidadesIds["SOLICITUD"];
                 $parametrosPrograma["plantel_id"]= $entidadesIds["PLANTEL"];
                 $parametrosPrograma["persona_id"]= $entidadesIds["COORDINADOR"];
@@ -675,6 +682,34 @@ session_start();
                 $programa->setAttributes($parametrosPrograma);
                 $programa = $programa->guardar();
                 $entidadesIds["PROGRAMA"] = isset($programa["data"]["id"])?$programa["data"]["id"]:false;
+              }
+
+              //Programa evaluacion
+              $evaluacionCurricular = new ProgramaEvaluacion();
+              isset($parametrosEvaluacion["programa_id"]) && !empty($parametrosEvaluacion["programa_id"]) ? "" : $parametrosEvaluacion["programa_id"] = $entidadesIds["PROGRAMA"];
+              if ( isset($parametrosEvaluacion["programa_id"]) 
+                && !empty($parametrosEvaluacion["programa_id"])
+                && isset($parametrosEvaluacion["cumplimiento_id"])
+                && !empty($parametrosEvaluacion["cumplimiento_id"])
+                && isset($parametrosEvaluacion["evaluador_id"])
+                && !empty($parametrosEvaluacion["evaluador_id"])
+                && isset($parametrosEvaluacion["fecha"])
+                && !empty($parametrosEvaluacion["fecha"]) ) {
+                  
+                  $parametrosEvaluacion["estatus"] = 2;
+                  $evaluacionCurricular->setAttributes($parametrosEvaluacion);
+                  $evaluacionCurricular = $evaluacionCurricular->guardar();
+                  $entidadesIds["EVALUACION"] = isset($evaluacionCurricular["data"]["id"])?$evaluacionCurricular["data"]["id"]:false;
+
+                  if (!isset($parametrosEvaluacion["id"]) || empty($parametrosEvaluacion["id"])) {
+                    $usuarioNotificar = new Solicitud();
+                    $usuarioNotificar->setAttributes(array("id"=>$entidadesIds["SOLICITUD"]));
+                    $resUsuarioNotificar = $usuarioNotificar->consultarId();
+                    $resUsuarioNotificar = $resUsuarioNotificar["data"];
+                    $notificacion = new Usuario();
+                    $msj = "Su programa de estudios obtuvo un " . $parametrosEvaluacion["cumplimiento"] .  "% en la evaluación técnico currilar";
+                    $notificacion->notificacionIdUsuario($resUsuarioNotificar["usuario_id"],"Evaluación técnico curricular",$msj);
+                  }
               }
                         
               // Programa Turnos
@@ -905,8 +940,8 @@ session_start();
       isset($_POST[$nombreInput])? $idDocumento = $_POST[$nombreInput] : $idDocumento = null;
 
       $tipoEntidad = strstr($campo, '-', true);
-      echo $tipoEntidad;
-      echo '<br>';
+      /* echo $tipoEntidad;
+      echo '<br>'; */
       $nombreFormulario = substr(strstr($campo, '-'),1);
       if(empty($archivo["name"])){
         continue;
@@ -950,7 +985,7 @@ session_start();
     $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"solicitudes","accion"=>"guardarSolicitud","lugar"=>"control-solicitud"]);
     $result = $bitacora->guardar();
 
-    retornarWebService( $_POST["url"], $resultado );
+    //retornarWebService( $_POST["url"], $resultado );
   }
 
   // Web Service para agendar Cita
@@ -1243,6 +1278,7 @@ session_start();
         $respuesta["data"]["solicitud"]["estatus"] = $res_solicitud["data"]["estatus_solicitud_id"];
         $respuesta["data"]["solicitud"]["tipo"] = $res_solicitud["data"]["tipo_solicitud_id"];
         $respuesta["data"]["solicitud"]["cita"] = $res_solicitud["data"]["cita"];
+        $respuesta["data"]["solicitud"]["convocatoria"] = $res_solicitud["data"]["convocatoria"];
         $programa =  new Programa();
         $res_programa = $programa->consultarPor( "programas", array("solicitud_id"=>$res_solicitud["data"]["id"]) , "*" );
         $temp_programa = new Programa();
@@ -1641,11 +1677,13 @@ session_start();
     $actu_coment->guardar();
 
     $solicitud_tipo = new Solicitud;
-    $res_solicitud = $solicitud_tipo->consultarPor("solicitudes",array("id"=>$_POST["id_solicitud"], "deleted_at"), array("id,tipo_solicitud_id"));
+    $res_solicitud = $solicitud_tipo->consultarPor("solicitudes",array("id"=>$_POST["id_solicitud"], "deleted_at"), array("id,tipo_solicitud_id, convocatoria"));
     $tipo_solicitud_id = $res_solicitud["data"][0]["tipo_solicitud_id"];
+    $convocatoria = $res_solicitud["data"][0]["convocatoria"];
     
-    if ($tipo_solicitud_id == 3) {
-      echo $tipo_solicitud_id;
+    //En caso de no ser migración y sea cambio de domicilio, se va directo a inspección
+    //En caso de que sea convocatoria 2021 hacia adelante, irse directo a asignar inspección
+    if ($tipo_solicitud_id == 3 || $convocatoria >= 2021 ) {
       $estatus_solicitud = new SolicitudEstatus();
       $estatus_solicitud->setAttributes(array("estatus_solicitud_id"=>6,"solicitud_id"=>$_POST["id_solicitud"]));
       $res = $estatus_solicitud->guardar();
@@ -1667,7 +1705,7 @@ session_start();
       $estatus_solicitud = new SolicitudEstatus();
       $estatus_solicitud->setAttributes(array("estatus_solicitud_id"=>4,"solicitud_id"=>$_POST["id_solicitud"]));
       $res = $estatus_solicitud->guardar();
-  
+      
       $solicitud = new Solicitud;
       $solicitud->setAttributes(array("id"=>$_POST["id_solicitud"],"estatus_solicitud_id"=>4));
       $solicitud->guardar();

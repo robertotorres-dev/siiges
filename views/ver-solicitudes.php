@@ -67,6 +67,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                 <li ><a data-toggle="tab" href="#tab-02">Programa de estudios</a></li>
                 <li><a data-toggle="tab" href="#tab-03">Plantel</a></li>
                 <li><a data-toggle="tab" href="#tab-04">Anexos</a></li>
+                <li><a id="tab-evaluacion" data-toggle="tab" href="#tab-05">Evaluaci&oacute;n curricular</a></li>
           </ul>
           <?php if($_SESSION["rol_id"] > 6){ ?>
           <!-- Div para los comentarios sobre el llenado de la solicitud (Control Documental)-->
@@ -2605,6 +2606,90 @@ Utileria::validarSesion( basename( __FILE__ ) );
                 </div>
               </div>
 
+              <!-- Evaluación curricular -->
+              <div class="tab-pane" id="tab-05">
+                <div class="panel-group ficha-collapse" role="tablist" id="acordion5">
+                  <!-- Evaluación -->
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-tittle">
+                        <a data-parent="#acordion5" data-toggle="collapse" href="#evaluacion" aria-expanded="false" aria-controls="evaluacion" class="collapsed">Datos Evaluaci&oacute;n </a>
+                        <button type="button" class="collpase-button collapsed" data-parent="#acordion5" data-toggle="collapse" href="#evaluacion" aria-expanded="false"></button>
+                      </h4>
+                    </div>
+                    <div id="evaluacion" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        <!-- Datos generales de evaluación -->
+                        <div class="form-group">
+                          <div class="col-sm-col-md-12">
+                            <h2>Datos generales de la evaluaci&oacute;n curricular</h2>
+                            <input type="hidden" id="evaluacion_id" name="EVALUACION-id" value="">
+                            <hr class="red">
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                              <label class="control-label" for="">Nombre del programa</label><br>
+                              <input type="text" id="programa_evaluacion" name="EVALUACION-programa" class="form-control " campo="Nombre del programa" ubicacion="Datos generales apartado evaluacion" value="" placeholder="Nombre del programa" disabled >
+                              <input type="hidden" id="programa_id_evaluacion" name="EVALUACION-programa_id" class="form-control " ubicacion="Datos generales apartado evaluacion" value="" >
+                            </div>
+                            <div class="col-sm-6 col-md-4">
+                              <label class="control-label" for="">Fecha de dictamen *</label><br>
+                              <input type="text" id="fecha_evaluacion" name="EVALUACION-fecha" class="form-control " campo="Fecha de evaluacion" ubicacion="Datos generales apartado evaluacion" value="" placeholder="Fecha de evaluacion" >
+                            </div>
+                          </div>
+                          <br>
+                          <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                              <label class="control-label" for="">Evaluador *</label><br>
+                              <select class="form-control selectpicker" id="lista_evaluadores" name="EVALUACION-evaluador_id" title="Seleccione una opción">
+                              <option value=""></option>
+                              </select><br>
+                            </div>
+                          </div>
+                          <br>
+                          <div class="row">
+                            <div class="col-sm-6 col-md-3">
+                              <label class="control-label" for="">Cumplimiento num&eacute;rico *</label><br>
+                              <input type="text" id="numero_evaluacion" name="EVALUACION-numero" class="form-control " campo="Numero de evaluación" ubicacion="Datos generales apartado evaluacion" value="" onchange='EditarSolicitud.resultadoEvaluacion(this)' placeholder="Puntuación" >
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                              <label class="control-label" for="">Porcentaje</label><br>
+                              <input type="text" id="cumplimiento_evaluacion" name="EVALUACION-cumplimiento" class="form-control" value="" placeholder="Cumplimiento %" disabled >
+                              <input type="hidden" id="cumplimiento_evaluacion_input" name="EVALUACION-cumplimiento" class="form-control" value="" placeholder="Cumplimiento %" >
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                              <label class="control-label" for="">Calificaci&oacute;n</label><br>
+                              <input type="text" id="tipo_cumplimiento_evaluacion" class="form-control" ubicacion="Datos generales apartado evaluacion" value="" placeholder="" disabled >
+                              <input type="hidden" id="cumplimiento_id_evaluacion" name="EVALUACION-cumplimiento_id" class="form-control" campo="cumplimiento_id" ubicacion="Datos generales apartado evaluacion" value="" placeholder="" >
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-12 col-md-12">
+                              <label class="control-label" for="">Valoraci&oacute;n Cualitativa</label><br>
+                              <textarea class="form-control" id="valoracion_evaluacion" campo="Valoración cualitativa" ubicacion="Datos generales apartado evaluacion"  name="EVALUACION-valoracion"  rows="3" placeholder=""></textarea>
+                              <br>
+                            </div>
+                          </div>
+                          <div class="row">
+                          <!-- Dictamen de evaluación -->
+                            <div class="col-sm-12 col-md-8">
+                              <label class="control-label" for="">Dictamen de evaluaci&oacute;n</label><br>
+                              <input type="hidden" id="dictamen-id" name="EVALUACION-dictamen_evaluacion-id" value="">
+                              <input type="file" onchange="Solicitud.verificarArchivo(this)" name="EVALUACION-dictamen_evaluacion" class="form-control"><br>
+                            </div>
+                            <div class="col-sm-12 col-md-4" id="contendordictamen" style="display: none">
+                              <br>
+                              <br>
+                              <a id="enlace-dictamen" class="enlaces" href="" target="_blank" >Ver archivo</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
               <!-- Mensajes generales para todo el formulario -->
               <div id="mesage">
                 <?php if(isset($resultado) && isset($resultado->status) && $resultado->status != "200"): ?>
@@ -2619,6 +2704,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
                 <!-- Filtrar informacion a cargar  -->
                 <input type="hidden" id="id_solicitud"  value="<?= $_GET["solicitud"] ?>">
                 <input type="hidden" id="opcionSolicitud" name="opcionSolicitud" value="">
+                <input type="hidden" id="convocatoria" name="SOLICITUD-convocatoria" value="" />
                 <input type="hidden" id="informacionCargar" value="<?= $_GET["tipo"] ?>">
                 <input type="hidden" id="datosNecesarios" value="<?= $_GET["dt"] ?>">
                 <input type="hidden" id="auxmodalidad" value="<?= $_GET["modalidad"] ?>">

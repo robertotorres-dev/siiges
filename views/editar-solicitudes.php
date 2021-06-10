@@ -59,6 +59,7 @@ Utileria::validarSesion( basename( __FILE__ ) );
               <li ><a data-toggle="tab" href="#tab-02">Programa de estudios</a></li>
               <li><a data-toggle="tab" href="#tab-03">Plantel</a></li>
               <li><a data-toggle="tab" href="#tab-04">Anexos</a></li>
+              <li><a id="tab-evaluacion" data-toggle="tab" href="#tab-05">Evaluaci&oacute;n curricular</a></li>
           </ul>
           <!-- Mensajes generales para todo el formulario -->
 
@@ -2584,6 +2585,8 @@ Utileria::validarSesion( basename( __FILE__ ) );
                             <div class="col-sm-12 col-md-8">
                               <label class="control-label" for="">Nombre autorizado:</label><br>
                               <input id="nombre_autorizado" type="text" name="RATIFICACION-nombre_autorizado" class="form-control" value="" placeholder="Nombre autorizado"><br>
+                              <!-- Input de control para solicitudes 2021 -->
+                              <input id="es_nombre_autorizado" type="hidden" class="form-control" value="">
                             </div>
                             <div class="col-sm-12 col-md-8">
                               <label class="control-label" for="">Acuerdo:</label><br>
@@ -2803,6 +2806,90 @@ Utileria::validarSesion( basename( __FILE__ ) );
                   <?php } ?>
                 </div>
               </div>
+              
+              <!-- Evaluación curricular -->
+              <div class="tab-pane" id="tab-05">
+                <div class="panel-group ficha-collapse" role="tablist" id="acordion5">
+                  <!-- Evaluación -->
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-tittle">
+                        <a data-parent="#acordion5" data-toggle="collapse" href="#evaluacion" aria-expanded="false" aria-controls="evaluacion" class="collapsed">Datos Evaluaci&oacute;n </a>
+                        <button type="button" class="collpase-button collapsed" data-parent="#acordion5" data-toggle="collapse" href="#evaluacion" aria-expanded="false"></button>
+                      </h4>
+                    </div>
+                    <div id="evaluacion" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        <!-- Datos generales de evaluación -->
+                        <div class="form-group">
+                          <div class="col-sm-col-md-12">
+                            <h2>Datos generales de la evaluaci&oacute;n curricular</h2>
+                            <input type="hidden" id="evaluacion_id" name="EVALUACION-id" value="">
+                            <hr class="red">
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                              <label class="control-label" for="">Nombre del programa</label><br>
+                              <input type="text" id="programa_evaluacion" name="EVALUACION-programa" class="form-control " campo="Nombre del programa" ubicacion="Datos generales apartado evaluacion" value="" placeholder="Nombre del programa" disabled >
+                              <input type="hidden" id="programa_id_evaluacion" name="EVALUACION-programa_id" class="form-control " ubicacion="Datos generales apartado evaluacion" value="" >
+                            </div>
+                            <div class="col-sm-6 col-md-4">
+                              <label class="control-label" for="">Fecha de dictamen *</label><br>
+                              <input type="text" id="fecha_evaluacion" name="EVALUACION-fecha" class="form-control " campo="Fecha de evaluacion" ubicacion="Datos generales apartado evaluacion" value="" placeholder="Fecha de evaluacion" >
+                            </div>
+                          </div>
+                          <br>
+                          <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                              <label class="control-label" for="">Evaluador *</label><br>
+                              <select class="form-control selectpicker" id="lista_evaluadores" name="EVALUACION-evaluador_id" title="Seleccione una opción">
+                              <option value=""></option>
+                              </select><br>
+                            </div>
+                          </div>
+                          <br>
+                          <div class="row">
+                            <div class="col-sm-6 col-md-3">
+                              <label class="control-label" for="">Cumplimiento num&eacute;rico *</label><br>
+                              <input type="text" id="numero_evaluacion" name="EVALUACION-numero" class="form-control " campo="Numero de evaluación" ubicacion="Datos generales apartado evaluacion" value="" onchange='EditarSolicitud.resultadoEvaluacion(this)' placeholder="Puntuación" >
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                              <label class="control-label" for="">Porcentaje</label><br>
+                              <input type="text" id="cumplimiento_evaluacion" name="EVALUACION-cumplimiento" class="form-control" value="" placeholder="Cumplimiento %" disabled >
+                              <input type="hidden" id="cumplimiento_evaluacion_input" name="EVALUACION-cumplimiento" class="form-control" value="" placeholder="Cumplimiento %" >
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                              <label class="control-label" for="">Calificaci&oacute;n</label><br>
+                              <input type="text" id="tipo_cumplimiento_evaluacion" class="form-control" ubicacion="Datos generales apartado evaluacion" value="" placeholder="" disabled >
+                              <input type="hidden" id="cumplimiento_id_evaluacion" name="EVALUACION-cumplimiento_id" class="form-control" campo="cumplimiento_id" ubicacion="Datos generales apartado evaluacion" value="" placeholder="" >
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-12 col-md-12">
+                              <label class="control-label" for="">Valoraci&oacute;n Cualitativa</label><br>
+                              <textarea class="form-control" id="valoracion_evaluacion" campo="Valoración cualitativa" ubicacion="Datos generales apartado evaluacion"  name="EVALUACION-valoracion"  rows="3" placeholder=""></textarea>
+                              <br>
+                            </div>
+                          </div>
+                          <div class="row">
+                          <!-- Dictamen de evaluación -->
+                            <div class="col-sm-12 col-md-8">
+                              <label class="control-label" for="">Dictamen de evaluaci&oacute;n</label><br>
+                              <input type="hidden" id="dictamen-id" name="EVALUACION-dictamen_evaluacion-id" value="">
+                              <input type="file" onchange="Solicitud.verificarArchivo(this)" name="EVALUACION-dictamen_evaluacion" class="form-control"><br>
+                            </div>
+                            <div class="col-sm-12 col-md-4" id="contendordictamen" style="display: none">
+                              <br>
+                              <br>
+                              <a id="enlace-dictamen" class="enlaces" href="" target="_blank" >Ver archivo</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <!-- Mensajes generales para todo el formulario -->
               <div id="mesage">
@@ -2824,8 +2911,8 @@ Utileria::validarSesion( basename( __FILE__ ) );
                 <input type="hidden" id="estatus_solicitud" name="SOLICITUD-estatus_solicitud_id" value="1" />
                 <input type="hidden" id="tipo" name="SOLICITUD-tipo_solicitud_id" value="<?= $_GET["tps"] ?>" />
                 <input type="hidden" id="id_usuario" value="<?=$_SESSION["id"]?>" />
+                <input type="hidden" id="convocatoria" name="SOLICITUD-convocatoria" value="" />
                 <?php if ([$_SESSION][0]["rol_id"] == 3){?>
-                <!-- Fin de convocatoria 2019 -->
                 <button id="btnTerminar" type="button" class="btn btn-primary pull-right" onclick="Solicitud.camposLlenos()" >Terminar solicitud</button>
                 <?php } ?>
                 <button id="btnGuardar" type="button" name="" class="btn btn-default pull-right" style="margin-right: 10px;" onclick="limpiarInputs()" > Guardar solicitud</button>
@@ -2863,52 +2950,77 @@ Utileria::validarSesion( basename( __FILE__ ) );
         </div>
         <!-- Modal para confirmación -->
         <div class="modal fade" id="modalConfirmacion" role="dialog">
-            <div id="tamanoModales" class="modal-dialog" >
-              <!-- Modal content-->
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Confirmación</h4>
-                </div>
-                <div class="modal-body">
-                    <div id="mensajesTerminar" class="alert alert-info">
-                      <p class="text-justify">
-                        <p class="text-center">¡Estimada institución!</p>
-                        Está a punto de concluir el llenado de la solicitud. Si usted llenó en su totalidad los campos solicitados de clic en "Aceptar" para terminar la solicitud.<br>
-                        Recuerda que la fecha de recepción oficial será la fecha de entrega de documentos de forma física.<br>
-                        No olvides llenar todos los campos y respetar las reglas gramaticales (mayúsculas y minúsculas).
-                      </p>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  <button  id="boton-terminar" type="button" class="btn btn-primary" onclick="Solicitud.terminar()">Aceptar</button>
-                </div>
+          <div id="tamanoModales" class="modal-dialog" >
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Confirmación</h4>
+              </div>
+              <div class="modal-body">
+                  <div id="mensajesTerminar" class="alert alert-info">
+                    <p class="text-justify">
+                      <p class="text-center">¡Estimada institución!</p>
+                      Está a punto de concluir el llenado de la solicitud. Si usted llenó en su totalidad los campos solicitados de clic en "Aceptar" para terminar la solicitud.<br>
+                      Recuerda que la fecha de recepción oficial será la fecha de entrega de documentos de forma física.<br>
+                      No olvides llenar todos los campos y respetar las reglas gramaticales (mayúsculas y minúsculas).
+                    </p>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button  id="boton-terminar" type="button" class="btn btn-primary" onclick="Solicitud.terminar()">Aceptar</button>
               </div>
             </div>
           </div>
+        </div>
+
+        <!-- Modal para convocatoria 2021 -->
+        <div class="modal fade" id="modalFueraDeConvocatoria" role="dialog">
+          <div id="tamanoModal2021" class="modal-dialog" >
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">¡Aviso importante!</h4>
+              </div>
+              <div class="modal-body">
+                  <div id="mensajeConvocatoria2021" class="">
+                    <p class="text-justify">
+                      <p class="text-center">¡Estimada institución!</p>
+                        El periodo de envío de solicitudes para la obtención de RVOE se habilitará en los meses de Enero/Febrero 2022
+                        Está atento a las fechas para envío de solicitudes.
+                        Antes del envío de solicitud, se recomienda llenar todos los campos de la solicitud dando clic en el botón Guardar Solicitud. "
+                        Recuerda que la fecha de recepción oficial será la fecha de entrega de documentos de forma física.
+                        No olvides llenar todos los campos y respetar las reglas gramaticales (mayúsculas y minúsculas).<br>
+                    </p>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <!-- Modal para aviso de término de convocatoria 2019 -->
         <div class="modal fade" id="modalConvocatoria" role="dialog">
-            <div id="tamanoModalConvocatoria" class="modal-dialog" >
-              <!-- Modal content-->
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">¡Aviso importante!</h4>
-                </div>
-                <div class="modal-body">
-                    <div id="mensajeConvocatoriaExpirada" class="">
-                      <p class="text-justify">
-                        <p class="text-center">¡Estimada institución!</p>
-                        El periodo para subir tu solicitud para la convocatoria de RVOE 2020 con vigencia el día 18 de Diciembre de 2020 ha expirado.<br>
-                        Está atento a las fechas de nuestra próxima convocatoria de RVOE 2021.<br>
-                      </p>
-                    </div>
-                </div>
+          <div id="tamanoModalConvocatoria" class="modal-dialog" >
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">¡Aviso importante!</h4>
+              </div>
+              <div class="modal-body">
+                  <div id="mensajeConvocatoriaExpirada" class="">
+                    <p class="text-justify">
+                      <p class="text-center">¡Estimada institución!</p>
+                      El periodo para subir tu solicitud para la convocatoria de RVOE 2020 con vigencia el día 18 de Diciembre de 2020 ha expirado.<br>
+                      Está atento a las fechas de nuestra próxima convocatoria de RVOE 2021.<br>
+                    </p>
+                  </div>
               </div>
             </div>
           </div>
+        </div>
 
         <!-- Modal para mostrar archivos -->
         <div class="modal fade" id="modalArchivos"  tabindex="-1" role="dialog" aria-hidden="true">
@@ -2936,14 +3048,16 @@ Utileria::validarSesion( basename( __FILE__ ) );
     <!-- JS JQUERY -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <!-- JS CALENDAR -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- JS MAPS -->
-  	 <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js" integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q==" crossorigin=""></script>
- 	 <script src="https://unpkg.com/esri-leaflet@2.2.2/dist/esri-leaflet.js"	integrity="sha512-cll/dcqNKG7yfQBrTbRNzGQ70Bh4m+J5jnvU97tPyMnWsD1Ry+CXi0JE+T7Rk54pdJEYlRgXtpwxa9sUqzUAyg==" crossorigin=""></script>
- 	 <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.13/dist/esri-leaflet-geocoder.js" integrity="sha512-zdT4Pc2tIrc6uoYly2Wp8jh6EPEWaveqqD3sT0lf5yei19BC1WulGuh5CesB0ldBKZieKGD7Qyf/G0jdSe016A==" crossorigin=""></script>
-   <script src="../js/funciones.js"></script>
-   <script src="../js/solicitudes.js"></script>
-   <script src="../js/editar-solicitudes.js"></script>
-   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_4zHAnZD2kXiCf3UIyoWn2lpB4FK3fy0&amp;callback=setMapa" async="" defer=""></script>
+  	<script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js" integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q==" crossorigin=""></script>
+    <script src="https://unpkg.com/esri-leaflet@2.2.2/dist/esri-leaflet.js"	integrity="sha512-cll/dcqNKG7yfQBrTbRNzGQ70Bh4m+J5jnvU97tPyMnWsD1Ry+CXi0JE+T7Rk54pdJEYlRgXtpwxa9sUqzUAyg==" crossorigin=""></script>
+    <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.13/dist/esri-leaflet-geocoder.js" integrity="sha512-zdT4Pc2tIrc6uoYly2Wp8jh6EPEWaveqqD3sT0lf5yei19BC1WulGuh5CesB0ldBKZieKGD7Qyf/G0jdSe016A==" crossorigin=""></script>
+    <script src="../js/funciones.js"></script>
+    <script src="../js/solicitudes.js"></script>
+    <script src="../js/editar-solicitudes.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_4zHAnZD2kXiCf3UIyoWn2lpB4FK3fy0&amp;callback=setMapa" async="" defer=""></script>
 
   </body>
 </html>

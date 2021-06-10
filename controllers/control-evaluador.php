@@ -37,9 +37,22 @@
   // Web service para consultar todos los registros
   if( $_POST["webService"]=="consultarTodos" )
   {
-    $obj = new Evaluador( );
-		$obj->setAttributes( array( ) );
-		$resultado = $obj->consultarTodos( );
+    $lista_evaluadores = new Evaluador();
+    $lista_evaluadores->setAttributes( array( ) );
+    $res_evaluadores = $lista_evaluadores->consultarTodos();
+    $lista_final_evaluadores = array();
+
+    foreach ($res_evaluadores["data"] as $key => $value_evaluador) {
+      $value_evaluador["persona"] = [];
+      $persona_evaluador = new Persona();
+      $persona_evaluador->setAttributes( array( 'id' => $value_evaluador["persona_id"] ) );
+      $resultado_persona_evaluador = $persona_evaluador->consultarId();
+      $value_evaluador["persona"] = $resultado_persona_evaluador["data"];
+      array_push($lista_final_evaluadores, $value_evaluador);
+    }
+
+    $resultado["data"]["evaluadores"] = $lista_final_evaluadores;
+    
     // Registro en bitacora
       $bitacora = new Bitacora();
       $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
