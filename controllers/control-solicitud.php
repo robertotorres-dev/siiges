@@ -552,7 +552,6 @@ session_start();
               }
               $parametrosSolicitud["tipo_solicitud_id"] = $_POST["SOLICITUD-tipo_solicitud_id"];
               $parametrosSolicitud["usuario_id"] = $parametrosInstitucion["usuario_id"];
-              print_r($_POST);
               $parametrosSolicitud["convocatoria"] = $_POST["SOLICITUD-convocatoria"];
 
               //$parametrosSolicitud["fecha"]
@@ -985,7 +984,7 @@ session_start();
     $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"solicitudes","accion"=>"guardarSolicitud","lugar"=>"control-solicitud"]);
     $result = $bitacora->guardar();
 
-    //retornarWebService( $_POST["url"], $resultado );
+    retornarWebService( $_POST["url"], $resultado );
   }
 
   // Web Service para agendar Cita

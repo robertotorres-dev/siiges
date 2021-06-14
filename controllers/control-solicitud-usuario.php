@@ -772,12 +772,14 @@ session_start();
 
               }
 
-              $dictamen_evaluacion = new Documento();
-              $res_dictamen_evaluacion = $dictamen_evaluacion->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["EVALUACION"],"entidad_id"=>$resultado["data"]["evaluacion"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["dictamen_evaluacion"],"deleted_at"),"*");
-              if (sizeof($res_dictamen_evaluacion["data"])>0)
-              {
-                $resultado["data"]["documentos"]["dictamen_evaluacion"] =$res_dictamen_evaluacion["data"][0];
+              if (isset($resultado["data"]["evaluacion"])) {
+                $dictamen_evaluacion = new Documento();
+                $res_dictamen_evaluacion = $dictamen_evaluacion->consultarPor("documentos",array("tipo_entidad"=>Documento::$tipoEntidad["EVALUACION"],"entidad_id"=>$resultado["data"]["evaluacion"]["id"],"tipo_documento"=>Documento::$nombresDocumentos["dictamen_evaluacion"],"deleted_at"),"*");
+                if (sizeof($res_dictamen_evaluacion["data"])>0)
+                {
+                  $resultado["data"]["documentos"]["dictamen_evaluacion"] =$res_dictamen_evaluacion["data"][0];
 
+                }
               }
 
               $horarios = new Documento();
