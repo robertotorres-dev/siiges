@@ -17,10 +17,10 @@ XML.datosXML = function (e) {
     processData: false,
     contentType: false,
     success: function (data) {
-      console.log(data);
+      /* console.log(data);
       $("#xml_data").removeClass("hidden");
       $("#xml_data").append(JSON.stringify(data, undefined, 4));
-      $("#xml_data").append(data);
+      $("#xml_data").append(data); */
       if (data.error == 1) {
         location.href = data.url;
       }
@@ -31,13 +31,7 @@ XML.datosXML = function (e) {
 $(document).ready(function ($) {
   const btnCargar = document.getElementById("cargarXML");
   const formData = document.getElementById("generar-pdf");
-  
+
   btnCargar.addEventListener("click", XML.datosModal);
   formData.addEventListener("click", XML.datosXML);
-
-  // Usuario.getUsuario();
-  /* $("#mensaje").on('click',Usuario.ocultarMensaje);
-  $("#modal-eliminar").on('click',Usuario.borrarUsuario); */
-  //$('#perfil-paises').on('change',Usuario.filtrarEstados);
-  //$('#perfil-estados').on('change',Usuario.filtrarMunicipios);
 });
