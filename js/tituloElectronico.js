@@ -17,13 +17,7 @@ XML.datosXML = function (e) {
     processData: false,
     contentType: false,
     success: function (data) {
-      /* console.log(data);
-      $("#xml_data").removeClass("hidden");
-      $("#xml_data").append(JSON.stringify(data, undefined, 4));
-      $("#xml_data").append(data); */
-      if (data.error == 1) {
-        location.href = data.url;
-      }
+      location.href = data.url;
     },
   });
 };
