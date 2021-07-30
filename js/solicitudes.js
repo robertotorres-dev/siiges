@@ -2221,17 +2221,25 @@ Solicitud.modificacionPrograma = function () {
               programa.coordinador.titulo_cargo
             );
           }
-          if (programa.perfil_ingreso != "") {
-            var ingreso = JSON.parse(programa.perfil_ingreso);
-            $("#perfil_ingreso_conocimientos").val(ingreso.conocimientos);
-            $("#perfil_ingreso_habilidades").val(ingreso.habilidades);
-            $("#perfil_ingreso_aptitudes").val(ingreso.aptitudes);
+          if (programa.perfil_ingreso_conocimientos != "") {
+            $("#perfil_ingreso_conocimientos").val(
+              programa.perfil_ingreso_conocimientos
+            );
+            $("#perfil_ingreso_habilidades").val(
+              programa.perfil_ingreso_habilidades
+            );
+            $("#perfil_ingreso_actitudes").val(
+              programa.perfil_ingreso_actitudes
+            );
           }
-          if (programa.perfil_egreso != "") {
-            var egreso = JSON.parse(programa.perfil_egreso);
-            $("#perfil_egreso_conocimientos").val(egreso.conocimientos);
-            $("#perfil_egreso_habilidades").val(egreso.habilidades);
-            $("#perfil_egreso_aptitudes").val(egreso.aptitudes);
+          if (programa.perfil_egreso_conocimientos != "") {
+            $("#perfil_egreso_conocimientos").val(
+              programa.perfil_egreso_conocimientos
+            );
+            $("#perfil_egreso_habilidades").val(
+              programa.perfil_egreso_habilidades
+            );
+            $("#perfil_egreso_actitudes").val(programa.perfil_egreso_actitudes);
           }
           if (programa.trayectoria != undefined) {
             var trayectoria = programa.trayectoria;
@@ -2294,7 +2302,7 @@ Solicitud.camposLlenos = function () {
         "</p>"
     );
   } else {
-    if ($("#es_nombre_autorizado").val() == 1) {
+    if ($("#es_nombre_autorizado").val() == 1 || $("#tipo").val() >= 2) {
       $("#modalConfirmacion").modal();
     } else {
       $("#tamanoModal2021").attr("style", "margin-top:80px;");

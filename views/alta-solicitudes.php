@@ -911,7 +911,7 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                             </div>
                             <div class="col-sm-12 col-md-12">
                               <p>Actitudes</p>
-                              <textarea class="form-control" id="perfil_ingreso_aptitudes" name="PROGRAMA-perfil_ingreso_aptitudes" rows="4" placeholder="Aptitudes necesarias"></textarea>
+                              <textarea class="form-control" id="perfil_ingreso_actitudes" name="PROGRAMA-perfil_ingreso_actitudes" rows="4" placeholder="Actitudes necesarias"></textarea>
                             </div>
                           </div>
                           <div class="col-sm-12 col-md-12">
@@ -939,7 +939,7 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                             </div>
                             <div class="col-sm-12 col-md-12">
                               <p>Actitudes</p>
-                              <textarea class="form-control" id="perfil_egreso_aptitudes" name="PROGRAMA-perfil_egreso_aptitudes" rows="4" placeholder="Aptitudes adquiridas"></textarea>
+                              <textarea class="form-control" id="perfil_egreso_actitudes" name="PROGRAMA-perfil_egreso_actitudes" rows="4" placeholder="Actitudes adquiridas"></textarea>
                             </div>
                           </div>
                           <div class="col-sm-12 col-md-12">
