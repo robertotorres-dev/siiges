@@ -307,6 +307,9 @@ $pdf->Cell( 0, 5,utf8_decode("JMNP/MAAZ /lmbh"), 0, 1, "L");
 
 if(!$oficio){
   $pdf->guardarOficio($registro);
+  $fecha = date( "Y-m-d H:i:s" );
+  $mensaje = "Documento emitido con fecha de ".date( "Y-m-d" ) . " y oficio ".$registro["oficio"] ;
+  $pdf->actualizarEstatus("9",$registro["solicitud_id"],$mensaje);
 }
 
 $pdf->Output( "I", "DictamenCambioDomicilio.pdf" );

@@ -326,6 +326,10 @@ $pdf->SetFont( "Arial", "", 9 );
 
 if(!$oficio){
   $pdf->guardarOficio($registro);
+  $fecha = date( "Y-m-d H:i:s" );
+  $mensaje = "Documento emitido con fecha de ".date( "Y-m-d" ) . " y oficio ".$registro["oficio"] ;
+  $pdf->actualizarEstatus("10",$registro["solicitud_id"],$mensaje);
+  $pdf->actualizarPrograma($registro["solicitud_id"],$registro["oficio"]);
 }
 
 $pdf->Output( "I", "AcuerdoCambioDomicilio.pdf" );
