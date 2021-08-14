@@ -46,7 +46,7 @@
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
 						<li><a href="home.php">SIIGES</a></li>
-						<li><a href="ce-planteles.php?institucion_id=<?php echo $_GET["institucion_id"]; ?>">Planteles</a></li>
+						<li><a href="ce-planteles-institucion.php">Planteles</a></li>
 						<li class="active">Programas de Estudios</li>
 					</ol>
 				</div>

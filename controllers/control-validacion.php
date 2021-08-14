@@ -79,7 +79,7 @@
 
       if( $_FILES["archivo_validacion"]["name"]!=null && $exito==0 )
       {
-        header( "Location: ../views/ce-validacion-alumno.php?programa_id=".$_POST["programa_id"]."&alumno_id=".$_POST["alumno_id"]."&proceso=edicion"."&codigo=404" );
+        header( "Location: ../views/ce-alumnos.php?programa_id=".$_POST["programa_id"]."&codigo=400" );
         exit( );
       }
     }
@@ -92,7 +92,6 @@
 
     $aux = new Utileria( );
     $_POST = $aux->limpiarEntrada( $_POST );
-    print_r($_POST);
     foreach( $_POST as $atributo=>$valor )
 		{
 			$parametros[$atributo] = $valor;
@@ -101,12 +100,40 @@
 		$obj = new Validacion( );
 		$obj->setAttributes( $parametros );
     $resultado = $obj->guardar( );
-    /*
+    
     // Registro en bitacora
     $bitacora = new Bitacora();
     $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
     $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"validacion","accion"=>"guardar","lugar"=>"control-validacion"]);
-    $result = $bitacora->guardar();*/
+    $result = $bitacora->guardar();
+		retornarWebService( $_POST["url"], $resultado );
+  }
+
+  // Web service para guardar registro
+  if( $_POST["webService"]=="habilitarCaptura" )
+  {
+    
+    $parametros = array( );
+		$parametros["id"] = $_POST["id"];
+    
+    $aux = new Utileria( );
+    $_POST = $aux->limpiarEntrada( $_POST );
+    
+    foreach( $_POST as $atributo=>$valor )
+		{
+      if ($atributo == "id" || $atributo == "estatus") {
+        $parametros[$atributo] = $valor;
+      }
+		}
+		$obj = new Validacion( );
+		$obj->setAttributes( $parametros );
+    $resultado = $obj->guardar( );
+    
+    // Registro en bitacora
+    $bitacora = new Bitacora();
+    $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
+    $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"validacion","accion"=>"habilitarCaptura","lugar"=>"control-validacion"]);
+    $result = $bitacora->guardar();
 		retornarWebService( $_POST["url"], $resultado );
   }
 

@@ -41,6 +41,7 @@ $resultadoPlantel = $plantel->consultarId();
 $institucion = new Institucion();
 $institucion->setAttributes(array("id" => $resultadoPlantel["data"]["institucion_id"]));
 $resultadoInstitucion = $institucion->consultarId();
+$datosInstitucion = $resultadoInstitucion["data"];
 
 $domicilio = new Domicilio();
 $domicilio->setAttributes(array("id" => $resultadoPlantel["data"]["domicilio_id"]));
@@ -148,7 +149,7 @@ if ($_GET["proceso"] == "edicion") {
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
 						<?php if (Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || (Rol::ROL_ADMIN == $_SESSION["rol_id"])) : ?>
-							<li><a href="ce-programas-plantel-validacion.php?institucion_id=<?php echo $resultadoInstitucion["data"]["id"] ?>&plantel_id=<?php echo $resultadoPlantel["data"]["id"] ?>">Programas de Estudios</a></li>
+							<li><a href="ce-programas-plantel-validacion.php?institucion_id=<?php echo $datosInstitucion["id"] ?>&plantel_id=<?php echo $resultadoPlantel["data"]["id"] ?>">Programas de Estudios</a></li>
 							<li><a href="ce-validacion.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Alumnos</a></li>
 							<li class="active"><?php echo $titulo; ?></li>
 						<?php endif; ?>
@@ -254,7 +255,7 @@ if ($_GET["proceso"] == "edicion") {
 						<div class="col-sm-4">
 							<div class="form-group">
 								<label class="control-label" for="institucion">Instituci&oacute;n</label>
-								<input type="text" id="" name="" value="<?php echo (isset($resultadoInstitucion)) ? $resultadoInstitucion["data"][0]["nombre"] : ""; ?>" maxlength="255" class="form-control" readonly />
+								<input type="text" id="" name="" value="<?php echo (isset($datosInstitucion)) ? $datosInstitucion["nombre"] : ""; ?>" maxlength="255" class="form-control" readonly />
 							</div>
 						</div>
 						<div class="col-sm-4">
@@ -431,7 +432,7 @@ if ($_GET["proceso"] == "edicion") {
 									</a>
 								</label>
 								<input type="file" id="archivo_validacion" name="archivo_validacion" accept="application/pdf" class="form-control" />
-								<div><a href="../uploads/<?php echo $res_validacion["data"] ? "Institucion" . $resultadoInstitucion["data"][0]["id"] . "/PLANTEL" . $resultadoPlantel["data"]["id"] . "/validaciones/" . $res_validacion["data"][0]["archivo_validacion"] : ""; ?>" target="_blank"><?php echo isset($res_validacion["data"][0]["archivo_validacion"]) ? "Oficio de validación" : ""; ?></a></div>
+								<div><a href="../uploads/<?php echo $res_validacion["data"] ? "Institucion" . $datosInstitucion["id"] . "/PLANTEL" . $resultadoPlantel["data"]["id"] . "/validaciones/" . $res_validacion["data"][0]["archivo_validacion"] : ""; ?>" target="_blank"><?php echo isset($res_validacion["data"][0]["archivo_validacion"]) ? "Oficio de validación" : ""; ?></a></div>
 							</div>
 						</div>
 						<div class="col-sm-4">
@@ -459,20 +460,28 @@ if ($_GET["proceso"] == "edicion") {
 							<div class="col-sm-12">
 								<div class="form-group">
 									<input type="hidden" name="id" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["id"] : ""; ?>" />
-									<input type="hidden" name="institucion_id" value="<?php echo ($resultadoInstitucion["data"][0]["id"]); ?>" />
+									<input type="hidden" name="institucion_id" value="<?php echo ($datosInstitucion["id"]); ?>" />
 									<input type="hidden" name="plantel_id" value="<?php echo ($resultadoPlantel["data"]["id"]); ?>" />
 									<input type="hidden" name="usuario_id" value="<?php echo isset($_SESSION["id"]) ? $_SESSION["id"] : -1; ?>" />
-									<input type="hidden" name="estatus" value="1" />
+
 									<?php if (Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || (Rol::ROL_ADMIN == $_SESSION["rol_id"])) : ?>
-										<input type="hidden" name="url" value="../views/ce-validacion.php?programa_id=<?php echo $_GET["programa_id"] . "&codigo=200"; ?> " />
+										<input type="hidden" name="estatus" value="0" />
+										<input type="hidden" name="url" value="../views/ce-validacion.php?programa_id=<?php echo $_GET["programa_id"] . "&codigo=201"; ?> " />
+										<input type="hidden" name="webService" value="habilitarCaptura" />
+										<?php if ($res_validacion["data"][0]["estatus"] == 1) : ?>
+											<input type="submit" id="submit" name="submit" value="Habilitar captura" class="btn btn-primary" />
+										<?php endif; ?>
 									<?php endif; ?>
+
 									<?php if (Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"])) : ?>
+										<input type="hidden" name="estatus" value="1" />
 										<input type="hidden" name="url" value="../views/ce-alumnos.php?programa_id=<?php echo $_GET["programa_id"] . "&codigo=200"; ?> " />
+										<input type="hidden" name="webService" value="guardar" />
+										<?php if (!isset($res_validacion["data"][0]["estatus"]) || $res_validacion["data"][0]["estatus"] != 1) : ?>
+											<input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" />
+										<?php endif; ?>
 									<?php endif; ?>
-									<input type="hidden" name="webService" value="guardar" />
-									<?php if (!isset($res_validacion["data"][0]["estatus"]) || $res_validacion["data"][0]["estatus"] != 1 || Rol::ROL_ADMIN == $_SESSION["rol_id"]) : ?>
-										<input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" />
-									<?php endif; ?>
+									
 								</div>
 
 							</div>

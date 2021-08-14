@@ -86,6 +86,11 @@
             <p>Registro guardado.</p>
           </div>
           <?php } ?>
+          <?php if( isset( $_GET["codigo"] ) && $_GET["codigo"]==201 ){ ?>
+          <div class="alert alert-success">
+            <p>Registro habilitado para captura.</p>
+          </div>
+          <?php } ?>
           <!-- Tabla de los usuarios-->
           <div class="col-sm-12 col-md-12 table respons">
             <table id="alumnos" class="table table-striped table-bordered" cellspacing="0" width="100%" >
