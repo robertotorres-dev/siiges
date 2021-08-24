@@ -2,7 +2,7 @@
 require("pdftitulo.php");
 
 // include QR_BarCode class 
-//include "../../Classes/QR_BarCode.php";
+include "../../Classes/QR_BarCode.php";
 
 session_start();
 
@@ -125,11 +125,11 @@ $pdf->Ln(8);
 
 //https://programacion.net/articulo/como_generar_un_codigo_qr_con_php_utilizando_la_api_de_google_chart_1706
 // QR_BarCode object 
-/* $qr = new QR_BarCode();
+$qr = new QR_BarCode();
 $qr->url('www.siiges.com/views/consulta_titulo_electronico.php?folioControl=' . $pdf->titulo["folio_control"]);
 $temp = sys_get_temp_dir();
-$qr->qrCode(350, $temp . "cw-qr.png");
-$pdf->Image($temp . "cw-qr.png", 150, 208, 52); */
+$qr->qrCode(350, $temp . "/cw-qr.png");
+$pdf->Image($temp . "/cw-qr.png", 150, 208, 52);
 
 ///Cadenas de titulo
 // Firmante Institución
@@ -165,7 +165,7 @@ $pdf->Ln(2);
 
 $pdf->SetFont("Nutmegbk", "", 7);
 $pdf->AddPage("P", "Letter");
-$names = file('../../uploads/Institucion1/titulacion_electronica/titulo_electronico_' . $pdf->titulo["folio_control"] . '.xml');
+$names = file('../../uploads/Institucion' . $pdf->titulo["institucion_id"] . '/titulacion_electronica/titulo_electronico_' . $pdf->titulo["folio_control"] . '.xml');
 // To check the number of lines
 foreach ($names as $name) {
   $pdf->MultiCell(180, 4, utf8_decode($name), 0, "L");

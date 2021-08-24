@@ -18,11 +18,7 @@ class PDF extends FPDF
 
   function vcell($c_width, $c_height, $x_axis, $text, $length)
   {
-    // var_dump($text);
-    /*echo "<br>";
-      echo $text;
-      echo $length;
-      echo "<br>";*/
+
     $w_text = str_split($text, $length);
     $c_height = $c_height > sizeof($w_text) * 5 ? $c_height : sizeof($w_text) * 5;
     $w_w = sizeof($w_text);
@@ -56,8 +52,7 @@ class PDF extends FPDF
     //Cabecera
     if ($sHeaders) {
       foreach ($header as $key => $value) {
-        // $x_axis=$this->getx();
-        // $c_height = $this->vcell($c_width[$key],$c_height,$x_axis,$value,$length[$key]);
+
         $this->Cell($c_width[$key], 5, utf8_decode($value), 1, 0, 'C', true);
       }
       $this->Ln();
@@ -79,7 +74,6 @@ class PDF extends FPDF
         $this->Ln();
       }
     }
-    // exit();
   }
 
 
@@ -110,6 +104,5 @@ class PDF extends FPDF
     $estado_txt->setAttributes(array("id" => $this->titulo["estado_id"]));
     $estado_txt = $estado_txt->consultarId();
     $this->titulo["estado_txt"] = $estado_txt["data"]["estado"];
-
   }
 }
