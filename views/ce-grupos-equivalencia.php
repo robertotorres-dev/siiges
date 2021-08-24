@@ -62,7 +62,7 @@
 					<!-- BARRA DE NAVEGACION -->
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
-						<li><a href="ce-programas-plantel-equivalencia.php?institucion_id=<?php echo $resultadoInstitucion["data"]["id"] ?>&plantel_id=<?php echo $resultadoPlantel["data"]["id"] ?>">Programas de Estudios</a></li>
+						<li><a href="ce-programas-plantel-equivalencia.php?institucion_id=<?php echo $resultadoInstitucion["data"][0]["id"] ?>&plantel_id=<?php echo $resultadoPlantel["data"]["id"] ?>">Programas de Estudios</a></li>
 						<li><a href="ce-ciclos-escolares-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Ciclos Escolares</a></li>
 						<li><a href="ce-grados-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>">Grados</a></li>
 						<li class="active">Grupos</li>
