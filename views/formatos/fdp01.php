@@ -88,14 +88,14 @@
   $pdf->Ln(15);
   }
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 0, 5, utf8_decode("CON REFERENCIA AL PERFIL DE NUEVO INGRESO"), 1, 1, "L", true );
+  $pdf->Cell( 0, 5, utf8_decode("CON REFERENCIA AL PERFIL DE EGRESO"), 1, 1, "L", true );
   $pdf->SetFont( "Arial", "", 9 );
   $pdf->MultiCell( 0, 5, utf8_decode($pdf->programa["necesidad_profesional"]), 1, "J");
   if($pdf->checkNewPage()){
   $pdf->Ln(15);
   }
   $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->Cell( 0, 5, utf8_decode("CON REFERENCIA AL PERFIL DE EGRESO"), 1, 1, "L", true );
+  $pdf->Cell( 0, 5, utf8_decode("CON REFERENCIA AL PERFIL DE NUEVO INGRESO"), 1, 1, "L", true );
   $pdf->SetFont( "Arial", "", 9 );
   $pdf->MultiCell( 0, 5, utf8_decode($pdf->programa["necesidad_institucional"]), 1, "J");
   if($pdf->checkNewPage()){
@@ -179,4 +179,3 @@
 
 
   $pdf->Output( "I", "PDP01.pdf" );
-?>
