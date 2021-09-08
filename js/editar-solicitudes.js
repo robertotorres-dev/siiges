@@ -1843,10 +1843,9 @@ EditarSolicitud.getSolicitud = function () {
 
         // Datos de evaluación
         const evaluacion = respuesta.data.evaluacion;
-
+        $("#programa_evaluacion").val(programa.nombre);
         if (evaluacion != "" && evaluacion != null) {
           $("#evaluacion_id").val(evaluacion.id);
-          $("#programa_evaluacion").val(evaluacion.programa.nombre);
           $("#programa_id_evaluacion").val(evaluacion.programa.id);
           $("#fecha_evaluacion").val(evaluacion.fecha);
           $("#cumplimiento_evaluacion").val(evaluacion.cumplimiento);
