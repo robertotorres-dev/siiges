@@ -93,11 +93,11 @@ class PDF extends FPDF
   }
 
   //******************************************************//
-  function getData($titulo_id = null)
+  function getData($titulo_id)
   {
     $this->titulo = new TitulosElectronicos();
     $this->titulo->setAttributes(["folio_control" => $titulo_id]);
-    $this->titulo = $this->titulo->consultarPor("titulos_electronicos", array(["folio_control" => $titulo_id], "deleted_at"), "*");
+    $this->titulo = $this->titulo->consultarPor("titulos_electronicos", array("folio_control" => $titulo_id, "deleted_at"), "*");
     $this->titulo = !empty($this->titulo["data"]) ? $this->titulo["data"][0] : false;
 
     $estado_txt = new Estado();

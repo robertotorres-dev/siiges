@@ -13,18 +13,18 @@ if (isset($_SESSION["resultado"])) {
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TITULACI&Oacute;N ELECTR&Oacute;NICA</title>
+  <title>Constancia de Titulaci&oacute;n</title>
   <!-- CSS GOB.MX -->
-  <link href="../favicon.ico" rel="shortcut icon">
+  <link href="./favicon.ico" rel="shortcut icon">
   <link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">
   <!-- CSS DATATABLE -->
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
   <!-- CSS LIVESELECT -->
-  <link rel="stylesheet" type="text/css" href="../css/bootstrap-select.min.css">
+  <link rel="stylesheet" type="text/css" href="./css/bootstrap-select.min.css">
   <!-- CSS CALENDAR -->
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- CSS PROPIO -->
-  <link rel="stylesheet" type="text/css" href="../css/estilos.css">
+  <link rel="stylesheet" type="text/css" href="./css/estilos.css">
 </head>
 
 <body>
@@ -43,7 +43,7 @@ if (isset($_SESSION["resultado"])) {
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a id="navImgJalisco" class="navbar-brand" href="home.php"><img src="../images/jalisco-logo.png" height="30"></a>
+            <a id="navImgJalisco" class="navbar-brand" href="home.php"><img src="./images/jalisco-logo.png" height="30"></a>
             <a id="navLetrasSiiga" class="navbar-brand" href="home.php">SIIGES</a>
           </div>
         </div>
@@ -58,8 +58,8 @@ if (isset($_SESSION["resultado"])) {
           <ol class="breadcrumb pull-right">
           </ol>
           <ol class="breadcrumb">
-            <li><a href="../views/consulta_titulo_electronico.php"><i class="icon icon-home"></i></a></li>
-            <li><a href="../views/consulta_titulo_electronico.php">Inicio</a></li>
+            <li><a href="./consulta_titulo_electronico.php"><i class="icon icon-home"></i></a></li>
+            <li><a href="./consulta_titulo_electronico.php">Inicio</a></li>
             <li class="active">Consulta tu Constancia de T&iacute;tulo</li>
           </ol>
         </div>
@@ -215,7 +215,9 @@ if (isset($_SESSION["resultado"])) {
                   <div class="form-group clearfix">
                     <div class="ember-view">
                       <div class="alert alert-info" aria-live="polite" style="word-wrap: break-word;">
-                        <strong>¡Sugerencia!</strong> Para solicitar asistencia en el trámite, reportar datos incorrectos o en caso de algún problema, puedes comunicarte al Centro de Atención, de lunes a viernes, de 08:00 a 16:00 horas, a los números telefónicos:
+                        <strong>¡Sugerencia!</strong> Para errores o cambios solicitar asistencia al área de titulación de la Dirección General de Incorporación y Servicios Escolares de la Subsecretaría de Educación Superior; para reportar datos incorrectos o en caso de algún problema, puedes comunicarte al área de soporte, de lunes a viernes, de 09:00 a 17:00 horas, a los números telefónicos:
+                        <br><strong>Tel:</strong> 33-15-43-28-00 ext. 52431
+                        <br><strong>Correo Electrónico:</strong> soporte.siiges@jalisco.gob.mx
                       </div>
                     </div>
                   </div>
@@ -234,11 +236,11 @@ if (isset($_SESSION["resultado"])) {
   <!-- JS JQUERY -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- JS LIVESELECT -->
-  <script src="../js/bootstrap-select.min.js"></script>
+  <script src="./js/bootstrap-select.min.js"></script>
   <!-- JS CALENDAR -->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <!-- JS PROPIOS -->
-  <script src="../js/consultaTitulo.js"></script>
+  <script src="./js/consultaTitulo.js"></script>
 
 </body>
 

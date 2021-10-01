@@ -13,19 +13,18 @@ ConstanciaTitulo.datosConstanciaTitulo = function (e) {
 
   const Form = new FormData($("#constanciaForm")[0]);
   if (document.getElementById("folioQR") != null) {
-    Form.set("folio", document.getElementById("folioQR").value)
+    Form.set("folio", document.getElementById("folioQR").value);
   }
 
   if (Form.get("folio") != "") {
     $.ajax({
-      url: "../controllers/control-titulo-electronico.php",
+      url: "./controllers/control-titulo-electronico.php",
       type: "post",
       dataType: "json",
       data: Form,
       processData: false,
       contentType: false,
       success: function (data) {
-
         //Modal error
         if (data.error == 1) {
           const errorLog = document.getElementById("errorLog");
@@ -48,6 +47,7 @@ ConstanciaTitulo.datosConstanciaTitulo = function (e) {
           const contenedorDatos = document.getElementById("contenedorDatos");
           const wizard2 = document.getElementById("wizard-2");
           const errorLog = document.getElementById("errorLog");
+          const btnBuscar = document.getElementById("searchButton");
           errorLog.removeChild(errorLog.childNodes[0]);
 
           document.getElementById("filaFolio").innerHTML = data.folio_control;
@@ -72,6 +72,7 @@ ConstanciaTitulo.datosConstanciaTitulo = function (e) {
           contenedorDatos.classList.remove("hide");
           wizard2.classList.add("completed");
           wizard2.scrollIntoView();
+          btnBuscar.remove();
         }
       },
     });
