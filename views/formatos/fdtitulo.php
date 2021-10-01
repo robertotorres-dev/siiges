@@ -124,7 +124,7 @@ $pdf->Ln(8);
 //https://programacion.net/articulo/como_generar_un_codigo_qr_con_php_utilizando_la_api_de_google_chart_1706
 // QR_BarCode object 
 $qr = new QR_BarCode();
-$qr->url('https://siiges.jalisco.gob.mx/views/consulta_titulo_electronico.php?folioControl=' . $pdf->titulo["folio_control"]);
+$qr->url('https://siiges.jalisco.gob.mx/consulta_titulo_electronico.php?folioControl=' . $pdf->titulo["folio_control"]);
 $temp = sys_get_temp_dir();
 $qr->qrCode(350, $temp . "/cw-qr.png");
 $pdf->Image($temp . "/cw-qr.png", 150, 208, 52);
