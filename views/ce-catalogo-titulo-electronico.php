@@ -139,7 +139,7 @@ if (isset($_SESSION["resultado"])) {
                   <td><?php echo $resultadoTitulo["data"][$i]["fecha_expedicion"]; ?></td>
                   <td>
                     <a href=<?= "formatos/fdtitulo.php?id=" . $resultadoTitulo["data"][$i]["folio_control"] ?> target="_blank"><span id="" title="Descargar PDF" class="glyphicon glyphicon-save-file col-sm-1 size_icon"></span></a>
-                    <a href=<?= "../uploads/Institucion" . $res_institucion["data"]["id"] . "/titulacion_electronica/titulo_electronico_" . $resultadoTitulo["data"][$i]["folio_control"] . ".xml" ?> download=<?= "titulo_electronico_" . $resultadoTitulo["data"][$i]["folio_control"] . ".xml" ?>><span id="" title="Descargar XML" class="glyphicon glyphicon-list-alt col-sm-1 size_icon"></span></a>
+                    <a href=<?= "../uploads/Institucion" . $res_institucion["data"]["id"] . "/titulacion_electronica/certificado_titulo_" . $resultadoTitulo["data"][$i]["folio_control"] . ".xml" ?> download=<?= "certificado_titulo_" . $resultadoTitulo["data"][$i]["folio_control"] . ".xml" ?>><span id="" title="Descargar XML" class="glyphicon glyphicon-list-alt col-sm-1 size_icon"></span></a>
                   </td>
                 </tr>
               <?php

@@ -6,9 +6,9 @@ include "../../Classes/QR_BarCode.php";
 
 session_start();
 
-/* if(!isset($_GET["id"]) && !$_GET["id"]){
-    header("../home.php");
-  } */
+if (empty($_GET)) {
+  header("Location: ../home.php");
+}
 
 $pdf = new PDF();
 $pdf->getData($_GET["id"]);
@@ -110,15 +110,21 @@ $pdf->Cell(90, 5, utf8_decode("Fecha de terminación"), 0, 1, "C", false);
 
 $pdf->Ln(8);
 
+isset($pdf->titulo["fecha_examen_profesional"]) ? $fecha_examen_profesional = $pdf->titulo["fecha_examen_profesional"] : $fecha_examen_profesional = $pdf->titulo["fecha_exencion_examen_profesional"];
+
 $pdf->SetFont("Nutmegbk", "", 8.5);
-$pdf->Cell(90, 5, utf8_decode($newDate = date("d/m/Y", strtotime($pdf->titulo["fecha_exencion_examen_profesional"]))), 0, 0, "C", false);
+if ($fecha_examen_profesional == "") {
+  $pdf->Cell(90, 5, "", 0, 0, "C", false);
+} else {
+  $pdf->Cell(90, 5, utf8_decode($newDate = date("d/m/Y", strtotime($fecha_examen_profesional))), 0, 0, "C", false);
+}
 $pdf->Cell(90, 5, utf8_decode($newDate = date("d/m/Y", strtotime($pdf->titulo["fecha_expedicion"]))), 0, 1, "C", false);
 $pdf->Ln(2);
 $pdf->Line($marIzq, ($primeraLinea + 122), $marDer, ($primeraLinea + 122));
 $pdf->Cell(90, 5, utf8_decode("Fecha de examen o exencion de examen profesional"), 0, 0, "C", false);
 $pdf->Cell(90, 5, utf8_decode("Fecha de expedición"), 0, 1, "C", false);
 
-$pdf->Ln(8);
+$pdf->Ln(5);
 
 
 //https://programacion.net/articulo/como_generar_un_codigo_qr_con_php_utilizando_la_api_de_google_chart_1706
@@ -130,6 +136,21 @@ $qr->qrCode(350, $temp . "/cw-qr.png");
 $pdf->Image($temp . "/cw-qr.png", 150, 208, 52);
 
 ///Cadenas de titulo
+// Firma de titulo
+$pdf->SetFont("Nutmegb", "", 5);
+$pdf->Cell(13, 3, utf8_decode("Folio digital:"), 0, 0, "L", false);
+$pdf->SetFont("Nutmegbk", "", 5);
+$pdf->Cell(107, 3, utf8_decode($pdf->titulo["folio_digital"]), 0, 1, "L", false);
+$pdf->SetFont("Nutmegb", "", 5);
+$pdf->Cell(23, 3, utf8_decode("Fecha de autenticación:"), 0, 0, "L", false);
+$pdf->SetFont("Nutmegbk", "", 5);
+$pdf->Cell(97, 3, utf8_decode($newDate = date("d/m/Y", strtotime($pdf->titulo["fecha_autenticacion"]))), 0, 1, "L", false);
+$pdf->SetFont("Nutmegb", "", 5);
+$pdf->Cell(120, 3, utf8_decode("Sello digital de título:"), 0, 1, "L", false);
+$pdf->SetFont("Nutmegbk", "", 5);
+$pdf->MultiCell(130, 2, utf8_decode($pdf->titulo["sello_titulo"]), 0, "L");
+$pdf->Ln(2);
+
 // Firmante Institución
 $pdf->SetFont("Nutmegb", "", 5);
 $pdf->Cell(20, 3, utf8_decode("Firmante institución:"), 0, 0, "L", false);
@@ -150,20 +171,9 @@ $pdf->Cell(120, 3, utf8_decode("Sello digital autoridad:"), 0, 1, "L", false);
 $pdf->MultiCell(130, 2, utf8_decode($pdf->titulo["sello_autenticacion"]), 0, "L");
 $pdf->Ln(2);
 
-// Firma de titulo
-$pdf->SetFont("Nutmegb", "", 5);
-$pdf->Cell(23, 3, utf8_decode("Fecha de autenticación:"), 0, 0, "L", false);
-$pdf->SetFont("Nutmegbk", "", 5);
-$pdf->Cell(97, 3, utf8_decode($newDate = date("d/m/Y", strtotime($pdf->titulo["fecha_autenticacion"]))), 0, 1, "L", false);
-$pdf->SetFont("Nutmegb", "", 5);
-$pdf->Cell(120, 3, utf8_decode("Sello título:"), 0, 1, "L", false);
-$pdf->SetFont("Nutmegbk", "", 5);
-$pdf->MultiCell(130, 2, utf8_decode($pdf->titulo["sello_titulo"]), 0, "L");
-$pdf->Ln(2);
-
 $pdf->SetFont("Nutmegbk", "", 7);
 $pdf->AddPage("P", "Letter");
-$names = file('../../uploads/Institucion' . $pdf->titulo["institucion_id"] . '/titulacion_electronica/titulo_electronico_' . $pdf->titulo["folio_control"] . '.xml');
+$names = file('../../uploads/Institucion' . $pdf->titulo["institucion_id"] . '/titulacion_electronica/certificado_titulo_' . $pdf->titulo["folio_control"] . '.xml');
 // To check the number of lines
 foreach ($names as $name) {
   $pdf->MultiCell(180, 4, utf8_decode($name), 0, "L");

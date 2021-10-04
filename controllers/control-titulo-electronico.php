@@ -153,7 +153,7 @@ if ($_POST["webService"] == "guardar") {
         $dir_institucion = '/Institucion' . $xml_data['institucion_id'];
         $directorio = Documento::$dir_subida . $dir_institucion . $dir_titulacion;
         !is_dir($directorio) ? mkdir($directorio, 0755, true) : false;
-        move_uploaded_file($_FILES["archivo-xml"]["tmp_name"], $directorio . "/titulo_electronico_" . $xml_data["folio_control"] . ".xml");
+        move_uploaded_file($_FILES["archivo-xml"]["tmp_name"], $directorio . "/certificado_titulo_" . $xml_data["folio_control"] . ".xml");
         $exito = 1;
       }
     }
@@ -172,10 +172,7 @@ if ($_POST["webService"] == "guardar") {
 }
 
 if ($_POST["webService"] == "datosConstanciaFolio") {
-  //$resultado = $_POST;
   // En caso de encontrarse ya registrado el folio de titulo, mostrar error
-
-
   $titulo = new TitulosElectronicos();
   $res_titulo = $titulo->consultarPor("titulos_electronicos", array("folio_control" => $_POST["folio"], "delete_at"), "*");
 
@@ -192,9 +189,9 @@ if ($_POST["webService"] == "datosConstanciaFolio") {
   $resultado["datosRegistro"] = $res_titulo["data"][0];
 
   // Registro en bitacora
-  /* $bitacora = new Bitacora();
+  /*   $bitacora = new Bitacora();
   $usuarioId = isset($_SESSION["id"]) ? $_SESSION["id"] : -1;
-  $bitacora->setAttributes(["usuario_id" => $usuarioId, "entidad" => "titulos_electronicos", "accion" => "cargarXML", "lugar" => "control-titulo-electronico"]);
+  $bitacora->setAttributes(["usuario_id" => $usuarioId, "entidad" => "certificado_titulo", "accion" => "cargarXML", "lugar" => "control-titulo-electronico"]);
   $result = $bitacora->guardar(); */
 
   retornarWebService("", $resultado);
