@@ -151,11 +151,11 @@
     $resultadoAlumno = $alumno->guardar( );
 
     // Registro en bitacora
-    $bitacora = new Bitacora();
+    /* $bitacora = new Bitacora();
     $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
     $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"alumnos","accion"=>"guardarAlumnoPersona","lugar"=>"control-alumno"]);
     $result = $bitacora->guardar();
-		retornarWebService( $_POST["url"], $resultadoAlumno );
+		retornarWebService( $_POST["url"], $resultadoAlumno ); */
   }
 
 	// Web service para guardar registro alumno persona
@@ -247,10 +247,10 @@
     $resultadoAlumno = $alumno->guardar( );
 
     // Registro en bitacora
-    $bitacora = new Bitacora();
+    /* $bitacora = new Bitacora();
     $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
     $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"alumnos","accion"=>"guardarAlumnoCertificado","lugar"=>"control-alumno"]);
     $result = $bitacora->guardar();
-		retornarWebService( $_POST["url"], $resultadoAlumno );
+		retornarWebService( $_POST["url"], $resultadoAlumno ); */
   }
 ?>

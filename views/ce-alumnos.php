@@ -24,6 +24,7 @@ $resultadoPlantel = $plantel->consultarId();
 $institucion = new Institucion();
 $institucion->setAttributes(array("id" => $resultadoPlantel["data"]["institucion_id"]));
 $resultadoInstitucion = $institucion->consultarId();
+$datosInstitucion = $resultadoInstitucion["data"];
 
 $situacionValidacion = new SituacionValidacion();
 $situacionValidacion->setAttributes(array());
@@ -70,7 +71,7 @@ $resultadoSituacionValidacion = $situacionValidacion->consultarTodos();
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
 						<li><a href="home.php">SIIGES</a></li>
-						<li><a href="ce-programas-plantel.php?institucion_id=<?php echo $resultadoInstitucion["data"][0]["id"] ?>&plantel_id=<?php echo $resultadoPlantel["data"]["id"] ?>">Programas de Estudios</a></li>
+						<li><a href="ce-programas-plantel.php?institucion_id=<?php echo $datosInstitucion["id"] ?>&plantel_id=<?php echo $resultadoPlantel["data"]["id"] ?>">Programas de Estudios</a></li>
 						<li class="active">Alumnos</li>
 					</ol>
 				</div>
@@ -133,10 +134,12 @@ $resultadoSituacionValidacion = $situacionValidacion->consultarTodos();
 								$max = count($resultadoAlumno["data"]);
 								for ($i = 0; $i < $max; $i++) {
 									$parametros2["id"] = $resultadoAlumno["data"][$i]["persona_id"];
+									$alumno = $resultadoAlumno["data"][$i];
 
 									$persona = new Persona();
 									$persona->setAttributes($parametros2);
 									$resultadoPersona = $persona->consultarId();
+									$nombreCompletoAlumno = $resultadoPersona["data"]["apellido_paterno"] . " " . $resultadoPersona["data"]["apellido_materno"] . " " . $resultadoPersona["data"]["nombre"];
 
 									$parametros3["id"] = $resultadoAlumno["data"][$i]["situacion_id"];
 
@@ -171,10 +174,30 @@ $resultadoSituacionValidacion = $situacionValidacion->consultarTodos();
 											endif;
 											?>
 										</td>
+										<!-- Acciones -->
 										<td>
-											<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=consulta"><span id="" title="Abrir" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
-											<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a>
-											<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion"><span id="" title="Eliminar" class="glyphicon glyphicon-trash col-sm-1 size_icon"></span></a>
+											<!-- Acciones Institución -->
+											<?php
+											if (Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"])) :
+											?>
+												<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=consulta"><span id="" title="Abrir" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
+												<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a>
+												<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion"><span id="" title="Eliminar" class="glyphicon glyphicon-trash col-sm-1 size_icon"></span></a>
+											<?php
+											endif;
+											?>
+											<!-- Acciones SICYT -->
+											<?php
+											if (Rol::ROL_ADMIN == $_SESSION["rol_id"] || (Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"])) :
+											?>
+												<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=consulta"><span id="" title="Abrir" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
+												<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a>
+												<a href="#" onclick="Alumno.modalEliminarRegistro('<?php echo $resultadoAlumno['data'][$i]['id'] ?>', '<?php echo $nombreCompletoAlumno ?>', '<?php echo $resultadoAlumno['data'][$i]['matricula'] ?>', '<?php echo $resultadoPrograma['data']['id'] ?>')"><span id="" title="Eliminar" class="glyphicon glyphicon-trash col-sm-1 size_icon"></span></a>
+											<?php
+											endif;
+											?>
+										</td>
+
 										</td>
 										<td>
 											<a href="ce-documentos.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>">Documentos</span></a>
@@ -194,8 +217,26 @@ $resultadoSituacionValidacion = $situacionValidacion->consultarTodos();
 					</div>
 				</div>
 			</div>
-
 		</section>
+
+		<div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-hidden="true">
+			<div id="tamanoModalMensaje" class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Eliminar registro</h4>
+					</div>
+					<div class="modal-body">
+						<div id="mensajeDocumentacion"></div>
+					</div>
+					<div id="mensaje-footer" class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 
 	<!-- JS GOB.MX -->
@@ -212,6 +253,9 @@ $resultadoSituacionValidacion = $situacionValidacion->consultarTodos();
 			});
 		});
 	</script>
+	<!-- JS PROPIOS -->
+	<script src="../js/alumnos.js"></script>
+
 </body>
 
 </html>
