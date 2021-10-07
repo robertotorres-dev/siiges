@@ -135,7 +135,7 @@
       $validacion = new Validacion( );
 	    $res_validacion = $validacion->consultarPor('validaciones', array("alumno_id"=>$resultadoAlumno["data"][0]["id"], "deleted_at"), '*' );
       if ((!$res_validacion["data"] 
-        || $res_validacion["data"][0]["situacion_validacion_id"] != 1) 
+        || $res_validacion["data"][0]["situacion_validacion_id"] == 2 ) 
         && intval($ciclo_escolar_actual[0]) >= 2021 
         && $validar_grado ) {
         header( "Location: ../views/ce-inscripcion.php?programa_id=".$_POST["programa_id"]."&ciclo_id=".$_POST["ciclo_id"]."&grado=".$_POST["grado"]."&grupo_id=".$_POST["grupo_id"]."&codigo=403&tramite=".$_POST["tramite"] );
@@ -202,4 +202,3 @@
 		header( "Location: ../views/ce-inscripcion.php?programa_id=".$_GET["programa_id"]."&ciclo_id=".$_GET["ciclo_id"]."&grado=".$_GET["grado"]."&grupo_id=".$_GET["grupo_id"]."&codigo=200" );
 		exit( );
   }
-?>
