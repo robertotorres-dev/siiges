@@ -42,8 +42,10 @@ require_once "../models/modelo-usuario.php";
 require_once "../models/modelo-estatus-solicitud.php";
 require_once "../utilities/utileria-general.php";
 require_once "../models/modelo-bitacora.php";
-session_start();
 
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 function retornarWebService($url, $resultado)
 {
   if ($url != "") {
@@ -227,6 +229,9 @@ if ($_POST["webService"] == "guardarSolicitud") {
 
   // Institucion
   try {
+    if (session_status() === PHP_SESSION_NONE) {
+      session_start();
+    }
     // Solo los representantes legales pueden crear una nueva solicitud
     if (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] || Rol::ROL_GESTOR  == $_SESSION["rol_id"]) {
       $parametrosInstitucion["usuario_id"] =  $_SESSION["id"];
@@ -239,7 +244,7 @@ if ($_POST["webService"] == "guardarSolicitud") {
     } else if (!isset($parametrosInstitucion["usuario_id"])) {
       // representante es el usuario_id
       // No permite continual
-      throw new Exception("INSTITUCION - representante no existe.");
+      //throw new Exception("INSTITUCION - representante no existe.");
     }
     $institucion = new Institucion();
     $institucion->setAttributes($parametrosInstitucion);
