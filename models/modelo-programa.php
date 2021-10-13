@@ -173,9 +173,12 @@ class Programa extends Catalogo
   {
     $fecha_actual =  date("Y-m-d");
     //$sql = "select * from programas where plantel_id='$this->plantel_id' and (vigencia<'$fecha_actual' or acuerdo_rvoe='') and deleted_at is null";
-    $sql = "select * from programas where plantel_id='$this->plantel_id'
-      and acuerdo_rvoe is null
-      and deleted_at is null";
+    $sql = "select programas.nombre, programas.vigencia, programas.id, programas.acuerdo_rvoe FROM programas, solicitudes 
+          where programas.solicitud_id = solicitudes.id 
+          and programas.plantel_id='$this->plantel_id'
+          and programas.acuerdo_rvoe is null
+          and programas.deleted_at is null
+          and solicitudes.deleted_at is null";
 
     $resultado = parent::consultarSQLCatalogo($sql);
     return $resultado;
