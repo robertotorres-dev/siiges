@@ -310,7 +310,7 @@
     if( $res_inspector["status"] == "200" )
     {
       $inspeccion = new Inspeccion();
-      $programas_inspeccionados = $inspeccion->consultarPor("inspectores",array("persona_id"=>$_POST["persona_id"]),array("programa_id"));
+      $programas_inspeccionados = $inspeccion->consultarPor("inspectores",array("persona_id"=>$_POST["persona_id"], "deleted_at"),array("programa_id"));
       if( sizeof($programas_inspeccionados["data"]) > 0 )
       {
         $programas_inspeccionados = $programas_inspeccionados["data"];

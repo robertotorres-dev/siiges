@@ -163,10 +163,10 @@ if ($_POST["webService"] == "guardar") {
   $resultado["url"] = $_POST["url"];
 
   // Registro en bitacora
-  $bitacora = new Bitacora();
+  /* $bitacora = new Bitacora();
   $usuarioId = isset($_SESSION["id"]) ? $_SESSION["id"] : -1;
   $bitacora->setAttributes(["usuario_id" => $usuarioId, "entidad" => "titulos_electronicos", "accion" => "cargarXML", "lugar" => "control-titulo-electronico"]);
-  $result = $bitacora->guardar();
+  $result = $bitacora->guardar(); */
 
   retornarWebService("", $resultado);
 }

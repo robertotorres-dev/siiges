@@ -67,10 +67,10 @@ if ($_POST["webService"] == "consultarTodos") {
   $obj->setAttributes(array());
   $resultado = $obj->consultarTodos();
   // Registro en bitacora
-  $bitacora = new Bitacora();
+  /* $bitacora = new Bitacora();
   $usuarioId = isset($_SESSION["id"]) ? $_SESSION["id"] : -1;
   $bitacora->setAttributes(["usuario_id" => $usuarioId, "entidad" => "solicitudes", "accion" => "consultarTodos", "lugar" => "control-solicitud"]);
-  $result = $bitacora->guardar();
+  $result = $bitacora->guardar(); */
   retornarWebService($_POST["url"], $resultado);
 }
 
@@ -82,10 +82,10 @@ if ($_POST["webService"] == "consultarId") {
   $obj->setAttributes(array("id" => $_POST["id"]));
   $resultado = $obj->consultarId();
   // Registro en bitacora
-  $bitacora = new Bitacora();
+  /* $bitacora = new Bitacora();
   $usuarioId = isset($_SESSION["id"]) ? $_SESSION["id"] : -1;
   $bitacora->setAttributes(["usuario_id" => $usuarioId, "entidad" => "solicitudes", "accion" => "consultarId", "lugar" => "control-solicitud"]);
-  $result = $bitacora->guardar();
+  $result = $bitacora->guardar(); */
   retornarWebService($_POST["url"], $resultado);
 }
 
@@ -102,10 +102,10 @@ if ($_POST["webService"] == "guardar") {
   $obj->setAttributes($parametros);
   $resultado = $obj->guardar();
   // Registro en bitacora
-  $bitacora = new Bitacora();
+  /* $bitacora = new Bitacora();
   $usuarioId = isset($_SESSION["id"]) ? $_SESSION["id"] : -1;
   $bitacora->setAttributes(["usuario_id" => $usuarioId, "entidad" => "solicitudes", "accion" => "guardar", "lugar" => "control-solicitud"]);
-  $result = $bitacora->guardar();
+  $result = $bitacora->guardar(); */
   retornarWebService($_POST["url"], $resultado);
 }
 
@@ -117,10 +117,10 @@ if ($_POST["webService"] == "eliminar") {
   $obj->setAttributes(array("id" => $_POST["id"]));
   $resultado = $obj->eliminar();
   // Registro en bitacora
-  $bitacora = new Bitacora();
+  /* $bitacora = new Bitacora();
   $usuarioId = isset($_SESSION["id"]) ? $_SESSION["id"] : -1;
   $bitacora->setAttributes(["usuario_id" => $usuarioId, "entidad" => "solicitudes", "accion" => "eliminar", "lugar" => "control-solicitud"]);
-  $result = $bitacora->guardar();
+  $result = $bitacora->guardar(); */
   retornarWebService($_POST["url"], $resultado);
 }
 
@@ -971,10 +971,10 @@ if ($_POST["webService"] == "guardarSolicitud") {
   $resultado = ["status" => $estatus, "message" => $mensaje, "data" => $datos];
 
   // Registro en bitacora
-  $bitacora = new Bitacora();
+  /* $bitacora = new Bitacora();
   $usuarioId = isset($_SESSION["id"]) ? $_SESSION["id"] : -1;
   $bitacora->setAttributes(["usuario_id" => $usuarioId, "entidad" => "solicitudes", "accion" => "guardarSolicitud", "lugar" => "control-solicitud"]);
-  $result = $bitacora->guardar();
+  $result = $bitacora->guardar(); */
 
   retornarWebService($_POST["url"], $resultado);
 }
@@ -1043,10 +1043,10 @@ if ($_POST["webService"] == "agendarCita") {
   $resultado["message"] = "$cita Fecha de cita para la solicitud: " . $resultado["data"]["id"];
 
   // Registro en bitacora
-  $bitacora = new Bitacora();
+  /* $bitacora = new Bitacora();
   $usuarioId = isset($_SESSION["id"]) ? $_SESSION["id"] : -1;
   $bitacora->setAttributes(["usuario_id" => $usuarioId, "entidad" => "solicitudes", "accion" => "agendarCita", "lugar" => "control-solicitud"]);
-  $result = $bitacora->guardar();
+  $result = $bitacora->guardar(); */
   retornarWebService($_POST["url"], $resultado);
 }
 
@@ -1217,10 +1217,10 @@ if ($_POST["webService"] == "solicitudes") {
     );
 
     // Registro en bitacora
-    $bitacora = new Bitacora();
+    /* $bitacora = new Bitacora();
     $usuarioId = isset($_SESSION["id"]) ? $_SESSION["id"] : -1;
     $bitacora->setAttributes(["usuario_id" => $usuarioId, "entidad" => "solicitudes", "accion" => "solicitudes", "lugar" => "control-solicitud"]);
-    $result = $bitacora->guardar();
+    $result = $bitacora->guardar(); */
     retornarWebService($_POST["url"], $resultado);
   }
 }
@@ -1316,10 +1316,10 @@ if ($_POST["webService"] == "detallesSolicitud") {
   }
 
   // Registro en bitacora
-  $bitacora = new Bitacora();
+  /* $bitacora = new Bitacora();
   $usuarioId = isset($_SESSION["id"]) ? $_SESSION["id"] : -1;
   $bitacora->setAttributes(["usuario_id" => $usuarioId, "entidad" => "solicitudes", "accion" => "detallesSolicitud", "lugar" => "control-solicitud"]);
-  $result = $bitacora->guardar();
+  $result = $bitacora->guardar(); */
   retornarWebService($_POST["url"], $respuesta);
 }
 
@@ -1439,10 +1439,10 @@ if ($_POST["webService"] == "revisionDocumentacion") {
     }
   }
   // Registro en bitacora
-  $bitacora = new Bitacora();
+  /* $bitacora = new Bitacora();
   $usuarioId = isset($_SESSION["id"]) ? $_SESSION["id"] : -1;
   $bitacora->setAttributes(["usuario_id" => $usuarioId, "entidad" => "solicitudes", "accion" => "revisionDocumentacion", "lugar" => "control-solicitud"]);
-  $result = $bitacora->guardar();
+  $result = $bitacora->guardar(); */
   retornarWebService($_POST["url"], $resultado);
 }
 
@@ -1508,10 +1508,10 @@ if ($_POST["webService"] == "institucionesSolicitudes") {
     }
   }
   // Registro en bitacora
-  $bitacora = new Bitacora();
+  /* $bitacora = new Bitacora();
   $usuarioId = isset($_SESSION["id"]) ? $_SESSION["id"] : -1;
   $bitacora->setAttributes(["usuario_id" => $usuarioId, "entidad" => "solicitudes", "accion" => "institucionesSolicitudes", "lugar" => "control-solicitud"]);
-  $result = $bitacora->guardar();
+  $result = $bitacora->guardar(); */
 
   retornarWebService($_POST["url"], $resultado);
 }
@@ -1555,10 +1555,10 @@ if ($_POST["webService"] == "solicitudesInstitucion") {
     }
   }
   // Registro en bitacora
-  $bitacora = new Bitacora();
+  /* $bitacora = new Bitacora();
   $usuarioId = isset($_SESSION["id"]) ? $_SESSION["id"] : -1;
   $bitacora->setAttributes(["usuario_id" => $usuarioId, "entidad" => "solicitudes", "accion" => "solicitudesInstitucion", "lugar" => "control-solicitud"]);
-  $result = $bitacora->guardar();
+  $result = $bitacora->guardar(); */
   retornarWebService($_POST["url"], $resultado);
 }
 //Web service que detalla una solicitud se requiere id de la solicitud (APPS)
@@ -1606,10 +1606,10 @@ if ($_POST["webService"] == "avanceSolicitud") {
     $resultado["data"] = $temp;
   }
   // Registro en bitacora
-  $bitacora = new Bitacora();
+  /* $bitacora = new Bitacora();
   $usuarioId = isset($_SESSION["id"]) ? $_SESSION["id"] : -1;
   $bitacora->setAttributes(["usuario_id" => $usuarioId, "entidad" => "solicitudes", "accion" => "avanceSolicitud", "lugar" => "control-solicitud"]);
-  $result = $bitacora->guardar();
+  $result = $bitacora->guardar(); */
   retornarWebService($_POST["url"], $resultado);
 }
 
@@ -1674,10 +1674,10 @@ if ($_POST["webService"] == "cotejamiento") {
 
 
   if ($res["data"]["id"] > 0) {
-    $bitacora = new Bitacora();
+    /* $bitacora = new Bitacora();
     $usuarioId = isset($_SESSION["id"]) ? $_SESSION["id"] : -1;
     $bitacora->setAttributes(["usuario_id" => $usuarioId, "entidad" => "solicitudes", "accion" => "agendarCita", "lugar" => "control-solicitud"]);
-    $result = $bitacora->guardar();
+    $result = $bitacora->guardar(); */
   }
 
 
