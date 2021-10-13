@@ -269,17 +269,22 @@ if ($_GET["proceso"] == "edicion") {
               </div>
             </div>
           </div>
-
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="form-group">
-                <input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" />
-                <input type="hidden" name="webService" value="guardar" />
-                <input type="hidden" name="url" value="../views/ce-catalogo-asignaturas.php?programa_id=<?php echo $_GET["programa_id"]; ?>&codigo=200" />
-                <input type="hidden" id="programa_id" name="programa_id" value="<?php echo $_GET["programa_id"]; ?>" />
+          <?php
+          if ($_GET["proceso"] != "consulta") {
+          ?>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" />
+                  <input type="hidden" name="webService" value="guardar" />
+                  <input type="hidden" name="url" value="../views/ce-catalogo-asignaturas.php?programa_id=<?php echo $_GET["programa_id"]; ?>&codigo=200" />
+                  <input type="hidden" id="programa_id" name="programa_id" value="<?php echo $_GET["programa_id"]; ?>" />
+                </div>
               </div>
             </div>
-          </div>
+          <?php
+          }
+          ?>
         </div>
       </form>
     </section>

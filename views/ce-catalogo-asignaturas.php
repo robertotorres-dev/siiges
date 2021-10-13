@@ -149,8 +149,8 @@ $resultadoInstitucion = $institucion->consultarId();
 											<td><?php echo $resultadoAsignatura["data"][$i]["consecutivo"]; ?></td>
 											<td>
 												<a href="../views/ce-editar-asignatura.php<?php echo "?programa_id=" . $resultadoPrograma["data"]["id"] . "&asignatura_id=" . $resultadoAsignatura["data"][$i]["id"] . "&proceso=edicion"; ?>"><span class='glyphicon glyphicon-edit'></span></a>
-												<a href="../views/ce-editar-asignatura.php<?php echo "?programa_id=" . $resultadoPrograma["data"]["id"] . "&asignatura_id=" . $resultadoAsignatura["data"][$i]["id"] . "&proceso=edicion"; ?>"><span class='glyphicon glyphicon-eye-open'></span></a>
-												<a href="../views/ce-editar-asignatura.php<?php echo "?programa_id=" . $resultadoPrograma["data"]["id"] . "&asignatura_id=" . $resultadoAsignatura["data"][$i]["id"] . "&proceso=edicion"; ?>"><span class='glyphicon glyphicon-trash'></span></a>
+												<a href="../views/ce-editar-asignatura.php<?php echo "?programa_id=" . $resultadoPrograma["data"]["id"] . "&asignatura_id=" . $resultadoAsignatura["data"][$i]["id"] . "&proceso=consulta"; ?>"><span class='glyphicon glyphicon-eye-open'></span></a>
+												<a href="#"><span class='glyphicon glyphicon-trash'></span></a>
 											</td>
 										</tr>
 									<?php
