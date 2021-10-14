@@ -1,30 +1,49 @@
 //Objeto guía
 var Asignaturas = {};
 
-Asignaturas.eliminarAsignatura = function (e) {
-  const fila = e.parentNode.parentNode;
-  const id = e.parentNode.parentNode.firstChild;
-  console.log(id.value);
-  const idAsignatura = id.value;
+Asignaturas.eliminarAsignatura = function (id, programa_id) {
+  let btnConfirmar = document.getElementById("boton_confirmar");
+  btnConfirmar.disabled = true;
+  Asignaturas.promesaEliminarAsignatura = $.ajax({
+    type: "POST",
+    url: "../controllers/control-asignatura.php",
+    dataType: "json",
+    data: {
+      webService: "eliminar",
+      url: "",
+      id: id,
+    },
+    success: function (respuesta) {
+      window.location = `${window.location.pathname}?programa_id=${programa_id}&codigo=200`;
+    },
+    error: function (respuesta, errmsg, err) {
+      console.log(respuesta);
+    },
+  });
+};
 
-  /* modal */
+Asignaturas.modalEliminarAsignatura = function (id, nombre, clave, programa_id) {
+  $("#modalMensaje").modal();
+  $("#tamanoModalMensaje").attr("style", "margin-top:20px;");
+  var mensajes = $("#mensajeAsignatura");
 
-  eliminarAsignaturaPromesa(idAsignatura, fila);
+  mensajes.addClass("alert alert-danger");
+  mensajes.html(
+    `<p class='text-left'><strong>¿Está seguro que desea eliminar la asignatura ${nombre} con clave ${clave}? 
+    </strong></p>`
+  );
 
-  function eliminarAsignaturaPromesa(idAsignatura) {
-    $.ajax({
-      type: "POST",
-      dataType: "json",
-      url: "../controllers/control-asignatura.php",
-      data: { webService: "eliminar", url: "", id: idAsignatura },
-      success: function (respuesta) {
-        console.log(respuesta);
-        fila.remove();
-      },
-      error: function (respuesta, errmsg, err) {
-        console.log(respuesta.status + ": " + respuesta.responseText);
-      },
-    });
+  var boton = $("<button/>", {
+    id: "boton_confirmar",
+    type: "button",
+    class: "btn btn-primary",
+    text: "SI",
+    onclick: `Asignaturas.eliminarAsignatura(${id}, ${programa_id})`,
+  });
+
+  let btnConfirmar = document.getElementById("boton_confirmar");
+  if (btnConfirmar == null) {
+    $("#mensaje-footer").append(boton);
   }
 };
 
@@ -53,7 +72,6 @@ $(document).ready(function ($) {
   }
 
   //Opcione en select
-
   if (document.getElementById("groupOptativa") != null) {
     if (document.getElementById("tipo").value == 1) {
       document.getElementById("groupAsignatura").style.display = "block";

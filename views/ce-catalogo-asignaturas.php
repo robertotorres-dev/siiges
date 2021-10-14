@@ -150,7 +150,7 @@ $resultadoInstitucion = $institucion->consultarId();
 											<td>
 												<a href="../views/ce-editar-asignatura.php<?php echo "?programa_id=" . $resultadoPrograma["data"]["id"] . "&asignatura_id=" . $resultadoAsignatura["data"][$i]["id"] . "&proceso=edicion"; ?>"><span class='glyphicon glyphicon-edit'></span></a>
 												<a href="../views/ce-editar-asignatura.php<?php echo "?programa_id=" . $resultadoPrograma["data"]["id"] . "&asignatura_id=" . $resultadoAsignatura["data"][$i]["id"] . "&proceso=consulta"; ?>"><span class='glyphicon glyphicon-eye-open'></span></a>
-												<a href="#"><span class='glyphicon glyphicon-trash'></span></a>
+												<a href="#" onclick="Asignaturas.modalEliminarAsignatura('<?php echo $resultadoAsignatura['data'][$i]['id'] ?>', '<?php echo $resultadoAsignatura['data'][$i]['nombre'] ?>', '<?php echo $resultadoAsignatura['data'][$i]['clave'] ?>', '<?php echo $resultadoPrograma['data']['id'] ?>')"><span class='glyphicon glyphicon-trash'></span></a>
 											</td>
 										</tr>
 									<?php
@@ -163,6 +163,23 @@ $resultadoInstitucion = $institucion->consultarId();
 				</div>
 			</form>
 		</section>
+		<div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-hidden="true">
+			<div id="tamanoModalMensaje" class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Eliminar asignatura</h4>
+					</div>
+					<div class="modal-body">
+						<div id="mensajeAsignatura"></div>
+					</div>
+					<div id="mensaje-footer" class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<!-- JS GOB.MX -->
