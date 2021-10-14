@@ -123,7 +123,7 @@ $resultadoInstitucion = $institucion->consultarId();
 											<?php endif; ?>
 											<br />
 											<a href="ce-ciclos-escolares.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Acreditaci&oacute;n</span></a>
-											<?php if (Rol::ROL_ADMIN == $_SESSION["rol_id"]) : ?>
+											<?php if (Rol::ROL_ADMIN == $_SESSION["rol_id"] || Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"]) : ?>
 												<br />
 												<a href="ce-catalogo-asignaturas.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Plan de Estudios</span></a>
 											<?php endif; ?>
@@ -182,7 +182,7 @@ $resultadoInstitucion = $institucion->consultarId();
 										<td><?php echo $resultadoPrograma["data"][$i]["acuerdo_rvoe"]; ?></td>
 										<!-- Se agregar los siguientes botones para poder migrar con usuario de control escolar SICYT -->
 										<td>
-											<?php if (Rol::ROL_ADMIN == $_SESSION["rol_id"]) : ?>
+											<?php if (Rol::ROL_ADMIN == $_SESSION["rol_id"] || Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"]) : ?>
 												<br />
 												<a href="ce-catalogo-asignaturas.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Plan de Estudios</span></a>
 											<?php endif; ?>
