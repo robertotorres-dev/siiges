@@ -392,38 +392,30 @@ if ($_POST["webService"] == "plantelesActivos") {
           }
           $temp["id"] = $value["id"];
           $temp["cct"] = $value["clave_centro_trabajo"];
-          $temp["domicilio"] = $res_domicilio["data"];
+          $temp["domicilio"] = $res_domicilio["data"]["numero_exterior"] . " " . $res_domicilio["data"]["calle"] . " " . $res_domicilio["data"]["municipio"];
           $temp["institucion"] = $campo["nombre"];
-          $temp["representante"] = $nombre_representante;
+          $temp["representante"] = $nombre_representante["nombre"] . " " . $nombre_representante["apellido_paterno"] . " " . $nombre_representante["apellido_materno"];
+          $editar = "<a  href='#' onclick='Planteles.datosModal(" . $temp["id"] . ")'><span class='glyphicon glyphicon-pencil'></span></a>";
+          $temp["acciones"] = $editar;
+
           array_push($planteles, $temp);
         }
       }
     }
-    //Tabla para mostar solicitudes
-    foreach ($planteles as $indice => $arreglo) {
-      $id_plantel = $arreglo["id"];
-      $editar = "<a  href='#' onclick='Planteles.datosModal(" . $id_plantel . ")'><span class='glyphicon glyphicon-pencil'></span></a>";
-      $plantel = $arreglo["domicilio"]["numero_exterior"] . " " . $arreglo["domicilio"]["calle"] . " " . $arreglo["domicilio"]["municipio"];
-      $tabla .= '{
-                "plantel":"' . $plantel . '",
-                "institucion":"' . $arreglo["institucion"] . '",
-                "cct":"' . $arreglo["cct"] . '",
-                "representante":"' . $arreglo["representante"]["nombre"] . " " . $arreglo["representante"]["apellido_paterno"] . " " . $arreglo["representante"]["apellido_materno"] . '",
-                "acciones":"' . $editar . '"
-              },';
-    }
+
     // Registro en bitacora
     /* $bitacora = new Bitacora();
           $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
           $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"planteles","accion"=>"plantelesActivos","lugar"=>"control-plantel"]);
           $result = $bitacora->guardar(); */
-    $tabla = substr($tabla, 0, strlen($tabla) - 1);
+
+    $resultado["data"] = "";
   } else {
     $resultado["status"] = "202";
     $resultado["mesagge"] = "NO DATA";
     $resultado["data"]  = "";
   }
-  echo '{"data":[' . $tabla . ']}';
+  retornarWebService($_POST["url"], $planteles);
 }
 
 //Actualizar CCT del plantel
