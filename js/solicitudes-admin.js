@@ -2,64 +2,72 @@ var Solicitudes = {};
 var tabla;
 //Obtener las solicitudes
 Solicitudes.getSolicitudes = function () {
-  tabla = $("#solicitudes").DataTable({
-    bDeferRender: true,
-    sPaginationType: "full_numbers",
-    order: [[2, "asc"]],
-    ajax: {
-      data: {
-        webService: "solicitudes",
-        url: "",
-      },
-      url: "../controllers/control-solicitud.php",
-      type: "POST",
+  $.ajax({
+    type: "post",
+    url: "../controllers/control-solicitud.php",
+    dataType: "json",
+    data: {
+      webService: "solicitudes",
+      url: "",
     },
-    columns: [
-      { data: "folio" },
-      { data: "programa" },
-      { data: "alta" },
-      { data: "estatus" },
-      { data: "plantel" },
-      { data: "institucion" },
-      { data: "acciones" },
-    ],
-    oLanguage: {
-      sProcessing: "Procesando...",
-      sLengthMenu:
-        "Mostrar <select>" +
-        '<option value="5">5</option>' +
-        '<option value="10">10</option>' +
-        '<option value="20">20</option>' +
-        '<option value="30">30</option>' +
-        '<option value="40">40</option>' +
-        '<option value="-1">All</option>' +
-        "</select> registros",
-      sZeroRecords: "No se encontraron resultados",
-      sEmptyTable: "Ningún dato disponible en esta tabla",
-      sInfo:
-        "Mostrando del (_START_ al _END_) de un total de _TOTAL_ registros",
-      sInfoEmpty: "Mostrando del 0 al 0 de un total de 0 registros",
-      sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
-      sInfoPostFix: "",
-      sSearch: "Filtrar:",
-      sUrl: "",
-      sInfoThousands: ",",
-      sLoadingRecords: "Por favor espere - cargando...",
-      oPaginate: {
-        sFirst: "Primero",
-        sLast: "Último",
-        sNext: "Siguiente",
-        sPrevious: "Anterior",
-      },
-      oAria: {
-        sSortAscending:
-          ": Activar para ordenar la columna de manera ascendente",
-        sSortDescending:
-          ": Activar para ordenar la columna de manera descendente",
-      },
+    success: function (dataSet) {
+      tabla = $("#solicitudes").DataTable({
+        bDeferRender: true,
+        sPaginationType: "full_numbers",
+        order: [[2, "asc"]],
+        data: dataSet,
+        columns: [
+          { data: "folio" },
+          { data: "programa" },
+          { data: "alta" },
+          { data: "estatus" },
+          { data: "plantel" },
+          { data: "institucion" },
+          { data: "acciones" },
+        ],
+        oLanguage: {
+          sProcessing: "Procesando...",
+          sLengthMenu:
+            "Mostrar <select>" +
+            '<option value="5">5</option>' +
+            '<option value="10">10</option>' +
+            '<option value="20">20</option>' +
+            '<option value="30">30</option>' +
+            '<option value="40">40</option>' +
+            '<option value="-1">All</option>' +
+            "</select> registros",
+          sZeroRecords: "No se encontraron resultados",
+          sEmptyTable: "Ningún dato disponible en esta tabla",
+          sInfo:
+            "Mostrando del (_START_ al _END_) de un total de _TOTAL_ registros",
+          sInfoEmpty: "Mostrando del 0 al 0 de un total de 0 registros",
+          sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+          sInfoPostFix: "",
+          sSearch: "Filtrar:",
+          sUrl: "",
+          sInfoThousands: ",",
+          sLoadingRecords: "Por favor espere - cargando...",
+          oPaginate: {
+            sFirst: "Primero",
+            sLast: "Último",
+            sNext: "Siguiente",
+            sPrevious: "Anterior",
+          },
+          oAria: {
+            sSortAscending:
+              ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending:
+              ": Activar para ordenar la columna de manera descendente",
+          },
+        },
+      });
+    },
+    error: function (respuesta, errmsg, err) {
+      console.log(respuesta);
     },
   });
 };
+
 //Obtener los niveles educativos
 Solicitudes.getNiveles = function () {
   Solicitudes.nivelesPromesa = $.ajax({
@@ -270,7 +278,7 @@ Solicitudes.getDetalles = function () {
           fda05.innerHTML = "FDA 05";
 
           fda06.remove();
-          if (fda06Checkbox) {            
+          if (fda06Checkbox) {
             fda06Checkbox.remove();
           }
 

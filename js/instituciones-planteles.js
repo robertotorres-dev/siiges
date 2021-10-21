@@ -2,7 +2,6 @@ var Planteles = {};
 
 //Obtiene todas los planteles
 Planteles.getPlanteles = function () {
-  console.log("Ejecutar getPlanteles");
   $.ajax({
     type: "post",
     url: "../controllers/control-plantel.php",
