@@ -55,7 +55,7 @@ function validarContrasena() {
     x.style.backgroundColor = "#FFAEAE";
     txt.style.color = "#FFAEAE";
     txt.innerHTML= 'No cumple los criterios';
-    y.value="";
+    //y.value="";
     inputTerminar.disabled = true;
   }
 }

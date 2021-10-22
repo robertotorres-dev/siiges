@@ -136,9 +136,9 @@ if (!empty($_POST)) {
       $asunto = "Restablecer acceso SIIGES";
       $usuario = $resultado["usuario"];
       $contrasena = $resultado["contrasena"];
-      $enlace = "<a href='https://siiges.gob.mx/restablecer-contrasena.php?key=" . md5($usuario) . "&reset=" . $contrasena . "'>Click para restablecer su acceso</a>";
-      $mensaje = "Este correo fue enviado debido a que se solicito restablecer su acceso a el portal web SIIGES." .
-        "En caso de que usted no lo haya solicitado solo ignore este correo. De caso sontrario de clic en el enlace: " . $enlace;
+      $enlace = "<a href='https://siiges.jalisco.gob.mx/restablecer-contrasena.php?key=" . md5($usuario) . "&reset=" . $contrasena . "'>Click para restablecer su acceso</a>";
+      $mensaje = "Este correo fue enviado debido a que se solicito restablecer su acceso al portal web SIIGES. " .
+        "En caso de que usted no lo haya solicitado solo ignore este correo. De caso contrario de clic en el siguientes enlace: " . $enlace;
 
       $resultado = Utileria::enviarCorreo($destino, $asunto, $mensaje);
       // Valida que el correo se envió
