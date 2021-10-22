@@ -5,7 +5,11 @@
 *.docx
 *.xls
 *.xml
-uploads/Institucion30/PROGRAMA/propuesta_hemerobibliografica_201911130230.xlsx
 *.xlsx
 *.doc
+
+#Todos los archivos error_log
+/error_log
+
+uploads/Institucion30/PROGRAMA/propuesta_hemerobibliografica_201911130230.xlsx
 models/configuracion.php
