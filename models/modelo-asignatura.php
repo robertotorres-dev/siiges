@@ -14,6 +14,7 @@
     protected $docente_id;
     protected $academia;
     protected $programa_id;
+    protected $consecutivo;
     protected $area;
     protected $nombre;
     protected $clave;

@@ -210,6 +210,8 @@ if (!empty($_POST)) {
         $parametros["id"] = null;
         $parametros["fotografia"] = FOTO_DEFAULT;
         $parametros['domicilio_id'] = DOMICILIO_DEFAULT;
+        $parametros["nombre"] = " ";
+        $parametros["apellido_paterno"] = " ";
 
         $persona = new Persona();
         $persona->setAttributes($parametros);
