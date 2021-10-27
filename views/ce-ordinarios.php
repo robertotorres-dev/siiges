@@ -178,7 +178,9 @@ $resultadoAsignatura = $asignatura->consultarId();
 										<th width="20%">Matr&iacute;cula</th>
 										<th width="40%">Nombre</th>
 										<th width="20%">Calificaci&oacute;n Ordinario</th>
-										<th width="20%">Fecha de Examen</th>
+										<th width="20%">Fecha de Examen
+											<input type="checkbox" name="checkbox" id="checkbox" value="" data-toggle="tooltip" data-placement="top" title="Copiar primera fecha en todos los campos">
+										</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -270,32 +272,7 @@ $resultadoAsignatura = $asignatura->consultarId();
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 	<!-- JS PROPIOS -->
-	<script type="text/javascript">
-		const inputs = document.querySelectorAll('#calificaciones');
-		const input = [];
-		const enteros = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-		for (let i = 0; i < inputs.length; i++) {
-			input.push(inputs[i].children[0]);
-			if (input[i].step === "0.1") {
-				input[i].addEventListener('change', updateValueFloat);
-			} else {
-				input[i].addEventListener('change', updateValueInt);
-			}
-		}
-
-		function updateValueFloat(e) {
-			enteros.map(function(entero) {
-				if (entero === parseFloat(e.target.value)) {
-					e.target.value = parseFloat(e.target.value).toFixed(1);
-				}
-			});
-		}
-
-		function updateValueInt(e) {
-			e.target.value = parseFloat(e.target.value).toFixed(0);
-		}
-	</script>
+	<script type="text/javascript" src="../js/ce-ordinarios.js"></script>
 </body>
 
 </html>
