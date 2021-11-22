@@ -346,11 +346,6 @@ $pdf->SetFont( "Arial", "", 9 );
     $pdf->Cell( 88, 5, utf8_decode($salud["tiempo"]), 1, 1, "C", true );
 
   }
-  $pdf->Ln( 10 );
-  $pdf->SetFont( "Arial", "", 11 );
-  $pdf->Cell(0,5, utf8_decode("BAJO PROTESTA DE DECIR VERDAD"), 0, 1, "C");
-  $pdf->SetFont( "Arial", "B", 11 );
-  $pdf->Cell( 0, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 1, "C");
 
   if($pdf->checkNewPage()){
     // Nombre del formato
@@ -610,6 +605,13 @@ $pdf->SetFont( "Arial", "", 9 );
     $pdf->Cell( 100, 5, utf8_decode($pdf->espejos["periodicidad"]), 1,1, "L");
 
   }
+
+  $pdf->Ln( 30 );
+  $pdf->SetFont( "Arial", "", 11 );
+  $pdf->Cell(0,5, utf8_decode("BAJO PROTESTA DE DECIR VERDAD"), 0, 1, "C");
+  $pdf->SetFont( "Arial", "B", 11 );
+  $pdf->Cell( 0, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 1, "C");
+
 
   $pdf->Output( "I", "FDA04.pdf" );
 ?>
