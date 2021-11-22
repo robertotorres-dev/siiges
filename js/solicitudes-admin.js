@@ -616,7 +616,8 @@ Solicitudes.entregarRVOE = function () {
       comentarios: $("#mensajeFinal").val(),
     },
     success: function (respuesta) {
-      tabla.ajax.reload();
+      location.reload();
+      //tabla.ajax.reload();
     },
     error: function (respuesta, errmsg, err) {
       console.log(respuesta.status + ": " + respuesta.responseText);
@@ -645,7 +646,8 @@ Solicitudes.eliminarSolicitud = function () {
         console.log(respuesta.status + ": " + respuesta.responseText);
       },
     });
-    tabla.ajax.reload();
+    location.reload();
+    //tabla.ajax.reload();
   }
 };
 
