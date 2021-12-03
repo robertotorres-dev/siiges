@@ -1,5 +1,11 @@
 //Objeto para Solicitud
 var Solicitud = {};
+
+//2 decimales
+Solicitud.dosNumerosDecimal = function (e) {
+  e.value = parseFloat(e.value).toFixed(2);
+};
+
 //Obtener los municipios de Jalisco
 Solicitud.getMunicipios = function () {
   Solicitud.municpioPromesa = $.ajax({

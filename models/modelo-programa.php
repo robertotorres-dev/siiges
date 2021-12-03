@@ -25,6 +25,8 @@ class Programa extends Catalogo
   protected $objetivos;
   protected $antecedentes;
   protected $creditos;
+  protected $minimo_horas_optativas;
+  protected $minimo_creditos_optativas;
   protected $vigencia;
   protected $acuerdo_rvoe;
   protected $nombre;

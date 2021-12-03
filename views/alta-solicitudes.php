@@ -751,7 +751,7 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                           </div>
                           <div class="col-sm-12 col-md-7">
                             <label class="control-label" for="">Créditos necesarios para concluir el programa</label><br>
-                            <input type="number" id="creditos" name="PROGRAMA-creditos" class="form-control revision" campo="Créditos del programa" ubicacion="Programas de estudios - Datos generales" value="0" placeholder=""><br>
+                            <input type="number" id="creditos" name="PROGRAMA-creditos" class="form-control revision" campo="Créditos del programa" ubicacion="Programas de estudios - Datos generales" value="0" placeholder="" step="0.01" onchange="Solicitud.dosNumerosDecimal(this)"><br>
                           </div>
                           <div class="col-sm-12 col-md-7">
                             <label class="control-label">Nivel educativo previo *</label>
@@ -1092,7 +1092,7 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                               </div>
                               <div class="col-sm-12 col-md-2">
                                 <label>Créditos *</label>
-                                <input id="credito" class="form-control" type="number" placeholder="No"><br>
+                                <input id="credito" class="form-control" type="number" placeholder="No." step="0.01" onchange="Solicitud.dosNumerosDecimal(this)"><br>
                               </div>
                               <div class="col-sm-12 col-md-6">
                                 <label>Área *</label>
@@ -1196,7 +1196,7 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                               </div>
                               <div class="col-sm-12 col-md-2">
                                 <label>Créditos *</label>
-                                <input id="creditoOptativa" class="form-control" type="number" placeholder="No"><br>
+                                <input id="creditoOptativa" class="form-control" type="number" placeholder="No." step="0.01" onchange="Solicitud.dosNumerosDecimal(this)"><br>
                               </div>
                               <div class="col-sm-12 col-md-6">
                                 <label>Área *</label>
@@ -1277,7 +1277,7 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                               <label class="control-label">Número mínimo de créditos que se deberán acreditar</label>
                             </div>
                             <div class="col-sm-12 col-md-3">
-                              <input type="number" id="minimo_creditos" name="PROGRAMA-minimo_creditos_optativas" class="form-control" value="">
+                              <input type="number" id="minimo_creditos" name="PROGRAMA-minimo_creditos_optativas" class="form-control" value="" step="0.01" onchange="Solicitud.dosNumerosDecimal(this)">
                             </div>
                           </div>
                         </div>

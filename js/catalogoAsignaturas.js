@@ -1,6 +1,11 @@
 //Objeto guía
 var Asignaturas = {};
 
+//2 decimales
+Asignaturas.dosNumerosDecimal = function (e) {
+  e.value = parseFloat(e.value).toFixed(2);
+};
+
 Asignaturas.eliminarAsignatura = function (id, programa_id) {
   let btnConfirmar = document.getElementById("boton_confirmar");
   btnConfirmar.disabled = true;
@@ -22,7 +27,12 @@ Asignaturas.eliminarAsignatura = function (id, programa_id) {
   });
 };
 
-Asignaturas.modalEliminarAsignatura = function (id, nombre, clave, programa_id) {
+Asignaturas.modalEliminarAsignatura = function (
+  id,
+  nombre,
+  clave,
+  programa_id
+) {
   $("#modalMensaje").modal();
   $("#tamanoModalMensaje").attr("style", "margin-top:20px;");
   var mensajes = $("#mensajeAsignatura");

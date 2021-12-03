@@ -265,7 +265,7 @@ if ($_GET["proceso"] == "edicion") {
               <div class="form-group">
                 <label class="control-label" for="creditos">Cr&eacute;ditos *</label>
                 <input type="number" id="creditos" name="creditos" value="<?php echo (isset($resultadoAsignatura)) ? $resultadoAsignatura["data"]["creditos"] : "";
-                                                                          ?>" maxlength="11" class="form-control" />
+                                                                          ?>" maxlength="11" class="form-control" step="0.01" onchange="Asignaturas.dosNumerosDecimal(this)" />
               </div>
             </div>
           </div>
