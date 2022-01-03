@@ -585,8 +585,9 @@ if ($_POST["webService"] == "guardarSolicitud") {
               $parametrosConsecutivo["id"] = $entidadesIds["SOLICITUD"];
               // Construccion del folio
               if (isset($_POST["PROGRAMA-nivel_id"]) && !empty($_POST["PROGRAMA-nivel_id"])) {
-                $numeroConsecutivo2021 = $entidadesIds["SOLICITUD"] - 584;
-                $parametrosConsecutivo["folio"] = Nivel::$niveles[$_POST["PROGRAMA-nivel_id"]] . date("Y") . str_pad($numeroConsecutivo2021, 3, "0", STR_PAD_LEFT);
+                //$numeroConsecutivo2021 = $entidadesIds["SOLICITUD"] - 584;
+                $numeroConsecutivo2022 = $entidadesIds["SOLICITUD"] - 1413;
+                $parametrosConsecutivo["folio"] = Nivel::$niveles[$_POST["PROGRAMA-nivel_id"]] . date("Y") . str_pad($numeroConsecutivo2022, 3, "0", STR_PAD_LEFT);
               }
 
               // Guardado de folio
