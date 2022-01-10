@@ -8,6 +8,7 @@ Utileria::validarSesion(basename(__FILE__));
 require_once "../models/modelo-programa.php";
 require_once "../models/modelo-asignatura.php";
 require_once "../models/modelo-institucion.php";
+require_once "../models/modelo-grado.php";
 
 
 $programa = new Programa();
@@ -108,13 +109,23 @@ $resultadoInstitucion = $institucion->consultarId();
 
 								$max = count($resultadoAsignatura["data"]);
 
-								for ($i = 0; $i < $max; $i++) {
-									if ($resultadoAsignatura["data"][$i]["grado"] != "Optativa") {
+								$resultadoGrados = [];
+								foreach ($resultadoAsignatura["data"] as $key => $atributoAsignatura) {
+									$grado = new Grado();
+									$res_grado = $grado->consultarPor('grados', array("nombre" => $atributoAsignatura["grado"], "deleted_at"), '*');
+									array_push($resultadoGrados, $res_grado["data"][0]);
+								}
+
+								$resultadoGrados = Utileria::array_sort($resultadoGrados, 'numero_grado', SORT_ASC);
+
+								foreach ($resultadoGrados as $key => $atributoGrado) {
+
+									if ($atributoAsignatura["grado"] != "Optativa") {
 								?>
 										<tr>
-											<td><?php echo $resultadoAsignatura["data"][$i]["grado"]; ?></td>
+											<td><?php echo $atributoGrado["nombre"]; ?></td>
 											<td>
-												<a href="ce-grupos-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $resultadoAsignatura["data"][$i]["grado"]; ?>">Grupos</a>
+												<a href="ce-grupos-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $atributoGrado["nombre"]; ?>">Grupos</a>
 											</td>
 										</tr>
 								<?php

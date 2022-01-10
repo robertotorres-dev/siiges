@@ -113,23 +113,25 @@ $resultadoInstitucion = $institucion->consultarId();
 								$cicloEscolar = new CicloEscolar();
 								$cicloEscolar->setAttributes($parametros);
 								$resultadoCicloEscolar = $cicloEscolar->consultarCiclosEscolaresPrograma();
+								$resultadoCicloEscolar["data"] = Utileria::array_sort($resultadoCicloEscolar["data"], 'nombre', SORT_ASC);
 
 								$max = count($resultadoCicloEscolar["data"]);
 
-								for ($i = 0; $i < $max; $i++) {
-									if ($resultadoCicloEscolar["data"][$i]["nombre"] === "EQUIV") {
+								foreach ($resultadoCicloEscolar["data"] as $key => $atributoCicloEscolar) {
+									//for ($i = 0; $i < $max; $i++) {
+									if ($atributoCicloEscolar["nombre"] === "EQUIV") {
 								?>
 										<tr>
-											<td><?php echo $resultadoCicloEscolar["data"][$i]["id"]; ?></td>
-											<td><?php echo $resultadoCicloEscolar["data"][$i]["nombre"]; ?></td>
-											<td><?php echo $resultadoCicloEscolar["data"][$i]["descripcion"]; ?></td>
+											<td><?php echo $atributoCicloEscolar["id"]; ?></td>
+											<td><?php echo $atributoCicloEscolar["nombre"]; ?></td>
+											<td><?php echo $atributoCicloEscolar["descripcion"]; ?></td>
 											<td>
-												<a href="ce-catalogo-ciclo-escolar-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $resultadoCicloEscolar["data"][$i]["id"]; ?>&proceso=consulta"><span id="" title="Abrir" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
-												<a href="ce-catalogo-ciclo-escolar-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $resultadoCicloEscolar["data"][$i]["id"]; ?>&proceso=edicion"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a>
+												<a href="ce-catalogo-ciclo-escolar-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $atributoCicloEscolar["id"]; ?>&proceso=consulta"><span id="" title="Abrir" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
+												<a href="ce-catalogo-ciclo-escolar-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $atributoCicloEscolar["id"]; ?>&proceso=edicion"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a>
 												<a href="#" data-toggle="modal" data-target="#modalEliminar"><span id="" title="Eliminar" class="glyphicon glyphicon-trash col-sm-1 size_icon"></span></a>
 											</td>
 											<td>
-												<a href="ce-grados-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $resultadoCicloEscolar["data"][$i]["id"]; ?>">Grados</a>
+												<a href="ce-grados-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $atributoCicloEscolar["id"]; ?>">Grados</a>
 											</td>
 										</tr>
 								<?php

@@ -28,6 +28,8 @@ if (isset($_GET["tramite"])) :
 		$tramiteEquiv = "equiv";
 	endif;
 endif;
+
+
 ?>
 
 
@@ -151,24 +153,24 @@ endif;
 								$asignatura = new Asignatura();
 								$asignatura->setAttributes($parametros3);
 								$resultadoAsignatura = $asignatura->consultarAsignaturasGrado();
-
+								
 								$asignaturaOptativa = new Asignatura();
 								$asignaturaOptativa->setAttributes($parametros4);
 								$resultadoAsignaturaOptativa = $asignaturaOptativa->consultarAsignaturasGrado();
-
+								
 								$maxOpt = count($resultadoAsignaturaOptativa["data"]);
-
+								
 								for ($j = 0; $j < $maxOpt; $j++) {
 									array_push($resultadoAsignatura["data"], $resultadoAsignaturaOptativa["data"][$j]);
 								}
-
+								$resultadoAsignatura["data"] = Utileria::array_sort($resultadoAsignatura["data"], 'consecutivo', SORT_ASC);
+								
 								$max = count($resultadoAsignatura["data"]);
 
-								for ($i = 0; $i < $max; $i++) {
-
+								foreach ($resultadoAsignatura["data"] as $key => $atributoAsignatura) {
 								?>
 									<tr>
-										<td><?php echo $resultadoAsignatura["data"][$i]["grado"]; ?></td>
+										<td><?php echo $atributoAsignatura["grado"]; ?></td>
 										<td><?php echo $resultadoGrupo["data"]["grupo"]; ?></td>
 										<?php
 										if (!(Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] ||
@@ -178,12 +180,12 @@ endif;
 											<td><?php echo $resultadoTurno["data"]["nombre"]; ?></td>
 										<?php
 										endif; ?>
-										<td><?php echo $resultadoAsignatura["data"][$i]["clave"]; ?></td>
-										<td><?php echo $resultadoAsignatura["data"][$i]["nombre"]; ?></td>
+										<td><?php echo $atributoAsignatura["clave"]; ?></td>
+										<td><?php echo $atributoAsignatura["nombre"]; ?></td>
 										<?php isset($tramiteEquiv) ? $tramite = $tramiteEquiv : $tramite = ''; ?>
 										<td>
-											<a href="ce-ordinarios.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $_GET["grupo_id"]; ?>&asignatura_id=<?php echo $resultadoAsignatura["data"][$i]["id"] ?>&tramite=<?php echo $tramite ?>">Ordinarios</a>
-											<a href="ce-extraordinarios.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $_GET["grupo_id"]; ?>&asignatura_id=<?php echo $resultadoAsignatura["data"][$i]["id"] ?>&tramite=<?php echo $tramite ?>">Extraordinarios</a>
+											<a href="ce-ordinarios.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $_GET["grupo_id"]; ?>&asignatura_id=<?php echo $atributoAsignatura["id"] ?>&tramite=<?php echo $tramite ?>">Ordinarios</a>
+											<a href="ce-extraordinarios.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $_GET["grupo_id"]; ?>&asignatura_id=<?php echo $atributoAsignatura["id"] ?>&tramite=<?php echo $tramite ?>">Extraordinarios</a>
 										</td>
 									</tr>
 								<?php

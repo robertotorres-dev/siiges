@@ -116,6 +116,7 @@ if ($_POST["webService"] == "guardar") {
   $xml_content["Expedicion"] = (array) $xml_content["Expedicion"];
   $xml_data["fecha_expedicion"] = $xml_content["Expedicion"]["@attributes"]["fechaExpedicion"];
   $xml_data["modalidad_titulacion_id"] = $xml_content["Expedicion"]["@attributes"]["idModalidadTitulacion"];
+  $xml_data["fecha_examen_profesional"] = $xml_content["Expedicion"]["@attributes"]["fechaExamenProfesional"];
   $xml_data["fecha_exencion_examen_profesional"] = $xml_content["Expedicion"]["@attributes"]["fechaExencionExamenProfesional"];
   $xml_data["cumplio_servicio_social"] = $xml_content["Expedicion"]["@attributes"]["cumplioServicioSocial"];
   $xml_data["fundamento_legal_servicio_social_id"] = $xml_content["Expedicion"]["@attributes"]["idFundamentoLegalServicioSocial"];
@@ -153,7 +154,7 @@ if ($_POST["webService"] == "guardar") {
         $dir_institucion = '/Institucion' . $xml_data['institucion_id'];
         $directorio = Documento::$dir_subida . $dir_institucion . $dir_titulacion;
         !is_dir($directorio) ? mkdir($directorio, 0755, true) : false;
-        move_uploaded_file($_FILES["archivo-xml"]["tmp_name"], $directorio . "/certificado_titulo_" . $xml_data["folio_control"] . ".xml");
+        move_uploaded_file($_FILES["archivo-xml"]["tmp_name"], $directorio . "/constancia_titulo_" . $xml_data["folio_control"] . ".xml");
         $exito = 1;
       }
     }
@@ -191,7 +192,7 @@ if ($_POST["webService"] == "datosConstanciaFolio") {
   // Registro en bitacora
   /*   $bitacora = new Bitacora();
   $usuarioId = isset($_SESSION["id"]) ? $_SESSION["id"] : -1;
-  $bitacora->setAttributes(["usuario_id" => $usuarioId, "entidad" => "certificado_titulo", "accion" => "cargarXML", "lugar" => "control-titulo-electronico"]);
+  $bitacora->setAttributes(["usuario_id" => $usuarioId, "entidad" => "constancia_titulo", "accion" => "cargarXML", "lugar" => "control-titulo-electronico"]);
   $result = $bitacora->guardar(); */
 
   retornarWebService("", $resultado);
