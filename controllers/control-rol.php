@@ -27,9 +27,9 @@ if ($_POST["webService"] == "consultarTodos") {
   $obj = new Rol();
   $obj->setAttributes(array());
   $resultado = $obj->consultarTodos();
+  $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
   // Registro en bitacora
   /* $bitacora = new Bitacora();
-    $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
     $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"roles","accion"=>"consultarTodos","lugar"=>"control-rol"]);
     $result = $bitacora->guardar(); */
   retornarWebService($_POST["url"], $resultado, $usuarioId);
