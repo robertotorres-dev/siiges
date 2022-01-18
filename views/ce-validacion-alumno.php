@@ -170,7 +170,7 @@ if ($_GET["proceso"] == "edicion") {
 					<!-- NOTIFICACIÓN -->
 					<?php if (isset($_GET["codigo"]) && $_GET["codigo"] == 404) { ?>
 						<div class="alert alert-danger">
-							<p>El archivo debe ser menor a 2MB con extención PDF.</p>
+							<p>Error en el archivo adjunto.</p>
 						</div>
 					<?php } ?>
 					<!-- CONTENIDO -->
@@ -468,7 +468,7 @@ if ($_GET["proceso"] == "edicion") {
 										<input type="hidden" name="estatus" value="0" />
 										<input type="hidden" name="url" value="../views/ce-validacion.php?programa_id=<?php echo $_GET["programa_id"] . "&codigo=201"; ?> " />
 										<input type="hidden" name="webService" value="habilitarCaptura" />
-										<?php if ($res_validacion["data"][0]["estatus"] == 1) : ?>
+										<?php if (isset($res_validacion["data"][0]["estatus"]) && $res_validacion["data"][0]["estatus"] == 1) : ?>
 											<input type="submit" id="submit" name="submit" value="Habilitar captura" class="btn btn-primary" />
 										<?php endif; ?>
 									<?php endif; ?>

@@ -159,13 +159,15 @@ if ($_POST["webService"] == "guardarAlumnoCertificado") {
 				$directorio = Documento::$dir_subida . $dir_certificados;
 				!is_dir($directorio) ? mkdir($directorio, 0755, true) : false;
 				move_uploaded_file($_FILES["archivo_certificado"]["tmp_name"], $directorio . "/documento1_" . $_POST["id"] . ".pdf");
-				$exito = 1;
+				if (file_exists($directorio . "/documento1_" . $_POST["id"] . ".pdf")) {
+					$exito = 1;
+				}
 			}
 		}
 	}
 
 	if ($_FILES["archivo_certificado"]["name"] != null && $exito == 0) {
-		header("Location: ../views/ce-certificado.php?programa_id=" . $_POST["programa_id"] . "&alumno_id=" . $_POST["id"] . "&codigo=404");
+		header("Location: ../views/ce-documentos.php?programa_id=" . $_POST["programa_id"] . "&alumno_id=" . $_POST["id"] . "&codigo=404");
 		exit();
 	}
 
@@ -177,13 +179,15 @@ if ($_POST["webService"] == "guardarAlumnoCertificado") {
 				$directorio = Documento::$dir_subida . $dir_certificados;
 				!is_dir($directorio) ? mkdir($directorio, 0755, true) : false;
 				move_uploaded_file($_FILES["archivo_nacimiento"]["tmp_name"], $directorio . "/documento2_" . $_POST["id"] . ".pdf");
-				$exito = 1;
+				if (file_exists($directorio . "/documento2_" . $_POST["id"] . ".pdf")) {
+					$exito = 1;
+				}
 			}
 		}
 	}
 
 	if ($_FILES["archivo_nacimiento"]["name"] != null && $exito == 0) {
-		header("Location: ../views/ce-certificado.php?programa_id=" . $_POST["programa_id"] . "&alumno_id=" . $_POST["id"] . "&codigo=404");
+		header("Location: ../views/ce-documentos.php?programa_id=" . $_POST["programa_id"] . "&alumno_id=" . $_POST["id"] . "&codigo=404");
 		exit();
 	}
 
@@ -195,13 +199,15 @@ if ($_POST["webService"] == "guardarAlumnoCertificado") {
 				$directorio = Documento::$dir_subida . $dir_certificados;
 				!is_dir($directorio) ? mkdir($directorio, 0755, true) : false;
 				move_uploaded_file($_FILES["archivo_curp"]["tmp_name"], $directorio . "/documento3_" . $_POST["id"] . ".pdf");
-				$exito = 1;
+				if (file_exists($directorio . "/documento3_" . $_POST["id"] . ".pdf")) {
+					$exito = 1;
+				}
 			}
 		}
 	}
 
 	if ($_FILES["archivo_curp"]["name"] != null && $exito == 0) {
-		header("Location: ../views/ce-certificado.php?programa_id=" . $_POST["programa_id"] . "&alumno_id=" . $_POST["id"] . "&codigo=404");
+		header("Location: ../views/ce-documentos.php?programa_id=" . $_POST["programa_id"] . "&alumno_id=" . $_POST["id"] . "&codigo=404");
 		exit();
 	}
 

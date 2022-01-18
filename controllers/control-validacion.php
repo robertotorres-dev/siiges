@@ -64,13 +64,15 @@ if ($_POST["webService"] == "guardar") {
           $directorio = Documento::$dir_subida . $dir_institucion . $dir_plantel . $dir_validacion;
           !is_dir($directorio) ? mkdir($directorio, 0755, true) : false;
           move_uploaded_file($_FILES["archivo_validacion"]["tmp_name"], $directorio . "/archivo_validacion" . $_POST["alumno_id"] . ".pdf");
-          $exito = 1;
+          if (file_exists($directorio . "/archivo_validacion" . $_POST["alumno_id"] . ".pdf")) {
+            $exito = 1;
+          }
         }
       }
     }
 
     if ($_FILES["archivo_validacion"]["name"] != null && $exito == 0) {
-      header("Location: ../views/ce-alumnos.php?programa_id=" . $_POST["programa_id"] . "&codigo=400");
+      header("Location: ../views/ce-validacion-alumno.php?programa_id=" . $_POST["programa_id"] . "&alumno_id=" . $_POST["alumno_id"] . "&proceso=edicion" . "&codigo=404");
       exit();
     }
   }
