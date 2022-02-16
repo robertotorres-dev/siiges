@@ -18,7 +18,7 @@ Solicitudes.getSolicitudes = function () {
         data: dataSet,
         columns: [
           { data: "folio" },
-          { data: "programa" },
+          { data: "programa_estudio" },
           { data: "alta" },
           { data: "estatus" },
           { data: "plantel" },

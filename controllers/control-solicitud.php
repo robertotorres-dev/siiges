@@ -5,6 +5,7 @@
  */
 
 require_once "../models/modelo-solicitud.php";
+require_once "../models/modelo-vdetalles-solicitud.php";
 require_once "../models/modelo-solicitud-estatus.php";
 require_once "../models/modelo-institucion.php";
 require_once "../models/modelo-plantel.php";
@@ -1053,40 +1054,150 @@ if ($_POST["webService"] == "agendarCita") {
 
 //Mostrar todas las solicitudes (administradores y roles de sicyt).
 if ($_POST["webService"] == "solicitudes") {
-  $solicitud = new Solicitud();
+  //$solicitud = new Solicitud();
+  $vdetalles_solicitud = new VDetallesSolicitud();
   if ((isset($_SESSION["rol_id"]) && $_SESSION["rol_id"] == 7)) {
-    $solicitudes = $solicitud->consultarPor("solicitudes", array("estatus_solicitud_id" => 2, "deleted_at"), "*");
-    $otras = new Solicitud();
-    $res_otras = $otras->consultarPor("solicitudes", array("estatus_solicitud_id" => 3, "deleted_at"), "*");
-    $entregarRVOE = new Solicitud();
-    $res_rvoe = $entregarRVOE->consultarPor("solicitudes", array("estatus_solicitud_id" => 10, "deleted_at"), "*");
+    $vdetalles_solicitudes = $vdetalles_solicitud->consultarPor("vdetalles_solicitudes", array("estatus_solicitud_id" => 2, "deleted_at"), "*");
+    //$solicitudes = $solicitud->consultarPor("solicitudes", array("estatus_solicitud_id" => 2, "deleted_at"), "*");
+    $otras = new VDetallesSolicitud();
+
+    $res_otras = $otras->consultarPor("vdetalles_solicitudes", array("estatus_solicitud_id" => 3, "deleted_at"), "*");
+    //$res_otras = $otras->consultarPor("solicitudes", array("estatus_solicitud_id" => 3, "deleted_at"), "*");
+
+    $entregarRVOE = new VDetallesSolicitud();
+    $res_rvoe = $entregarRVOE->consultarPor("vdetalles_solicitudes", array("estatus_solicitud_id" => 10, "deleted_at"), "*");
+    //$res_rvoe = $entregarRVOE->consultarPor("solicitudes", array("estatus_solicitud_id" => 10, "deleted_at"), "*");
+
     if (sizeof($res_otras["data"]) > 0) {
       foreach ($res_otras["data"] as $key => $value) {
-        array_push($solicitudes["data"], $value);
+        array_push($vdetalles_solicitudes["data"], $value);
       }
     }
     if (sizeof($res_rvoe["data"]) > 0) {
       foreach ($res_rvoe["data"] as $key => $value) {
-        array_push($solicitudes["data"], $value);
+        array_push($vdetalles_solicitudes["data"], $value);
       }
     }
   }
 
   if ((isset($_SESSION["rol_id"]) && $_SESSION["rol_id"] == 2) ||  (isset($_SESSION["rol_id"]) && $_SESSION["rol_id"] > 7)) {
     if ($_SESSION["rol_id"] == 11) {
-      $solicitudes = $solicitud->consultarPor("solicitudes", array("estatus_solicitud_id" => 6, "deleted_at"), "*");
+      $vdetalles_solicitudes = $vdetalles_solicitud->consultarPor("vdetalles_solicitudes", array("estatus_solicitud_id" => 6, "deleted_at"), "*");
+      //$solicitudes = $solicitud->consultarPor("solicitudes", array("estatus_solicitud_id" => 6, "deleted_at"), "*");
     } else if ($_SESSION["rol_id"] == 10) {
-      $solicitudes = $solicitud->consultarPor("solicitudes", array("estatus_solicitud_id" => 4, "deleted_at"), "*");
+      $vdetalles_solicitudes = $vdetalles_solicitud->consultarPor("vdetalles_solicitudes", array("estatus_solicitud_id" => 4, "deleted_at"), "*");
+      //$solicitudes = $solicitud->consultarPor("solicitudes", array("estatus_solicitud_id" => 4, "deleted_at"), "*");
     } else {
-      $solicitudes = $solicitud->consultarTodos();
+      $vdetalles_solicitudes = $vdetalles_solicitud->consultarTodos();
     }
   }
 
   $resultado = array();
   if ((isset($_SESSION["rol_id"]) && $_SESSION["rol_id"] > 6) || (isset($_SESSION["rol_id"]) && $_SESSION["rol_id"] == 2)) {
-    if (sizeof($solicitudes["data"]) > 0) {
-      $solicitudes = $solicitudes["data"];
-      foreach ($solicitudes as $posicion => $arreglo) {
+    if (sizeof($vdetalles_solicitudes["data"]) > 0) {
+
+      $vdetalles_solicitudes = $vdetalles_solicitudes["data"];
+      foreach ($vdetalles_solicitudes as $posicion => $arreglo) {
+        $respuesta["id"] = $arreglo["id"];
+        $respuesta["tipo_solicitud"] = $arreglo["tipo_solicitud"];
+        $respuesta["usuario_id"] = $arreglo["usuario_id"];
+        $respuesta["folio"] = $arreglo["folio"];
+        $respuesta["acuerdo_rvoe"] = $arreglo["acuerdo_rvoe"];
+        $respuesta["alta"] = $arreglo["created_at"];
+        $respuesta["estatus_solicitud"] = $arreglo["estatus_solicitud"];
+        $respuesta["programa"]["nombre"] = $arreglo["nombre_programa"];
+        $respuesta["programa"]["id"] = $arreglo["programa_id"];
+        $respuesta["instituto"]["nombre"] = $arreglo["nombre_institucion"];
+        $respuesta["domicilio"]["numero_exterior"] = $arreglo["numero_exterior"];
+        $respuesta["domicilio"]["calle"] = $arreglo["calle"];
+        $respuesta["domicilio"]["municipio"] = $arreglo["municipio"];
+        $respuesta["programa"]["modalidad_id"] = $arreglo["modalidad_id"];
+        $respuesta["tipo_solicitud_id"] = $arreglo["tipo_solicitud_id"];
+        $respuesta["estatus_solicitud_id"] = $arreglo["estatus_solicitud_id"];
+
+
+        if (isset($respuesta["domicilio"])) {
+          $respuesta["plantel"] = $respuesta["domicilio"]["numero_exterior"] . " " . $respuesta["domicilio"]["calle"] . " " . $respuesta["domicilio"]["municipio"];
+        } else {
+          $respuesta["plantel"] = "S/N";
+        }
+
+        // Opciones de edición
+        $txt_aux = "?solicitud=" . $respuesta["id"];
+        $espacio = "&nbsp;&nbsp;&nbsp;";
+        $json = [];
+        $json["solicitud"] = $respuesta["id"];
+        $json["folio"] = $respuesta["folio"];
+        $json["tipo_solicitud"] = $respuesta["tipo_solicitud"];
+        $json["programa_id"] = $respuesta["programa"]["id"];
+        $json["programa"] = $respuesta["programa"]["nombre"];
+        $json = json_encode($json);
+
+        // USUARIO CONTROL DOCUMENTAL
+        if ($_SESSION["rol_id"] == 7) {
+          //Filtra las que son por revisión de solicitud y entrega de documentación
+          if ($respuesta["estatus_solicitud_id"] == 2) {
+            $txt_aux = "&modalidad=" . $respuesta["programa"]["modalidad_id"] . "&tps=" . $respuesta["tipo_solicitud_id"] . "&dt=" . $respuesta["programa"]["id"] . "&odt=1";
+            $opciones_edicion  =  "<a title='Revisar documentación' href='ver-solicitudes.php?solicitud=" . $respuesta["id"] . "&tipo=4" . $txt_aux . "'><span class='glyphicon glyphicon-pencil' ></span></a>";
+          }
+          if ($respuesta["estatus_solicitud_id"] == 3) {
+            $opciones_edicion = "<a title='Revisar documentos en físico' href='cotejamiento-solicitudes.php?solicitud=" . $respuesta["id"] . "'><span class='glyphicon glyphicon-folder-open' ></span></a>";
+          }
+          if ($respuesta["estatus_solicitud_id"] == 10) {
+            $opciones_edicion = "<a title='Entregar RVOE' onclick='Solicitudes.recogerRVOE(" . htmlentities($json) . ")'><span class='glyphicon glyphicon-print' ></span></a>";
+          }
+        }
+
+        // USUARIO SICYT EDITAR / ADMIN 
+        if ($_SESSION["rol_id"] == 9  || $_SESSION["rol_id"] == 2) {
+          $txt_auxi = "&modalidad=" . $respuesta["programa"]["modalidad_id"] . "&tps=" . $respuesta["tipo_solicitud_id"] . "&dt=" . $respuesta["programa"]["id"] . "&odt=1";
+
+          if ($respuesta["estatus_solicitud_id"] >= 2 && $respuesta["estatus_solicitud_id"] < 100) {
+            $opciones_edicion  =  "<a title='Detalles de la solicitud' href='detalles-solicitudes.php?solicitud=" . $respuesta["id"] . $txt_auxi . "'><span class='glyphicon glyphicon-list-alt'></span></a>" . $espacio . "<a title='Ver solicitud' href='ver-solicitudes.php?solicitud=" . $respuesta["id"] . "&tipo=4" . $txt_auxi . "'><span class='glyphicon glyphicon-eye-open'></span></a>" . $espacio . "<a title='Eliminar solicitud'  onclick='Solicitudes.modalEliminar(" . htmlentities($json) . ")' href='#'><span class='glyphicon glyphicon-trash'></span></a>";
+          }
+          if ($respuesta["estatus_solicitud_id"] == 200) {
+            $opciones_edicion  =  "<a title='Detalles de la solicitud' href='detalles-solicitudes.php?solicitud=" . $respuesta["id"] . $txt_auxi . "'><span class='glyphicon glyphicon-list-alt'></span></a>" . $espacio . "<a title='Ver solicitud' href='ver-solicitudes.php?solicitud=" . $respuesta["id"] . "&tipo=4" . $txt_auxi . "'><span class='glyphicon glyphicon-eye-open'></span></a>" . $espacio . "<a title='Eliminar solicitud'  onclick='Solicitudes.modalEliminar(" . htmlentities($json) . ")' href='#'><span class='glyphicon glyphicon-trash'></span></a>";
+          }
+          if ($respuesta["estatus_solicitud_id"] == 100) {
+            $opciones_edicion  =  "<a title='Detalles de la solicitud' href='detalles-solicitudes.php?solicitud=" . $respuesta["id"] . $txt_auxi . "'><span class='glyphicon glyphicon-list-alt'></span></a>" . $espacio . "<a title='Ver solicitud' href='ver-solicitudes.php?solicitud=" . $respuesta["id"] . "&tipo=4" . $txt_auxi . "'><span class='glyphicon glyphicon-eye-open'></span></a>";
+          }
+          if ($respuesta["estatus_solicitud_id"] == 1) {
+            $opciones_edicion = "<a title='Ver solicitud' href='ver-solicitudes.php?solicitud=" . $respuesta["id"] . "&tipo=4" . $txt_auxi . "'><span class='glyphicon glyphicon-eye-open'></span></a>";
+          }
+        }
+
+        // SICYT LECTURA
+        if ($_SESSION["rol_id"] == 8) {
+          $txt_auxi = "&modalidad=" . $respuesta["programa"]["modalidad_id"] . "&tps=" . $respuesta["tipo_solicitud_id"] . "&dt=" . $respuesta["programa"]["id"] . "&odt=1";
+          $opciones_edicion  =  "<a href='detalles-solicitudes.php?solicitud=" . $respuesta["id"] . $txt_auxi . "'><span  class='glyphicon glyphicon glyphicon-list-alt'></span></a>" . $espacio . "<a href='ver-solicitudes.php?solicitud=" . $respuesta["id"] . "&tipo=4" . $txt_auxi . "'><span class='glyphicon glyphicon-eye-open'></span></a>";
+        }
+
+        // COMITE EVALUACION
+        if ($_SESSION["rol_id"] == 10) {
+          $txt_auxi = "&modalidad=" . $respuesta["programa"]["modalidad_id"] . "&tps=" . $respuesta["tipo_solicitud_id"] . "&dt=" . $respuesta["programa"]["id"] . "&odt=1";
+          $opciones_edicion =  "<a title='Asignar Evaluación ' href='asignacion-evaluacion.php?solicitud=" . $respuesta["id"] . $txt_auxi . "'><span class='glyphicon glyphicon-edit'></span></a>";
+        }
+
+        //JEFE INSPECTOR
+        if ($_SESSION["rol_id"] == 11) {
+          $txt_auxi = "&modalidad=" . $respuesta["programa"]["modalidad_id"] . "&tps=" . $respuesta["tipo_solicitud_id"] . "&dt=" . $respuesta["programa"]["id"] . "&odt=1";
+          $opciones_edicion  =  "<a href='asignacion-inspeccion.php?solicitud=" . $respuesta["id"] . $txt_auxi . "'><span  class='glyphicon glyphicon glyphicon-edit'></span></a>";
+        }
+
+        $respuesta["folio"] = isset($respuesta["folio"]) ? $respuesta["folio"] . "<br>" . $respuesta["tipo_solicitud"]  : "En proceso";
+        $respuesta["programa_estudio"] = isset($respuesta["programa"]["nombre"]) ? $respuesta["programa"]["nombre"] : "En proceso";
+        $respuesta["alta"] = isset($respuesta["alta"]) ? $respuesta["alta"] : "";
+        $respuesta["estatus"] = isset($respuesta["estatus_solicitud"]) ? $respuesta["estatus_solicitud"] . "<br>" . $respuesta["acuerdo_rvoe"] : "";
+        $respuesta["institucion"]  = isset($respuesta["instituto"]["nombre"]) ? $respuesta["instituto"]["nombre"] : "";
+
+        $respuesta["acciones"] = $opciones_edicion;
+
+        array_push($resultado, $respuesta);
+      }
+
+      $tabla = "";
+
+      /* foreach ($solicitudes as $posicion => $arreglo) {
         $respuesta["id"] = $arreglo["id"];
         $respuesta["tipo_solicitud_id"] = $arreglo["tipo_solicitud_id"];
         $respuesta["usuario_id"] = $arreglo["usuario_id"];
@@ -1094,11 +1205,13 @@ if ($_POST["webService"] == "solicitudes") {
         $respuesta["alta"] = $arreglo["created_at"];
         $respuesta["estatus_solicitud_id"] = $arreglo["estatus_solicitud_id"];
         $respuesta["tipo_solicitud_id"] = $arreglo["tipo_solicitud_id"];
+
         //Tipo de solicitud
         $tipo_solicitud = new TipoSolicitud();
         $tipo_solicitud->setAttributes(array('id' => $respuesta["tipo_solicitud_id"]));
         $respuestas = $tipo_solicitud->consultarId();
         $respuesta["tipo_solicitud"] = $respuestas["data"]["nombre"];
+
         //Estatus de la solicitud
         $estatus_solicitud = new EstatusSolicitud();
         $estatus_solicitud->setAttributes(array('id' => $respuesta["estatus_solicitud_id"]));
@@ -1111,6 +1224,7 @@ if ($_POST["webService"] == "solicitudes") {
           $plantel = new Plantel();
           $respuestas = $plantel->consultarPor("planteles", array("id" => $respuesta["programa"]["plantel_id"]), array("id", "domicilio_id"));
           $respuesta["plantel"] = $respuestas["data"][0];
+
           //INSTITUCION
           $institucion = new Institucion();
           $respuestas = $institucion->consultarPor("instituciones", array("usuario_id" => $respuesta["usuario_id"]), array("id", "nombre"));
@@ -1199,82 +1313,7 @@ if ($_POST["webService"] == "solicitudes") {
 
         array_push($resultado, $respuesta);
       }
-      $tabla = "";
-      /* foreach ($resultado as $registro => $campos) {
-        $txt_aux = "?solicitud=" . $campos["id"];
-        $espacio = "&nbsp;&nbsp;&nbsp;";
-        $json = [];
-        $json["solicitud"] = $campos["id"];
-        $json["folio"] = $campos["folio"];
-        $json["tipo_solicitud"] = $campos["tipo_solicitud_id"];
-        $json["programa_id"] = $campos["programa"]["id"];
-        $json["programa"] = $campos["programa"]["nombre"];
-        $json = json_encode($json);
-        if ($_SESSION["rol_id"] == 7) {
-          //Filtra las que son por revisión de solicitud y entrega de documentación
-          if ($campos["estatus_solicitud_id"] == 2) {
-            $txt_aux = "&modalidad=" . $campos["programa"]["modalidad_id"] . "&tps=" . $campos["tipo_solicitud_id"] . "&dt=" . $campos["programa"]["id"] . "&odt=1";
-            $opciones_edicion  =  "<a title='Revisar documentación' href='ver-solicitudes.php?solicitud=" . $campos["id"] . "&tipo=4" . $txt_aux . "'><span class='glyphicon glyphicon-pencil' ></span></a>";
-          }
-          if ($campos["estatus_solicitud_id"] == 3) {
-            $opciones_edicion = "<a title='Revisar documentos en físico' href='cotejamiento-solicitudes.php?solicitud=" . $campos["id"] . "'><span class='glyphicon glyphicon-folder-open' ></span></a>";
-          }
-          if ($campos["estatus_solicitud_id"] == 10) {
-            $opciones_edicion = "<a title='Entregar RVOE' onclick='Solicitudes.recogerRVOE(" . htmlentities($json) . ")'><span class='glyphicon glyphicon-print' ></span></a>";
-          }
-        }
-        if ($_SESSION["rol_id"] == 9  || $_SESSION["rol_id"] == 2) {
-          $txt_auxi = "&modalidad=" . $campos["programa"]["modalidad_id"] . "&tps=" . $campos["tipo_solicitud_id"] . "&dt=" . $campos["programa"]["id"] . "&odt=1";
-          // if( $campos["estatus_solicitud_id"] == 4){
-          //   $opciones_edicion =   $opciones_edicion."<br></br>"."<a title='Asignar Evaluación ' href='asignacion-evaluacion.php".$txt_aux."'><span class='glyphicon glyphicon-edit'></span></a>";
-          // }
-          if ($campos["estatus_solicitud_id"] >= 2 && $campos["estatus_solicitud_id"] < 100) {
-            $opciones_edicion  =  "<a title='Detalles de la solicitud' href='detalles-solicitudes.php?solicitud=" . $campos["id"] . $txt_auxi . "'><span class='glyphicon glyphicon-list-alt'></span></a>" . $espacio . "<a title='Ver solicitud' href='ver-solicitudes.php?solicitud=" . $campos["id"] . "&tipo=4" . $txt_auxi . "'><span class='glyphicon glyphicon-eye-open'></span></a>" . $espacio . "<a title='Eliminar solicitud'  onclick='Solicitudes.modalEliminar(" . htmlentities($json) . ")' href='#'><span class='glyphicon glyphicon-trash'></span></a>";
-          }
-          if ($campos["estatus_solicitud_id"] == 200) {
-            $opciones_edicion  =  "<a title='Detalles de la solicitud' href='detalles-solicitudes.php?solicitud=" . $campos["id"] . $txt_auxi . "'><span class='glyphicon glyphicon-list-alt'></span></a>" . $espacio . "<a title='Ver solicitud' href='ver-solicitudes.php?solicitud=" . $campos["id"] . "&tipo=4" . $txt_auxi . "'><span class='glyphicon glyphicon-eye-open'></span></a>" . $espacio . "<a title='Eliminar solicitud'  onclick='Solicitudes.modalEliminar(" . htmlentities($json) . ")' href='#'><span class='glyphicon glyphicon-trash'></span></a>";
-          }
-          if ($campos["estatus_solicitud_id"] == 100) {
-            $opciones_edicion  =  "<a title='Detalles de la solicitud' href='detalles-solicitudes.php?solicitud=" . $campos["id"] . $txt_auxi . "'><span class='glyphicon glyphicon-list-alt'></span></a>" . $espacio . "<a title='Ver solicitud' href='ver-solicitudes.php?solicitud=" . $campos["id"] . "&tipo=4" . $txt_auxi . "'><span class='glyphicon glyphicon-eye-open'></span></a>";
-          }
-          if ($campos["estatus_solicitud_id"] == 1) {
-            $opciones_edicion = "<a title='Ver solicitud' href='ver-solicitudes.php?solicitud=" . $campos["id"] . "&tipo=4" . $txt_auxi . "'><span class='glyphicon glyphicon-eye-open'></span></a>";
-          }
-        }
-        if ($_SESSION["rol_id"] == 8) {
-          $txt_auxi = "&modalidad=" . $campos["programa"]["modalidad_id"] . "&tps=" . $campos["tipo_solicitud_id"] . "&dt=" . $campos["programa"]["id"] . "&odt=1";
-          $opciones_edicion  =  "<a href='detalles-solicitudes.php?solicitud=" . $campos["id"] . $txt_auxi . "'><span  class='glyphicon glyphicon glyphicon-list-alt'></span></a>" . $espacio . "<a href='ver-solicitudes.php?solicitud=" . $campos["id"] . "&tipo=4" . $txt_auxi . "'><span class='glyphicon glyphicon-eye-open'></span></a>";
-        }
-        if ($_SESSION["rol_id"] == 10) {
-          $txt_auxi = "&modalidad=" . $campos["programa"]["modalidad_id"] . "&tps=" . $campos["tipo_solicitud_id"] . "&dt=" . $campos["programa"]["id"] . "&odt=1";
-          $opciones_edicion =  "<a title='Asignar Evaluación ' href='asignacion-evaluacion.php?solicitud=" . $campos["id"] . $txt_auxi . "'><span class='glyphicon glyphicon-edit'></span></a>";
-        }
-        if ($_SESSION["rol_id"] == 11) {
-          $txt_auxi = "&modalidad=" . $campos["programa"]["modalidad_id"] . "&tps=" . $campos["tipo_solicitud_id"] . "&dt=" . $campos["programa"]["id"] . "&odt=1";
-          $opciones_edicion  =  "<a href='asignacion-inspeccion.php?solicitud=" . $campos["id"] . $txt_auxi . "'><span  class='glyphicon glyphicon glyphicon-edit'></span></a>";
-        }
-        $folio = isset($campos["folio"]) ? $campos["folio"] : "En proceso";
-        $plan = isset($campos["programa"]["nombre"]) ? $campos["programa"]["nombre"] : "En proceso";
-        $alta = isset($campos["alta"]) ? $campos["alta"] : "";
-        $estatus = isset($campos["estatus_solicitud"]) ? $campos["estatus_solicitud"] : "";
-        $institucion  = isset($campos["instituto"]["nombre"]) ? $campos["instituto"]["nombre"] : "";
-        if (isset($campos["domicilio"])) {
-          $plantel = $campos["domicilio"]["numero_exterior"] . " " . $campos["domicilio"]["calle"] . " " . $campos["domicilio"]["municipio"];
-        } else {
-          $plantel = "S/N";
-        }
-        $tabla .= '{
-                  "folio":"' . $folio . '",
-                  "programa":"' . $plan . '",
-                  "alta":"' . $alta . '",
-                  "estatus":"' . $estatus . '",
-                  "plantel":"' . $plantel . '",
-                  "institucion":"' . $institucion . '",
-                  "acciones":"' . $opciones_edicion . '"
-                },';
-      } */
-      //$tabla = substr($tabla, 0, strlen($tabla) - 1);
-      //echo '{"data":[' . $tabla . ']}';
+      $tabla = ""; */
 
       retornarWebService($_POST["url"], $resultado);
     } else {
