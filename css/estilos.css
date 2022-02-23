@@ -4,37 +4,37 @@ svg {
   font: normal 9pt sans-serif;
 }
 svg g line {
-  stroke:  #80C0FF;
+  stroke: #80c0ff;
   stroke-width: 10;
 }
 svg g circle {
-  fill:  #80C0FF;
+  fill: #80c0ff;
 }
 svg g text {
-  fill: #0080FF;
+  fill: #0080ff;
   text-anchor: middle;
   dominant-baseline: central;
   font-size: 1.5em;
 }
 svg g.active line,
 svg g.active ~ g line {
-  stroke: #0080FF;
+  stroke: #0080ff;
 }
 
 svg g.active circle,
 svg g.active ~ g circle {
-  fill: #0080FF;
+  fill: #0080ff;
 }
 
 svg g.active text,
 svg g.active ~ g text {
-  fill: #FFF;
+  fill: #fff;
 }
 /* Make the active group bigger*/
 svg g.active {
   font-size: 1.5em;
 }
-svg g.active circle{
+svg g.active circle {
   r: 4%;
 }
 /* Use 'pointer' cursor*/
@@ -43,65 +43,65 @@ svg g circle,
 svg g text {
   cursor: pointer;
 }
-.titulo-linea{
+.titulo-linea {
   fill: #000;
   font-size: 1.3em;
 }
 
 .hline {
-  width:100%;
-  height:1px;
+  width: 100%;
+  height: 1px;
   background: #eee;
 }
 /*PROPIEDADES EN GENERAL*/
-.separacion{
-	margin-top: 5px;
-	margin-bottom: 5px;
+.separacion {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
-.size{
-    width: 330px;
+.size {
+  width: 330px;
 }
-.tamano-pantalla{
-	height: 470px !important;
-}
-
-.division{
-	border-top: 2px solid #ccc;
+.tamano-pantalla {
+  height: 470px !important;
 }
 
-a{
-	text-decoration: none;
+.division {
+  border-top: 2px solid #ccc;
 }
 
-table > tbody > tr > td > a{
-	color: inherit;
+a {
+  text-decoration: none;
+}
+
+table > tbody > tr > td > a {
+  color: inherit;
 }
 
 .fondo-imagen {
-	background-image: url("../images/wallpaper.jpg");
-	background-repeat: no-repeat;
-	background-size: 100%;
+  background-image: url("../images/wallpaper.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 
 .form-inline > * {
-   margin-bottom: 10px !important;
+  margin-bottom: 10px !important;
 }
 
-.border-top-rounded{
-	border-top-right-radius: 10px;
-	border-top-left-radius: 10px;
+.border-top-rounded {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
 }
 
-.border-bottom-rounded{
-	border-bottom-right-radius: 10px;
-	border-bottom-left-radius: 10px;
+.border-bottom-rounded {
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
-.border-rounded{
-	border-top-right-radius: 10px;
-	border-top-left-radius: 10px;
-	border-bottom-right-radius: 10px;
-	border-bottom-left-radius: 10px;
+.border-rounded {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 /*PROPIEDADES IMAGENES*/
@@ -110,23 +110,22 @@ table > tbody > tr > td > a{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  }
+}
 
 .image-wrap {
-border: 1px solid #ddd !important;
-border-radius: 4px !important;
-padding: 5px !important;
-width: 300px !important;
-margin: 20px auto;
+  border: 1px solid #ddd !important;
+  border-radius: 4px !important;
+  padding: 5px !important;
+  width: 300px !important;
+  margin: 20px auto;
 }
 
 .image {
-width: 100%;
-padding-top: calc(100% / (16/25));
-background-size: 100%;
-background-position: center;
-background-repeat: no-repeat;
-
+  width: 100%;
+  padding-top: calc(100% / (16 / 25));
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .questionmark {
@@ -134,71 +133,105 @@ background-repeat: no-repeat;
 }
 
 #carta-validacion {
-background-image: url('../images/carta_validacion.jpg');
+  background-image: url("../images/carta_validacion.jpg");
 }
 
 #oficio-validacion {
-background-image: url('../images/oficio_validacion.jpg');
+  background-image: url("../images/oficio_validacion.jpg");
 }
 
 #cedula {
-background-image: url('../images/cedula_profesional.jpg');
+  background-image: url("../images/cedula_profesional.jpg");
 }
 
 #codigo_qr {
-background-image: url('../images/codigo_qr.jpg');
+  background-image: url("../images/codigo_qr.jpg");
+}
+
+#cedula_1 {
+  background-image: url("../images/cedula_profesional_1.jpg");
+}
+
+#cedula_2 {
+  background-image: url("../images/cedula_profesional_2.jpg");
+}
+
+#cedula_3 {
+  background-image: url("../images/cedula_profesional_3.jpg");
+}
+
+#cedula_4 {
+  background-image: url("../images/cedula_profesional_4.jpg");
+}
+
+#cedula_5 {
+  background-image: url("../images/cedula_profesional_5.jpg");
+}
+
+#titulo_fisico {
+  background-image: url("../images/titulo_fisico.jpg");
+}
+
+#titulo_electronico {
+  background-image: url("../images/titulo_electronico.jpg");
+}
+
+#carta_autorizacion {
+  background-image: url("../images/carta_autorizacion.jpg");
+}
+
+#carta_aceptacion {
+  background-image: url("../images/carta_aceptacion.jpg");
 }
 
 .image:hover {
-background-size: 200%;
+  background-size: 200%;
 }
-
-
 
 /*PROPIEDADES REGISTRO Y LOGIN*/
 
-.body-login{
-	background-color: #F7F7F7;
-	padding-left: 20px;
-	padding-right: 20px;
-	padding-top: 15px;
-	padding-bottom: 10px;
-	margin-right: 10px;
-	margin-left: 10px;
+.body-login {
+  background-color: #f7f7f7;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
-.header-login{
-	background-color: #37373C;
-	color: #fff;
-	text-align: center;
-	padding-left: 20px;
-	padding-right: 20px;
-	padding-top: 2px;
-	padding-bottom: 1px;
-	margin-right: 10px;
-	margin-left: 10px;
+.header-login {
+  background-color: #37373c;
+  color: #fff;
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 2px;
+  padding-bottom: 1px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
-.size-icon{
-	padding-top: 8px;
-	padding-bottom: 8px;
+.size-icon {
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
-.margins-section-login{
-	margin-top: 80px;
-	margin-bottom: 40px;
+.margins-section-login {
+  margin-top: 80px;
+  margin-bottom: 40px;
 }
 
-.margin-section-formularios{
-	margin-top: 65px;
-	margin-bottom: 40px;
+.margin-section-formularios {
+  margin-top: 65px;
+  margin-bottom: 40px;
 }
-.tab-personal{
-	border: 1px solid #eee;
-	padding: 25px;
+.tab-personal {
+  border: 1px solid #eee;
+  padding: 25px;
 }
 
-.body-comentarios{
+.body-comentarios {
   background-color: #eee;
   padding-left: 20px;
   padding-right: 20px;
@@ -209,7 +242,7 @@ background-size: 200%;
   box-sizing: border-box;
   border-style: solid;
 }
-.header-comentarios{
+.header-comentarios {
   background-color: #ddd;
   padding-left: 20px;
   padding-right: 20px;
@@ -222,98 +255,97 @@ background-size: 200%;
 }
 /*PROPIEDADES ASIDE USUARIO*/
 
-aside{
-	margin-top: 30px;
+aside {
+  margin-top: 30px;
 }
 
 fieldset.border {
-    border: 1px groove #ddd !important;
-    padding: 0 1.4em 1.4em 1.4em !important;
-    margin: 0 0 1.5em 0 !important;
-    -webkit-box-shadow:  0px 0px 0px 0px #000;
-            box-shadow:  0px 0px 0px 0px #000;
+  border: 1px groove #ddd !important;
+  padding: 0 1.4em 1.4em 1.4em !important;
+  margin: 0 0 1.5em 0 !important;
+  -webkit-box-shadow: 0px 0px 0px 0px #000;
+  box-shadow: 0px 0px 0px 0px #000;
 }
 
-.legend-circular{
-	border-radius: 50%;
-	background-color: #00AAF8;
-	width: 100px;
-    height: 100px;
-    margin: 0 auto;
+.legend-circular {
+  border-radius: 50%;
+  background-color: #00aaf8;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
 }
 
 /*PROPIEDADES ICONOS TABLAS*/
-.desactivar{
-	cursor: pointer;
+.desactivar {
+  cursor: pointer;
 }
-.activar{
-	cursor: pointer;
+.activar {
+  cursor: pointer;
 }
 
-.mensaje{
-	cursor: pointer;
+.mensaje {
+  cursor: pointer;
 }
-.error
-{
- border:1px solid red;
+.error {
+  border: 1px solid red;
 }
 
 .loader {
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    background: url('../images/cargando.gif') 50% 50% no-repeat rgb(249,249,249);
-    opacity: .8;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: url("../images/cargando.gif") 50% 50% no-repeat rgb(249, 249, 249);
+  opacity: 0.8;
 }
 .enlace:link {
-	 	color: blue;
-    text-decoration: underline;
+  color: blue;
+  text-decoration: underline;
 }
 
 .enlace:visited {
-		color: blue;
-    text-decoration: underline;
+  color: blue;
+  text-decoration: underline;
 }
 
 .enlace:hover {
-		color: blue;
-    text-decoration: underline;
+  color: blue;
+  text-decoration: underline;
 }
 
 .enlace:active {
-		color: blue;
-    text-decoration: underline;
+  color: blue;
+  text-decoration: underline;
 }
 
 .enlaces:hover {
-		color: blue;
-    text-decoration: underline;
-    cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
 }
 /* Color para menú */
 .sub-navbar .navbar-collapse {
-    /* background-color: #eaeaea; */
+  /* background-color: #eaeaea; */
 }
 
 .sub-navbar {
-    /* background: #eaeaea; */
+  /* background: #eaeaea; */
 }
 
 /*Colo de encabezado de pestañas*/
 
-li[class='active'] > a[data-toggle='tab'] {
-  background-color: #FFFFFF !important;
+li[class="active"] > a[data-toggle="tab"] {
+  background-color: #ffffff !important;
   color: #545454 !important;
 }
 
-a[data-toggle='tab']{
-  background-color: #4D92DF !important;
+a[data-toggle="tab"] {
+  background-color: #4d92df !important;
   color: white !important;
 }
 
 hr.red::before {
-  background-color: #4D92DF;
+  background-color: #4d92df;
 }
