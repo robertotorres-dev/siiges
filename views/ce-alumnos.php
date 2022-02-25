@@ -6,12 +6,8 @@ Utileria::validarSesion(basename(__FILE__));
 //====================================================================================================
 
 require_once "../models/modelo-programa.php";
-require_once "../models/modelo-alumno.php";
-require_once "../models/modelo-persona.php";
-require_once "../models/modelo-situacion.php";
 require_once "../models/modelo-institucion.php";
-require_once "../models/modelo-situacion-validacion.php";
-require_once "../models/modelo-validacion.php";
+require_once "../models/modelo-vdetalles-alumno.php";
 
 $programa = new Programa();
 $programa->setAttributes(array("id" => $_GET["programa_id"]));
@@ -25,10 +21,6 @@ $institucion = new Institucion();
 $institucion->setAttributes(array("id" => $resultadoPlantel["data"]["institucion_id"]));
 $resultadoInstitucion = $institucion->consultarId();
 $datosInstitucion = $resultadoInstitucion["data"];
-
-$situacionValidacion = new SituacionValidacion();
-$situacionValidacion->setAttributes(array());
-$resultadoSituacionValidacion = $situacionValidacion->consultarTodos();
 
 ?>
 
@@ -101,7 +93,7 @@ $resultadoSituacionValidacion = $situacionValidacion->consultarTodos();
 				<!-- CONTENIDO -->
 				<div class="row">
 					<div class="col-sm-12">
-						<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&proceso=alta" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i> Alta de Alumno</a>
+						<a href="ce-catalogo-alumno.php?programa_id=<?php echo $resultadoPrograma["data"]["id"]; ?>&proceso=alta" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i> Alta de Alumno</a>
 					</div>
 				</div>
 				<div class="row" style="padding-top: 20px;">
@@ -127,50 +119,32 @@ $resultadoSituacionValidacion = $situacionValidacion->consultarTodos();
 								<?php
 								$parametros["programa_id"] = $_GET["programa_id"];
 
-								$alumno = new Alumno();
-								$alumno->setAttributes($parametros);
-								$resultadoAlumno = $alumno->consultarAlumnosPrograma();
+								$detallesAlumnos = new VDetallesAlumno();
+								$detallesAlumnos->setAttributes($parametros);
+								$resultadoDetallesAlumnos = $detallesAlumnos->consultarAlumnosPrograma();
 
-								$max = count($resultadoAlumno["data"]);
+								$max = count($resultadoDetallesAlumnos["data"]);
 								for ($i = 0; $i < $max; $i++) {
-									$parametros2["id"] = $resultadoAlumno["data"][$i]["persona_id"];
-									$alumno = $resultadoAlumno["data"][$i];
+									$alumnoDetalle = $resultadoDetallesAlumnos["data"][$i];
 
-									$persona = new Persona();
-									$persona->setAttributes($parametros2);
-									$resultadoPersona = $persona->consultarId();
-									$nombreCompletoAlumno = $resultadoPersona["data"]["apellido_paterno"] . " " . $resultadoPersona["data"]["apellido_materno"] . " " . $resultadoPersona["data"]["nombre"];
-
-									$parametros3["id"] = $resultadoAlumno["data"][$i]["situacion_id"];
-
-									$situacion = new Situacion();
-									$situacion->setAttributes($parametros3);
-									$resultadoSituacion = $situacion->consultarId();
-
-									$validacion = new Validacion();
-									$res_validacion = $validacion->consultarPor('validaciones', array("alumno_id" => $resultadoAlumno["data"][$i]["id"], "deleted_at"), '*');
-
-									$maxv = count($resultadoSituacionValidacion["data"]);
-									for ($j = 0; $j < $maxv; $j++) {
-										if (isset($res_validacion["data"][0]["situacion_validacion_id"]) && $resultadoSituacionValidacion["data"][$j]["id"] == $res_validacion["data"][0]["situacion_validacion_id"]) {
-											$res_validacion["data"][0]["situacion_validacion_txt"] = $resultadoSituacionValidacion["data"][$j]["nombre"];
-										}
-									}
+									$nombreCompletoAlumno = $alumnoDetalle["apellido_paterno"] . " " . $alumnoDetalle["apellido_materno"] . " " . $alumnoDetalle["nombre"];
 
 								?>
 									<tr>
-										<td><?php echo $resultadoAlumno["data"][$i]["id"]; ?></td>
-										<td><?php echo $resultadoAlumno["data"][$i]["matricula"]; ?></td>
-										<td><?php echo $resultadoPersona["data"]["apellido_paterno"]; ?></td>
-										<td><?php echo $resultadoPersona["data"]["apellido_materno"]; ?></td>
-										<td><?php echo $resultadoPersona["data"]["nombre"]; ?></td>
+										<td><?php echo $alumnoDetalle["id"]; ?></td>
+										<td><?php echo $alumnoDetalle["matricula"]; ?></td>
+										<td><?php echo $alumnoDetalle["apellido_paterno"]; ?></td>
+										<td><?php echo $alumnoDetalle["apellido_materno"]; ?></td>
+										<td><?php echo $alumnoDetalle["nombre"]; ?></td>
+
+										<!-- Situacion general -->
 										<td>
 											<?php
-											echo $resultadoSituacion["data"]["nombre"];
+											echo $alumnoDetalle["situacion"];
 
 											if (Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"])) :
 												echo "<br>";
-												echo isset($res_validacion["data"][0]["situacion_validacion_txt"]) ? $res_validacion["data"][0]["situacion_validacion_txt"] : "Sin validar";
+												echo isset($alumnoDetalle["situacion_validacion"]) ? $alumnoDetalle["situacion_validacion"] : "Sin validar";
 											endif;
 											?>
 										</td>
@@ -180,9 +154,9 @@ $resultadoSituacionValidacion = $situacionValidacion->consultarTodos();
 											<?php
 											if (Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"])) :
 											?>
-												<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=consulta"><span id="" title="Abrir" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
-												<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a>
-												<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion"><span id="" title="Eliminar" class="glyphicon glyphicon-trash col-sm-1 size_icon"></span></a>
+												<a href="ce-catalogo-alumno.php?programa_id=<?php echo $resultadoPrograma["data"]["id"]; ?>&alumno_id=<?php echo $alumnoDetalle["id"]; ?>&proceso=consulta"><span id="" title="Abrir" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
+												<a href="ce-catalogo-alumno.php?programa_id=<?php echo $resultadoPrograma["data"]["id"]; ?>&alumno_id=<?php echo $alumnoDetalle["id"]; ?>&proceso=edicion"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a>
+												<a href="ce-catalogo-alumno.php?programa_id=<?php echo $resultadoPrograma["data"]["id"]; ?>&alumno_id=<?php echo $alumnoDetalle["id"]; ?>&proceso=edicion"><span id="" title="Eliminar" class="glyphicon glyphicon-trash col-sm-1 size_icon"></span></a>
 											<?php
 											endif;
 											?>
@@ -190,9 +164,9 @@ $resultadoSituacionValidacion = $situacionValidacion->consultarTodos();
 											<?php
 											if (Rol::ROL_ADMIN == $_SESSION["rol_id"] || (Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"])) :
 											?>
-												<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=consulta"><span id="" title="Abrir" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
-												<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a>
-												<a href="#" onclick="Alumno.modalEliminarRegistro('<?php echo $resultadoAlumno['data'][$i]['id'] ?>', '<?php echo $nombreCompletoAlumno ?>', '<?php echo $resultadoAlumno['data'][$i]['matricula'] ?>', '<?php echo $resultadoPrograma['data']['id'] ?>')"><span id="" title="Eliminar" class="glyphicon glyphicon-trash col-sm-1 size_icon"></span></a>
+												<a href="ce-catalogo-alumno.php?programa_id=<?php echo $resultadoPrograma["data"]["id"]; ?>&alumno_id=<?php echo $alumnoDetalle["id"]; ?>&proceso=consulta"><span id="" title="Abrir" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
+												<a href="ce-catalogo-alumno.php?programa_id=<?php echo $resultadoPrograma["data"]["id"]; ?>&alumno_id=<?php echo $alumnoDetalle["id"]; ?>&proceso=edicion"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a>
+												<a href="#" onclick="Alumno.modalEliminarRegistro('<?php echo $alumnoDetalle['id'] ?>', '<?php echo $nombreCompletoAlumno ?>', '<?php echo $alumnoDetalle['matricula'] ?>', '<?php echo $resultadoPrograma['data']['id'] ?>')"><span id="" title="Eliminar" class="glyphicon glyphicon-trash col-sm-1 size_icon"></span></a>
 											<?php
 											endif;
 											?>
@@ -200,13 +174,13 @@ $resultadoSituacionValidacion = $situacionValidacion->consultarTodos();
 
 										</td>
 										<td>
-											<a href="ce-documentos.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>">Documentos</span></a>
+											<a href="ce-documentos.php?programa_id=<?php echo $resultadoPrograma["data"]["id"]; ?>&alumno_id=<?php echo $alumnoDetalle["id"]; ?>">Documentos</span></a>
 											<?php if (Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"])) : ?>
 												<br />
-												<a href="ce-validacion-alumno.php?programa_id=<?php echo $resultadoAlumno["data"][$i]["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion">Validaci&oacute;n</a>
+												<a href="ce-validacion-alumno.php?programa_id=<?php echo $resultadoPrograma["data"]["id"]; ?>&alumno_id=<?php echo $alumnoDetalle["id"]; ?>&proceso=edicion">Validaci&oacute;n</a>
 											<?php endif; ?>
 											<br />
-											<a href="ce-kardex.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>">Kardex</a>
+											<a href="ce-kardex.php?programa_id=<?php echo $resultadoPrograma["data"]["id"]; ?>&alumno_id=<?php echo $alumnoDetalle["id"]; ?>">Kardex</a>
 										</td>
 									</tr>
 								<?php

@@ -30,8 +30,6 @@ class VDetallesSolicitud extends Catalogo
   protected $numero_exterior;
   protected $municipio;
 
-  const NUEVA = 1;
-
   // Constructor
   public function __construct()
   {
@@ -78,14 +76,4 @@ class VDetallesSolicitud extends Catalogo
     $resultado = parent::eliminarCatalogo(VISTA_VDETALLES_SOLICITUD);
     return $resultado;
   }
-
-  /* public function rollbackSolicitud(){
-      $res = $this->mysqli->query( "DELETE FROM solicitudes WHERE id = ".$this->id );
-
-      return [
-        "status" => $res?"200":"404",
-        "message" => $res?"OK":"ERROR",
-        "data" => $res
-      ];
-    } */
 }
