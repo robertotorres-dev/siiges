@@ -456,13 +456,14 @@ Solicitudes.getDetalles = function () {
                 avances[i].comentario +
                 "\n";
             }
-            if (avances[i].estatus_solicitud_id == 3) {
+            // Se inhabilita hasta que este lista toda migracion en siiges
+            /* if (avances[i].estatus_solicitud_id == 3) {
               observaciones =
                 observaciones +
                 "USTED DEBE DE ENTREGAR LOS DOCUMENTOS (FDA01 al FDA06) ASÍ COMO EL COMPROBANTE DE PAGO ORIGINAL, EL DOCUMENTO DE INFEJAL Y PROTECCIÓN CIVIL EL DÍA:  " +
                 solicitud.cita +
                 "\n";
-            }
+            } */
             // if(avances[i].estatus_solicitud_id == 200 || avances[i].estatus_solicitud_id == 100){
             //     observaciones =  observaciones + avances[i].comentario +"\n";
             // }
