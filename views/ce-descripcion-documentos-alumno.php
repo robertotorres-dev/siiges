@@ -108,6 +108,7 @@ if (isset($_SESSION["resultado"])) {
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
+							<h3>Ejemplo de documentos</h3>
 							<h4>Cédula federal (Formato físico)</h4>
 						</div>
 					</div>
