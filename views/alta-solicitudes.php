@@ -2721,9 +2721,8 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
           <div class="modal-body">
             <div id="mensajesTerminar" class="alert alert-info">
               <p class="text-justify">
-              <p class="text-center">¡Estimada institución!</p>
-              Recuerda que la fecha de recepción oficial será la fecha de entrega de documentos de forma física.<br>
-              No olvides llenar todos los campos y respetar las reglas gramaticales (mayúsculas y minúsculas).
+              <p class="text-center">Estimada Institución, recuerda que la fecha oficial de recepción de la solicitud será al momento de la entrega de la documentación en físico.<br>
+                No olvides llenar todos los campos y respetar las reglas gramaticales (mayúsculas y minúsculas).
               </p>
             </div>
           </div>
