@@ -173,11 +173,11 @@ $pdf->Ln(2);
 
 $pdf->SetFont("Nutmegbk", "", 7);
 $pdf->AddPage("P", "Letter");
-$names = file('../../uploads/Institucion' . $pdf->titulo["institucion_id"] . '/titulacion_electronica/certificado_titulo_' . $pdf->titulo["folio_control"] . '.xml');
+$names = file('../../uploads/Institucion' . $pdf->titulo["institucion_id"] . '/titulacion_electronica/constancia_titulo_' . $pdf->titulo["folio_control"] . '.xml');
 // To check the number of lines
 foreach ($names as $name) {
   $pdf->MultiCell(180, 4, utf8_decode($name), 0, "L");
 }
 
 
-$pdf->Output("I", "CERTIFICADO_TITULO_" . $pdf->titulo["folio_control"] . ".pdf");
+$pdf->Output("I", $pdf->titulo["folio_control"] . "_CONSTANCIA_TITULO.pdf");

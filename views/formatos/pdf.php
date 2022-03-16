@@ -1,5 +1,5 @@
 <?php
-require("../../fpdf181/fpdf.php");
+require("../../fpdf181/pdf_mc_table.php");
 require_once "../../models/modelo-solicitud.php";
 require_once "../../models/modelo-programa.php";
 require_once "../../models/modelo-nivel.php";
@@ -38,13 +38,16 @@ require_once "../../models/modelo-experiencia.php";
 require_once "../../models/modelo-publicacion.php";
 
 
-class PDF extends FPDF
+class PDF extends PDF_MC_Table
 {
   // Cabecera de p�gina
   function Header()
   {
     $this->Image("../../images/encabezado.jpg", 0, 15, 75);
     $this->Image("../../images/direccion_sicyt.PNG", 155, 12, 40);
+    $this->AddFont('Nutmeg', '', 'Nutmeg-Regular.php');
+    $this->AddFont('Nutmegb', '', 'Nutmeg-Bold.php');
+    $this->AddFont('Nutmegbk', '', 'Nutmeg-Book.php');
   }
 
   // Pie de p�gina
@@ -146,7 +149,7 @@ class PDF extends FPDF
   }
   function checkNewPage()
   {
-    if ($this->GetY() > 220) {
+    if ($this->GetY() > 230) {
       $this->AliasNbPages();
       $this->AddPage("P", "Letter");
       return true;
