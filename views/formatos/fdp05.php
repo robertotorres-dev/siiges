@@ -18,7 +18,7 @@
 
     public function getNombreFormato(){
       // Nombre del formato
-        $this->SetFont( "Arial", "B", 11 );
+        $this->SetFont( "Nutmegb", "", 11 );
         $this->Ln( 10);
         $this->SetTextColor( 255, 255, 255 );
         $this->SetFillColor( 0, 127, 204 );
@@ -34,7 +34,7 @@
 
   $pdf->nuevaPagina();
 
-  $pdf->SetFont( "Arial", "B", 10 );
+  $pdf->SetFont( "Nutmegb", "", 11 );
   $pdf->SetMargins(20, 35 , 20);
   $pdf->SetAutoPageBreak(true, 30);
   // Nombre del formato
@@ -48,20 +48,20 @@
 
 
   $pdf->SetFillColor( 166, 166, 166 );
-  $pdf->SetFont( "Arial", "B", 9 );
+  $pdf->SetFont( "Nutmegb", "", 10 );
   $pdf->Cell( 0, 5, utf8_decode("3.1. PROGRAMA DE SEGUIMIENTO DE LA TRAYECTORIA ACADÉMICA DE LOS ESTUDIANTES"), 1, 1, "C", true );
-  $pdf->SetFont( "Arial", "", 9 );
-  $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["programa_seguimiento"]), 1, "J");
+  $pdf->Ln(5);
+  $pdf->SetFont( "Nutmeg", "", 11 );
+  $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["programa_seguimiento"]), 0, "J");
   if($pdf->checkNewPage()){
-    $pdf->Ln(15);
   }
   $pdf->Ln( 5 );
 
   $pdf->SetFillColor( 166, 166, 166 );
-  $pdf->SetFont( "Arial", "B", 9 );
+  $pdf->SetFont( "Nutmegb", "", 10 );
   $pdf->Cell( 0, 5, utf8_decode("3.2 FUNCIÓN TUTORIAL"), 1, 1, "C", true );
-  $pdf->SetFont( "Arial", "", 9 );
-  $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["funcion_tutorial"]), 1, "J");
+  $pdf->SetFont("Nutmeg", "", 11 );
+  $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["funcion_tutorial"]), 0, "J");
   if($pdf->checkNewPage()){
     $pdf->Ln(15);
   }
@@ -69,10 +69,10 @@
 
 
   $pdf->SetFillColor( 166, 166, 166 );
-  $pdf->SetFont( "Arial", "B", 9 );
+  $pdf->SetFont( "Nutmegb", "", 10 );
   $pdf->Cell( 0, 5, utf8_decode("3.3 TIPO DE TUTORIA"), 1, 1, "C", true );
-  $pdf->SetFont( "Arial", "", 9 );
-  $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["tipo_tutoria"]), 1, "J");
+  $pdf->SetFont( "Nutmeg", "", 11 );
+  $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["tipo_tutoria"]), 0, "J");
   if($pdf->checkNewPage()){
     $pdf->Ln(15);
   }
@@ -80,40 +80,40 @@
 
 
   $pdf->SetFillColor( 166, 166, 166 );
-  $pdf->SetFont( "Arial", "B", 9 );
+  $pdf->SetFont( "Nutmegb", "", 9 );
   $pdf->Cell( 0, 5, utf8_decode("3.4 TASA DE EGRESOS"), 1, 1, "C", true );
-  $pdf->SetFont( "Arial", "", 9 );
-  $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["tasa_egreso"]), 1, "J");
+  $pdf->SetFont( "Nutmeg", "", 11 );
+  $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["tasa_egreso"]), 0, "J");
   if($pdf->checkNewPage()){
     $pdf->Ln(15);
   }
   $pdf->Ln( 5 );
 
   $pdf->SetFillColor( 166, 166, 166 );
-  $pdf->SetFont( "Arial", "B", 9 );
+  $pdf->SetFont( "Nutmegb", "", 9 );
   $pdf->Cell( 0, 5, utf8_decode("3.5 ESTADISTICA DE TITULACIÓN"), 1, 1, "C", true );
-  $pdf->SetFont( "Arial", "", 9 );
-  $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["estadisticas_titulacion"]), 1, "J");
+  $pdf->SetFont( "Nutmeg", "", 11 );
+  $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["estadisticas_titulacion"]), 0, "J");
   if($pdf->checkNewPage()){
     $pdf->Ln(15);
   }
   $pdf->Ln( 5 );
 
   $pdf->SetFillColor( 166, 166, 166 );
-  $pdf->SetFont( "Arial", "B", 9 );
+  $pdf->SetFont( "Nutmegb", "", 9 );
   $pdf->Cell( 0, 5, utf8_decode("3.6 MODALIDADES DE TITULACIÓN"), 1, 1, "C", true );
-  $pdf->SetFont( "Arial", "", 9 );
-  $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["modalidades_titulacion"]), 1, "J");
+  $pdf->SetFont( "Nutmeg", "", 11 );
+  $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["modalidades_titulacion"]), 0, "J");
   if($pdf->checkNewPage()){
     $pdf->Ln(15);
   }
-  $pdf->Ln( 5 );
+  $pdf->Ln( 10 );
 
   $pdf->Ln( 20 );
-  $pdf->SetFont( "Arial", "", 11 );
+  $pdf->SetFont( "Nutmeg", "", 11 );
   $pdf->Cell( 0, 5, "BAJO PROTESTA DE DECIR VERDAD", 0, 0, "C");
   $pdf->Ln( 5);
-  $pdf->SetFont( "Arial", "B", 11 );
+  $pdf->SetFont( "Nutmegb", "", 11 );
 
   $pdf->Cell( 0, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 0, "C");
 
