@@ -46,7 +46,7 @@ $modalidad = $pdf->modalidad["nombre"];
 $periodo = $pdf->ciclo["nombre"];
 
 
-$pdf->SetFont("Nutmeg", "", 11);
+$pdf->SetFont("Nutmeg", "", 10);
 $pdf->SetFillColor(191, 191, 191);
 $pdf->SetTextColor(0, 0, 0);
 $pdf->MultiCell(
@@ -57,7 +57,6 @@ $pdf->MultiCell(
       "J"
 );
 $pdf->Ln();
-$pdf->Ln();
 
 $pdf->MultiCell(
       0,
@@ -66,7 +65,6 @@ $pdf->MultiCell(
       0,
       "J"
 );
-$pdf->Ln();
 $pdf->Ln();
 
 $pdf->MultiCell(
@@ -77,7 +75,6 @@ $pdf->MultiCell(
       "J"
 );
 $pdf->Ln();
-$pdf->Ln();
 
 $pdf->MultiCell(
       0,
@@ -86,7 +83,6 @@ $pdf->MultiCell(
       0,
       "J"
 );
-$pdf->Ln();
 $pdf->Ln();
 
 $pdf->MultiCell(
@@ -97,9 +93,8 @@ $pdf->MultiCell(
       "J"
 );
 $pdf->Ln();
-$pdf->Ln();
 
-$pdf->SetFont("Nutmeg", "", 11);
+$pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
@@ -118,9 +113,8 @@ if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
 }
 $pdf->Ln();
-$pdf->Ln();
 
-$pdf->SetFont("Nutmeg", "", 11);
+$pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
@@ -129,7 +123,6 @@ $pdf->MultiCell(
       "J"
 );
 $pdf->Ln();
-$pdf->Ln();
 if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
       $pdf->SetFont("Nutmegb", "", 11);
@@ -142,7 +135,7 @@ if ($pdf->checkNewPage()) {
 }
 
 
-$pdf->SetFont("Nutmeg", "", 11);
+$pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
@@ -151,7 +144,6 @@ $pdf->MultiCell(
       "J"
 );
 $pdf->Ln();
-$pdf->Ln();
 
 if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
@@ -164,7 +156,7 @@ if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
 }
 
-$pdf->SetFont("Nutmeg", "", 11);
+$pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
@@ -173,7 +165,6 @@ $pdf->MultiCell(
       "J"
 );
 $pdf->Ln();
-$pdf->Ln();
 if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
       $pdf->SetFont("Nutmegb", "", 11);
@@ -185,7 +176,7 @@ if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
 }
 
-$pdf->SetFont("Nutmeg", "", 11);
+$pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
@@ -194,7 +185,6 @@ $pdf->MultiCell(
       "J"
 );
 $pdf->Ln();
-$pdf->Ln();
 if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
       $pdf->SetFont("Nutmegb", "", 11);
@@ -206,7 +196,7 @@ if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
 }
 
-$pdf->SetFont("Nutmeg", "", 11);
+$pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
@@ -215,7 +205,6 @@ $pdf->MultiCell(
       "J"
 );
 $pdf->Ln();
-$pdf->Ln();
 if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
       $pdf->SetFont("Nutmegb", "", 11);
@@ -228,7 +217,7 @@ if ($pdf->checkNewPage()) {
 }
 
 
-$pdf->SetFont("Nutmeg", "", 11);
+$pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
@@ -237,7 +226,6 @@ $pdf->MultiCell(
       "J"
 );
 $pdf->Ln();
-$pdf->Ln();
 if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
       $pdf->SetFont("Nutmegb", "", 11);
@@ -249,7 +237,7 @@ if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
 }
 
-$pdf->SetFont("Nutmeg", "", 11);
+$pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
@@ -258,7 +246,6 @@ $pdf->MultiCell(
       "J"
 );
 $pdf->Ln();
-$pdf->Ln();
 if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
       $pdf->SetFont("Nutmegb", "", 11);
@@ -270,7 +257,7 @@ if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
 }
 
-$pdf->SetFont("Nutmeg", "", 11);
+$pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
@@ -279,7 +266,6 @@ $pdf->MultiCell(
       "J"
 );
 $pdf->Ln();
-$pdf->Ln();
 if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
       $pdf->SetFont("Nutmegb", "", 11);
@@ -291,7 +277,7 @@ if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
 }
 
-$pdf->SetFont("Nutmeg", "", 11);
+$pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
@@ -300,7 +286,6 @@ $pdf->MultiCell(
       "J"
 );
 $pdf->Ln();
-$pdf->Ln();
 if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
       $pdf->SetFont("Nutmegb", "", 11);
@@ -312,7 +297,7 @@ if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
 }
 
-$pdf->SetFont("Nutmeg", "", 11);
+$pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
@@ -321,7 +306,6 @@ $pdf->MultiCell(
       "J"
 );
 $pdf->Ln();
-$pdf->Ln();
 if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
       $pdf->SetFont("Nutmegb", "", 11);
@@ -333,7 +317,7 @@ if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
 }
 
-$pdf->SetFont("Nutmeg", "", 11);
+$pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
@@ -342,7 +326,6 @@ $pdf->MultiCell(
       "J"
 );
 $pdf->Ln();
-$pdf->Ln();
 if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
       $pdf->SetFont("Nutmegb", "", 11);
@@ -354,7 +337,7 @@ if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
 }
 
-$pdf->SetFont("Nutmeg", "", 11);
+$pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
@@ -363,7 +346,6 @@ $pdf->MultiCell(
       "J"
 );
 $pdf->Ln();
-$pdf->Ln();
 if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
       $pdf->SetFont("Nutmegb", "", 11);
@@ -375,7 +357,7 @@ if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
 }
 
-$pdf->SetFont("Nutmeg", "", 11);
+$pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
@@ -384,7 +366,6 @@ $pdf->MultiCell(
       "J"
 );
 $pdf->Ln();
-$pdf->Ln();
 if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
       $pdf->SetFont("Nutmegb", "", 11);
@@ -396,7 +377,7 @@ if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
 }
 
-$pdf->SetFont("Nutmeg", "", 11);
+$pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
@@ -405,7 +386,6 @@ $pdf->MultiCell(
       "J"
 );
 $pdf->Ln();
-$pdf->Ln();
 if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
       $pdf->SetFont("Nutmegb", "", 11);
@@ -417,7 +397,7 @@ if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
 }
 
-$pdf->SetFont("Nutmeg", "", 11);
+$pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
@@ -426,7 +406,6 @@ $pdf->MultiCell(
       "J"
 );
 $pdf->Ln();
-$pdf->Ln();
 if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
       $pdf->SetFont("Nutmegb", "", 11);
@@ -438,7 +417,7 @@ if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
 }
 
-$pdf->SetFont("Nutmeg", "", 11);
+$pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
@@ -446,8 +425,7 @@ $pdf->MultiCell(
       0,
       "J"
 );
-$pdf->Ln();
-$pdf->Ln();
+
 if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
       $pdf->SetFont("Nutmegb", "", 11);
@@ -459,8 +437,9 @@ if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
 }
 
+
+$pdf->Ln(30);
 $pdf->SetFont("Nutmegb", "", 11);
-$pdf->Ln(10);
 $pdf->Cell(0, 5, "BAJO PROTESTA DE DECIR VERDAD", 0, 0, "C");
 $pdf->Ln(5);
 $pdf->SetFont("Nutmeg", "", 11);

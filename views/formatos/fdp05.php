@@ -42,16 +42,16 @@
   $pdf->getNombreFormato();
 
   $pdf->SetTextColor( 0, 127, 204 );
-  $pdf->Cell( 0, 5, utf8_decode("TRAYECTORIA EDUCATIVA Y TUTORÍA DE LOS ESTUDIANTES"), 0, 1, "R");
+  $pdf->Cell( 0, 5, utf8_decode("TRAYECTORIA EDUCATIVA Y TUTORÍA DE LOS ESTUDIANTES"), 0, 1, "L");
   $pdf->SetTextColor( 0, 0, 0 );
   $pdf->Ln( 10 );
 
 
   $pdf->SetFillColor( 166, 166, 166 );
-  $pdf->SetFont( "Nutmegb", "", 10 );
-  $pdf->Cell( 0, 5, utf8_decode("3.1. PROGRAMA DE SEGUIMIENTO DE LA TRAYECTORIA ACADÉMICA DE LOS ESTUDIANTES"), 1, 1, "C", true );
+  $pdf->SetFont( "Nutmegb", "", 9 );
+  $pdf->Cell( 0, 5, utf8_decode("1. PROGRAMA DE SEGUIMIENTO DE LA TRAYECTORIA ACADÉMICA DE LOS ESTUDIANTES"), 1, 1, "C", true );
   $pdf->Ln(5);
-  $pdf->SetFont( "Nutmeg", "", 11 );
+  $pdf->SetFont( "Nutmeg", "", 9 );
   $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["programa_seguimiento"]), 0, "J");
   if($pdf->checkNewPage()){
   }
@@ -59,8 +59,8 @@
 
   $pdf->SetFillColor( 166, 166, 166 );
   $pdf->SetFont( "Nutmegb", "", 10 );
-  $pdf->Cell( 0, 5, utf8_decode("3.2 FUNCIÓN TUTORIAL"), 1, 1, "C", true );
-  $pdf->SetFont("Nutmeg", "", 11 );
+  $pdf->Cell( 0, 5, utf8_decode("2. FUNCIÓN TUTORIAL"), 1, 1, "C", true );
+  $pdf->SetFont("Nutmeg", "", 9 );
   $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["funcion_tutorial"]), 0, "J");
   if($pdf->checkNewPage()){
     $pdf->Ln(15);
@@ -69,9 +69,9 @@
 
 
   $pdf->SetFillColor( 166, 166, 166 );
-  $pdf->SetFont( "Nutmegb", "", 10 );
-  $pdf->Cell( 0, 5, utf8_decode("3.3 TIPO DE TUTORIA"), 1, 1, "C", true );
-  $pdf->SetFont( "Nutmeg", "", 11 );
+  $pdf->SetFont( "Nutmegb", "", 9 );
+  $pdf->Cell( 0, 5, utf8_decode("3. TIPO DE TUTORIA"), 1, 1, "C", true );
+  $pdf->SetFont( "Nutmeg", "", 9 );
   $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["tipo_tutoria"]), 0, "J");
   if($pdf->checkNewPage()){
     $pdf->Ln(15);
@@ -81,8 +81,8 @@
 
   $pdf->SetFillColor( 166, 166, 166 );
   $pdf->SetFont( "Nutmegb", "", 9 );
-  $pdf->Cell( 0, 5, utf8_decode("3.4 TASA DE EGRESOS"), 1, 1, "C", true );
-  $pdf->SetFont( "Nutmeg", "", 11 );
+  $pdf->Cell( 0, 5, utf8_decode("4. TASA DE EGRESOS"), 1, 1, "C", true );
+  $pdf->SetFont( "Nutmeg", "", 9 );
   $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["tasa_egreso"]), 0, "J");
   if($pdf->checkNewPage()){
     $pdf->Ln(15);
@@ -91,8 +91,8 @@
 
   $pdf->SetFillColor( 166, 166, 166 );
   $pdf->SetFont( "Nutmegb", "", 9 );
-  $pdf->Cell( 0, 5, utf8_decode("3.5 ESTADISTICA DE TITULACIÓN"), 1, 1, "C", true );
-  $pdf->SetFont( "Nutmeg", "", 11 );
+  $pdf->Cell( 0, 5, utf8_decode("5. ESTADISTICA DE TITULACIÓN"), 1, 1, "C", true );
+  $pdf->SetFont( "Nutmeg", "", 9 );
   $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["estadisticas_titulacion"]), 0, "J");
   if($pdf->checkNewPage()){
     $pdf->Ln(15);
@@ -101,8 +101,8 @@
 
   $pdf->SetFillColor( 166, 166, 166 );
   $pdf->SetFont( "Nutmegb", "", 9 );
-  $pdf->Cell( 0, 5, utf8_decode("3.6 MODALIDADES DE TITULACIÓN"), 1, 1, "C", true );
-  $pdf->SetFont( "Nutmeg", "", 11 );
+  $pdf->Cell( 0, 5, utf8_decode("6. MODALIDADES DE TITULACIÓN"), 1, 1, "C", true );
+  $pdf->SetFont( "Nutmeg", "", 9 );
   $pdf->MultiCell( 0, 5, utf8_decode($pdf->trayectoria["modalidades_titulacion"]), 0, "J");
   if($pdf->checkNewPage()){
     $pdf->Ln(15);
@@ -119,4 +119,3 @@
 
 
   $pdf->Output( "I", "FDP05.pdf" );
-?>

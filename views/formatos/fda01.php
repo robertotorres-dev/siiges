@@ -35,8 +35,13 @@ class PDF extends FPDF
   function Footer()
   {
     $this->SetY(-30);
+    $this->SetFont("Nutmegbk", "", 7);
+    $this->SetTextColor(0, 0, 0);
     $this->Ln(5);
-    $this->Image("../../images/jalisco.png", 20, 250, 20);
+    $this->Image("../../images/jalisco.png", 20, 245, 20);
+    $this->SetY(-20);
+    $this->SetTextColor(166, 166, 166);
+    $this->Cell(0, 5, utf8_decode("Página " . $this->PageNo()), 0, 0, "R");
   }
 }
 
@@ -208,13 +213,13 @@ $pdf->AliasNbPages();
 $pdf->AddPage("P", "Letter");
 $pdf->SetFont("Nutmegb", "", 11);
 $pdf->SetMargins(20, 20, 20);
-
+$pdf->Ln();
 $pdf->SetTextColor(0, 127, 204);
-$pdf->Cell(0, 5, utf8_decode("OFICIO DE ENTREGA DE DOCUMENTACIÓN"), 0, 1, "R");
+$pdf->Cell(0, 5, utf8_decode("OFICIO DE ENTREGA DE DOCUMENTACIÓN"), 0, 1, "L");
 $pdf->SetTextColor(0, 0, 0);
 $pdf->Ln(10);
 $pdf->Cell(0, 5, utf8_decode("SUBSECRETARIO DE EDUCACIÓN SUPERIOR"), 0, 1, "L");
-$pdf->Ln(10);
+$pdf->Ln(5);
 $pdf->Cell(0, 5, utf8_decode("AT´N: DIRECTOR GENERAL DE INCORPORACIÓN Y SERVICIOS ESCOLARES."), 0, 1, "R");
 
 $pdf->Ln(5);

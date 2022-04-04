@@ -54,31 +54,12 @@ class PDF extends PDF_MC_Table
   function Footer()
   {
     $this->SetY(-30);
-    $this->SetFont("Arial", "B", 8);
-    //$this->Cell( 0, 5, utf8_decode("Teléfono: 01 (33) 1543 2800 "), 0, 1, "L" );
-    $this->SetFont("Arial", "", 8);
-    //$this->Cell( 120, 5, "Edificio MIND. planta baja. Av. Faro 2350 / col. Verde Valle, 44550, Guadalajara, Jal. ", 0, 0, "L" );
-    $this->SetTextColor(0, 107, 210);
-    $this->SetFont("Arial", "B", 11);
-    //$this->Cell( 10, 5, "SYCIT.", 0, 0, "R" );
-    $this->SetTextColor(0, 0, 0);
-    //$this->Cell( 17, 5, "JALISCO", 0, 0, "R" );
-    $this->SetTextColor(100, 100, 100);
-    //$this->Cell( 10, 5, ".GOB", 0, 0, "R" );
-    $this->SetTextColor(0, 107, 210);
-    $this->SetFont("Arial", "", 11);
-    //$this->Cell( 7, 5, ".MX", 0, 0, "R" );
-    $this->SetFillColor(0, 107, 210);
-    //$this->Cell( 11, 5, "", 0, 1, "L",true);
-    //$this->SetLineWidth(0.5);
-    //$this->Line(20,260,195,260);
-    $this->SetFont("Arial", "B", 9);
+    $this->SetFont("Nutmegbk", "", 7);
     $this->SetTextColor(0, 0, 0);
     $this->Ln(5);
     $this->Image("../../images/jalisco.png", 20, 245, 20);
-    //$this->Cell( 25, 5, "@ InnovaJal", 0, 0, "R" );
-    //$this->Image( "../../images/facebook.JPG",53,264,0);
-    //$this->Cell( 44, 5, "InnovacionJalisco", 0, 1, "R" );
+    $this->SetTextColor(191, 191, 191);
+    $this->Cell(0, 5, utf8_decode("Página " . $this->PageNo()), 0, 0, "R");
   }
 
   function vcell($c_width, $c_height, $x_axis, $text, $length)
@@ -646,16 +627,6 @@ class PDF extends PDF_MC_Table
         if ($tipo_docente == $docente["tipo_docente"] & $docente["id"] != 23) {
           if (!isset($this->AsigPorGrado[$asignatura["grado"]])) {
             $this->AsigPorGrado[$asignatura["grado"]] = [];
-            $fila = [
-              "docente" => "NOMBRE DOCENTE",
-              "formacion" => "FORMACIÓN PROFESIONAL",
-              "asignatura" => "ASIGNATURA PROPUESTA",
-              "experiencia" => "EXPERIENCIA",
-              "contratacion_antiguedad" => "CONTRATO, ANTIGUEDAD",
-              "aceptado" => "SE ACEPTA",
-              "observaciones" => "OBSERVACIONES"
-            ];
-            array_push($this->AsigPorGrado[$asignatura["grado"]], $fila);
           }
           $fTexto = "";
 
@@ -665,14 +636,15 @@ class PDF extends PDF_MC_Table
             $nivel = $nivel->consultarId();
             $nivel = !empty($nivel["data"]) ? $nivel["data"] : false;
 
-            $fTexto .= $nivel["descripcion"] . " en " . $formacion["nombre"] . ", " . $formacion["descripcion"] . " ";
+            $fTexto .= $nivel["descripcion"] . " en " . $formacion["nombre"] . "\n\n";
           }
           $fila = [
-            "formacion" => $fTexto,
             "docente" => $PersonaDocente["apellido_paterno"] . " " . $PersonaDocente["apellido_materno"] . " " . $PersonaDocente["nombre"],
+            "formacion" => $fTexto,
+            "documento" => $formacion["descripcion"],
             "asignatura" => $asignatura["clave"] . " - " . $asignatura["nombre"],
-            "experiencia" => "",
-            "contratacion_antiguedad" => Docente::$TIPO_CONTRATACION[$docente["tipo_contratacion"]] . ", " . $docente["antiguedad"],
+            "experiencia" => $docente["experiencias"],
+            "contratacion_antiguedad" => Docente::$TIPO_CONTRATACION[$docente["tipo_contratacion"]] . " - " . "\n" . $docente["antiguedad"],
             "aceptado" => $docente["es_aceptado"] ? "SI" : "PENDIENTE",
             "observaciones" => $docente["observaciones"]
           ];

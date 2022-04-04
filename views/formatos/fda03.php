@@ -20,7 +20,7 @@ $pdf->getData($_GET["id"]);
 $pdf->AliasNbPages();
 
 $pdf->AddPage("P", "Letter");
-$pdf->SetFont("Nutmegb", "", 10);
+$pdf->SetFont("Nutmegb", "", 11);
 $pdf->SetMargins(20, 20, 20);
 
 // Nombre del formato
@@ -40,7 +40,7 @@ $pdf->Cell(0, 5, utf8_decode("SOLICITUD PARA LA AUTORIZACIÓN DE NOMBRE DE LA IN
 $pdf->SetTextColor(0, 0, 0);
 $pdf->Ln(5);
 // Fecha
-$pdf->SetFont("Nutmeg", "", 10);
+$pdf->SetFont("Nutmeg", "", 9);
 $fecha =  $pdf->fecha;
 $pdf->Cell(0, 5, utf8_decode(mb_strtoupper("Guadalajara, Jal. a $fecha")), 0, 1, "R");
 $pdf->Ln(5);
@@ -277,7 +277,7 @@ if ($pdf->institucion["es_nombre_autorizado"]) {
 
 $pdf->Ln(2);
 $pdf->SetTextColor(127, 127, 127);
-$pdf->SetFont("Nutmeg", "", 8);
+$pdf->SetFont("Nutmegbk", "", 8);
 $pdf->MultiCell(0, 3, utf8_decode("NOMBRES DE PERSONAS FÍSICAS: Se deberá anexar la biografía o fundamento por el que se hace la propuesta de nombre. En su caso, se anexará la bibliografía que sirva de fuente de consulta (autor, título de la obra editorial, lugar y fecha de edición)."), 0, "J");
 $pdf->Ln(30);
 
