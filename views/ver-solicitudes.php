@@ -116,7 +116,7 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                   <div class="panel panel-default">
                     <div class="panel-heading">
                       <h4 class="panel-tittle">
-                        <a data-parent="#acordion" data-toggle="collapse" href="#datos-institucion" aria-expanded="false" aria-controls="datos-institucion" class="collapsed">Datos Institución</a>
+                        <a data-parent="#acordion" data-toggle="collapse" href="#datos-institucion" aria-expanded="false" aria-controls="datos-institucion" class="collapsed">Institución</a>
                         <button type="button" class="collpase-button collapsed" data-parent="#acordion" data-toggle="collapse" href="#datos-institucion" aria-expanded="false"></button>
                       </h4>
                     </div>
@@ -124,7 +124,7 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                       <div class="panel-body">
                         <div class="form-group">
                           <div class="col-sm-col-md-12">
-                            <h2>Datos de la institución</h2>
+                            <h2>Institución</h2>
                             <hr class="red">
                             <div id="institucion-noautorizada" class="col-sm-12 col-md-12">
                               <input type="hidden" id="nombre-institucion" name="INSTITUCION-nombre" value="NO AUTORIZADO">
@@ -582,7 +582,7 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-tittle">
-                      <a data-parent="#acordion3" data-toggle="collapse" href="#datos-generales-programa" aria-expanded="false" aria-controls="datos-generales-programa" class="collapsed">Datos generales</a>
+                      <a data-parent="#acordion3" data-toggle="collapse" href="#datos-generales-programa" aria-expanded="false" aria-controls="datos-generales-programa" class="collapsed">Datos del plan de estudios</a>
                       <button type="button" class="collpase-button collapsed" data-parent="#acordion3" data-toggle="collapse" href="#datos-generales-programa" aria-expanded="false"></button>
                     </h4>
                   </div>
@@ -1728,7 +1728,7 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-tittle">
-                      <a data-parent="#acordion2" data-toggle="collapse" href="#datos-plantel" aria-expanded="false" aria-controls="datos-plantel" class="collapsed">Datos generales</a>
+                      <a data-parent="#acordion2" data-toggle="collapse" href="#datos-plantel" aria-expanded="false" aria-controls="datos-plantel" class="collapsed">Datos del plantel</a>
                       <button type="button" class="collpase-button collapsed" data-parent="#acordion2" data-toggle="collapse" href="#datos-plantel" aria-expanded="false"></button>
                     </h4>
                   </div>
@@ -2635,7 +2635,7 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-tittle">
-                      <a data-parent="#acordion5" data-toggle="collapse" href="#evaluacion" aria-expanded="false" aria-controls="evaluacion" class="collapsed">Datos Evaluaci&oacute;n </a>
+                      <a data-parent="#acordion5" data-toggle="collapse" href="#evaluacion" aria-expanded="false" aria-controls="evaluacion" class="collapsed">Datos de la evaluaci&oacute;n </a>
                       <button type="button" class="collpase-button collapsed" data-parent="#acordion5" data-toggle="collapse" href="#evaluacion" aria-expanded="false"></button>
                     </h4>
                   </div>

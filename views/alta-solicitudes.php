@@ -74,7 +74,7 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                   <div class="panel panel-default">
                     <div class="panel-heading">
                       <h4 class="panel-tittle">
-                        <a data-parent="#acordion" data-toggle="collapse" href="#datos-institucion" aria-expanded="false" aria-controls="datos-institucion" class="collapsed">Datos Institución *</a>
+                        <a data-parent="#acordion" data-toggle="collapse" href="#datos-institucion" aria-expanded="false" aria-controls="datos-institucion" class="collapsed">Institución *</a>
                         <button type="button" class="collpase-button collapsed" data-parent="#acordion" data-toggle="collapse" href="#datos-institucion" aria-expanded="false"></button>
                       </h4>
                     </div>
@@ -698,7 +698,7 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-tittle">
-                      <a data-parent="#acordion3" data-toggle="collapse" href="#datos-generales-programa" aria-expanded="false" aria-controls="datos-generales-programa" class="collapsed">Datos generales *</a>
+                      <a data-parent="#acordion3" data-toggle="collapse" href="#datos-generales-programa" aria-expanded="false" aria-controls="datos-generales-programa" class="collapsed">Datos del plan de estudios *</a>
                       <button type="button" class="collpase-button collapsed" data-parent="#acordion3" data-toggle="collapse" href="#datos-generales-programa" aria-expanded="false"></button>
                     </h4>
                   </div>
@@ -1812,7 +1812,7 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-tittle">
-                      <a data-parent="#acordion2" data-toggle="collapse" href="#datos-plantel" aria-expanded="false" aria-controls="datos-plantel" class="collapsed">Datos generales *</a>
+                      <a data-parent="#acordion2" data-toggle="collapse" href="#datos-plantel" aria-expanded="false" aria-controls="datos-plantel" class="collapsed">Datos del plantel *</a>
                       <button type="button" class="collpase-button collapsed" data-parent="#acordion2" data-toggle="collapse" href="#datos-plantel" aria-expanded="false"></button>
                     </h4>
                   </div>
@@ -2647,7 +2647,7 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-tittle">
-                      <a data-parent="#acordion5" data-toggle="collapse" href="#evaluacion" aria-expanded="false" aria-controls="evaluacion" class="collapsed">Datos Evaluaci&oacute;n </a>
+                      <a data-parent="#acordion5" data-toggle="collapse" href="#evaluacion" aria-expanded="false" aria-controls="evaluacion" class="collapsed">Datos de la evaluaci&oacute;n </a>
                       <button type="button" class="collpase-button collapsed" data-parent="#acordion5" data-toggle="collapse" href="#evaluacion" aria-expanded="false"></button>
                     </h4>
                   </div>
