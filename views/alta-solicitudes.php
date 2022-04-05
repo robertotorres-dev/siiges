@@ -2550,25 +2550,10 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                   <input type="file" onchange="Solicitud.verificarArchivo(this)" name="SOLICITUD-comprobante_pago" class="form-control"><br>
                 </div>
                 <?php if ($_GET["tipo"] == 1 ||  $_GET["tipo"] == 3) { ?>
-                  <!-- Acreditación del inmueble -->
-                  <div class="col-sm-12 col-md-8">
-                    <label class="control-label" for="">Acreditación de inmueble </label><br>
-                    <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PLANTEL-acreditacion_inmueble" class="form-control"><br>
-                  </div>
                   <!-- Fotografías del inmueble -->
                   <div class="col-sm-12 col-md-8">
                     <label class="control-label" for="">Fotografías inmuebles </label><br>
                     <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PLANTEL-fotografia_inmueble" class="form-control"><br>
-                  </div>
-                  <!-- Planos -->
-                  <div class="col-sm-12 col-md-8">
-                    <label class="control-label" for="">Planos </label><br>
-                    <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PLANTEL-plano" class="form-control"><br>
-                  </div>
-                  <!-- Dictamenes -->
-                  <div class="col-sm-12 col-md-8">
-                    <label class="control-label" for="">Dictámenes</label><br>
-                    <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PLANTEL-dictamenes" class="form-control" multiple> <br>
                   </div>
                   <!-- Infejal -->
                   <div class="col-sm-12 col-md-8">
@@ -2591,18 +2576,6 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                     <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PLANTEL-comprobante_telefono" class="form-control"><br>
                   </div>
                 <?php } ?>
-                <?php if ($_GET["tipo"] == 1) { ?>
-                  <!-- Calendario -->
-                  <div class="col-sm-12 col-md-8">
-                    <label class="control-label" for="">Propuesta de calendario</label><br>
-                    <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PROGRAMA-propuesta_calendario" class="form-control"><br>
-                  </div>
-                  <!-- Horarios -->
-                  <div class="col-sm-12 col-md-8">
-                    <label class="control-label" for="">Propuesta de horario</label><br>
-                    <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PROGRAMA-propuesta_horario" class="form-control"><br>
-                  </div>
-                <?php } ?>
                 <?php if ($_GET["tipo"] != 1) { ?>
                   <!-- Acuerdo anterior -->
                   <div class="col-sm-12 col-md-8">
@@ -2620,11 +2593,6 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                   <div class="col-sm-12 col-md-8">
                     <label class="control-label" for="">Plan de mejora</label><br>
                     <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PROGRAMA-plan_mejora" class="form-control"><br>
-                  </div>
-                  <!-- Reglamento -->
-                  <div class="col-sm-12 col-md-8">
-                    <label class="control-label" for="">Reglamento institucional</label><br>
-                    <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PROGRAMA-reglamento_institucional" class="form-control"><br>
                   </div>
                   <!-- Plan mejora -->
                   <div class="col-sm-12 col-md-8">

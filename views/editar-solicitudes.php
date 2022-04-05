@@ -2653,17 +2653,6 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                   <a id="enlace-pago" class="enlaces" href="" target="_blank">Ver archivo</a>
                 </div>
                 <?php if ($_GET['tps'] == 1 ||  $_GET['tps'] == 3) { ?>
-                  <!-- Acreditación del inmueble -->
-                  <div class="col-sm-12 col-md-8">
-                    <label class="control-label" for="">Acreditación de inmueble </label><br>
-                    <input type="hidden" id="inmueble-id" name="PLANTEL-acreditacion_inmueble-id" value="">
-                    <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PLANTEL-acreditacion_inmueble" class="form-control"><br>
-                  </div>
-                  <div class="col-sm-12 col-md-4" id="contendorInmueble" style="display: none">
-                    <br>
-                    <br>
-                    <a id="enlace-inmueble" class="enlaces" href="" target="_blank">Ver archivo</a>
-                  </div>
                   <!-- Fotografías del inmueble -->
                   <div class="col-sm-12 col-md-8">
                     <label class="control-label" for="">Fotografías inmuebles </label><br>
@@ -2674,28 +2663,6 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                     <br>
                     <br>
                     <a id="enlace-fotografias" class="enlaces" href="" target="_blank">Ver archivo</a>
-                  </div>
-                  <!-- Planos -->
-                  <div class="col-sm-12 col-md-8">
-                    <label class="control-label" for="">Planos </label><br>
-                    <input type="hidden" id="plano-id" name="PLANTEL-plano-id" value="">
-                    <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PLANTEL-plano" class="form-control"><br>
-                  </div>
-                  <div class="col-sm-12 col-md-4" id="contendorplanos" style="display: none">
-                    <br>
-                    <br>
-                    <a id="enlace-planos" class="enlaces" href="" target="_blank">Ver archivo</a>
-                  </div>
-                  <!-- Dictamenes -->
-                  <div class="col-sm-12 col-md-8">
-                    <label class="control-label" for="">Dictámenes</label><br>
-                    <input type="hidden" id="dictamenes-id" name="PLANTEL-dictamenes-id" value="">
-                    <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PLANTEL-dictamenes" class="form-control" multiple> <br>
-                  </div>
-                  <div class="col-sm-12 col-md-4" id="contendordictamenes" style="display: none">
-                    <br>
-                    <br>
-                    <a id="enlace-dictamenes" class="enlaces" href="" target="_blank">Ver archivo</a>
                   </div>
                   <!-- Infejal -->
                   <div class="col-sm-12 col-md-8">
@@ -2742,31 +2709,6 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                     <a id="enlace-telefono" class="enlaces" href="" target="_blank">Ver archivo</a>
                   </div>
                 <?php } ?>
-                <?php if ($_GET['tps'] == 1) { ?>
-                  <!-- Calendario -->
-                  <div class="col-sm-12 col-md-8">
-                    <label class="control-label" for="">Propuesta de calendario</label><br>
-                    <input type="hidden" id="calendario-id" name="PROGRAMA-propuesta_calendario-id" value="">
-                    <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PROGRAMA-propuesta_calendario" class="form-control"><br>
-                  </div>
-                  <div class="col-sm-12 col-md-4" id="contendorcalendario" style="display: none">
-                    <br>
-                    <br>
-                    <a id="enlace-calendario" class="enlaces" href="" target="_blank">Ver archivo</a>
-                  </div>
-
-                  <!-- Horarios -->
-                  <div class="col-sm-12 col-md-8">
-                    <label class="control-label" for="">Propuesta de horario</label><br>
-                    <input type="hidden" id="horarios-id" name="PROGRAMA-propuesta_horario-id" value="">
-                    <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PROGRAMA-propuesta_horario" class="form-control"><br>
-                  </div>
-                  <div class="col-sm-12 col-md-4" id="contendorhorarios" style="display: none">
-                    <br>
-                    <br>
-                    <a id="enlace-horarios" class="enlaces" href="" target="_blank">Ver archivo</a>
-                  </div>
-                <?php } ?>
                 <?php if ($_GET["tps"] != 1) { ?>
                   <!-- Acuerdo anterior -->
                   <div class="col-sm-12 col-md-8">
@@ -2802,17 +2744,6 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                     <br>
                     <br>
                     <a id="enlace-mejora" class="enlaces" href="" target="_blank">Ver archivo</a>
-                  </div>
-                  <!-- Reglamento -->
-                  <div class="col-sm-12 col-md-8">
-                    <label class="control-label" for="">Reglamento institucional</label><br>
-                    <input type="hidden" id="reglamento-id" name="PROGRAMA-reglamento_institucional-id" value="">
-                    <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PROGRAMA-reglamento_institucional" class="form-control"><br>
-                  </div>
-                  <div class="col-sm-12 col-md-4" id="contendorreglamento" style="display: none">
-                    <br>
-                    <br>
-                    <a id="enlace-reglamento" class="enlaces" href="" target="_blank">Ver archivo</a>
                   </div>
                   <!-- Programa de superacion -->
                   <div class="col-sm-12 col-md-8">
