@@ -19,7 +19,6 @@ Solicitudes.getSolicitudes = function () {
         columns: [
           { data: "folio" },
           { data: "programa_estudio" },
-          { data: "alta" },
           { data: "estatus" },
           { data: "plantel" },
           { data: "institucion" },
@@ -294,8 +293,14 @@ Solicitudes.getDetalles = function () {
         }
 
         if (solicitud != undefined) {
+          console.log(solicitud);
           $("#tipo_solicitud").val(solicitud.tipo);
-          $("#alta_solicitud").val(solicitud.alta.substring(0, 10));
+          if (solicitud.fecha_recepcion) {
+            $("#fecha_recepcion_documentacion").val(
+              solicitud.fecha_recepcion.substring(0, 10)
+            );
+          }
+
           $("#folio").val(solicitud.folio);
 
           if (
@@ -605,7 +610,7 @@ Solicitudes.completarCotejamiento = function () {
   if ($("#fecha_recepcion_modal").val() != "") {
     const fecha_recepcion_modal = $("#fecha_recepcion_modal").val();
     $("#fecha_recepcion").val(fecha_recepcion_modal);
-    
+
     let btnConfirmar = document.getElementById("boton_si");
     btnConfirmar.classList.remove("active");
     btnConfirmar.classList.add("disabled");

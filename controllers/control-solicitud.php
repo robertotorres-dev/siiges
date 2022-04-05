@@ -1373,6 +1373,7 @@ if ($_POST["webService"] == "detallesSolicitud") {
       $respuesta["data"]["solicitud"]["estatus"] = $res_solicitud["data"]["estatus_solicitud_id"];
       $respuesta["data"]["solicitud"]["tipo"] = $res_solicitud["data"]["tipo_solicitud_id"];
       $respuesta["data"]["solicitud"]["cita"] = $res_solicitud["data"]["cita"];
+      $respuesta["data"]["solicitud"]["fecha_recepcion"] = $res_solicitud["data"]["fecha_recepcion"];
       $respuesta["data"]["solicitud"]["convocatoria"] = $res_solicitud["data"]["convocatoria"];
       $programa =  new Programa();
       $res_programa = $programa->consultarPor("programas", array("solicitud_id" => $res_solicitud["data"]["id"]), "*");

@@ -69,8 +69,8 @@
 						</div>
 						<input type="hidden" id="tipo_control">
 						<div class="col-sm-12 col-md-3">
-							<label class="control-label">Fecha de alta</label>
-							<input type="text" id="alta_solicitud" class="form-control" value="" readonly>
+							<label class="control-label">Fecha de recepción</label>
+							<input type="text" id="fecha_recepcion_documentacion" class="form-control" value="" readonly>
 						</div>
 						<div class="col-sm-12 col-md-3">
 							<label class="control-label">Folio de captura</label>
@@ -273,8 +273,7 @@
 					<div class="form-group col-sm-6 col-md-4">
 						<h4>Otros</h4>
 						<a target="_blank" href= "oficios/desistimiento.php" id="Desistimiento" name="<?= $_GET["solicitud"]?>" class="post">Desistimiento</a><br>
-						<!-- <a target="_blank" href="oficios/observaciones.php" id="Observaciones" name="<?= $_GET["solicitud"]?>" class="get">Observaciones</a><br> -->
-						<a target="_blank" href="oficios/oficio-turnar-CIFRHS.php" id="OficioTurnarCIFRHS" name="<?= $_GET["solicitud"]?>"  class="get" >Oficio para Turnar a CIFRHS</a><br>
+						
 					</div>
 				<?php endif; ?>
 				</div>

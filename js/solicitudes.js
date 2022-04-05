@@ -274,7 +274,6 @@ Solicitud.getSolicitudes = function () {
     columns: [
       { data: "folio" },
       { data: "planestudios" },
-      { data: "alta" },
       { data: "estatus" },
       { data: "plantel" },
       { data: "acciones" },

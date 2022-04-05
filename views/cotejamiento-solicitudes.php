@@ -63,8 +63,8 @@ if (isset($_SESSION["resultado"])) {
 							</select>
 						</div>
 						<div class="col-sm-12 col-md-3">
-							<label class="control-label">Fecha de alta</label>
-							<input type="text" id="alta_solicitud" class="form-control" value="" readonly>
+							<label class="control-label">Fecha de recepción</label>
+							<input type="text" id="fecha_recepcion_documentacion" class="form-control" value="" readonly>
 						</div>
 						<div class="col-sm-12 col-md-3">
 							<label class="control-label">Folio</label>

@@ -123,7 +123,6 @@
 								<tr>
 										<th>Folio de captura</th>
 										<th>Plan de estudios</th>
-										<th>Fecha de alta</th>
 										<th>Estatus</th>
 										<th>Plantel</th>
 										<th>Acciones</th>
