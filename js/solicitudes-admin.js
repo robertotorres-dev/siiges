@@ -525,7 +525,6 @@ Solicitudes.mostrarMensaje = function (tipo, texto) {
 //Guardar cambios de la revisión
 Solicitudes.guardarComentarios = function (opcion) {
   $("#opcion-comentarios").val(opcion);
-  console.log($("#opcion-comentarios").val(opcion));
   if (opcion == 2) {
     if ($("#terminarRevision").val() == "") {
       Solicitud.mostrarMensaje(
@@ -572,6 +571,16 @@ Solicitudes.revisarDocumentacion = function () {
       "<p class='text-left'><strong>¿La documentación fue recibida?</strong></p>"
     );
 
+    const cuerpo = $("#cuerpoModal");
+
+    const child = document.createElement("div");
+    child.innerHTML = `<div class="col-sm-12 col-md-12">
+    <label class="control-label" for="">Ingresar la fecha de recepción de la solicitud</label><br>
+    <input type="date" id="fecha_recepcion_modal" class="form-control">
+    <br></div>`;
+
+    cuerpo.append(child);
+
     var boton = $("<button/>", {
       id: "boton_si",
       type: "button",
@@ -593,12 +602,19 @@ Solicitudes.revisarDocumentacion = function () {
 };
 //Confirmar revisión de documentacion
 Solicitudes.completarCotejamiento = function () {
-  let btnConfirmar = document.getElementById("boton_si");
-  btnConfirmar.classList.remove("active");
-  btnConfirmar.classList.add("disabled");
-  btnConfirmar.setAttribute("disabled", "");
+  if ($("#fecha_recepcion_modal").val() != "") {
+    const fecha_recepcion_modal = $("#fecha_recepcion_modal").val();
+    $("#fecha_recepcion").val(fecha_recepcion_modal);
+    
+    let btnConfirmar = document.getElementById("boton_si");
+    btnConfirmar.classList.remove("active");
+    btnConfirmar.classList.add("disabled");
+    btnConfirmar.setAttribute("disabled", "");
 
-  $("#form-cotejamiento").submit();
+    $("#form-cotejamiento").submit();
+  } else {
+    $("#fecha_recepcion_modal").focus();
+  }
 };
 //Entregar rvoe
 Solicitudes.recogerRVOE = function (obj) {

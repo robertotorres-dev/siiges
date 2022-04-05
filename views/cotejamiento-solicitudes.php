@@ -1,17 +1,18 @@
 <?php
-	// Válida los permisos del usuario de la sesión
-	require_once "../utilities/utileria-general.php";
-	require_once "../models/modelo-rol.php";
-	Utileria::validarSesion( basename( __FILE__ ) );
-	//====================================================================================================
-	$resultado = "";
-	if(isset($_SESSION["resultado"])){
-	  $resultado = json_decode($_SESSION["resultado"]);
-	  unset($_SESSION["resultado"]);
-	}
+// Válida los permisos del usuario de la sesión
+require_once "../utilities/utileria-general.php";
+require_once "../models/modelo-rol.php";
+Utileria::validarSesion(basename(__FILE__));
+//====================================================================================================
+$resultado = "";
+if (isset($_SESSION["resultado"])) {
+	$resultado = json_decode($_SESSION["resultado"]);
+	unset($_SESSION["resultado"]);
+}
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,10 +38,10 @@
 				<ol class="breadcrumb">
 					<li><a href="home.php"><i class="icon icon-home"></i></a></li>
 					<li><a href="home.php">SIIGES</a></li>
-					<?php if($_SESSION["rol_id"] == 3 || $_SESSION["rol_id"] == 4 ){ ?>
-					<li><a href="mis-solicitudes.php">Solicitudes</a></li>
-					<?php }else{ ?>
-					<li><a href="solicitudes.php">Solicitudes</a></li>
+					<?php if ($_SESSION["rol_id"] == 3 || $_SESSION["rol_id"] == 4) { ?>
+						<li><a href="mis-solicitudes.php">Solicitudes</a></li>
+					<?php } else { ?>
+						<li><a href="solicitudes.php">Solicitudes</a></li>
 					<?php } ?>
 					<li class="active">Revisión de documentos</li>
 				</ol>
@@ -170,7 +171,7 @@
 					<div class="form-group col-sm-12 col-md-12">
 
 						<div class="col-sm-6 col-md-6">
-							<input id="fda01Checkbox" type="checkbox" style=" transform: scale(2.0)"> &nbsp; <a target="_blank" href= <?= "formatos/fda01.php?id=".$_GET["solicitud"] ?>>FDA 01</a><br>
+							<input id="fda01Checkbox" type="checkbox" style=" transform: scale(2.0)"> &nbsp; <a target="_blank" href=<?= "formatos/fda01.php?id=" . $_GET["solicitud"] ?>>FDA 01</a><br>
 							<br>
 						</div>
 						<div class="col-sm-6 col-md-6">
@@ -178,7 +179,7 @@
 							<br>
 						</div>
 						<div class="col-sm-6 col-md-6">
-							<input id="fda03Checkbox" type="checkbox" style=" transform: scale(2.0)"> &nbsp; <a target="_blank" href= <?= "formatos/fda03.php?id=".$_GET["solicitud"] ?> id="fda03l">FDA 03</a><br>
+							<input id="fda03Checkbox" type="checkbox" style=" transform: scale(2.0)"> &nbsp; <a target="_blank" href=<?= "formatos/fda03.php?id=" . $_GET["solicitud"] ?> id="fda03l">FDA 03</a><br>
 							<br>
 						</div>
 						<div class="col-sm-6 col-md-6">
@@ -202,32 +203,33 @@
 							<button type="button" class="btn btn-primary pull-left" onclick="Solicitudes.revisarDocumentacion()">Documentación completa</button>
 						</div>
 					</div>
+					<input type="hidden" name="fecha_recepcion" id="fecha_recepcion">
 					<input type="hidden" id="opcion" value="2">
-					<input type="hidden" id="id_solicitud" name="id_solicitud" value="<?= $_GET['solicitud']?>">
+					<input type="hidden" id="id_solicitud" name="id_solicitud" value="<?= $_GET['solicitud'] ?>">
 					<input type="hidden" name="webService" value="cotejamiento">
 				</form>
 			</div>
 
 		</section>
 		<!-- Modal para mensajes -->
-		<div class="modal fade" id="modalMensaje"  tabindex="-1" role="dialog" aria-hidden="true">
-				<div  id="tamanoModalMensaje" class="modal-dialog" >
-					<!-- Modal content-->
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">Mensajes</h4>
-						</div>
-						<div class="modal-body">
-								<div id="mensajeDocumentacion"></div>
-						</div>
-						<div id="mensaje-footer" class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-						</div>
+		<div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-hidden="true">
+			<div id="tamanoModalMensaje" class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Mensajes</h4>
 					</div>
-
+					<div id="cuerpoModal" class="modal-body">
+						<div id="mensajeDocumentacion"></div>
+					</div>
+					<div id="mensaje-footer" class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					</div>
 				</div>
+
 			</div>
+		</div>
 	</div>
 
 
@@ -241,4 +243,5 @@
 	<script src="../js/documentos.js"></script>
 
 </body>
+
 </html>

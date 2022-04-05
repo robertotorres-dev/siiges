@@ -1744,48 +1744,22 @@ if ($_POST["webService"] == "cotejamiento") {
   $actu_coment->setAttributes(array("id" => $id_estatus["id"], "comentario" => $_POST["comentarios"]));
   $actu_coment->guardar();
 
-  $solicitud_tipo = new Solicitud;
-  $res_solicitud = $solicitud_tipo->consultarPor("solicitudes", array("id" => $_POST["id_solicitud"], "deleted_at"), array("id,tipo_solicitud_id, convocatoria"));
-  $tipo_solicitud_id = $res_solicitud["data"][0]["tipo_solicitud_id"];
-  $convocatoria = $res_solicitud["data"][0]["convocatoria"];
+  $estatus_solicitud = new SolicitudEstatus();
+  $estatus_solicitud->setAttributes(array("estatus_solicitud_id" => 6, "solicitud_id" => $_POST["id_solicitud"]));
+  $res = $estatus_solicitud->guardar();
 
-  //En caso de no ser migración y sea cambio de domicilio, se va directo a inspección
-  //En caso de que sea convocatoria 2021 hacia adelante, irse directo a asignar inspección
-  if ($tipo_solicitud_id == 3 || $convocatoria >= 2021) {
-    $estatus_solicitud = new SolicitudEstatus();
-    $estatus_solicitud->setAttributes(array("estatus_solicitud_id" => 6, "solicitud_id" => $_POST["id_solicitud"]));
-    $res = $estatus_solicitud->guardar();
+  $solicitud = new Solicitud;
+  $solicitud->setAttributes(array("id" => $_POST["id_solicitud"], "estatus_solicitud_id" => 6, "fecha_recepcion" => $_POST["fecha_recepcion"]));
+  $solicitud->guardar();
 
-    $solicitud = new Solicitud;
-    $solicitud->setAttributes(array("id" => $_POST["id_solicitud"], "estatus_solicitud_id" => 6));
-    $solicitud->guardar();
-
-    //Notificación a apps
-    $usuarioNotificar = new Solicitud();
-    $usuarioNotificar->setAttributes(array("id" => $_POST["id_solicitud"]));
-    $resUsuarioNotificar = $usuarioNotificar->consultarId();
-    $resUsuarioNotificar = $resUsuarioNotificar["data"];
-    $notificacion = new Usuario();
-    $msj = "Su solicitud está por ser asignada para inspección.";
-    $notificacion->notificacionIdUsuario($resUsuarioNotificar["usuario_id"], "Avances", $msj);
-  } else {
-    $estatus_solicitud = new SolicitudEstatus();
-    $estatus_solicitud->setAttributes(array("estatus_solicitud_id" => 4, "solicitud_id" => $_POST["id_solicitud"]));
-    $res = $estatus_solicitud->guardar();
-
-    $solicitud = new Solicitud;
-    $solicitud->setAttributes(array("id" => $_POST["id_solicitud"], "estatus_solicitud_id" => 4));
-    $solicitud->guardar();
-
-    //Notificación a apps
-    $usuarioNotificar = new Solicitud();
-    $usuarioNotificar->setAttributes(array("id" => $_POST["id_solicitud"]));
-    $resUsuarioNotificar = $usuarioNotificar->consultarId();
-    $resUsuarioNotificar = $resUsuarioNotificar["data"];
-    $notificacion = new Usuario();
-    $msj = "Su solicitud está por ser asignada para evaluación técnico curricular.";
-    $notificacion->notificacionIdUsuario($resUsuarioNotificar["usuario_id"], "Avances", $msj);
-  }
+  //Notificación a apps
+  $usuarioNotificar = new Solicitud();
+  $usuarioNotificar->setAttributes(array("id" => $_POST["id_solicitud"]));
+  $resUsuarioNotificar = $usuarioNotificar->consultarId();
+  $resUsuarioNotificar = $resUsuarioNotificar["data"];
+  $notificacion = new Usuario();
+  $msj = "Su solicitud está por ser asignada para inspección.";
+  $notificacion->notificacionIdUsuario($resUsuarioNotificar["usuario_id"], "Avances", $msj);
 
 
   if ($res["data"]["id"] > 0) {

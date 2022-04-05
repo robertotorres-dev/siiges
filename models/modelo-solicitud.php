@@ -17,6 +17,7 @@
     protected $fecha;
     protected $estatus_solicitud_id;
     protected $cita;
+    protected $fecha_recepcion;
     protected $folio;
     protected $convocatoria;
 

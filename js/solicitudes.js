@@ -1950,7 +1950,7 @@ Solicitud.modificacionPrograma = function () {
               }
             }
             var infComun = respuesta.data.infraestructuraComun;
-            console.log("ALTA de solicitud de modificación/actualización");
+            console.log("ALTA de solicitud de refrendo");
             if (infComun != undefined) {
               for (var indInf = 0; indInf < infComun.length; indInf++) {
                 var filaInf;
