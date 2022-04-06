@@ -14,6 +14,7 @@
     protected $descripcion;
 
     const ESCOLARIZADA = 1;
+    const DUAL = 4;
 
 		// Constructor
 		public function __construct( )

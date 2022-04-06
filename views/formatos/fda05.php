@@ -365,7 +365,7 @@ $pdf->SetFont( "Arial", "", 9 );
 
   }
 
-  if($pdf->programa["modalidad_id"] != Modalidad::ESCOLARIZADA){
+  if($pdf->programa["modalidad_id"] > Modalidad::ESCOLARIZADA && $pdf->programa["modalidad_id"] < Modalidad::DUAL){
     $pdf->getDataMixta($pdf->programa["id"]);
     // Instituciones de salud aledañas
     $pdf->SetTextColor( 0, 0, 0 );
@@ -612,4 +612,3 @@ $pdf->SetFont( "Arial", "", 9 );
   }
 
   $pdf->Output( "I", "FDA05.pdf" );
-?>

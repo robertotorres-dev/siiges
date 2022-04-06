@@ -836,7 +836,7 @@ if ($_POST["webService"] == "guardarSolicitud") {
                 *
                 */
               // Si la modalidad no es escolarizada se requieren los datos de mixta NO escolarizada
-              if (Modalidad::ESCOLARIZADA == $parametrosPrograma["modalidad_id"]) {
+              if (Modalidad::ESCOLARIZADA == $parametrosPrograma["modalidad_id"] || Modalidad::DUAL == $parametrosPrograma["modalidad_id"]) {
                 $entidadesIds["MIXTA"] = false;
                 throw new Exception("");
               } else {

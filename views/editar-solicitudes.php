@@ -1581,7 +1581,7 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                     </div>
                   </div>
                 <?php } ?>
-                <?php if (($_GET['tps'] == 1 &&  $_GET['modalidad'] != 1) || ($_GET['tps'] == 2 && $_GET['modalidad'] != 1)) {  ?>
+                <?php if (($_GET['tps'] == 1 &&  ($_GET['modalidad'] > 1 && $_GET['modalidad'] < 4)) || ($_GET['tps'] == 2 && ($_GET['modalidad'] > 1 && $_GET['modalidad'] < 4))) {  ?>
                   <!-- Licencias -->
                   <div id="mixta-licencia" class="panel panel-default">
                     <div class="panel-heading">

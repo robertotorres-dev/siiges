@@ -1499,7 +1499,7 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                     </div>
                   </div>
                 <?php } ?>
-                <?php if (($_GET['tipo'] == 1 &&  $_GET['modalidad'] != 1) || ($_GET['tipo'] == 2 && $_GET['modalidad'] != 1)) {  ?>
+                <?php if (($_GET['tipo'] == 1 &&  ($_GET['modalidad'] > 1 && $_GET['modalidad'] < 4)) || ($_GET['tipo'] == 2 && ($_GET['modalidad'] > 1 && $_GET['modalidad'] < 4))) {  ?>
 
                   <!-- Licencias -->
                   <div id="mixta-licencia" class="panel panel-default">
