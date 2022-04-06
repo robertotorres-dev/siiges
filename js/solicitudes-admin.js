@@ -194,6 +194,7 @@ Solicitudes.tiposControl = {
 };
 
 Solicitudes.ESTATUS = {
+  ENTREGA_DOCUMENTOS: 3,
   INSPECCION: 7,
   CIMPRESION: 9,
   EVALUACION: 5,
@@ -293,7 +294,6 @@ Solicitudes.getDetalles = function () {
         }
 
         if (solicitud != undefined) {
-          console.log(solicitud);
           $("#tipo_solicitud").val(solicitud.tipo);
           if (solicitud.fecha_recepcion) {
             $("#fecha_recepcion_documentacion").val(
@@ -302,6 +302,16 @@ Solicitudes.getDetalles = function () {
           }
 
           $("#folio").val(solicitud.folio);
+
+          if (
+            solicitud.estatus > Solicitudes.ESTATUS.ENTREGA_DOCUMENTOS &&
+            solicitud.estatus != Solicitudes.ESTATUS.RECHAZADA &&
+            solicitud.estatus != 200
+          ) {
+            $("#Admisorio").show();
+          } else {
+            $("#Admisorio").hide();
+          }
 
           if (
             solicitud.estatus >= Solicitudes.ESTATUS.INSPECCION &&

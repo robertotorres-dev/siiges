@@ -43,6 +43,7 @@ Documento.getFormatos = function () {
     data: datos,
     dataType: "json",
     success: function (response) {
+      console.log(response);
       if ($.isArray(response.data) && !response.data.length > 0) {
         console.log(response.message + " FDP03 para la solicitud " + entidadId);
         $("#fdp03").on("click", function (e) {

@@ -272,6 +272,7 @@
 
 					<div class="form-group col-sm-6 col-md-4">
 						<h4>Otros</h4>
+						<a target="_blank" href= <?= "oficios/admisorio.php?id=".$_GET["solicitud"]?> id="Admisorio" name="<?= $_GET["solicitud"]?>" class="post">Oficio Admisorio</a><br>
 						<a target="_blank" href= "oficios/desistimiento.php" id="Desistimiento" name="<?= $_GET["solicitud"]?>" class="post">Desistimiento</a><br>
 						
 					</div>
