@@ -74,7 +74,7 @@
 								<tr>
 	                <th width="5%">Id</th>
 	                <th width="35%">Nombre</th>
-	                <th width="20%">Vigencia</th>
+	                <th width="20%">Surte efecto</th>
 									<th width="20%">Acuerdo RVOE</th>
 	                <th width="20%">Acciones</th>
 								</tr>
@@ -92,7 +92,7 @@
 							<tr>
 								<td><?php echo $resultadoPrograma["data"][$i]["id"]; ?></td>
 								<td><?php echo $resultadoPrograma["data"][$i]["nombre"]; ?></td>
-								<td><?php echo $resultadoPrograma["data"][$i]["vigencia"]; ?></td>
+								<td><?php echo $resultadoPrograma["data"][$i]["surte_efecto"]; ?></td>
 								<td><?php echo $resultadoPrograma["data"][$i]["acuerdo_rvoe"]; ?></td>
 								<td>
 									<?php if(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] || Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] ): ?>
@@ -137,7 +137,7 @@
 								<tr>
 	                <th width="10%">Id</th>
 	                <th width="40%">Nombre</th>
-	                <th width="20%">Vigencia</th>
+	                <th width="20%">Surte efecto</th>
 									<th width="20%">Acuerdo RVOE</th>
 	                <th width="10%">Acciones</th>
 								</tr>
@@ -156,7 +156,7 @@
 							<tr>
 								<td><?php echo $resultadoPrograma["data"][$i]["id"]; ?></td>
 								<td><?php echo $resultadoPrograma["data"][$i]["nombre"]; ?></td>
-								<td><?php echo $resultadoPrograma["data"][$i]["vigencia"]; ?></td>
+								<td><?php echo $resultadoPrograma["data"][$i]["surte_efecto"]; ?></td>
 								<td><?php echo $resultadoPrograma["data"][$i]["acuerdo_rvoe"]; ?></td>
 								<!-- Se agregar los siguientes botones para poder migrar con usuario de control escolar SICYT -->
 								<td>

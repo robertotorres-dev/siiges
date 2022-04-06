@@ -796,8 +796,6 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                           </div>
                         </div>
                       <?php } ?>
-                      <!--Vigencia input oculto TODO: Asignar dinamico-->
-                      <input type="hidden" id="vigencia_programa" name="PROGRAMA-vigencia" value="2018-12-30">
                     </div>
                   </div>
                 </div>

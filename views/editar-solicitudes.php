@@ -821,8 +821,6 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                           </div>
                         </div>
                       <?php } ?>
-                      <!--Vigencia input oculto TODO: Asignar dinamico-->
-                      <input type="hidden" id="vigencia_programa" name="PROGRAMA-vigencia" value="2018-12-30">
                     </div>
                   </div>
                 </div>
