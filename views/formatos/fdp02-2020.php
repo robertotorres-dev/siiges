@@ -306,10 +306,11 @@ $pdf->SetFillColor(192, 192, 192);
 // Tabla de materias para curriculum flexible
 if ($pdf->programa["ciclo_id"] == 4 || $pdf->programa["ciclo_id"] == 5) {
 
-  //Tabla para asignaturas en curriculum rígido
   $total_docente = 0;
   $total_independiente = 0;
   $total_creditos = 0;
+
+  //Tabla para asignaturas en curriculum rígido
   foreach ($asignaturaGrados as $grado => $asignaturas) {
 
     $horas_docente = 0;
@@ -344,7 +345,7 @@ if ($pdf->programa["ciclo_id"] == 4 || $pdf->programa["ciclo_id"] == 5) {
     $pdf->Ln(10);
 
 
-
+    // Fila de asignatura por asignatura
     foreach ($asignaturas as $asignatura => $detalle) {
       $area_txt = "";
       switch ($detalle["area"]) {
@@ -383,6 +384,7 @@ if ($pdf->programa["ciclo_id"] == 4 || $pdf->programa["ciclo_id"] == 5) {
       $pdf->SetColors([]);
       $pdf->SetFont("Nutmeg", "", 7);
 
+      //Imprime la fila
       foreach ($dataAsignaturasGrado as $item) {
         // write data using Row() method containing array of values
         $pdf->Row(array(
@@ -400,6 +402,8 @@ if ($pdf->programa["ciclo_id"] == 4 || $pdf->programa["ciclo_id"] == 5) {
           $pdf->Ln(15);
         }
       }
+
+      //Suma de horas y creditos por grado
       $total_docente = $total_docente + $detalle["horas_docente"];
       $horas_docente = $horas_docente + $detalle["horas_docente"];
       $total_independiente = $total_independiente + $detalle["horas_independiente"];
@@ -413,6 +417,7 @@ if ($pdf->programa["ciclo_id"] == 4 || $pdf->programa["ciclo_id"] == 5) {
     $pdf->SetFillColor(191, 191, 191);
     $pdf->SetFont("Nutmeg", "", 8);
 
+    //Impresión de total de horas y creditos por grado
     $pdf->Cell(15, 5, utf8_decode($horas_docente), 1, 0, "C", true);
     $pdf->Cell(15, 5, utf8_decode($horas_independiente), 1, 0, "C", true);
     $pdf->Cell(15, 5, utf8_decode($creditos), 1, 1, "C", true);
@@ -425,130 +430,279 @@ if ($pdf->programa["ciclo_id"] == 4 || $pdf->programa["ciclo_id"] == 5) {
   if ($pdf->checkNewPage()) {
     $pdf->Ln(15);
   }
-  
 } else if ($pdf->programa["ciclo_id"] == 1 || $pdf->programa["ciclo_id"] == 2) {
 
   //Tabla para asignaturas en curriculum rígido
   $total_docente = 0;
   $total_independiente = 0;
   $total_creditos = 0;
-  foreach ($asignaturaGrados as $grado => $asignaturas) {
 
+  //Titulos de tabla por grado
+  foreach ($asignaturaGrados as $grado => $asignaturas) {
     $horas_docente = 0;
     $horas_independiente = 0;
     $creditos = 0;
 
+    // Impresión de grados excepto optativas
+    if ($grado != "Optativa") {
 
-    $pdf->SetFillColor(166, 166, 166);
-    $pdf->SetFont("Nutmeg", "", 7);
-    $pdf->Cell(176, 5, utf8_decode(mb_strtoupper($grado)), 1, 1, "C", true);
-    if ($pdf->checkNewPage()) {
-      $pdf->Ln(15);
-    }
-    $pdf->SetFillColor(191, 191, 191);
-    $pdf->Cell(33, 10, utf8_decode("ÁREA"), 1, 0, "C", true);
-    $y = $pdf->GetY();
-    $x = $pdf->GetX();
-    $pdf->MultiCell(36, 5, utf8_decode("ASIGNATURA O UNIDAD DE APRENDIZAJE"), 1, "C", true);
-    $pdf->SetXY($x + 36, $y);
-    $pdf->Cell(17, 10, utf8_decode("CLAVE"), 1, 0, "C", true);
-    $pdf->Cell(17, 10, utf8_decode("SERIACIÓN"), 1, 0, "C", true);
-    $y = $pdf->GetY();
-    $x = $pdf->GetX();
-    $pdf->MultiCell(15, 5, utf8_decode("HORAS DOCENTE"), 1, "C", true);
-    $pdf->SetXY($x + 15, $y);
-    $y = $pdf->GetY();
-    $x = $pdf->GetX();
-    $pdf->MultiCell(15, 5, utf8_decode("HORAS INDEP."), 1, "C", true);
-    $pdf->SetXY($x + 15, $y);
-    $pdf->Cell(15, 10, utf8_decode("CRÉDITOS"), 1, 0, "C", true);
-    $pdf->Cell(28, 10, utf8_decode("INSTALACIONES"), 1, 0, "C", true);
-    $pdf->Ln(10);
-
-
-
-    foreach ($asignaturas as $asignatura => $detalle) {
-      $area_txt = "";
-      switch ($detalle["area"]) {
-        case 1:
-          $area_txt = "Formación general";
-          break;
-        case 2:
-          $area_txt = "Formación Integral";
-          break;
-        case 3:
-          $area_txt = "Profesionalizante";
-          break;
-        case 4:
-          $area_txt = "Optativa especializante";
-          break;
-      }
-
-      $dataAsignaturasGrado = array(
-        [
-          "area_asignatura" => utf8_decode(mb_strtoupper($area_txt)),
-          "nombre_asignatura" => utf8_decode(mb_strtoupper($detalle["nombre"])),
-          "clave_asignatura" => utf8_decode(mb_strtoupper($detalle["clave"])),
-          "seriacion_asignatura" => utf8_decode(mb_strtoupper($detalle["seriacion"])),
-          "horas_docente_asignatura" => utf8_decode(mb_strtoupper($detalle["horas_docente"])),
-          "horas_independiente_asignatura" => utf8_decode(mb_strtoupper($detalle["horas_independiente"])),
-          "creditos_asignatura" => utf8_decode(mb_strtoupper($detalle["creditos"])),
-          "infraestructura_nombre_asignatura" => utf8_decode(mb_strtoupper($detalle["infraestructura_nombre"])),
-        ]
-      );
-
-      //set widht for each column (6 columns)
-      $pdf->SetWidths(array(33, 36, 17, 17, 15, 15, 15, 28));
-
-      //set line height
-      $pdf->SetLineHeight(5);
-      $pdf->SetColors([]);
+      $pdf->SetFillColor(166, 166, 166);
       $pdf->SetFont("Nutmeg", "", 7);
-
-      foreach ($dataAsignaturasGrado as $item) {
-        // write data using Row() method containing array of values
-        $pdf->Row(array(
-          $item['area_asignatura'],
-          $item['nombre_asignatura'],
-          $item['clave_asignatura'],
-          $item['seriacion_asignatura'],
-          $item['horas_docente_asignatura'],
-          $item['horas_independiente_asignatura'],
-          $item['creditos_asignatura'],
-          $item['infraestructura_nombre_asignatura']
-        ));
-
-        if ($pdf->checkNewPage()) {
-          $pdf->Ln(15);
-        }
+      $pdf->Cell(176, 5, utf8_decode(mb_strtoupper($grado)), 1, 1, "C", true);
+      if ($pdf->checkNewPage()) {
+        $pdf->Ln(15);
       }
-      $total_docente = $total_docente + $detalle["horas_docente"];
-      $horas_docente = $horas_docente + $detalle["horas_docente"];
-      $total_independiente = $total_independiente + $detalle["horas_independiente"];
-      $horas_independiente = $horas_independiente + $detalle["horas_independiente"];
-      $total_creditos = $total_creditos + $detalle["creditos"];
-      $creditos = $creditos + $detalle["creditos"];
+      $pdf->SetFillColor(191, 191, 191);
+      $pdf->Cell(33, 10, utf8_decode("ÁREA"), 1, 0, "C", true);
+      $y = $pdf->GetY();
+      $x = $pdf->GetX();
+      $pdf->MultiCell(36, 5, utf8_decode("ASIGNATURA O UNIDAD DE APRENDIZAJE"), 1, "C", true);
+      $pdf->SetXY($x + 36, $y);
+      $pdf->Cell(17, 10, utf8_decode("CLAVE"), 1, 0, "C", true);
+      $pdf->Cell(17, 10, utf8_decode("SERIACIÓN"), 1, 0, "C", true);
+      $y = $pdf->GetY();
+      $x = $pdf->GetX();
+      $pdf->MultiCell(15, 5, utf8_decode("HORAS DOCENTE"), 1, "C", true);
+      $pdf->SetXY($x + 15, $y);
+      $y = $pdf->GetY();
+      $x = $pdf->GetX();
+      $pdf->MultiCell(15, 5, utf8_decode("HORAS INDEP."), 1, "C", true);
+      $pdf->SetXY($x + 15, $y);
+      $pdf->Cell(15, 10, utf8_decode("CRÉDITOS"), 1, 0, "C", true);
+      $pdf->Cell(28, 10, utf8_decode("INSTALACIONES"), 1, 0, "C", true);
+      $pdf->Ln(10);
+
+      //Filas de asignatura por asignatura
+      foreach ($asignaturas as $asignatura => $detalle) {
+
+        $area_txt = "";
+        switch ($detalle["area"]) {
+          case 1:
+            $area_txt = "Formación general";
+            break;
+          case 2:
+            $area_txt = "Formación Integral";
+            break;
+          case 3:
+            $area_txt = "Profesionalizante";
+            break;
+          case 4:
+            $area_txt = "Formación Electiva";
+            break;
+        }
+
+        $dataAsignaturasGrado = array(
+          [
+            "area_asignatura" => utf8_decode(mb_strtoupper($area_txt)),
+            "nombre_asignatura" => utf8_decode(mb_strtoupper($detalle["nombre"])),
+            "clave_asignatura" => utf8_decode(mb_strtoupper($detalle["clave"])),
+            "seriacion_asignatura" => utf8_decode(mb_strtoupper($detalle["seriacion"])),
+            "horas_docente_asignatura" => utf8_decode(mb_strtoupper($detalle["horas_docente"])),
+            "horas_independiente_asignatura" => utf8_decode(mb_strtoupper($detalle["horas_independiente"])),
+            "creditos_asignatura" => utf8_decode(mb_strtoupper($detalle["creditos"])),
+            "infraestructura_nombre_asignatura" => utf8_decode(mb_strtoupper($detalle["infraestructura_nombre"])),
+          ]
+        );
+
+        //set widht for each column (6 columns)
+        $pdf->SetWidths(array(33, 36, 17, 17, 15, 15, 15, 28));
+
+        //set line height
+        $pdf->SetLineHeight(5);
+        $pdf->SetColors([]);
+        $pdf->SetFont("Nutmeg", "", 7);
+
+        //Imprime las filas por grado
+        foreach ($dataAsignaturasGrado as $item) {
+          // write data using Row() method containing array of values
+          $pdf->Row(array(
+            $item['area_asignatura'],
+            $item['nombre_asignatura'],
+            $item['clave_asignatura'],
+            $item['seriacion_asignatura'],
+            $item['horas_docente_asignatura'],
+            $item['horas_independiente_asignatura'],
+            $item['creditos_asignatura'],
+            $item['infraestructura_nombre_asignatura']
+          ));
+
+          if ($pdf->checkNewPage()) {
+            $pdf->Ln(15);
+          }
+        }
+        // Suma de horas y créditos por grado
+        $total_docente += $detalle["horas_docente"];
+        $horas_docente += $detalle["horas_docente"];
+        $total_independiente += $detalle["horas_independiente"];
+        $horas_independiente += $detalle["horas_independiente"];
+        $total_creditos += $detalle["creditos"];
+        $creditos += $detalle["creditos"];
+      }
+
+      $pdf->SetFillColor(255, 255, 255);
+      $pdf->Cell(103, 5, utf8_decode(""), 0, 0, "R", true);
+      $pdf->SetFillColor(191, 191, 191);
+      $pdf->SetFont("Nutmeg", "", 8);
+
+      //Imprime los totasl de horas y créditos por grado
+      $pdf->Cell(15, 5, utf8_decode($horas_docente), 1, 0, "C", true);
+      $pdf->Cell(15, 5, utf8_decode($horas_independiente), 1, 0, "C", true);
+      $pdf->Cell(15, 5, utf8_decode($creditos), 1, 1, "C", true);
+
+      $pdf->Ln();
+      $pdf->Ln();
+    } else if ($grado == "Optativa") {
+
+      // Impresión de tabla para optativas
+      $pdf->SetFillColor(166, 166, 166);
+      $pdf->SetFont("Nutmeg", "", 7);
+      $pdf->Cell(176, 5, utf8_decode(mb_strtoupper($grado)), 1, 1, "C", true);
+      if ($pdf->checkNewPage()) {
+        $pdf->Ln(15);
+      }
+      $pdf->SetFillColor(191, 191, 191);
+      $pdf->Cell(33, 10, utf8_decode("ÁREA"), 1, 0, "C", true);
+      $y = $pdf->GetY();
+      $x = $pdf->GetX();
+      $pdf->MultiCell(36, 5, utf8_decode("ASIGNATURA O UNIDAD DE APRENDIZAJE"), 1, "C", true);
+      $pdf->SetXY($x + 36, $y);
+      $pdf->Cell(17, 10, utf8_decode("CLAVE"), 1, 0, "C", true);
+      $pdf->Cell(17, 10, utf8_decode("SERIACIÓN"), 1, 0, "C", true);
+      $y = $pdf->GetY();
+      $x = $pdf->GetX();
+      $pdf->MultiCell(15, 5, utf8_decode("HORAS DOCENTE"), 1, "C", true);
+      $pdf->SetXY($x + 15, $y);
+      $y = $pdf->GetY();
+      $x = $pdf->GetX();
+      $pdf->MultiCell(15, 5, utf8_decode("HORAS INDEP."), 1, "C", true);
+      $pdf->SetXY($x + 15, $y);
+      $pdf->Cell(15, 10, utf8_decode("CRÉDITOS"), 1, 0, "C", true);
+      $pdf->Cell(28, 10, utf8_decode("INSTALACIONES"), 1, 0, "C", true);
+      $pdf->Ln(10);
+
+      // Fila de asignatura optativa
+      foreach ($asignaturas as $asignatura => $detalle) {
+
+        $area_txt = "";
+        switch ($detalle["area"]) {
+          case 1:
+            $area_txt = "Formación general";
+            break;
+          case 2:
+            $area_txt = "Formación Integral";
+            break;
+          case 3:
+            $area_txt = "Profesionalizante";
+            break;
+          case 4:
+            $area_txt = "Formación Electiva";
+            break;
+        }
+
+        $dataAsignaturasGrado = array(
+          [
+            "area_asignatura" => utf8_decode(mb_strtoupper($area_txt)),
+            "nombre_asignatura" => utf8_decode(mb_strtoupper($detalle["nombre"])),
+            "clave_asignatura" => utf8_decode(mb_strtoupper($detalle["clave"])),
+            "seriacion_asignatura" => utf8_decode(mb_strtoupper($detalle["seriacion"])),
+            "horas_docente_asignatura" => utf8_decode(mb_strtoupper($detalle["horas_docente"])),
+            "horas_independiente_asignatura" => utf8_decode(mb_strtoupper($detalle["horas_independiente"])),
+            "creditos_asignatura" => utf8_decode(mb_strtoupper($detalle["creditos"])),
+            "infraestructura_nombre_asignatura" => utf8_decode(mb_strtoupper($detalle["infraestructura_nombre"])),
+          ]
+        );
+
+        //set widht for each column (6 columns)
+        $pdf->SetWidths(array(33, 36, 17, 17, 15, 15, 15, 28));
+
+        //set line height
+        $pdf->SetLineHeight(5);
+        $pdf->SetColors([]);
+        $pdf->SetFont("Nutmeg", "", 7);
+
+        // Impresión de fila de asignatura
+        foreach ($dataAsignaturasGrado as $item) {
+          // write data using Row() method containing array of values
+          $pdf->Row(array(
+            $item['area_asignatura'],
+            $item['nombre_asignatura'],
+            $item['clave_asignatura'],
+            $item['seriacion_asignatura'],
+            $item['horas_docente_asignatura'],
+            $item['horas_independiente_asignatura'],
+            $item['creditos_asignatura'],
+            $item['infraestructura_nombre_asignatura']
+          ));
+
+          if ($pdf->checkNewPage()) {
+            $pdf->Ln(15);
+          }
+        }
+        $horas_docente += $detalle["horas_docente"];
+        $horas_independiente += $detalle["horas_independiente"];
+        $creditos += $detalle["creditos"];
+      }
+
+      $pdf->SetFillColor(255, 255, 255);
+      $pdf->Cell(103, 5, utf8_decode(""), 0, 0, "R", true);
+      $pdf->SetFillColor(191, 191, 191);
+      $pdf->SetFont("Nutmeg", "", 8);
+
+      $pdf->Cell(15, 5, utf8_decode($horas_docente), 1, 0, "C", true);
+      $pdf->Cell(15, 5, utf8_decode($horas_independiente), 1, 0, "C", true);
+      $pdf->Cell(15, 5, utf8_decode($creditos), 1, 1, "C", true);
+
+      $pdf->Ln();
+      $pdf->Ln();
     }
-
-    $pdf->SetFillColor(255, 255, 255);
-    $pdf->Cell(103, 5, utf8_decode(""), 0, 0, "R", true);
-    $pdf->SetFillColor(191, 191, 191);
-    $pdf->SetFont("Nutmeg", "", 8);
-
-    $pdf->Cell(15, 5, utf8_decode($horas_docente), 1, 0, "C", true);
-    $pdf->Cell(15, 5, utf8_decode($horas_independiente), 1, 0, "C", true);
-    $pdf->Cell(15, 5, utf8_decode($creditos), 1, 1, "C", true);
-
-    $pdf->Ln();
-    $pdf->Ln();
   }
 
-
+  //Sumatoria de total de horas y créditos de grados + horas y créditos mínimos de asigntaruas optativas
+  $total_docente += $pdf->programa["minimo_horas_optativas"];
+  $total_creditos += $pdf->programa["minimo_creditos_optativas"];
   if ($pdf->checkNewPage()) {
     $pdf->Ln(15);
   }
 }
 
+//Impresión de número mínimo de horas y créditos de asignaturas optativas
+$dataTotal = array(
+  [
+    "name" => utf8_decode("NÚMERO MÍNIMO DE HORAS QUE SE DEBERÁN ACREDITAR EN LAS ASIGNATURAS DE FORMACIÓN ELECTIVA, BAJO LA CONDUCCIÓN DE UN DOCENTE"),
+    "description" => (utf8_decode($pdf->programa["minimo_horas_optativas"] . " HORAS"))
+  ],
+  [
+    "name" => utf8_decode("NÚMERO MÍNIMO DE CRÉDITOS QUE SE DEBERÁN ACREDITAR EN LAS ASIGNATURAS DE FORMACIÓN ELECTIVA"),
+    "description" => (utf8_decode($pdf->programa["minimo_creditos_optativas"] . " CRÉDITOS"))
+  ],
+);
+
+
+//set widht for each column (6 columns)
+$pdf->SetWidths(array(130, 44));
+
+//set line height
+$pdf->SetLineHeight(5);
+
+$pdf->SetColors([[191, 191, 191], []]);
+
+//Impresión de filas
+foreach ($dataTotal as $item) {
+  // write data using Row() method containing array of values
+  $pdf->Row(array(
+    $item['name'],
+    $item['description']
+  ));
+}
+$pdf->Ln();
+$pdf->Ln();
+
+
+if ($pdf->checkNewPage()) {
+  $pdf->Ln(15);
+}
+
+// Impresión de total de horas y créditos de todas las asignaturas incluyendo optativas
 $dataTotal = array(
   [
     "name" => utf8_decode("TOTAL DE HORAS DE TRABAJO BAJO LA CONDUCCIÓN DE UN DOCENTE DURANTE TODA LA CARRERA"),
