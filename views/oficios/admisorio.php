@@ -66,7 +66,7 @@ $pdf->Cell(0, 5, utf8_decode("NUMERO DE OFICIO PENDIENTE"), 0, 1, "R");
 $pdf->Ln(3);
 
 $pdf->SetFont("Nutmegb", "", 10);
-$fecha = $pdf->convertirFecha(date("d-m-Y"));
+$fecha = $pdf->convertirFecha($pdf->solicitud["fecha_recepcion"]);
 $pdf->Cell(0, 5, "Guadalajara, Jalisco; " . $fecha, 0, 1, "R");
 $pdf->Ln(10);
 
