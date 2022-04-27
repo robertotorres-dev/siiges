@@ -181,7 +181,7 @@ Solicitudes.tiposControl = {
   1: { dictamenId: "DictamenRVOE", acuerdoId: "AcuerdoRVOE" },
   2: {
     dictamenId: "DictamenModificacionRVOE",
-    acuerdoId: "AcuerdoModificacionRVOE",
+    acuerdoId: "RefrendoRVOE",
   },
   3: {
     dictamenId: "DictamenCambioDomicilio",

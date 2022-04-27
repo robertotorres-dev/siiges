@@ -10,7 +10,7 @@
 //print_r($_GET["id"]);
   $tituloTipoSolicitud = [
                         "SOLICITUD DE RECONOCIMIENTO DE VALIDEZ OFICIAL DE ESTUDIOS",
-                        "SOLICITUD DE MODIFICACIÓN A PLANES Y PROGRAMAS DE ESTUDIO ",
+                        "SOLICITUD DE REFRENDO A PLANES Y PROGRAMAS DE ESTUDIO ",
                         "SOLICITUD DE CAMBIO DE DOMICILIO",
                         "SOLICITUD DE CAMBIO DE REPRESENTANTE LEGAL"
                       ];

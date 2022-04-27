@@ -147,8 +147,9 @@ Documento.nuevoOficio = function () {
   var enlace = $("#modal-enlace").val();
   var solicitudId = $("#modal-solicitud-id").val();
   var oficio = $("#modal-numero-oficio").val();
+  var fecha_surte_efecto = $("#modal-fecha_surte_efecto").val();
   $("#modal-numero-oficio").val("");
-  var url = enlace + "?id=" + solicitudId + "&oficio=" + oficio;
+  var url = enlace + "?id=" + solicitudId + "&oficio=" + oficio + "&fecha_surte_efecto=" + fecha_surte_efecto;
   window.open(url, "_blank");
 };
 

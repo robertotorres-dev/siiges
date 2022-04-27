@@ -28,7 +28,7 @@ class Programa extends Catalogo
   protected $minimo_horas_optativas;
   protected $minimo_creditos_optativas;
   protected $vigencia;
-  protected $surte_efecto;
+  protected $fecha_surte_efecto;
   protected $acuerdo_rvoe;
   protected $nombre;
   protected $tipo;

@@ -458,7 +458,6 @@ class PDF extends FPDF
   {
 
     $registroDetalles = $this->limpiar($registro);
-
     $detalles = new OficioDetalle();
     $detalles = $detalles->consultarPor("oficio_detalles", ["oficio_id" => $registro["oficio_id"], "propiedad" => $registro["propiedad"]], "*");
     $detalles = !empty($detalles["data"]) ? $detalles["data"] : false;
@@ -744,14 +743,14 @@ class PDF extends FPDF
     $notificacion->notificacionIdUsuario($resUsuarioNotificar["usuario_id"], "Acuerdo RVOE", $msj);
   }
 
-  function actualizarPrograma($solicitud_id, $rvoe)
+  function actualizarPrograma($solicitud_id, $rvoe, $fecha_surte_efecto)
   {
     $programa = new Programa();
     $res_programa = $programa->consultarPor("programas", array("solicitud_id" => $solicitud_id), "*");
-    $programas = $res_programa["data"][0];
+    $programa = $res_programa["data"][0];
 
     $programaAct = new Programa();
-    $programaAct->setAttributes(array("id" => $programas["id"], "acuerdo_rvoe" => $rvoe, "minimo_horas_optativas" => $programas["minimo_horas_optativas"], "minimo_creditos_optativas" => $programas["minimo_creditos_optativas"], "metodos_induccion" => $programas["metodos_induccion"]));
+    $programaAct->setAttributes(array("id" => $programa["id"], "acuerdo_rvoe" => $rvoe, "fecha_surte_efecto" => $fecha_surte_efecto, "minimo_horas_optativas" => $programa["minimo_horas_optativas"], "minimo_creditos_optativas" => $programa["minimo_creditos_optativas"], "metodos_induccion" => $programa["metodos_induccion"]));
     $programaAct->guardar();
   }
 }
