@@ -39,6 +39,11 @@ $pdf->getInspecciones($pdf->programa["id"]);
 
 $registro["solicitud_id"] = $_GET["id"];
 $registro["oficio"] = $_GET["oficio"];
+if (isset($_GET["fecha_surte_efecto"])) {
+  $registro["fecha_surte_efecto"] = $_GET["fecha_surte_efecto"];
+} else {
+  $registro["fecha_surte_efecto"] = $pdf->programa["fecha_surte_efecto"];
+}
 $registro["documento"] = "AcuerdoRVOE";
 $registro["fecha"] = date("Y-m-d");
 
@@ -295,11 +300,10 @@ $pdf->Cell(0, 5, "", 0, 1, "C");
 
 if(!$oficio){
   $pdf->guardarOficio($registro);
-  $fecha = date( "Y-m-d H:i:s" );
-  $mensaje = "Documento emitido con fecha de ".date( "Y-m-d" ) . " y oficio ".$registro["oficio"] ;
-  $pdf->actualizarEstatus("10",$registro["solicitud_id"],$mensaje);
-  $pdf->actualizarPrograma($registro["solicitud_id"],$registro["oficio"]);
+  $fecha = date("Y-m-d H:i:s");
+  $mensaje = "Documento expedido con fecha de " . $fecha . " y oficio " . $registro["oficio"];
+  $pdf->actualizarEstatus("10", $registro["solicitud_id"], $mensaje);
+  $pdf->actualizarPrograma($registro["solicitud_id"], $registro["oficio"], $registro["fecha_surte_efecto"]);
 }
 
 $pdf->Output( "I", "AcuerdoRVOE.pdf" );
-?>
