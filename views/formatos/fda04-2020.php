@@ -204,57 +204,6 @@ foreach ($dataDetalleDomicilioInstitucion as $item) {
 $pdf->Ln();
 $pdf->Ln();
 
-// Dictamenes expedidos para el plantel
-$pdf->SetFillColor(166, 166, 166);
-$pdf->SetFont("Nutmegb", "", 9);
-$pdf->Cell(174, 5, utf8_decode("3. DICTÁMENES EXPEDIDOS"), 1, 1, "C", true);
-
-$pdf->SetFillColor(191, 191, 191);
-$pdf->Cell(58, 5, utf8_decode("NOMBRE DEL DICTÁMEN"), 1, 0, "C", true);
-$pdf->Cell(88, 5, utf8_decode("AUTORIDAD QUE LO EMITIÓ"), 1, 0, "C", true);
-$pdf->Cell(28, 5, utf8_decode("FECHA"), 1, 0, "C", true);
-$pdf->Ln();
-
-foreach ($pdf->plantelDictamenes as $key => $dictamen) {
-
-  $dataDictamenes = array(
-    [
-      "nombre_dictamen" => utf8_decode(mb_strtoupper($dictamen["nombre"])),
-      "autoridad_dictamen" => utf8_decode(mb_strtoupper($dictamen["autoridad"])),
-      "fecha_eimision_dictamen" => utf8_decode(mb_strtoupper($dictamen["fecha_emision"])),
-    ]
-  );
-
-  //set widht for each column (6 columns)
-  $pdf->SetWidths(array(58, 88, 28));
-
-  //set line height
-  $pdf->SetLineHeight(5);
-  $pdf->SetColors([]);
-  $pdf->SetFont("Nutmeg", "", 9);
-
-  foreach ($dataDictamenes as $item) {
-    // write data using Row() method containing array of values
-    $pdf->Row(array(
-      $item['nombre_dictamen'],
-      $item['autoridad_dictamen'],
-      $item['fecha_eimision_dictamen']
-    ));
-    if ($pdf->checkNewPage()) {
-      $pdf->Ln(15);
-      $pdf->SetFont("Nutmegb", "", 11);
-      $pdf->SetTextColor(255, 255, 255);
-      $pdf->SetFillColor(0, 127, 204);
-      $pdf->Cell(140, 5, "", 0, 0, "L");
-      $pdf->Cell(35, 6, "FDA04", 0, 0, "R", true);
-      $pdf->SetTextColor(0, 0, 0);
-      $pdf->Ln(15);
-    }
-  }
-}
-$pdf->Ln();
-$pdf->Ln();
-
 if ($pdf->checkNewPage()) {
   $pdf->Ln(15);
   $pdf->SetFont("Nutmegb", "", 11);
@@ -271,7 +220,7 @@ if ($pdf->checkNewPage()) {
 // Dictamenes expedidos para el plantel
 $pdf->SetFillColor(166, 166, 166);
 $pdf->SetFont("Nutmegb", "", 9);
-$pdf->Cell(174, 5, utf8_decode("4. DESCRIPCIÓN DEL PLANTEL"), 1, 1, "C", true);
+$pdf->Cell(174, 5, utf8_decode("3. DESCRIPCIÓN DEL PLANTEL"), 1, 1, "C", true);
 $pdf->Ln();
 
 
@@ -408,7 +357,7 @@ $pdf->Ln();
 // Higiene del plantel
 $pdf->SetFillColor(166, 166, 166);
 $pdf->SetFont("Nutmegb", "", 9);
-$pdf->Cell(174, 5, utf8_decode("5. HIGIENE DEL PLANTEL"), 1, 1, "C", true);
+$pdf->Cell(174, 5, utf8_decode("4. HIGIENE DEL PLANTEL"), 1, 1, "C", true);
 
 $pdf->SetFillColor(191, 191, 191);
 $pdf->Cell(116, 5, utf8_decode("DESCRIPCIÓN"), 1, 0, "C", true);
@@ -458,7 +407,7 @@ $pdf->Ln();
 // Infraestructura del plantel
 $pdf->SetFillColor(166, 166, 166);
 $pdf->SetFont("Nutmegb", "", 9);
-$pdf->Cell(175, 5, utf8_decode("6. INFRAESTRUCTURA PARA EL PROGRAMA"), 1, 1, "C", true);
+$pdf->Cell(175, 5, utf8_decode("5. INFRAESTRUCTURA PARA EL PROGRAMA"), 1, 1, "C", true);
 $pdf->SetFillColor(191, 191, 191);
 $pdf->SetFont("Nutmeg", "", 9);
 $pdf->Cell(175, 5, utf8_decode("ESPACIOS Y EQUIPAMIENTO"), 1, 1, "C", true);
@@ -549,67 +498,13 @@ if ($pdf->checkNewPage()) {
 }
 
 $pdf->Ln();
-
-
-// otros RVOES
-if (!empty(json_decode($pdf->programa["otros_rvoes"]))) {
-
-  $pdf->SetFillColor(166, 166, 166);
-  $pdf->SetFont("Nutmegb", "", 9);
-  $pdf->Cell(175, 5, utf8_decode("7. PROGRAMAS IMPARTIDOS EN EL PLANTEL (OTROS RVOE)"), 1, 1, "C", true);
-  $pdf->SetFillColor(191, 191, 191);
-  $pdf->SetFont("Nutmeg", "", 9);
-  $pdf->Cell(175, 5, utf8_decode("ESPACIOS Y EQUIPAMIENTO"), 1, 1, "C", true);
-
-
-  foreach ($pdf->programa["otros_rvoes"] as $key => $otrosRvoes) {
-    $dataOtrosRvoes = array(
-      [
-        "nombre_otros_rvoes" => utf8_decode(mb_strtoupper($otrosRvoes["nombre"])),
-        "nivel_otros_rvoes" => utf8_decode(mb_strtoupper($otrosRvoes["nivel"])),
-        "acuerdo_otros_rvoes" => utf8_decode(mb_strtoupper($otrosRvoes["acuerdo"])),
-        "numero_alumnos_otros_rvoes" => utf8_decode(mb_strtoupper($otrosRvoes["numero_alumnos"])),
-      ]
-    );
-
-    //set widht for each column (6 columns)
-    $pdf->SetWidths(array(116, 58));
-
-    //set line height
-    $pdf->SetLineHeight(5);
-    $pdf->SetColors([]);
-    $pdf->SetFont("Nutmeg", "", 9);
-
-    foreach ($dataOtrosRvoes as $item) {
-      // write data using Row() method containing array of values
-      $pdf->Row(array(
-        $item['nombre_otros_rvoes'],
-        $item['nivel_otros_rvoes'],
-        $item['acuerdo_otros_rvoes'],
-        $item['numero_alumnos_otros_rvoes'],
-      ));
-
-      if ($pdf->checkNewPage()) {
-        $pdf->Ln(15);
-        $pdf->SetFont("Nutmegb", "", 11);
-        $pdf->SetTextColor(255, 255, 255);
-        $pdf->SetFillColor(0, 127, 204);
-        $pdf->Cell(140, 5, "", 0, 0, "L");
-        $pdf->Cell(35, 6, "FDA04", 0, 0, "R", true);
-        $pdf->SetTextColor(0, 0, 0);
-        $pdf->Ln(15);
-      }
-    }
-  }
-}
-
 $pdf->Ln();
 
 
 // Instituciones de salud aledañas
 $pdf->SetFillColor(166, 166, 166);
 $pdf->SetFont("Nutmegb", "", 9);
-$pdf->MultiCell(174, 5, utf8_decode("8. RELACIÓN DE INSTITUCIONES DE SALUD ALEDAÑAS, SERVICIOS DE AMBULANCIA U OTROS SERVICIOS DE EMERGENCIA A LOS CUALES RECURRIRÁ LA INSTITUCIÓN EN CASO DE ALGUNA CONTINGENCIA"), 1, "C", true);
+$pdf->MultiCell(174, 5, utf8_decode("6. RELACIÓN DE INSTITUCIONES DE SALUD ALEDAÑAS, SERVICIOS DE AMBULANCIA U OTROS SERVICIOS DE EMERGENCIA A LOS CUALES RECURRIRÁ LA INSTITUCIÓN EN CASO DE ALGUNA CONTINGENCIA"), 1, "C", true);
 
 $y = $pdf->GetY();
 $x = $pdf->GetX();
@@ -662,7 +557,7 @@ if ($pdf->programa["modalidad_id"] > Modalidad::ESCOLARIZADA && $pdf->programa["
   $pdf->SetTextColor(0, 0, 0);
   $pdf->SetFillColor(166, 166, 166);
   $pdf->SetFont("Nutmegb", "", 9);
-  $pdf->Cell(0, 5, utf8_decode("9.	SÓLO PARA LA MODALIDAD MIXTA Y NO ESCOLARIZADA"), 1, 1, "L", true);
+  $pdf->Cell(0, 5, utf8_decode("7.	SÓLO PARA LA MODALIDAD MIXTA Y NO ESCOLARIZADA"), 1, 1, "L", true);
   $pdf->SetFillColor(191, 191, 191);
   $pdf->Cell(0, 5, utf8_decode("LICENCIAS DE SOFTWARE "), 1, 1, "C", true);
   $pdf->SetFont("Nutmeg", "", 9);
