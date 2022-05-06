@@ -953,7 +953,7 @@ Solicitud.getDatosPlantel = function (idplantel) {
                 }
               }
               //Dictamenes
-              if (object.dictamenes != undefined && $("#tipo").val() != 4) {
+              /* if (object.dictamenes != undefined && $("#tipo").val() != 4) {
                 $("#inputsDictamenes").empty();
                 $("#dictamenes tr:not(:first)").remove();
                 var dictamenes = object.dictamenes;
@@ -987,7 +987,7 @@ Solicitud.getDatosPlantel = function (idplantel) {
                   nfilaDictamen++;
                   $("#dictamenes tr:last").after(filaDictamen);
                 }
-              }
+              } */
               //Edificios
               if (object.edificios != undefined) {
                 var edificios = object.edificios;
