@@ -77,10 +77,6 @@
 									<option value="">Selecione una opcion</option>
 								</select>
 								<br>
-								<p class="text-muted small">
-									<strong>¡Aviso importante! </strong>
-									Le recordamos que la convocatoria para la solicitud de RVOE 2020 con vigencia el día 18 de diciembre de 2020 ha cerrado. Estar atento a la próxima fecha de convocatoria 2021.
-								</p>
 							</div>
 							<div id="opcion-modalidad" class="col-sm-12 col-md-12 col-lg-12" style="display:none">
 								<label class="control-label" for="">Modalidad:</label><br>

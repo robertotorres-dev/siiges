@@ -164,10 +164,18 @@ if ($resultadoPrograma["data"]["nivel_id"] >= 4 && $resultadoPrograma["data"]["n
 					<br><br>
 					<div class="row">
 						<div class="col-sm-8">
+							<p class="text-muted small">
+								<strong>¡Nota importante! </strong>
+								Los documentos que se adjunten tendrán que ser escaneados a color, con buena resolución y cuidado de que no se pierda u omita información.
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-8">
 							<div class="form-group">
 								<label class="control-label" for="archivo_certificado"><?php echo $titulo_certificado1; ?>
 									<a class="questionmark" href="./ce-descripcion-documentos-alumno.php" target="_blank">
-										<span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top" title="Da clic para ver los datalles de cada documento"></span>
+										<span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top" title="Da clic para ver los datalles de este documento. Tamaño de archivo no mayor a 2MB"></span>
 									</a>
 								</label>
 								<input type="file" id="archivo_certificado" name="archivo_certificado" accept="application/pdf" class="form-control" />
@@ -189,6 +197,9 @@ if ($resultadoPrograma["data"]["nivel_id"] >= 4 && $resultadoPrograma["data"]["n
 						<div class="col-sm-8">
 							<div class="form-group">
 								<label class="control-label" for="archivo_nacimiento">Archivo Acta de Nacimiento (PDF)</label>
+								<a class="questionmark" href="#">
+									<span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top" title="Tamaño de archivo no mayor a 2MB"></span>
+								</a>
 								<input type="file" id="archivo_nacimiento" name="archivo_nacimiento" accept="application/pdf" class="form-control" />
 								<div><a href="../uploads/certificados/<?php echo $resultadoAlumno["data"]["archivo_nacimiento"]; ?>" target="_blank"><?php echo $resultadoAlumno["data"]["archivo_nacimiento"]; ?></a></div>
 							</div>
@@ -208,6 +219,9 @@ if ($resultadoPrograma["data"]["nivel_id"] >= 4 && $resultadoPrograma["data"]["n
 						<div class="col-sm-8">
 							<div class="form-group">
 								<label class="control-label" for="archivo_curp">Archivo CURP (PDF)</label>
+								<a class="questionmark" href="#">
+									<span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top" title="Tamaño de archivo no mayor a 2MB"></span>
+								</a>
 								<input type="file" id="archivo_curp" name="archivo_curp" accept="application/pdf" class="form-control" />
 								<div><a href="../uploads/certificados/<?php echo $resultadoAlumno["data"]["archivo_curp"]; ?>" target="_blank"><?php echo $resultadoAlumno["data"]["archivo_curp"]; ?></a></div>
 							</div>

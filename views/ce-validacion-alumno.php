@@ -439,7 +439,7 @@ if ($_GET["proceso"] == "edicion") {
 							<div class="form-group">
 								<label class="control-label" for="fecha_validacion">Fecha de archivo de validaci&oacute;n*
 									<a class="questionmark" href="#">
-										<span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top" title="Fecha en la que la IES realiza la validación del documento"></span>
+										<span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top" title="Fecha en la que la Institución Educativa realiza la carga de información en la plataforma"></span>
 									</a>
 								</label>
 								<input type="text" id="fecha_validacion" name="fecha_validacion" value="<?php echo $res_validacion["data"] ? $res_validacion["data"][0]["fecha_validacion"] : ""; ?>" maxlength="255" class="form-control" required />
