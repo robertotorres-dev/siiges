@@ -323,7 +323,7 @@ Solicitudes.getDetalles = function () {
             $("#OrdenInspección").hide();
           }
 
-          if (
+          /* if (
             solicitud.estatus >= Solicitudes.ESTATUS.CIMPRESION &&
             solicitud.estatus != Solicitudes.ESTATUS.RECHAZADA &&
             solicitud.estatus != 200
@@ -334,20 +334,21 @@ Solicitudes.getDetalles = function () {
           } else {
             $("#Notificacion").hide();
             $("#" + Solicitudes.tiposControl[solicitud.tipo].acuerdoId).hide();
-          }
+          } */
           if (
             solicitud.estatus >= Solicitudes.ESTATUS.REVISION &&
-            solicitud.estatus != Solicitudes.ESTATUS.RECHAZADA
+            solicitud.estatus != Solicitudes.ESTATUS.RECHAZADA &&
+            solicitud.estatus != 200
           ) {
             $("#ActaDeInspeccion").show();
             $("#ActaDeCierre").show();
             $("#Desistimiento").show();
-            $("#" + Solicitudes.tiposControl[solicitud.tipo].dictamenId).show();
+            $("#" + Solicitudes.tiposControl[solicitud.tipo].acuerdoId).show();
           } else {
             $("#ActaDeInspeccion").hide();
             $("#ActaDeCierre").hide();
             $("#Desistimiento").hide();
-            $("#" + Solicitudes.tiposControl[solicitud.tipo].dictamenId).hide();
+            $("#" + Solicitudes.tiposControl[solicitud.tipo].acuerdoId).hide();
           }
           if (
             solicitud.estatus >= Solicitudes.ESTATUS.EVALUACION &&
