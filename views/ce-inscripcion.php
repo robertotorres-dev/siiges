@@ -188,7 +188,9 @@ $resultadoCicloEscolar = $cicloEscolar->consultarId();
 							<table id="tabla-reporte1" class="table table-striped table-bordered" cellspacing="0" width="100%">
 								<thead>
 									<tr>
-										<th width="20%">Inscribir</th>
+										<th width="20%">Inscribir
+											<input type="checkbox" name="checkbox_all" id="checkbox_all" value="" data-toggle="tooltip" data-placement="top" title="Seleccionar todas las materias disponibles">
+										</th>
 										<th width="10%">Clave</th>
 										<th width="10%">Seriaci&oacute;n</th>
 										<th width="60%">Asignatura</th>
@@ -355,31 +357,7 @@ $resultadoCicloEscolar = $cicloEscolar->consultarId();
 	<script src="../js/bootstrap-select.min.js"></script>
 	<!-- JS CALENDAR -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script>
-		$(document).ready(function() {
-			$("#generacion_fecha_inicio").datepicker({
-				firstDay: 1,
-				monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-				dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-				dateFormat: 'yy-mm-dd'
-			});
-
-			$("#generacion_fecha_fin").datepicker({
-				firstDay: 1,
-				monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-				dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-				dateFormat: 'yy-mm-dd'
-			});
-		});
-
-		function confirmarBaja() {
-			if (confirm("¿Desea eliminar el registro seleccionado?\nSe eliminarán asignaturas y calificaciones del alumno.")) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	</script>
+	<script src="../js/ce-inscripcion.js"></script>
 </body>
 
 </html>
