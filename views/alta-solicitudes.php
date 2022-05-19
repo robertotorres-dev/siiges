@@ -735,7 +735,6 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                               <option value="">Seleccione una opción</option>
                               <option value="1">Semestral</option>
                               <option value="2">Cuatrimestral</option>
-                              <option value="3">Anual</option>
                               <option value="4">Semestral curriculum flexible</option>
                               <option value="5">Cuatrimestral curriculum flexible</option>
                             </select><br>

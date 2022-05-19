@@ -99,7 +99,6 @@ if (isset($_SESSION["resultado"])) {
 								<option value="">Seleccione una opción</option>
 								<option value="1">Semestral</option>
 								<option value="2">Cuatrimestral</option>
-								<option value="3">Anual</option>
 								<option value="4">Semestral curriculum felxible</option>
 								<option value="5">Cuatrimestral curriculum felxible</option>
 							</select><br>
