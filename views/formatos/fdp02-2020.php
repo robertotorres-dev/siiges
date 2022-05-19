@@ -310,7 +310,7 @@ if ($pdf->programa["ciclo_id"] == 4 || $pdf->programa["ciclo_id"] == 5) {
   $total_independiente = 0;
   $total_creditos = 0;
 
-  //Tabla para asignaturas en curriculum rígido
+  //Tabla para asignaturas en curriculum flexible
   foreach ($asignaturaGrados as $grado => $asignaturas) {
 
     $horas_docente = 0;
@@ -666,34 +666,37 @@ if ($pdf->programa["ciclo_id"] == 4 || $pdf->programa["ciclo_id"] == 5) {
 }
 
 //Impresión de número mínimo de horas y créditos de asignaturas optativas
-$dataTotal = array(
-  [
-    "name" => utf8_decode("NÚMERO MÍNIMO DE HORAS QUE SE DEBERÁN ACREDITAR EN LAS ASIGNATURAS DE FORMACIÓN ELECTIVA, BAJO LA CONDUCCIÓN DE UN DOCENTE"),
-    "description" => (utf8_decode($pdf->programa["minimo_horas_optativas"] . " HORAS"))
-  ],
-  [
-    "name" => utf8_decode("NÚMERO MÍNIMO DE CRÉDITOS QUE SE DEBERÁN ACREDITAR EN LAS ASIGNATURAS DE FORMACIÓN ELECTIVA"),
-    "description" => (utf8_decode($pdf->programa["minimo_creditos_optativas"] . " CRÉDITOS"))
-  ],
-);
-
-
-//set widht for each column (6 columns)
-$pdf->SetWidths(array(130, 44));
-
-//set line height
-$pdf->SetLineHeight(5);
-
-$pdf->SetColors([[191, 191, 191], []]);
-
-//Impresión de filas
-foreach ($dataTotal as $item) {
-  // write data using Row() method containing array of values
-  $pdf->Row(array(
-    $item['name'],
-    $item['description']
-  ));
+if ($pdf->programa["minimo_horas_optativas"]) {
+  $dataTotal = array(
+    [
+      "name" => utf8_decode("NÚMERO MÍNIMO DE HORAS QUE SE DEBERÁN ACREDITAR EN LAS ASIGNATURAS DE FORMACIÓN ELECTIVA, BAJO LA CONDUCCIÓN DE UN DOCENTE"),
+      "description" => (utf8_decode($pdf->programa["minimo_horas_optativas"] . " HORAS"))
+    ],
+    [
+      "name" => utf8_decode("NÚMERO MÍNIMO DE CRÉDITOS QUE SE DEBERÁN ACREDITAR EN LAS ASIGNATURAS DE FORMACIÓN ELECTIVA"),
+      "description" => (utf8_decode($pdf->programa["minimo_creditos_optativas"] . " CRÉDITOS"))
+    ],
+  );
+  
+  
+  //set widht for each column (6 columns)
+  $pdf->SetWidths(array(130, 44));
+  
+  //set line height
+  $pdf->SetLineHeight(5);
+  
+  $pdf->SetColors([[191, 191, 191], []]);
+  
+  //Impresión de filas
+  foreach ($dataTotal as $item) {
+    // write data using Row() method containing array of values
+    $pdf->Row(array(
+      $item['name'],
+      $item['description']
+    ));
+  }
 }
+
 $pdf->Ln();
 $pdf->Ln();
 
