@@ -350,29 +350,37 @@ if ($pdf->programa["ciclo_id"] == 4 || $pdf->programa["ciclo_id"] == 5) {
       $area_txt = "";
       switch ($detalle["area"]) {
         case 1:
-          $area_txt = "Formación general";
+          $area_txt = "Formación General";
           break;
         case 2:
-          $area_txt = "Formación Integral";
+          $area_txt = "Formación Básica";
           break;
         case 3:
-          $area_txt = "Profesionalizante";
+          $area_txt = "Formación Disciplinar";
           break;
         case 4:
-          $area_txt = "Optativa especializante";
+          $area_txt = "Formación Electiva";
+          break;
+        case 5:
+          $area_txt = 'Formación Técnica';
+          break;
+        case 6:
+          $area_txt = 'Formación Especializante';
           break;
       }
 
+      $nombreInfraestructura = utf8_decode(strtolower($detalle["infraestructura_nombre"]));
+      $nombreInfraestructura = ucfirst($nombreInfraestructura);
       $dataAsignaturasGrado = array(
         [
-          "area_asignatura" => utf8_decode(mb_strtoupper($area_txt)),
-          "nombre_asignatura" => utf8_decode(mb_strtoupper($detalle["nombre"])),
-          "clave_asignatura" => utf8_decode(mb_strtoupper($detalle["clave"])),
-          "seriacion_asignatura" => utf8_decode(mb_strtoupper($detalle["seriacion"])),
-          "horas_docente_asignatura" => utf8_decode(mb_strtoupper($detalle["horas_docente"])),
-          "horas_independiente_asignatura" => utf8_decode(mb_strtoupper($detalle["horas_independiente"])),
-          "creditos_asignatura" => utf8_decode(mb_strtoupper($detalle["creditos"])),
-          "infraestructura_nombre_asignatura" => utf8_decode(mb_strtoupper($detalle["infraestructura_nombre"])),
+          "area_asignatura" => utf8_decode($area_txt),
+          "nombre_asignatura" => utf8_decode($detalle["nombre"]),
+          "clave_asignatura" => utf8_decode($detalle["clave"]),
+          "seriacion_asignatura" => utf8_decode($detalle["seriacion"]),
+          "horas_docente_asignatura" => utf8_decode($detalle["horas_docente"]),
+          "horas_independiente_asignatura" => utf8_decode($detalle["horas_independiente"]),
+          "creditos_asignatura" => utf8_decode($detalle["creditos"]),
+          "infraestructura_nombre_asignatura" => $nombreInfraestructura,
         ]
       );
 
@@ -481,26 +489,34 @@ if ($pdf->programa["ciclo_id"] == 4 || $pdf->programa["ciclo_id"] == 5) {
             $area_txt = "Formación general";
             break;
           case 2:
-            $area_txt = "Formación Integral";
+            $area_txt = "Formación Básica";
             break;
           case 3:
-            $area_txt = "Profesionalizante";
+            $area_txt = "Formación Disciplinar";
             break;
           case 4:
             $area_txt = "Formación Electiva";
             break;
+          case 5:
+            $area_txt = 'Formación Técnica';
+            break;
+          case 6:
+            $area_txt = 'Formación Especializante';
+            break;
         }
 
+        $nombreInfraestructura = utf8_decode(strtolower($detalle["infraestructura_nombre"]));
+        $nombreInfraestructura = ucfirst($nombreInfraestructura);
         $dataAsignaturasGrado = array(
           [
-            "area_asignatura" => utf8_decode(mb_strtoupper($area_txt)),
-            "nombre_asignatura" => utf8_decode(mb_strtoupper($detalle["nombre"])),
-            "clave_asignatura" => utf8_decode(mb_strtoupper($detalle["clave"])),
-            "seriacion_asignatura" => utf8_decode(mb_strtoupper($detalle["seriacion"])),
-            "horas_docente_asignatura" => utf8_decode(mb_strtoupper($detalle["horas_docente"])),
-            "horas_independiente_asignatura" => utf8_decode(mb_strtoupper($detalle["horas_independiente"])),
-            "creditos_asignatura" => utf8_decode(mb_strtoupper($detalle["creditos"])),
-            "infraestructura_nombre_asignatura" => utf8_decode(mb_strtoupper($detalle["infraestructura_nombre"])),
+            "area_asignatura" => utf8_decode($area_txt),
+            "nombre_asignatura" => utf8_decode($detalle["nombre"]),
+            "clave_asignatura" => utf8_decode($detalle["clave"]),
+            "seriacion_asignatura" => utf8_decode($detalle["seriacion"]),
+            "horas_docente_asignatura" => utf8_decode($detalle["horas_docente"]),
+            "horas_independiente_asignatura" => utf8_decode($detalle["horas_independiente"]),
+            "creditos_asignatura" => utf8_decode($detalle["creditos"]),
+            "infraestructura_nombre_asignatura" => $nombreInfraestructura,
           ]
         );
 
@@ -589,26 +605,34 @@ if ($pdf->programa["ciclo_id"] == 4 || $pdf->programa["ciclo_id"] == 5) {
             $area_txt = "Formación general";
             break;
           case 2:
-            $area_txt = "Formación Integral";
+            $area_txt = "Formación Básica";
             break;
           case 3:
-            $area_txt = "Profesionalizante";
+            $area_txt = "Formación Disciplinar";
             break;
           case 4:
             $area_txt = "Formación Electiva";
             break;
+          case 5:
+            $area_txt = 'Formación Técnica';
+            break;
+          case 6:
+            $area_txt = 'Formación Especializante';
+            break;
         }
 
+        $nombreInfraestructura = utf8_decode(strtolower($detalle["infraestructura_nombre"]));
+        $nombreInfraestructura = ucfirst($nombreInfraestructura);
         $dataAsignaturasGrado = array(
           [
-            "area_asignatura" => utf8_decode(mb_strtoupper($area_txt)),
-            "nombre_asignatura" => utf8_decode(mb_strtoupper($detalle["nombre"])),
-            "clave_asignatura" => utf8_decode(mb_strtoupper($detalle["clave"])),
-            "seriacion_asignatura" => utf8_decode(mb_strtoupper($detalle["seriacion"])),
-            "horas_docente_asignatura" => utf8_decode(mb_strtoupper($detalle["horas_docente"])),
-            "horas_independiente_asignatura" => utf8_decode(mb_strtoupper($detalle["horas_independiente"])),
-            "creditos_asignatura" => utf8_decode(mb_strtoupper($detalle["creditos"])),
-            "infraestructura_nombre_asignatura" => utf8_decode(mb_strtoupper($detalle["infraestructura_nombre"])),
+            "area_asignatura" => utf8_decode($area_txt),
+            "nombre_asignatura" => utf8_decode($detalle["nombre"]),
+            "clave_asignatura" => utf8_decode($detalle["clave"]),
+            "seriacion_asignatura" => utf8_decode($detalle["seriacion"]),
+            "horas_docente_asignatura" => utf8_decode($detalle["horas_docente"]),
+            "horas_independiente_asignatura" => utf8_decode($detalle["horas_independiente"]),
+            "creditos_asignatura" => utf8_decode($detalle["creditos"]),
+            "infraestructura_nombre_asignatura" => $nombreInfraestructura,
           ]
         );
 
@@ -677,16 +701,16 @@ if ($pdf->programa["minimo_horas_optativas"]) {
       "description" => (utf8_decode($pdf->programa["minimo_creditos_optativas"] . " CRÉDITOS"))
     ],
   );
-  
-  
+
+
   //set widht for each column (6 columns)
   $pdf->SetWidths(array(130, 44));
-  
+
   //set line height
   $pdf->SetLineHeight(5);
-  
+
   $pdf->SetColors([[191, 191, 191], []]);
-  
+
   //Impresión de filas
   foreach ($dataTotal as $item) {
     // write data using Row() method containing array of values

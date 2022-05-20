@@ -1006,8 +1006,10 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                                 <option value="">Seleccione una opción</option>
                                 <optgroup label="Área">
                                   <option value="1">Formación General</option>
-                                  <option value="2">Formación Integral</option>
-                                  <option value="3">Profesionalizante</option>
+                                  <option value="2">Formación Básica</option>
+                                  <option value="3">Formación Disciplinar</option>
+                                  <option value="5">Formación Técnica</option>
+                                  <option value="6">Formación Especializante</option>
                                 </optgroup>
                               </select>
                             </div>
@@ -1076,7 +1078,7 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                   <div class="panel panel-default">
                     <div class="panel-heading">
                       <h4 class="panel-tittle">
-                        <a data-parent="#acordion3" data-toggle="collapse" href="#optativas-programa" aria-expanded="false" aria-controls="optativas-programa" class="collapsed">Optativas</a>
+                        <a data-parent="#acordion3" data-toggle="collapse" href="#optativas-programa" aria-expanded="false" aria-controls="optativas-programa" class="collapsed">Formación Electiva</a>
                         <button type="button" class="collpase-button collapsed" data-parent="#acordion3" data-toggle="collapse" href="#optativas-programa" aria-expanded="false"></button>
                       </h4>
                     </div>
@@ -1084,7 +1086,7 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                       <div class="panel-body">
                         <div class="form-group">
                           <div class="col-sm-12 col-md-12">
-                            <h2>Asignaturas optativas</h2>
+                            <h2>Asignaturas de Formación Electiva</h2>
                             <hr class="red">
                           </div>
                           <!-- insertar valores -->
@@ -1109,7 +1111,7 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                               <select class="form-control" id="areaOptativa" name="">
                                 <option value="">Seleccione una opción</option>
                                 <optgroup label="Área">
-                                  <option value="4">Optativa Especializante</option>
+                                  <option value="4">Formación Electiva</option>
                                 </optgroup>
                               </select>
                             </div>

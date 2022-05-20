@@ -226,13 +226,17 @@ if ($_GET["proceso"] == "edicion") {
                     <option value="1" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["area"] == 1) ? "selected" : "";
                                       ?>>Formación General</option>
                     <option value="2" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["area"] == 2) ? "selected" : "";
-                                      ?>>Formación Integral</option>
+                                      ?>>Formación Básica</option>
                     <option value="3" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["area"] == 3) ? "selected" : "";
-                                      ?>>Profesionalizante</option>
+                                      ?>>Formación Disciplinar</option>
+                    <option value="5" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["area"] == 5) ? "selected" : "";
+                                      ?>>Formación Técnica</option>
+                    <option value="6" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["area"] == 6) ? "selected" : "";
+                                      ?>>Formación Especializante</option>
                   </optgroup>
                   <optgroup id="groupOptativa" label="Optativa">
                     <option value="4" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["area"] == 4) ? "selected" : "";
-                                      ?>>Optativa Especializante</option>
+                                      ?>>Formación Electiva</option>
                   </optgroup>
                 </select>
               </div>
