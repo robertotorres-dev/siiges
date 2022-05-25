@@ -486,7 +486,7 @@ if ($pdf->programa["ciclo_id"] == 4 || $pdf->programa["ciclo_id"] == 5) {
         $area_txt = "";
         switch ($detalle["area"]) {
           case 1:
-            $area_txt = "Formación general";
+            $area_txt = "Formación General";
             break;
           case 2:
             $area_txt = "Formación Básica";
@@ -602,7 +602,7 @@ if ($pdf->programa["ciclo_id"] == 4 || $pdf->programa["ciclo_id"] == 5) {
         $area_txt = "";
         switch ($detalle["area"]) {
           case 1:
-            $area_txt = "Formación general";
+            $area_txt = "Formación General";
             break;
           case 2:
             $area_txt = "Formación Básica";
@@ -777,9 +777,9 @@ $pdf->Cell(0, 5, utf8_decode("11. OPERACIÓN DEL PLAN DE ESTUDIOS A TRAVÉS DE S
 foreach ($asignaturaAcademias as $academia => $asignaturas) {
   $pdf->SetFillColor(191, 191, 191);
   $pdf->SetFont("Nutmegb", "", 8);
-  $pdf->Cell(0, 5, utf8_decode(mb_strtoupper($academia)), 1, 1, "L", true);
+  $pdf->Cell(0, 5, utf8_decode(ucfirst($academia)), 1, 1, "L", true);
   $pdf->SetFont("Nutmeg", "", 7);
-  $pdf->MultiCell(0, 5, utf8_decode(mb_strtoupper($asignaturas)), 1, "J");
+  $pdf->MultiCell(0, 5, utf8_decode($asignaturas), 1, "J");
 
   if ($pdf->checkNewPage()) {
     $pdf->SetFont("Nutmegb", "", 11);
@@ -841,12 +841,14 @@ if ($pdf->checkNewPage()) {
 
 $pdf->SetFont("Nutmeg", "", 9);
 if ($pdf->programa["acuerdo_rvoe"]) {
-  $y = $pdf->GetY();
-  $x = $pdf->GetX();
-  $pdf->MultiCell(60, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), "T", "C");
-  $pdf->SetXY($x + 60, $y);
-  $pdf->Cell(50, 5, mb_strtoupper(Solicitud::convertirFecha(date("d-m-y"))), 0, 0, "C");
-  $pdf->MultiCell(65, 5, utf8_decode("ING. MARCO ARTURO CASTRO AGUILERA\nDIRECTOR GENERAL DE INCORPORACIÓN Y SERVICIOS ESCOLARES"), "T", "C");
+  $pdf->Cell(0, 5, utf8_decode("FECHA DE AUTORIZACIÓN"), 0, 1, "C");
+  $pdf->Cell(0, 5, mb_strtoupper(Solicitud::convertirFecha($pdf->programa["fecha_surte_efecto"])), 0, 0, "C");
+  $pdf->Ln(25);
+  $sizeFieldFirma = 65;
+  $sizePage = $pdf->GetPageWidth();
+  $x = ($sizePage / 2) - ($sizeFieldFirma / 2);
+  $pdf->SetX($x);
+  $pdf->MultiCell(65, 5, utf8_decode("ING. MARCO ARTURO CASTRO AGUILERA\nDIRECTOR GENERAL DE INCORPORACIÓN Y SERVICIOS ESCOLARES"), "T", "C", false);
 } else {
   $pdf->Cell(0, 5, "BAJO PROTESTA DE DECIR VERDAD", 0, 0, "C");
   $pdf->Ln(5);
