@@ -67,6 +67,7 @@ tipo_entidad = id_tabla
                                               "acta_constitutiva"=>34,
                                               "acuerdo_anterior"=>35,
                                               "dictamen_evaluacion"=>36,
+                                              "formato_pedagogico_01"=>37,
                                             );
 
     public static $dir_subida = '../uploads/';

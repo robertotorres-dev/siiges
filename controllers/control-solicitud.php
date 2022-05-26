@@ -933,8 +933,6 @@ if ($_POST["webService"] == "guardarSolicitud") {
     isset($_POST[$nombreInput]) ? $idDocumento = $_POST[$nombreInput] : $idDocumento = null;
 
     $tipoEntidad = strstr($campo, '-', true);
-    /* echo $tipoEntidad;
-      echo '<br>'; */
     $nombreFormulario = substr(strstr($campo, '-'), 1);
     if (empty($archivo["name"])) {
       continue;

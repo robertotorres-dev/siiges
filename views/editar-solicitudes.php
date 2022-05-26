@@ -829,7 +829,7 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-tittle">
-                      <a data-parent="#acordion3" data-toggle="collapse" href="#estudios-programa" aria-expanded="false" aria-controls="estudios-programa" class="collapsed">Estudios de oferta/demanda y pertinencia</a>
+                      <a data-parent="#acordion3" data-toggle="collapse" href="#estudios-programa" aria-expanded="false" aria-controls="estudios-programa" class="collapsed">Fundamentación del plan de estudios</a>
                       <button type="button" class="collpase-button collapsed" data-parent="#acordion3" data-toggle="collapse" href="#estudios-programa" aria-expanded="false"></button>
                     </h4>
                   </div>
@@ -837,7 +837,7 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                     <div class="panel-body">
                       <!--Estudio de pertinencia-->
                       <div class="form-group">
-                        <div class="col-sm-12 col-md-12">
+                        <!-- <div class="col-sm-12 col-md-12">
                           <h2>Estudio de pertinencia y factibilidad</h2>
                           <hr class="red">
                         </div>
@@ -861,10 +861,28 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                         <div class="col-sm-12 col-md-12" id="contendorPertinencia" style="display: none">
                           <a id="enlace-pertinencia" class="enlaces" href="" target="_blank">Ver estudio de pertinencia</a>
                           <br>
+                        </div> -->
+                        <div class="col-sm-12 col-md-6">
+                          <label class="control-label">FDP01 *</label>
+                          <input type="hidden" id="fdp_01-id" name="PROGRAMA-formato_pedagogico_01-id" value="">
+                          <input class="form-control" type="file" name="PROGRAMA-formato_pedagogico_01" value="">
+                        </div>
+                        <div class="col-sm-12 col-md-6" id="contendorFDP01" style="display: none">
+                          <label for=""></label><br>
+                          <a id="enlace-fdp_01" class="enlaces" href="" target="_blank">Ver archivo</a>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                          <br>
+                          <p class="text-muted small">
+                            <strong>¡Nota importante! </strong>
+                            <br>
+                            Adjuntar archivo que describa el estudio de pertinencia y factibilidad así como el estudio de oferta y demanda
+                            con las especificaciones señaladas en el Instructivo para la Obtención del Reconocimiento de Validez Oficial de Estudios de Educación Superior
+                            del Estado de Jalisco. <a href="plantillas/FDP01.docx">(Descargar plantilla). </a>
                         </div>
                       </div>
                       <!--Estudio de oferta y demanda-->
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <div class="col-sm-12 col-md-12">
                           <h2>Estudio de oferta y demanda*</h2>
                           <hr class="red">
@@ -891,9 +909,9 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                           <p class="small">*El estudio de oferta y demanda deberá contener un cuadro comparativo de programas educativos similares a nivel internacional, nacional y local, así como la demanda potencial a quien va dirigido</p>
                           <br>
                         </div>
-                      </div>
+                      </div> -->
                       <!--Recursos para su oepración-->
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <div class="col-sm-12 col-md-12">
                           <h2>Recursos para la operación</h2>
                           <hr class="red">
@@ -911,7 +929,7 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                           <a id="enlace-convenios" class="enlaces" href="" target="_blank">Ver convenios</a>
                           <br>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
@@ -1069,7 +1087,7 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                               <br>
                               <sup>1</sup> Archivo que muestre de manera esquemática la distribución de las unidades de aprendizaje,
                               secuencias (verticalidad y horizontalidad), flexibilidad para seleccionar trayectorias de estudio, número de unidades de
-                              aprendizaje por periodo lectivo (año escolar, semestre, cuatrimestre, trimestre, etcétera),
+                              aprendizaje por periodo lectivo (semestre o cuatrimestre),
                               las unidades de aprendizaje obligatorias y optativas
                               <br><br>
                               <sup>2</sup>Reglamento de academias o documento que contenga las reglas de operación de dichos cuerpos colegiados

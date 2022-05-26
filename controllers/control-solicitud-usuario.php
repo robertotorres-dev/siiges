@@ -534,6 +534,12 @@ if ($_POST["webService"] = "datosSolicitud") {
             $resultado["data"]["documentos"]["estudio_pertinencia"] = $res_estudioPertenencia["data"][0];
           }
 
+          $FDP01 = new Documento();
+          $res_fdp_01 = $FDP01->consultarPor("documentos", array("tipo_entidad" => Documento::$tipoEntidad["PROGRAMA"], "entidad_id" => $resultado["data"]["programa"]["id"], "tipo_documento" => Documento::$nombresDocumentos["formato_pedagogico_01"], "deleted_at"), "*");
+          if (sizeof($res_fdp_01["data"]) > 0) {
+            $resultado["data"]["documentos"]["formato_pedagogico_01"] = $res_fdp_01["data"][0];
+          }
+
           $ofertaDemanda = new Documento();
           $res_ofertaDemanda = $ofertaDemanda->consultarPor("documentos", array("tipo_entidad" => Documento::$tipoEntidad["PROGRAMA"], "entidad_id" => $resultado["data"]["programa"]["id"], "tipo_documento" => Documento::$nombresDocumentos["archivo_oferta_demanda"], "deleted_at"), "*");
           if (sizeof($res_ofertaDemanda["data"]) > 0) {

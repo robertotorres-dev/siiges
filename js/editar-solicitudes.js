@@ -120,6 +120,15 @@ EditarSolicitud.getSolicitud = function () {
 							documentos.estudio_pertinencia.archivo
 						);
 					}
+					console.log(documentos);
+					if (documentos.formato_pedagogico_01 != undefined) {
+						$('#fdp_01-id').val(documentos.formato_pedagogico_01.id);
+						$('#contendorFDP01').attr('style', 'display: block');
+						$('#enlace-fdp_01').attr(
+							'href',
+							documentos.formato_pedagogico_01.archivo
+						);
+					}
 					if (documentos.oferta_demanda != undefined) {
 						$('#demanda-id').val(documentos.oferta_demanda.id);
 						$('#contendorOfertaDemanda').attr('style', 'display: block');
