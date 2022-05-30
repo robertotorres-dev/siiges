@@ -43,7 +43,6 @@ Documento.getFormatos = function () {
     data: datos,
     dataType: "json",
     success: function (response) {
-      console.log(response);
       if ($.isArray(response.data) && !response.data.length > 0) {
         console.log(response.message + " FDP03 para la solicitud " + entidadId);
         $("#fdp03").on("click", function (e) {
@@ -110,7 +109,6 @@ Documento.showOficio = function (e) {
     dataType: "json",
     success: function (response) {
       console.log("SUCCESS");
-      // console.log(response);
       if (!response) {
         if ("get" == enlace.className) {
           $("#modal-solicitud-id").val(solicitudId);

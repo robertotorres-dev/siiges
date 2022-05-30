@@ -180,15 +180,12 @@ Solicitudes.getTipos = function () {
 Solicitudes.tiposControl = {
   1: { dictamenId: "DictamenRVOE", acuerdoId: "AcuerdoRVOE" },
   2: {
-    dictamenId: "DictamenModificacionRVOE",
     acuerdoId: "RefrendoRVOE",
   },
   3: {
-    dictamenId: "DictamenCambioDomicilio",
     acuerdoId: "AcuerdoCambioDomicilio",
   },
   4: {
-    dictamenId: "DictamenCambioRepresentanteLegal",
     acuerdoId: "AcuerdoCambioRepresentanteLegal",
   },
 };
