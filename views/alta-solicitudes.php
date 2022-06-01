@@ -779,19 +779,19 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                           </div>
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label" for="">Nombre(s) del coordinador</label><br>
-                            <input type="text" id="nombre_coordinador_programa" name="COORDINADOR-nombre" class="form-control" campo="Nombre del coordinador" ubicacion="Programa estudios - Datos generales" value="" placeholder="Nombre(s) del coordinador del programa"><br>
+                            <input type="text" id="nombre_coordinador_programa" name="COORDINADOR-nombre" class="form-control revision" campo="Nombre del coordinador" ubicacion="Programa estudios - Datos generales" value="" placeholder="Nombre(s) del coordinador del programa"><br>
                           </div>
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label" for="">Apellido paterno del coordinador</label><br>
-                            <input type="text" id="apellido_paterno_coordinador_programa" name="COORDINADOR-apellido_paterno" class="form-control" campo="Apellido paterno del coordinador" ubicacion="Programa estudios - Datos generales" value="" placeholder="Apellido paterno del coordinador del programa"><br>
+                            <input type="text" id="apellido_paterno_coordinador_programa" name="COORDINADOR-apellido_paterno" class="form-control revision" campo="Apellido paterno del coordinador" ubicacion="Programa estudios - Datos generales" value="" placeholder="Apellido paterno del coordinador del programa"><br>
                           </div>
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label" for="">Apellido materno del coordinador</label><br>
-                            <input type="text" id="apellido_materno_coordinador_programa" name="COORDINADOR-apellido_materno" class="form-control" value="" placeholder="Apellido materno del coordinador del programa"><br>
+                            <input type="text" id="apellido_materno_coordinador_programa" name="COORDINADOR-apellido_materno" class="form-control revision" value="" placeholder="Apellido materno del coordinador del programa"><br>
                           </div>
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label" for="">Perfil académico del coordinador</label><br>
-                            <input type="text" id="perfil_coordinador_programa" name="COORDINADOR-formacion" class="form-control" campo="Perfil del coordinador" ubicacion="Programa estudios - Datos generales" value="" placeholder="Perfil del coordinador del programa"><br>
+                            <input type="text" id="perfil_coordinador_programa" name="COORDINADOR-formacion" class="form-control revision" campo="Perfil del coordinador" ubicacion="Programa estudios - Datos generales" value="" placeholder="Perfil del coordinador del programa"><br>
                           </div>
                         </div>
                       <?php } ?>

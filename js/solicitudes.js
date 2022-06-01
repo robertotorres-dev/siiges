@@ -2321,13 +2321,14 @@ Solicitud.camposLlenos = function () {
 				'</p>'
 		);
 	} else {
-		if ($('#es_nombre_autorizado').val() == 1 || $('#tipo').val() >= 2) {
+		$('#modalConfirmacion').modal();
+		/* if ($('#es_nombre_autorizado').val() == 1 || $('#tipo').val() >= 2) {
 			$('#modalConfirmacion').modal();
 		} else {
 			$('#tamanoModal2021').attr('style', 'margin-top:80px;');
 			$('#mensajeConvocatoria2021').addClass('alert alert-danger');
 			$('#modalFueraDeConvocatoria').modal();
-		}
+		} */
 		$('#opcionSolicitud').val(1);
 		$('#tamanoModales').attr('style', 'margin-top:20px;');
 	}
