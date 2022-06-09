@@ -10,6 +10,8 @@ require_once "../models/modelo-alumno.php";
 require_once "../models/modelo-persona.php";
 require_once "../models/modelo-situacion.php";
 require_once "../models/modelo-institucion.php";
+require_once "../models/modelo-validacion.php";
+require_once "../models/modelo-situacion-validacion.php";
 
 $programa = new Programa();
 $programa->setAttributes(array("id" => $_GET["programa_id"]));
@@ -28,6 +30,7 @@ $resultadoInstitucion = $institucion->consultarId();
 
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -105,6 +108,7 @@ $resultadoInstitucion = $institucion->consultarId();
 									<th width="20%">Apellido Paterno</th>
 									<th width="20%">Apellido Materno</th>
 									<th width="20%">Nombre</th>
+									<th width="10%">Situaci&oacute;n</th>
 									<th width="10%">Acciones</th>
 									<th width="10%">Acciones</th>
 								</tr>
@@ -131,6 +135,15 @@ $resultadoInstitucion = $institucion->consultarId();
 									$situacion = new Situacion();
 									$situacion->setAttributes($parametros3);
 									$resultadoSituacion = $situacion->consultarId();
+
+									$validacion = new Validacion();
+									$resultadoValidacion = $validacion->consultarPor("validaciones", array("alumno_id" => $resultadoAlumno["data"][$i]["id"], "deleted_at"), "*");
+									$parametros4["id"] = $resultadoValidacion["data"][0]["situacion_validacion_id"];
+
+									$situacionValidacion = new SituacionValidacion();
+									$situacionValidacion->setAttributes($parametros4);
+									$resultadoSituacionValidacion = $situacionValidacion->consultarId();
+
 								?>
 									<tr>
 										<td><?php echo $resultadoAlumno["data"][$i]["id"]; ?></td>
@@ -138,6 +151,17 @@ $resultadoInstitucion = $institucion->consultarId();
 										<td><?php echo $resultadoPersona["data"]["apellido_paterno"]; ?></td>
 										<td><?php echo $resultadoPersona["data"]["apellido_materno"]; ?></td>
 										<td><?php echo $resultadoPersona["data"]["nombre"]; ?></td>
+										<!-- Situacion general -->
+										<td>
+											<?php
+											echo $resultadoSituacion["data"]["nombre"];
+
+											if (Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"])) :
+												echo "<br>";
+												echo isset($resultadoSituacionValidacion["data"]) ? $resultadoSituacionValidacion["data"]["nombre"] : "Sin validar";
+											endif;
+											?>
+										</td>
 										<td>
 											<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=consulta&tramite=equiv"><span id="" title="Abrir" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
 											<a href="ce-catalogo-alumno.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion&tramite=equiv"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a>
@@ -145,7 +169,11 @@ $resultadoInstitucion = $institucion->consultarId();
 										</td>
 										<td>
 											<a href="ce-equivalencia-expediente.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion">Expediente</span></a>
-											<br>
+											<?php if (Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"])) : ?>
+												<br />
+												<a href="ce-validacion-alumno.php?programa_id=<?php echo $resultadoPrograma["data"]["id"]; ?>&alumno_id=<?php echo  $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion&tramite=equiv">Validaci&oacute;n</a>
+											<?php endif; ?>
+											<br />
 											<a href="ce-kardex.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>">Kardex</a>
 										</td>
 									</tr>

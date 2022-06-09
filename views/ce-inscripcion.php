@@ -185,7 +185,7 @@ $resultadoCicloEscolar = $cicloEscolar->consultarId();
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
-							<table id="tabla-reporte1" class="table table-striped table-bordered" cellspacing="0" width="100%">
+							<table id="tabla-asignaturas" class="table table-striped table-bordered" cellspacing="0" width="100%">
 								<thead>
 									<tr>
 										<th width="20%">Inscribir
@@ -243,7 +243,7 @@ $resultadoCicloEscolar = $cicloEscolar->consultarId();
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<table id="tabla-reporte1" class="table table-striped table-bordered" cellspacing="0" width="100%">
+								<table id="tabla-optativas" class="table table-striped table-bordered" cellspacing="0" width="100%">
 									<thead>
 										<tr>
 											<th width="20%">Inscribir</th>
@@ -258,7 +258,7 @@ $resultadoCicloEscolar = $cicloEscolar->consultarId();
 										foreach ($resultadoAsignaturaOptativa["data"] as $key => $atributoAsignaturaOptativa) {
 										?>
 											<tr>
-												<td align="center"><input type="checkbox" id="asignaturas_grado[]" name="asignaturas_grado[]" value="<?php echo $atributoAsignaturaOptativa["id"]; ?>" /></td>
+												<td align="center"><input type="checkbox" id="optativas_grado[]" name="optativas_grado[]" value="<?php echo $atributoAsignaturaOptativa["id"]; ?>" /></td>
 												<td><?php echo $atributoAsignaturaOptativa["nombre"]; ?></td>
 											</tr>
 										<?php
@@ -332,7 +332,7 @@ $resultadoCicloEscolar = $cicloEscolar->consultarId();
 										<tr>
 											<td><?php echo $resultadoAlumno["data"]["matricula"]; ?></td>
 											<td><?php echo $resultadoPersona["data"]["apellido_paterno"] . " " . $resultadoPersona["data"]["apellido_materno"] . " " . $resultadoPersona["data"]["nombre"]; ?></td>
-											<td><a href="../controllers/control-alumno-grupo.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $_GET["grupo_id"]; ?>&alumno_id=<?php echo $resultadoAlumnoGrupo["data"][$i]["alumno_id"]; ?>&id=<?php echo $resultadoAlumnoGrupo["data"][$i]["id"]; ?>&webService=eliminarAlumnoGrupo" onclick="return confirmarBaja( )"><span id="" title="Eliminar" class="glyphicon glyphicon-trash col-sm-1 size_icon"></span></a></td>
+											<td><a href="../controllers/control-alumno-grupo.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $_GET["ciclo_id"]; ?>&grado=<?php echo $_GET["grado"]; ?>&grupo_id=<?php echo $_GET["grupo_id"]; ?>&tramite=<?php echo $_GET["tramite"] ?>&alumno_id=<?php echo $resultadoAlumnoGrupo["data"][$i]["alumno_id"]; ?>&id=<?php echo $resultadoAlumnoGrupo["data"][$i]["id"]; ?>&webService=eliminarAlumnoGrupo" onclick="return confirmarBaja( )"><span id="" title="Eliminar" class="glyphicon glyphicon-trash col-sm-1 size_icon"></span></a></td>
 										</tr>
 									<?php
 									}

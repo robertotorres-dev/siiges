@@ -154,7 +154,12 @@ if ($_GET["proceso"] == "edicion") {
 							<li class="active"><?php echo $titulo; ?></li>
 						<?php endif; ?>
 						<?php if (Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"])) : ?>
-							<li><a href="ce-alumnos.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Alumnos</a></li>
+
+							<?php if (isset($_GET["tramite"]) && $_GET["tramite"] == "equiv") { ?>
+								<li><a href="ce-alumnos-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Alumnos</a></li>
+							<?php	} else { ?>
+								<li><a href="ce-alumnos.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Alumnos</a></li>
+							<?php	} ?>
 						<?php endif; ?>
 					</ol>
 				</div>
@@ -475,15 +480,19 @@ if ($_GET["proceso"] == "edicion") {
 
 									<?php if (Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"])) : ?>
 										<input type="hidden" name="estatus" value="1" />
-										<input type="hidden" name="url" value="../views/ce-alumnos.php?programa_id=<?php echo $_GET["programa_id"] . "&codigo=200"; ?> " />
+										<?php if (isset($_GET["tramite"]) && $_GET["tramite"] == "equiv") { ?>
+											<input type="hidden" name="url" value="../views/ce-alumnos-equivalencia.php?programa_id=<?php echo $_GET["programa_id"] . "&codigo=200"; ?> " />
+										<?php	} else { ?>
+											<input type="hidden" name="url" value="../views/ce-alumnos.php?programa_id=<?php echo $_GET["programa_id"] . "&codigo=200"; ?> " />
+										<?php	} ?>
+
 										<input type="hidden" name="webService" value="guardar" />
 										<?php if (!isset($res_validacion["data"][0]["estatus"]) || $res_validacion["data"][0]["estatus"] != 1) : ?>
 											<input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" />
 										<?php endif; ?>
 									<?php endif; ?>
-									
-								</div>
 
+								</div>
 							</div>
 						</div>
 					<?php

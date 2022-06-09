@@ -127,8 +127,8 @@ if (!empty($_POST)) {
     $res_validacion = $validacion->consultarPor('validaciones', array("alumno_id" => $resultadoAlumno["data"][0]["id"], "deleted_at"), '*');
     if ((!$res_validacion["data"]
         || $res_validacion["data"][0]["situacion_validacion_id"] == 2)
-      && intval($ciclo_escolar_actual[0]) >= 2021
-      && $validar_grado
+      && (intval($ciclo_escolar_actual[0]) >= 2021 || $resultado_ciclo_escolar["data"]["nombre"] == "EQUIV")
+      && ($validar_grado || $resultado_ciclo_escolar["data"]["nombre"] == "EQUIV")
     ) {
       header("Location: ../views/ce-inscripcion.php?programa_id=" . $_POST["programa_id"] . "&ciclo_id=" . $_POST["ciclo_id"] . "&grado=" . $_POST["grado"] . "&grupo_id=" . $_POST["grupo_id"] . "&codigo=403&tramite=" . $_POST["tramite"]);
       exit();
@@ -144,6 +144,18 @@ if (!empty($_POST)) {
     $resultadoAlumnoGrupo = $alumnoGrupo->guardar();
 
     foreach ($_POST["asignaturas_grado"] as $asignatura_id) {
+      $parametros3 = array();
+      $parametros3["alumno_id"] = $resultadoAlumno["data"][0]["id"];
+      $parametros3["grupo_id"] = $_POST["grupo_id"];
+      $parametros3["asignatura_id"] = $asignatura_id;
+      $parametros3["tipo"] = 1;
+
+      $calificacion = new Calificacion();
+      $calificacion->setAttributes($parametros3);
+      $resultadoCalificacion = $calificacion->guardar();
+    }
+
+    foreach ($_POST["optativas_grado"] as $asignatura_id) {
       $parametros3 = array();
       $parametros3["alumno_id"] = $resultadoAlumno["data"][0]["id"];
       $parametros3["grupo_id"] = $_POST["grupo_id"];
@@ -189,6 +201,10 @@ if ($_GET["webService"] == "eliminarAlumnoGrupo") {
     $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"alumnos_grupos","accion"=>"eliminarAlumnoGrupo","lugar"=>"control-alumno-grupo"]);
     $result = $bitacora->guardar(); */
 
-  header("Location: ../views/ce-inscripcion.php?programa_id=" . $_GET["programa_id"] . "&ciclo_id=" . $_GET["ciclo_id"] . "&grado=" . $_GET["grado"] . "&grupo_id=" . $_GET["grupo_id"] . "&codigo=200");
+  if ($_GET["tramite"] == "equiv") {
+    header("Location: ../views/ce-inscripcion.php?programa_id=" . $_GET["programa_id"] . "&ciclo_id=" . $_GET["ciclo_id"] . "&grado=" . $_GET["grado"] . "&grupo_id=" . $_GET["grupo_id"] . "&tramite=" . $_GET["tramite"] . "&codigo=200");
+  } else {
+    header("Location: ../views/ce-inscripcion.php?programa_id=" . $_GET["programa_id"] . "&ciclo_id=" . $_GET["ciclo_id"] . "&grado=" . $_GET["grado"] . "&grupo_id=" . $_GET["grupo_id"] . "&codigo=200");
+  }
   exit();
 }

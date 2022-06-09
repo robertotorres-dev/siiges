@@ -22,7 +22,6 @@ $institucion = new Institucion();
 $institucion->setAttributes(array("id" => $resultadoPlantel["data"]["institucion_id"]));
 $resultadoInstitucion = $institucion->consultarId();
 
-
 ?>
 
 
@@ -68,7 +67,15 @@ $resultadoInstitucion = $institucion->consultarId();
 					<ol class="breadcrumb pull-left">
 						<li><i class="icon icon-home"></i></li>
 						<li><a href="home.php">SIIGES</a></li>
-						<li><a href="ce-programas-plantel.php<?php echo "?institucion_id=" . $resultadoInstitucion["data"]["id"] . "&plantel_id=" . $resultadoPlantel["data"]["id"]; ?>">Programas de Estudios</a></li>
+						<li><a href="ce-programas-plantel.php
+						<?php
+						if (isset($resultadoInstitucion["data"][0])) {
+							$resultadoInstitucion["data"] = $resultadoInstitucion["data"][0];
+						}
+
+						echo "?institucion_id=" . $resultadoInstitucion["data"]["id"] . "&plantel_id=" . $resultadoPlantel["data"]["id"];
+
+						?>">Programas de Estudios</a></li>
 						<li class="active">Cat&aacute;logo Asignaturas</li>
 					</ol>
 				</div>
@@ -94,72 +101,93 @@ $resultadoInstitucion = $institucion->consultarId();
 
 					<!-- CONTENIDO -->
 					<div class="row">
-						<div class="col-sm-12">
-							<a href="ce-editar-asignatura.php<?php echo "?programa_id=" . $resultadoPrograma["data"]["id"]; ?>&proceso=alta" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i> Alta de Asignatura</a>
-						</div>
+						<?php
+						if (
+							Rol::ROL_ADMIN == $_SESSION["rol_id"]
+							|| Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"]
+							|| Rol::ROL_SICYT_EDITAR == $_SESSION["rol_id"]
+						) {
+						?>
+							<div class="col-sm-12">
+								<a href="ce-editar-asignatura.php<?php echo "?programa_id=" . $resultadoPrograma["data"]["id"]; ?>&proceso=alta" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i> Alta de Asignatura</a>
+							</div>
 					</div>
-					<div class="row" style="padding-top: 20px;">
-						<div class="col-sm-12">
-						</div>
+				<?php
+						}
+				?>
+				<div class="row" style="padding-top: 20px;">
+					<div class="col-sm-12">
 					</div>
-					<!-- Contenido del formulario -->
-					<div class="row">
-						<div class="col-sm-12">
-							<table id="tabla-reporte1" class="table table-striped table-bordered" cellspacing="0" width="100%">
-								<thead>
+				</div>
+				<!-- Contenido del formulario -->
+				<div class="row">
+					<div class="col-sm-12">
+						<table id="tabla-reporte1" class="table table-striped table-bordered" cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th width="15%">Grado</th>
+									<th width="35%">Asignatura</th>
+									<th width="10%">Clave</th>
+									<th width="10%">Seriaci&oacute;n</th>
+									<th width="10%">Docente</th>
+									<th width="10%">Independiente</th>
+									<th width="10%">Cr&eacute;ditos</th>
+									<th width="10%">Consecutivo</th>
+									<th width="10%">Acciones</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php
+
+								$parametros3["programa_id"] = $_GET["programa_id"];
+								$parametros3["grado"] = "Primer cuatrimestre";
+
+								$parametros4["programa_id"] = $_GET["programa_id"];
+								$parametros4["grado"] = "Optativa";
+
+								$asignatura = new Asignatura();
+								$asignatura->setAttributes($parametros3);
+								$resultadoAsignatura = $asignatura->consultarPor('asignaturas', array("programa_id" => $_GET['programa_id'], "deleted_at"), '*');
+
+								$max = count($resultadoAsignatura["data"]);
+
+								for ($i = 0; $i < $max; $i++) {
+
+								?>
+									<input type="hidden" id="id[]" name="id[]" value="<?php echo $resultadoAsignatura["data"][$i]["id"] ?>" />
 									<tr>
-										<th width="15%">Grado</th>
-										<th width="35%">Asignatura</th>
-										<th width="10%">Clave</th>
-										<th width="10%">Seriaci&oacute;n</th>
-										<th width="10%">Docente</th>
-										<th width="10%">Independiente</th>
-										<th width="10%">Cr&eacute;ditos</th>
-										<th width="10%">Consecutivo</th>
-										<th width="10%">Acciones</th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php
-
-									$parametros3["programa_id"] = $_GET["programa_id"];
-									$parametros3["grado"] = "Primer cuatrimestre";
-
-									$parametros4["programa_id"] = $_GET["programa_id"];
-									$parametros4["grado"] = "Optativa";
-
-									$asignatura = new Asignatura();
-									$asignatura->setAttributes($parametros3);
-									$resultadoAsignatura = $asignatura->consultarPor('asignaturas', array("programa_id" => $_GET['programa_id'], "deleted_at"), '*');
-
-									$max = count($resultadoAsignatura["data"]);
-
-									for ($i = 0; $i < $max; $i++) {
-
-									?>
-										<input type="hidden" id="id[]" name="id[]" value="<?php echo $resultadoAsignatura["data"][$i]["id"] ?>" />
-										<tr>
-											<td><?php echo $resultadoAsignatura["data"][$i]["grado"]; ?></td>
-											<td><?php echo $resultadoAsignatura["data"][$i]["nombre"]; ?></td>
-											<td><?php echo $resultadoAsignatura["data"][$i]["clave"]; ?></td>
-											<td><?php echo $resultadoAsignatura["data"][$i]["seriacion"]; ?></td>
-											<td><?php echo $resultadoAsignatura["data"][$i]["horas_docente"]; ?></td>
-											<td><?php echo $resultadoAsignatura["data"][$i]["horas_independiente"]; ?></td>
-											<td><?php echo $resultadoAsignatura["data"][$i]["creditos"]; ?></td>
-											<td><?php echo $resultadoAsignatura["data"][$i]["consecutivo"]; ?></td>
-											<td>
+										<td><?php echo $resultadoAsignatura["data"][$i]["grado"]; ?></td>
+										<td><?php echo $resultadoAsignatura["data"][$i]["nombre"]; ?></td>
+										<td><?php echo $resultadoAsignatura["data"][$i]["clave"]; ?></td>
+										<td><?php echo $resultadoAsignatura["data"][$i]["seriacion"]; ?></td>
+										<td><?php echo $resultadoAsignatura["data"][$i]["horas_docente"]; ?></td>
+										<td><?php echo $resultadoAsignatura["data"][$i]["horas_independiente"]; ?></td>
+										<td><?php echo $resultadoAsignatura["data"][$i]["creditos"]; ?></td>
+										<td><?php echo $resultadoAsignatura["data"][$i]["consecutivo"]; ?></td>
+										<td>
+											<?php
+											if (
+												Rol::ROL_ADMIN == $_SESSION["rol_id"]
+												|| Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"]
+												|| Rol::ROL_SICYT_EDITAR == $_SESSION["rol_id"]
+											) {
+											?>
 												<a href="../views/ce-editar-asignatura.php<?php echo "?programa_id=" . $resultadoPrograma["data"]["id"] . "&asignatura_id=" . $resultadoAsignatura["data"][$i]["id"] . "&proceso=edicion"; ?>"><span class='glyphicon glyphicon-edit'></span></a>
 												<a href="../views/ce-editar-asignatura.php<?php echo "?programa_id=" . $resultadoPrograma["data"]["id"] . "&asignatura_id=" . $resultadoAsignatura["data"][$i]["id"] . "&proceso=consulta"; ?>"><span class='glyphicon glyphicon-eye-open'></span></a>
 												<a href="#" onclick="Asignaturas.modalEliminarAsignatura('<?php echo $resultadoAsignatura['data'][$i]['id'] ?>', '<?php echo $resultadoAsignatura['data'][$i]['nombre'] ?>', '<?php echo $resultadoAsignatura['data'][$i]['clave'] ?>', '<?php echo $resultadoPrograma['data']['id'] ?>')"><span class='glyphicon glyphicon-trash'></span></a>
-											</td>
-										</tr>
-									<?php
-									}
-									?>
-								</tbody>
-							</table>
-						</div>
+											<?php } else { ?>
+												<a href="../views/ce-editar-asignatura-institucion.php<?php echo "?programa_id=" . $resultadoPrograma["data"]["id"] . "&asignatura_id=" . $resultadoAsignatura["data"][$i]["id"] . "&proceso=edicion"; ?>"><span class='glyphicon glyphicon-edit'></span></a>
+												<a href="../views/ce-editar-asignatura-institucion.php<?php echo "?programa_id=" . $resultadoPrograma["data"]["id"] . "&asignatura_id=" . $resultadoAsignatura["data"][$i]["id"] . "&proceso=consulta"; ?>"><span class='glyphicon glyphicon-eye-open'></span></a>
+											<?php } ?>
+										</td>
+									</tr>
+								<?php
+								}
+								?>
+							</tbody>
+						</table>
 					</div>
+				</div>
 				</div>
 			</form>
 		</section>

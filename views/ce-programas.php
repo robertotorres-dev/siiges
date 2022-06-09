@@ -96,7 +96,7 @@
 							<tr>
 								<td><?php echo $resultadoPrograma["data"][$i]["id"]; ?></td>
 								<td><?php echo $resultadoPrograma["data"][$i]["nombre"]; ?></td>
-								<td><?php echo $resultadoPrograma["data"][$i]["surte_efecto"]; ?></td>
+								<td><?php echo $resultadoPrograma["data"][$i]["fecha_surte_efecto"]; ?></td>
 								<td><?php echo $resultadoPrograma["data"][$i]["acuerdo_rvoe"]; ?></td>
 								<td>
 									<a href="ce-reglas.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Reglas</span></a>
@@ -154,7 +154,7 @@
 							<tr>
 								<td><?php echo $resultadoPrograma["data"][$i]["id"]; ?></td>
 								<td><?php echo $resultadoPrograma["data"][$i]["nombre"]; ?></td>
-								<td><?php echo $resultadoPrograma["data"][$i]["surte_efecto"]; ?></td>
+								<td><?php echo $resultadoPrograma["data"][$i]["fecha_surte_efecto"]; ?></td>
 								<td><?php echo $resultadoPrograma["data"][$i]["acuerdo_rvoe"]; ?></td>
 								<td>N/A</td>
 							</tr>

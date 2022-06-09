@@ -36,6 +36,10 @@ require_once "../../models/modelo-docente.php";
 require_once "../../models/modelo-formacion.php";
 require_once "../../models/modelo-experiencia.php";
 require_once "../../models/modelo-publicacion.php";
+require_once "../../models/modelo-calificacion.php";
+require_once "../../models/modelo-grupo.php";
+require_once "../../models/modelo-ciclo-escolar.php";
+require_once "../../models/modelo-alumno.php";
 
 
 class PDF extends PDF_MC_Table
@@ -826,6 +830,216 @@ class PDF extends PDF_MC_Table
         ];
         array_push($this->publicaciones, $p);
       }
+    }
+  }
+
+  function getDataPrograma($programa_id = null)
+  {
+    $this->programa = new Programa();
+    $this->programa->setAttributes(["id" => $programa_id]);
+    $this->programa = $this->programa->consultarId();
+    $this->programa = !empty($this->programa["data"]) ? $this->programa["data"] : false;
+    if (!$this->programa) {
+      $_SESSION["resultado"] = json_encode(["status" => "404", "message" => "Programa no encontrado.", "data" => []]);
+      header("Location: ../home.php");
+      exit();
+    }
+    //print_r($this->programa);
+    // Nivel
+    $this->nivel = new Nivel();
+    $this->nivel->setAttributes(["id" => $this->programa["nivel_id"]]);
+    $this->nivel = $this->nivel->consultarId();
+    $this->nivel = !empty($this->nivel["data"]) ? $this->nivel["data"] : false;
+    if (!$this->nivel) {
+      $_SESSION["resultado"] = json_encode(["status" => "404", "message" => "Nivel no encontrado.", "data" => []]);
+      header("Location: ../home.php");
+      exit();
+    }
+    // Antecendentes
+    $antecendente = new Nivel();
+    $antecendente->setAttributes(["id" => $this->programa["antecedente_academico"]]);
+    $antecendente = $antecendente->consultarId();
+    $antecendente = !empty($antecendente["data"]) ? $antecendente["data"] : false;
+    if (!$antecendente) {
+      $_SESSION["resultado"] = json_encode(["status" => "404", "message" => "Antecedente no encontrado.", "data" => []]);
+      header("Location: ../home.php");
+      exit();
+    }
+    $this->programa["antecedente"] = $antecendente;
+    //Modalidad
+    $this->modalidad = new Modalidad();
+    $this->modalidad->setAttributes(["id" => $this->programa["modalidad_id"]]);
+    $this->modalidad = $this->modalidad->consultarId();
+    $this->modalidad = !empty($this->modalidad["data"]) ? $this->modalidad["data"] : false;
+    if (!$this->modalidad) {
+      $_SESSION["resultado"] = json_encode(["status" => "404", "message" => "Modalidad no encontrada.", "data" => []]);
+      header("Location: ../home.php");
+      exit();
+    }
+    //Ciclo
+    $this->ciclo = new Ciclo();
+    $this->ciclo->setAttributes(["id" => $this->programa["ciclo_id"]]);
+    $this->ciclo = $this->ciclo->consultarId();
+    $this->ciclo = !empty($this->ciclo["data"]) ? $this->ciclo["data"] : false;
+    if (!$this->ciclo) {
+      $_SESSION["resultado"] = json_encode(["status" => "404", "message" => "Ciclo no encontrado.", "data" => []]);
+      header("Location: ../home.php");
+      exit();
+    }
+    $this->turno = "";
+    $this->turnoArray = [];
+    // Turnos
+    $this->turnos = new Turno();
+
+    $this->turnos = $this->turnos->consultarPor("programas_turnos", array("programa_id" => $this->programa["id"], "deleted_at"), "*");
+    $this->turnos = !empty($this->turnos["data"]) ? $this->turnos["data"] : false;
+    if (!$this->turnos) {
+      $_SESSION["resultado"] = json_encode(["status" => "404", "message" => "Solicitud no encontrada.", "data" => []]);
+      header("Location: ../home.php");
+      exit();
+    }
+    foreach ($this->turnos as $value) {
+      $this->objTurno = new Turno();
+      $this->objTurno->setAttributes(["id" => $value["turno_id"]]);
+      $this->objTurno = $this->objTurno->consultarId();
+      $this->objTurno = !empty($this->objTurno["data"]) ? $this->objTurno["data"] : false;
+      if (!$this->objTurno) {
+        $_SESSION["resultado"] = json_encode(["status" => "404", "message" => "Turno no encontrado.", "data" => []]);
+        header("Location: ../home.php");
+        exit();
+      }
+      $this->turno .= $this->objTurno["nombre"] . ", ";
+      array_push($this->turnoArray, $this->objTurno["nombre"]);
+    }
+    // Plantel
+    $this->plantel = new Plantel();
+    $this->plantel->setAttributes(["id" => $this->programa["plantel_id"]]);
+    $this->plantel = $this->plantel->consultarId();
+    $this->plantel = !empty($this->plantel["data"]) ? $this->plantel["data"] : false;
+    if (!$this->plantel) {
+      $_SESSION["resultado"] = json_encode(["status" => "404", "message" => "Plantel no encontrado.", "data" => []]);
+      header("Location: ../home.php");
+      exit();
+    }
+
+    $this->nombreInstitucion = "";
+    $this->razonSocial = "";
+    $this->nombrePropuesto = [];
+    // Institución
+    $this->institucion = new Institucion();
+    $this->institucion->setAttributes(["id" => $this->plantel["institucion_id"]]);
+    $this->institucion = $this->institucion->consultarId();
+
+    $this->institucion = !empty($this->institucion["data"]) ? $this->institucion["data"] : false;
+    if (!$this->institucion) {
+      $_SESSION["resultado"] = json_encode(["status" => "404", "message" => "Institucion no encontrada.", "data" => []]);
+      header("Location: ../home.php");
+      exit();
+    }
+  }
+
+  function getAlumno($alumno_id = null){
+    $alumno = new Alumno;
+    $alumno->setAttributes(array("id" => $alumno_id));
+    $res_alumno = $alumno->consultarId();
+    $res_alumno = $res_alumno["data"];
+    $this->alumno = $res_alumno;
+
+    $persona = new Persona;
+    $persona->setAttributes(array("id" => $res_alumno["persona_id"]));
+    $res_persona = $persona->consultarId();
+    $res_persona = $res_persona["data"];
+    $this->alumno["persona"] = $res_persona;
+  }
+
+  function getCalificaciones($alumno_id = null)
+  {
+    $calificacionAlumno = new Calificacion;
+    $res_calificacion_alumno = $calificacionAlumno->consultarPor("calificaciones", array("alumno_id" => $alumno_id, "deleted_at"), "*");
+    $res_calificacion_alumno = $res_calificacion_alumno["data"];
+
+    $calificacionCiclo = [];
+
+    foreach ($res_calificacion_alumno as $key => $calificacion) {
+
+      $asignatura = new Asignatura;
+      $asignatura->setAttributes(array("id" => $calificacion["asignatura_id"]));
+      $res_asignatura = $asignatura->consultarId();
+      $res_asignatura = $res_asignatura["data"];
+
+      $grupo = new Grupo();
+      $grupo->setAttributes(array("id" => $calificacion["grupo_id"]));
+      $res_grupo = $grupo->consultarId();
+      $res_grupo = $res_grupo["data"];
+
+      $cicloEscolar = new CicloEscolar();
+      $cicloEscolar->setAttributes(array("id" => $res_grupo["ciclo_escolar_id"]));
+      $res_ciclo_escolar = $cicloEscolar->consultarId();
+      $res_ciclo_escolar = $res_ciclo_escolar["data"];
+
+      switch ($res_asignatura["tipo"]) {
+        case '1':
+          $res_asignatura["tipo_txt"] = "Ordinario";
+          break;
+        case '2':
+          $res_asignatura["tipo_txt"] = "Extraordinario";
+          break;
+      }
+
+      $calificacion["consecutivo"] = (int)$res_asignatura["consecutivo"];
+      $calificacion["asignatura"] = $res_asignatura;
+      $calificacion["ciclo_escolar"] = $res_ciclo_escolar;
+
+      if (!isset($calificacionCiclo[$calificacion["ciclo_escolar"]["nombre"]])) {
+        $calificacionCiclo[$calificacion["ciclo_escolar"]["nombre"]] = [];
+      }
+      array_push($calificacionCiclo[$calificacion["ciclo_escolar"]["nombre"]], $calificacion);
+
+    }
+
+    $this->calificacionesAlumno = $calificacionCiclo;
+  }
+
+  // M�todo para orden ascendente o descendente
+  public static function array_sort($array, $on, $order = SORT_ASC)
+  {
+    $new_array = array();
+    $sortable_array = array();
+
+    if (count($array) > 0) {
+      foreach ($array as $k => $v) {
+        if (is_array($v)) {
+          foreach ($v as $k2 => $v2) {
+            if ($k2 == $on) {
+              $sortable_array[$k] = $v2;
+            }
+          }
+        } else {
+          $sortable_array[$k] = $v;
+        }
+      }
+
+      switch ($order) {
+        case SORT_ASC:
+          asort($sortable_array);
+          break;
+        case SORT_DESC:
+          arsort($sortable_array);
+          break;
+      }
+
+      foreach ($sortable_array as $k => $v) {
+        $new_array[$k] = $array[$k];
+      }
+    }
+
+    return $new_array;
+  }
+
+  public static function convertirFecha($fecha){
+    if($fecha) {
+      $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+      return date('d',strtotime($fecha))." de ".$meses[date('n',strtotime($fecha))-1]. " del ".date('Y') ;
     }
   }
 }

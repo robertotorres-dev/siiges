@@ -109,7 +109,7 @@ $resultadoInstitucion = $institucion->consultarId();
 									<tr>
 										<td><?php echo $resultadoPrograma["data"][$i]["id"]; ?></td>
 										<td><?php echo $resultadoPrograma["data"][$i]["nombre"]; ?></td>
-										<td><?php echo $resultadoPrograma["data"][$i]["surte_efecto"]; ?></td>
+										<td><?php echo $resultadoPrograma["data"][$i]["fecha_surte_efecto"]; ?></td>
 										<td><?php echo $resultadoPrograma["data"][$i]["acuerdo_rvoe"]; ?></td>
 										<td>
 											<?php if (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] || Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || (Rol::ROL_ADMIN == $_SESSION["rol_id"])) : ?>
@@ -181,7 +181,7 @@ $resultadoInstitucion = $institucion->consultarId();
 									<tr>
 										<td><?php echo $resultadoPrograma["data"][$i]["id"]; ?></td>
 										<td><?php echo $resultadoPrograma["data"][$i]["nombre"]; ?></td>
-										<td><?php echo $resultadoPrograma["data"][$i]["surte_efecto"]; ?></td>
+										<td><?php echo $resultadoPrograma["data"][$i]["fecha_surte_efecto"]; ?></td>
 										<td><?php echo $resultadoPrograma["data"][$i]["acuerdo_rvoe"]; ?></td>
 										<!-- Se agregar los siguientes botones para poder migrar con usuario de control escolar SICYT -->
 										<td>

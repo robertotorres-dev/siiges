@@ -5,6 +5,9 @@
  */
 
 require_once "../models/modelo-calificacion.php";
+require_once "../models/modelo-asignatura.php";
+require_once "../models/modelo-grupo.php";
+require_once "../models/modelo-ciclo-escolar.php";
 require_once "../models/modelo-bitacora.php";
 require_once "../models/modelo-alumno-grupo.php";
 require_once "../utilities/utileria-general.php";
@@ -188,4 +191,54 @@ if ($_POST["webService"] == "guardarCalificacionesGrupoAsignaturaExtra") {
 
 	header("Location: ../views/ce-extraordinarios.php?programa_id=" . $_POST["programa_id"] . "&ciclo_id=" . $_POST["ciclo_id"] . "&grado=" . $_POST["grado"] . "&grupo_id=" . $_POST["grupo_id"] . "&asignatura_id=" . $_POST["asignatura_id"] . "&codigo=200" . "&tramite=" . $_POST["tramite"]);
 	exit();
+}
+
+// Web service para consutlar registro
+if ($_POST["webService"] == "consultarCalificacionPorAlumno") {
+	$aux = new Utileria();
+	$_POST = $aux->limpiarEntrada($_POST);
+	$calificacionAlumno = new Calificacion;
+	$res_calificacion_alumno = $calificacionAlumno->consultarPor("calificaciones", array("alumno_id" => $_POST["alumno_id"], "deleted_at"), "*");
+	$res_calificacion_alumno = $res_calificacion_alumno["data"];
+
+	$calificacionCiclo = [];
+
+	foreach ($res_calificacion_alumno as $key => $calificacion) {
+
+		$asignatura = new Asignatura;
+		$asignatura->setAttributes(array("id" => $calificacion["asignatura_id"]));
+		$res_asignatura = $asignatura->consultarId();
+		$res_asignatura = $res_asignatura["data"];
+
+		$grupo = new Grupo();
+		$grupo->setAttributes(array("id" => $calificacion["grupo_id"]));
+		$res_grupo = $grupo->consultarId();
+		$res_grupo = $res_grupo["data"];
+
+		$cicloEscolar = new CicloEscolar();
+		$cicloEscolar->setAttributes(array("id" => $res_grupo["ciclo_escolar_id"]));
+		$res_ciclo_escolar = $cicloEscolar->consultarId();
+		$res_ciclo_escolar = $res_ciclo_escolar["data"];
+
+		switch ($res_asignatura["tipo"]) {
+			case '1':
+				$res_asignatura["tipo_txt"] = "Ordinario";
+				break;
+			case '2':
+				$res_asignatura["tipo_txt"] = "Extraordinario";
+				break;
+		}
+
+		$calificacion["consecutivo"] = (int)$res_asignatura["consecutivo"];
+		$calificacion["asignatura"] = $res_asignatura;
+		$calificacion["ciclo_escolar"] = $res_ciclo_escolar;
+
+		if (!isset($calificacionCiclo[$calificacion["ciclo_escolar"]["nombre"]])) {
+			$calificacionCiclo[$calificacion["ciclo_escolar"]["nombre"]] = [];
+		}
+		array_push($calificacionCiclo[$calificacion["ciclo_escolar"]["nombre"]], $calificacion);
+	}
+	$resultado = $calificacionCiclo;
+
+	retornarWebService($_POST["url"], $resultado);
 }

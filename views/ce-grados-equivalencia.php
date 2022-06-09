@@ -120,7 +120,7 @@ $resultadoInstitucion = $institucion->consultarId();
 
 								foreach ($resultadoGrados as $key => $atributoGrado) {
 
-									if ($atributoAsignatura["grado"] != "Optativa") {
+									if ($atributoGrado["nombre"] != "Optativa") {
 								?>
 										<tr>
 											<td><?php echo $atributoGrado["nombre"]; ?></td>
