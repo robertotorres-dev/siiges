@@ -60,6 +60,9 @@ class PDF extends FPDF
     //$this->Image( "../../images/marcaDeAguaSicyt.jpg",0,0,215,279);
     $this->Image("../../images/encabezado.jpg", 0, 15, 75);
     $this->Image("../../images/direccion_sicyt.PNG", 155, 12, 40);
+    $this->AddFont('Nutmeg', '', 'Nutmeg-Regular.php');
+    $this->AddFont('Nutmegb', '', 'Nutmeg-Bold.php');
+    $this->AddFont('Nutmegbk', '', 'Nutmeg-Book.php');
   }
 
   // Pie de p�gina
