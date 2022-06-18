@@ -71,8 +71,6 @@ foreach ($pdf->TodasAsignaturas as $key => $asignatura) {
   array_push($asignaturaArea[$asignatura["area"]], $asignatura);
 }
 
-
-
 $pdf->SetFont("Nutmeg", "", 10);
 
 if ($pdf->nombreInstitucion) {
@@ -412,12 +410,15 @@ if ($pdf->programa["ciclo_id"] == 4 || $pdf->programa["ciclo_id"] == 5) {
       }
 
       //Suma de horas y creditos por grado
-      $total_docente = $total_docente + $detalle["horas_docente"];
       $horas_docente = $horas_docente + $detalle["horas_docente"];
-      $total_independiente = $total_independiente + $detalle["horas_independiente"];
       $horas_independiente = $horas_independiente + $detalle["horas_independiente"];
-      $total_creditos = $total_creditos + $detalle["creditos"];
       $creditos = $creditos + $detalle["creditos"];
+
+      if ($grado != "Optativa") {
+        $total_independiente = $total_independiente + $detalle["horas_independiente"];
+        $total_docente = $total_docente + $detalle["horas_docente"];
+        $total_creditos = $total_creditos + $detalle["creditos"];
+      }
     }
 
     $pdf->SetFillColor(255, 255, 255);
@@ -680,13 +681,13 @@ if ($pdf->programa["ciclo_id"] == 4 || $pdf->programa["ciclo_id"] == 5) {
       $pdf->Ln();
     }
   }
+}
 
-  //Sumatoria de total de horas y créditos de grados + horas y créditos mínimos de asigntaruas optativas
-  $total_docente += $pdf->programa["minimo_horas_optativas"];
-  $total_creditos += $pdf->programa["minimo_creditos_optativas"];
-  if ($pdf->checkNewPage()) {
-    $pdf->Ln(15);
-  }
+//Sumatoria de total de horas y créditos de grados + horas y créditos mínimos de asigntaruas optativas
+$total_docente += $pdf->programa["minimo_horas_optativas"];
+$total_creditos += $pdf->programa["minimo_creditos_optativas"];
+if ($pdf->checkNewPage()) {
+  $pdf->Ln(15);
 }
 
 //Impresión de número mínimo de horas y créditos de asignaturas optativas

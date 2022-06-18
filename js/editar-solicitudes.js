@@ -120,7 +120,6 @@ EditarSolicitud.getSolicitud = function () {
 							documentos.estudio_pertinencia.archivo
 						);
 					}
-					console.log(documentos);
 					if (documentos.formato_pedagogico_01 != undefined) {
 						$('#fdp_01-id').val(documentos.formato_pedagogico_01.id);
 						$('#contendorFDP01').attr('style', 'display: block');

@@ -68,7 +68,13 @@ class PDF extends FPDF
   // Pie de p�gina
   function Footer()
   {
+    $this->SetY(-30);
+    $this->SetFont("Nutmegbk", "", 7);
+    $this->SetTextColor(0, 0, 0);
+    $this->Ln(5);
     $this->Image("../../images/jalisco.png", 20, 245, 20);
+    $this->SetTextColor(191, 191, 191);
+    $this->Cell(0, 5, utf8_decode("Página " . $this->PageNo()), 0, 0, "R");
   }
 
   function checkNewPage()
