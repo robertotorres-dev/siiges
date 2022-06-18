@@ -109,3 +109,7 @@ Alumno.modalEliminarRegistro = function (id, nombre, matricula, programa_id) {
     $("#mensaje-footer").append(boton);
   }
 };
+
+$gmx(document).ready(function () {
+  $('[data-toggle="tooltip"]').tooltip();
+});

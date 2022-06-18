@@ -220,12 +220,12 @@ if ($_POST["webService"] == "consultarCalificacionPorAlumno") {
 		$res_ciclo_escolar = $cicloEscolar->consultarId();
 		$res_ciclo_escolar = $res_ciclo_escolar["data"];
 
-		switch ($res_asignatura["tipo"]) {
+		switch ($calificacion["tipo"]) {
 			case '1':
-				$res_asignatura["tipo_txt"] = "Ordinario";
+				$calificacion["tipo_txt"] = "Ordinario";
 				break;
 			case '2':
-				$res_asignatura["tipo_txt"] = "Extraordinario";
+				$calificacion["tipo_txt"] = "Extraordinario";
 				break;
 		}
 

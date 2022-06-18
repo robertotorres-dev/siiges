@@ -21,7 +21,6 @@ Calificacion.getCalificacionPorCiclo = function () {
         if (Object.hasOwnProperty.call(data, ciclo_escolar)) {
 
           const materias_ciclo = data[ciclo_escolar];
-          console.log("Materias por ciclo");
 
           materias_ciclo.sort((a, b) => {
             return a.consecutivo - b.consecutivo;
@@ -41,7 +40,7 @@ Calificacion.getCalificacionPorCiclo = function () {
           { data: "asignatura.clave" },
           { data: "asignatura.seriacion" },
           { data: "asignatura.nombre" },
-          { data: "asignatura.tipo_txt" },
+          { data: "tipo_txt" },
           { data: "calificacion" },
           { data: "fecha_examen" },
         ],
