@@ -2433,6 +2433,11 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                     <label class="control-label" for="">Licencia municipal</label><br>
                     <input type="file" onchange="Solicitud.verificarArchivo(this)" name="PLANTEL-licencia_municipal" class="form-control"><br>
                   </div>
+                  <!-- Dictamen del IMPI -->
+                  <div class="col-sm-12 col-md-8">
+                    <label class="control-label" for="">Dictamen del Instituto Mexicano de Propiedad Intelectual (IMPI)</label><br>
+                    <input type="file" onchange="Solicitud.verificarArchivo(this)" name="INSTITUCION-dictamen_impi" class="form-control"><br>
+                  </div>
                   <!-- Salud -->
                   <div class="col-sm-12 col-md-8">
                     <label class="control-label" for="">Aviso funcionamiento de Secretaría de Salud ó Carta bajo protesta de decir verdad de NO venta de alimentos.</label><br>

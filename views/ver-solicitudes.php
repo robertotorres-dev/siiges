@@ -2381,6 +2381,15 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                     <br>
                     <a id="enlace-municipal" class="enlaces" href="" target="_blank">Ver archivo</a>
                   </div>
+                  <!-- Dictamen del IMPI -->
+                  <div class="col-sm-12 col-md-8">
+                    <label class="control-label" for="">Dictamen del Instituto Mexicano de Propiedad Intelectual (IMPI)</label><br>
+                  </div>
+                  <div class="col-sm-12 col-md-4" id="contendorimpi" style="display: none">
+                    <br>
+                    <br>
+                    <a id="enlace-impi" class="enlaces" href="" target="_blank">Ver archivo</a>
+                  </div>
                   <!-- Salud -->
                   <div class="col-sm-12 col-md-8">
                     <label class="control-label" for="">Aviso de funcionamiento de Secretaría de Salud ó Carta bajo protesta de decir verdad de NO venta de alimentos.</label><br>

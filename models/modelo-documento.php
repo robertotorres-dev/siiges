@@ -68,6 +68,7 @@ tipo_entidad = id_tabla
                                               "acuerdo_anterior"=>35,
                                               "dictamen_evaluacion"=>36,
                                               "formato_pedagogico_01"=>37,
+                                              "dictamen_impi"=>38,
                                             );
 
     public static $dir_subida = '../uploads/';
@@ -121,4 +122,3 @@ tipo_entidad = id_tabla
 
 
   }
-?>

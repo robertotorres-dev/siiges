@@ -540,6 +540,12 @@ if ($_POST["webService"] = "datosSolicitud") {
             $resultado["data"]["documentos"]["formato_pedagogico_01"] = $res_fdp_01["data"][0];
           }
 
+          $dictamenIMPI = new Documento();
+          $res_dictamen_impi = $dictamenIMPI->consultarPor("documentos", array("tipo_entidad" => Documento::$tipoEntidad["INSTITUCION"], "entidad_id" => $resultado["data"]["programa"]["plantel"]["institucion_id"], "tipo_documento" => Documento::$nombresDocumentos["dictamen_impi"], "deleted_at"), "*");
+          if (sizeof($res_dictamen_impi["data"]) > 0) {
+            $resultado["data"]["documentos"]["dictamen_impi"] = $res_dictamen_impi["data"][0];
+          }
+
           $ofertaDemanda = new Documento();
           $res_ofertaDemanda = $ofertaDemanda->consultarPor("documentos", array("tipo_entidad" => Documento::$tipoEntidad["PROGRAMA"], "entidad_id" => $resultado["data"]["programa"]["id"], "tipo_documento" => Documento::$nombresDocumentos["archivo_oferta_demanda"], "deleted_at"), "*");
           if (sizeof($res_ofertaDemanda["data"]) > 0) {

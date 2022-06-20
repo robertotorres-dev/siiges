@@ -128,6 +128,14 @@ EditarSolicitud.getSolicitud = function () {
 							documentos.formato_pedagogico_01.archivo
 						);
 					}
+					if (documentos.dictamen_impi != undefined) {
+						$('#impi-id').val(documentos.dictamen_impi.id);
+						$('#contendorimpi').attr('style', 'display: block');
+						$('#enlace-impi').attr(
+							'href',
+							documentos.dictamen_impi.archivo
+						);
+					}
 					if (documentos.oferta_demanda != undefined) {
 						$('#demanda-id').val(documentos.oferta_demanda.id);
 						$('#contendorOfertaDemanda').attr('style', 'display: block');
