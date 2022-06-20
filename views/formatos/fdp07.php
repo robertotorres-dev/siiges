@@ -184,7 +184,7 @@
       $pdf->MultiCell(60, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), "T", "C");
       $pdf->SetXY($x + 60, $y);
       $pdf->Cell(50, 5, mb_strtoupper(Solicitud::convertirFecha(date("d-m-y"))), 0, 0, "C");
-      $pdf->MultiCell(65, 5, utf8_decode("ING. MARCO ARTURO CASTRO AGUILERA\nDIRECTOR GENERAL DE INCORPORACIÓN Y SERVICIOS ESCOLARES"), "T", "C");
+      $pdf->MultiCell(65, 5, utf8_decode("MTRA. MARGARITA FLORES MARQUEZ\nDIRECTORA DE INCORPORACIÓN"), "T", "C");
     } else {
       $pdf->Cell(0, 5, "BAJO PROTESTA DE DECIR VERDAD", 0, 0, "C");
       $pdf->Ln(5);
