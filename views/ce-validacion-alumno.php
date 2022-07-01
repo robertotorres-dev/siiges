@@ -470,12 +470,17 @@ if ($_GET["proceso"] == "edicion") {
 									<input type="hidden" name="usuario_id" value="<?php echo isset($_SESSION["id"]) ? $_SESSION["id"] : -1; ?>" />
 
 									<?php if (Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || (Rol::ROL_ADMIN == $_SESSION["rol_id"])) : ?>
-										<input type="hidden" name="estatus" value="0" />
-										<input type="hidden" name="url" value="../views/ce-validacion.php?programa_id=<?php echo $_GET["programa_id"] . "&codigo=201"; ?> " />
-										<input type="hidden" name="webService" value="habilitarCaptura" />
-										<?php if (isset($res_validacion["data"][0]["estatus"]) && $res_validacion["data"][0]["estatus"] == 1) : ?>
+										<?php if (isset($res_validacion["data"][0]["estatus"]) && $res_validacion["data"][0]["estatus"] == 1) { ?>
+											<input type="hidden" name="estatus" value="0" />
+											<input type="hidden" name="url" value="../views/ce-validacion.php?programa_id=<?php echo $_GET["programa_id"] . "&codigo=201"; ?> " />
+											<input type="hidden" name="webService" value="habilitarCaptura" />
 											<input type="submit" id="submit" name="submit" value="Habilitar captura" class="btn btn-primary" />
-										<?php endif; ?>
+										<?php } else if (isset($res_validacion["data"][0]["estatus"]) && $res_validacion["data"][0]["estatus"] == 0) { ?>
+											<input type="hidden" name="estatus" value="1" />
+											<input type="hidden" name="url" value="../views/ce-validacion.php?programa_id=<?php echo $_GET["programa_id"] . "&codigo=200"; ?> " />
+											<input type="hidden" name="webService" value="guardar" />
+											<input type="submit" id="submit" name="submit" value="Guardar cambios" class="btn btn-primary" />
+										<?php } ?>
 									<?php endif; ?>
 
 									<?php if (Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"])) : ?>
@@ -488,7 +493,7 @@ if ($_GET["proceso"] == "edicion") {
 
 										<input type="hidden" name="webService" value="guardar" />
 										<?php if (!isset($res_validacion["data"][0]["estatus"]) || $res_validacion["data"][0]["estatus"] != 1) : ?>
-											<input type="submit" id="submit" name="submit" value="Enviar" class="btn btn-primary" />
+											<input type="submit" id="submit" name="submit" value="Guardar cambios" class="btn btn-primary" />
 										<?php endif; ?>
 									<?php endif; ?>
 

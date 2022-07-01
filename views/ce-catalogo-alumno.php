@@ -294,8 +294,8 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
 							<div class="form-group">
 								<?php if (
 									Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] ||
-									(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv") ||
-									(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv")
+									(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] && isset($_GET["tramite"]) && $_GET["tramite"] == "equiv") ||
+									(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] && isset($_GET["tramite"]) && $_GET["tramite"] == "equiv")
 								) : ?>
 
 									<label class="control-label" for="revalidacion_equivalencia">Tipo de tr&aacute;mite</label>
@@ -436,8 +436,8 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
 									<input type="hidden" name="proceso" value="<?php echo $_GET["proceso"]; ?>" />
 									<?php if (
 										Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"] ||
-										(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv") ||
-										(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] && $_GET["tramite"] == "equiv")
+										(Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] && isset($_GET["tramite"]) && $_GET["tramite"] == "equiv") ||
+										(Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] && isset($_GET["tramite"]) && $_GET["tramite"] == "equiv")
 									) { ?>
 										<input type="hidden" name="url" value="../views/ce-alumnos-equivalencia.php?programa_id=<?php echo $_GET["programa_id"]; ?>&codigo=200" />
 										<input type="hidden" name="tramite" value="<?php echo $_GET["tramite"]; ?>" />
