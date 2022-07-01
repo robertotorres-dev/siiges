@@ -629,9 +629,12 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                             <select class="form-control selectpicker" id="turno_programa" name="PROGRAMA-turnos[]" multiple title="Seleccione una opción">
                             </select><br>
                           </div>
-                          <div class="col-sm-12 col-md-7">
+                          <div class="col-sm-12 col-md-5">
                             <label class="control-label" for="">Duración del programa</label><br>
-                            <input type="text" id="duracion" name="PROGRAMA-duracion" class="form-control revision" campo="Duración del programa" ubicacion="Programas de estudios - Datos generales" value="" placeholder="# semanas efectivas clase"><br>
+                            <input type="number" id="duracion_periodos" name="PROGRAMA-duracion_periodos" class="form-control revision" campo="Duración del programa" ubicacion="Programas de estudios - Datos generales" value="" placeholder="#">
+                          </div>
+                          <div class="col-sm-12 col-md-3">
+                            <p style="padding-top: 35px;" id="txt_duracion_periodos">Periodos</p>
                           </div>
                           <div class="col-sm-12 col-md-7">
                             <label class="control-label" for="">Créditos necesarios para concluir el programa</label><br>

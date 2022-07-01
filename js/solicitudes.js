@@ -2406,6 +2406,31 @@ Solicitud.verificarArchivo = function (file) {
 		}
 	}
 };
+
+function setTextDuracionPeriodos(e) {
+	const selectElement = e.target;
+	const value = selectElement.value;
+
+	let txt_duracion_periodos = '';
+	switch (value) {
+		case '1':
+		case '4':
+			txt_duracion_periodos = 'Periodos semestrales';
+			break;
+		case '2':
+		case '5':
+			txt_duracion_periodos = 'Periodos cuatrimestrales';
+			break;
+		case '3':
+			txt_duracion_periodos = 'Periodos anuales';
+			break;
+		default:
+			txt_duracion_periodos = 'Periodos';
+			break;
+	}
+	$('#txt_duracion_periodos').text(txt_duracion_periodos);
+}
+
 //Iniciliza las funciones necesarias
 $(document).ready(function ($) {
 	//Mis Solicitudes
@@ -2466,6 +2491,9 @@ $(document).ready(function ($) {
 				console.log(' Promesas completadas para alta solicitud');
 			})
 			.done(function () {
+				const periodos_select = document.getElementById('ciclo_id');
+				periodos_select.addEventListener('change', setTextDuracionPeriodos);
+
 				//Elementos con fechas
 				if ($('#fecha_evaluacion').length) {
 					$('#fecha_evaluacion').datepicker({
@@ -2502,7 +2530,6 @@ $(document).ready(function ($) {
 					$('#datosNecesarios').val() > 0
 				) {
 					document.getElementById('cargando').style.display = 'block';
-					console.log('cargar plantel con id:' + $('#datosNecesarios').val());
 					Solicitud.getDatosPlantel($('#datosNecesarios').val());
 					Solicitud.promesaPlantel.done(function () {
 						console.log('datos del plantel se cargaron');

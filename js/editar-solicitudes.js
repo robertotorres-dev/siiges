@@ -131,10 +131,7 @@ EditarSolicitud.getSolicitud = function () {
 					if (documentos.dictamen_impi != undefined) {
 						$('#impi-id').val(documentos.dictamen_impi.id);
 						$('#contendorimpi').attr('style', 'display: block');
-						$('#enlace-impi').attr(
-							'href',
-							documentos.dictamen_impi.archivo
-						);
+						$('#enlace-impi').attr('href', documentos.dictamen_impi.archivo);
 					}
 					if (documentos.oferta_demanda != undefined) {
 						$('#demanda-id').val(documentos.oferta_demanda.id);
@@ -748,6 +745,27 @@ EditarSolicitud.getSolicitud = function () {
 								//No se carga la variable programa[tipo] en elemento ($("#tipo").val() de solicitud para evitar error
 							} else {
 								$('#' + variable).val(programa[variable]);
+							}
+
+							if (variable == 'ciclo_id') {
+								let txt_duracion_periodos = '';
+								switch (programa[variable]) {
+									case '1':
+									case '4':
+										txt_duracion_periodos = 'Periodos semestrales';
+										break;
+									case '2':
+									case '5':
+										txt_duracion_periodos = 'Periodos cuatrimestrales';
+										break;
+									case '3':
+										txt_duracion_periodos = 'Periodos anuales';
+										break;
+									default:
+										txt_duracion_periodos = 'Periodos';
+										break;
+								}
+								$('#txt_duracion_periodos').text(txt_duracion_periodos);
 							}
 						}
 					}
