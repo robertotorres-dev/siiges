@@ -162,10 +162,11 @@ $pdf->MultiCell(130, 2, utf8_decode($pdf->titulo["sello"]), 0, "L");
 $pdf->Ln(2);
 
 // Firmante Autoridad
+$nombreAutoridad = ("00001000000506574908" == $pdf->titulo["no_certificado_autoridad"]) ? "JOSÉ ROSALÍO MUÑOZ CASTRO" :   "ILIANA JANETT HERNÁNDEZ PARTIDA";
 $pdf->SetFont("Nutmegb", "", 5);
 $pdf->Cell(20, 3, utf8_decode("Firmante autoridad:"), 0, 0, "L", false);
 $pdf->SetFont("Nutmegbk", "", 5);
-$pdf->Cell(100, 3, utf8_decode("JOSÉ ROSALÍO MUÑOZ CASTRO"), 0, 1, "L", false);
+$pdf->Cell(100, 3, utf8_decode($nombreAutoridad), 0, 1, "L", false);
 $pdf->Cell(120, 3, utf8_decode("No. de Certificado:   " . $pdf->titulo["no_certificado_autoridad"]), 0, 1, "L", false);
 $pdf->Cell(120, 3, utf8_decode("Sello digital autoridad:"), 0, 1, "L", false);
 $pdf->MultiCell(130, 2, utf8_decode($pdf->titulo["sello_autenticacion"]), 0, "L");
