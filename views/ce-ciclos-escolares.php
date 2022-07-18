@@ -143,7 +143,15 @@ $resultadoInstitucion = $institucion->consultarId();
 											<td>
 												<a href="ce-catalogo-ciclo-escolar.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $atributoCicloEscolar["id"]; ?>&proceso=consulta"><span id="" title="Abrir" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
 												<a href="ce-catalogo-ciclo-escolar.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $atributoCicloEscolar["id"]; ?>&proceso=edicion"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a>
-												<a href="#" data-toggle="modal" data-target="#modalEliminar"><span id="" title="Eliminar" class="glyphicon glyphicon-trash col-sm-1 size_icon"></span></a>
+												<?php
+												if (Rol::ROL_ADMIN == $_SESSION["rol_id"] || Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"]) :
+												?>
+													<a href="#" onclick="CicloEscolar.modalEliminarCiclo('<?php echo $atributoCicloEscolar['id'] ?>',
+												 '<?php echo $atributoCicloEscolar['nombre']; ?>',
+												 '<?php echo $parametros['programa_id'] ?>')">
+														<span id="" title="Eliminar" class="glyphicon glyphicon-trash col-sm-1 size_icon"></span></a>
+												<?php
+												endif; ?>
 											</td>
 											<td>
 												<a href="ce-grados.php?programa_id=<?php echo $_GET["programa_id"]; ?>&ciclo_id=<?php echo $atributoCicloEscolar["id"]; ?>">Grados</a>
@@ -160,13 +168,31 @@ $resultadoInstitucion = $institucion->consultarId();
 			</div>
 
 		</section>
+		<div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-hidden="true">
+			<div id="tamanoModalMensaje" class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Eliminar grupo</h4>
+					</div>
+					<div class="modal-body">
+						<div id="mensajeGrupos"></div>
+					</div>
+					<div id="mensaje-footer" class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<!-- JS GOB.MX -->
 	<script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
 	<!-- JS JQUERY -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>}
+	<script src="../js/ce-ciclos-escolares.js"></script>
 </body>
 
 </html>

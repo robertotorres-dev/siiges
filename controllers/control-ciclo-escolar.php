@@ -5,6 +5,7 @@
  */
 
 require_once "../models/modelo-ciclo-escolar.php";
+require_once "../models/modelo-grupo.php";
 require_once "../models/modelo-bitacora.php";
 require_once "../utilities/utileria-general.php";
 
@@ -79,6 +80,18 @@ if ($_POST["webService"] == "eliminar") {
   /* $bitacora = new Bitacora();
     $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
     $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"ciclos_escolares","accion"=>"eliminar","lugar"=>"control-ciclo-escolar"]);
+    $result = $bitacora->guardar(); */
+  retornarWebService($_POST["url"], $resultado);
+}
+
+// Web service para comprobar ciclos con grupos registrados
+if ($_POST["webService"] == "comprobarGrupos") {
+  $grupoCiclo = new Grupo();
+  $resultado = $grupoCiclo->consultarPor('grupos', array("ciclo_escolar_id" => $_POST["id"], "deleted_at"), '*');
+  // Registro en bitacora
+  /* $bitacora = new Bitacora();
+    $usuarioId= isset($_SESSION["id"])?$_SESSION["id"]:-1;
+    $bitacora->setAttributes(["usuario_id"=>$usuarioId,"entidad"=>"ciclos_escolares","accion"=>"comprobarGrupos","lugar"=>"control-ciclo-escolar"]);
     $result = $bitacora->guardar(); */
   retornarWebService($_POST["url"], $resultado);
 }
