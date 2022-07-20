@@ -65,7 +65,7 @@ if ($_POST["webService"] == "guardar") {
 
   // En caso de encontrarse ya registrado el folio de titulo, mostrar error
   $titulo = new TitulosElectronicos();
-  $res_titulo = $titulo->consultarPor("titulos_electronicos", array("folio_control" => $xml_content["@attributes"]["folioControl"], "delete_at"), "*");
+  $res_titulo = $titulo->consultarPor("titulos_electronicos", array("folio_control" => $xml_content["@attributes"]["folioControl"], "deleted_at"), "*");
   if (sizeof($res_titulo["data"]) > 0) {
     $_SESSION["resultado"] = json_encode(["status" => "404", "message" => "El folio de control ya se encuentra registrado.", "data" => []]);
     $resultado["error"] = 1;
@@ -175,7 +175,7 @@ if ($_POST["webService"] == "guardar") {
 if ($_POST["webService"] == "datosConstanciaFolio") {
   // En caso de encontrarse ya registrado el folio de titulo, mostrar error
   $titulo = new TitulosElectronicos();
-  $res_titulo = $titulo->consultarPor("titulos_electronicos", array("folio_control" => $_POST["folio"], "delete_at"), "*");
+  $res_titulo = $titulo->consultarPor("titulos_electronicos", array("folio_control" => $_POST["folio"], "deleted_at"), "*");
 
   if (empty($res_titulo["data"])) {
 
