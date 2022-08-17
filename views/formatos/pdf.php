@@ -365,14 +365,14 @@ class PDF extends PDF_MC_Table
   function getDataPlantel($id = null)
   {
     // Dictamenes del plantel
-    $this->plantelDictamenes = new PlantelDictamen();
+    /*$this->plantelDictamenes = new PlantelDictamen();
     $this->plantelDictamenes = $this->plantelDictamenes->consultarPor("plantel_dictamenes", ["plantel_id" => $id], "*");
     $this->plantelDictamenes = sizeof($this->plantelDictamenes["data"]) > 0 ? $this->plantelDictamenes["data"] : false;
     if (!$this->plantelDictamenes) {
       $_SESSION["resultado"] = json_encode(["status" => "404", "message" => "Dictamenes de plantel no encontrado.", "data" => []]);
       header("Location: ../home.php");
       exit();
-    }
+    }*/
 
     // Edificios Niveles
     $this->plantelEdificioNiveles = new PlantelEdificioNivel();
