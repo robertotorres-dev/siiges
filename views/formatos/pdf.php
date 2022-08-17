@@ -451,7 +451,7 @@ class PDF extends PDF_MC_Table
 
     // Infraestructura
     $this->plantelInfraestructura = new Infraestructura();
-    $this->plantelInfraestructura = $this->plantelInfraestructura->consultarPor("infraestructuras", ["plantel_id" => $id], "*");
+    $this->plantelInfraestructura = $this->plantelInfraestructura->consultarPor("infraestructuras", array("plantel_id" => $id, 'deleted_at'), "*");
     $this->plantelInfraestructura = sizeof($this->plantelInfraestructura["data"]) > 0 ? $this->plantelInfraestructura["data"] : false;
     if (!$this->plantelInfraestructura) {
       $_SESSION["resultado"] = json_encode(["status" => "404", "message" => "Infraestructura de plantel no encontrado.", "data" => []]);
@@ -464,7 +464,7 @@ class PDF extends PDF_MC_Table
       $this->instalacion->setAttributes(["id" => $infraestructura["tipo_instalacion_id"]]);
       $this->instalacion = $this->instalacion->consultarId();
       $this->instalacion = !empty($this->instalacion["data"]) ? $this->instalacion["data"] : false;
-      //print_r($this->instalacion);
+
       if (!$this->instalacion) {
         $_SESSION["resultado"] = json_encode(["status" => "404", "message" => "Tipo de instalacion no encontrado.", "data" => []]);
         header("Location: ../home.php");
@@ -472,7 +472,7 @@ class PDF extends PDF_MC_Table
       }
       // Asignaturas
       $this->asignatura = new Asignatura();
-      $this->asignatura = $this->asignatura->consultarPor("asignaturas", ["infraestructura_id" => $infraestructura["id"]], "*");
+      $this->asignatura = $this->asignatura->consultarPor("asignaturas", array("infraestructura_id" => $infraestructura["id"], 'deleted_at'), "*");
       $this->asignatura = sizeof($this->asignatura["data"]) > 0 ? $this->asignatura["data"] : [];
 
       $asignaturas = "";
@@ -483,8 +483,16 @@ class PDF extends PDF_MC_Table
       $asignaturas = !empty($asignaturas) ? substr($asignaturas, 0, -2) : "";
 
       //Si el aula no tiene materias registradas no se imprimirán
-      if ($this->instalacion["id"] == 1 & empty($asignaturas)) {
-      } else {
+      if ($this->instalacion["id"] == 1 && isset($asignaturas) && $infraestructura["solicitud_id"] == $this->solicitud['id']) {
+        array_push($this->tiposInstalacion, [
+          "instalacion" => $this->instalacion["nombre"] . " " . $infraestructura["nombre"],
+          "capacidad" => $infraestructura["capacidad"],
+          "metros" => $infraestructura["metros"],
+          "recursos" => $infraestructura["recursos"],
+          "ubicacion" => $infraestructura["ubicacion"],
+          "asignaturas" => $asignaturas
+        ]);
+      } elseif ($this->instalacion["id"] !=  1) {
         array_push($this->tiposInstalacion, [
           "instalacion" => $this->instalacion["nombre"] . " " . $infraestructura["nombre"],
           "capacidad" => $infraestructura["capacidad"],
@@ -938,7 +946,8 @@ class PDF extends PDF_MC_Table
     }
   }
 
-  function getAlumno($alumno_id = null){
+  function getAlumno($alumno_id = null)
+  {
     $alumno = new Alumno;
     $alumno->setAttributes(array("id" => $alumno_id));
     $res_alumno = $alumno->consultarId();
@@ -994,7 +1003,6 @@ class PDF extends PDF_MC_Table
         $calificacionCiclo[$calificacion["ciclo_escolar"]["nombre"]] = [];
       }
       array_push($calificacionCiclo[$calificacion["ciclo_escolar"]["nombre"]], $calificacion);
-
     }
 
     $this->calificacionesAlumno = $calificacionCiclo;
@@ -1036,10 +1044,11 @@ class PDF extends PDF_MC_Table
     return $new_array;
   }
 
-  public static function convertirFecha($fecha){
-    if($fecha) {
-      $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-      return date('d',strtotime($fecha))." de ".$meses[date('n',strtotime($fecha))-1]. " del ".date('Y') ;
+  public static function convertirFecha($fecha)
+  {
+    if ($fecha) {
+      $meses = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+      return date('d', strtotime($fecha)) . " de " . $meses[date('n', strtotime($fecha)) - 1] . " del " . date('Y');
     }
   }
 }
