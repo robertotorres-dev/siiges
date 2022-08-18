@@ -14,7 +14,7 @@ $pdf->getDataPlantel($pdf->plantel["id"]);
 
 
 $pdf->AddPage("P", "Letter");
-$pdf->SetMargins(20, 20, 20,);
+$pdf->SetMargins(20, 20, 20);
 
 // Nombre del formato
 $pdf->SetFont("Nutmegb", "", 11);
