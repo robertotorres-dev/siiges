@@ -111,6 +111,8 @@ foreach ($pdf->calificacionesAlumno as $ciclos => $ciclo) {
     $pdf->Ln(20);
   }
 
+
+
   $ciclo = $pdf->array_sort($ciclo, 'consecutivo', SORT_ASC);
   $pdf->SetFillColor(166, 166, 166);
   $pdf->SetFont("Nutmeg", "", 9);
@@ -119,12 +121,13 @@ foreach ($pdf->calificacionesAlumno as $ciclos => $ciclo) {
   $pdf->SetFont("Nutmegb", "", 7);
 
   $pdf->SetFillColor(191, 191, 191);
-  $pdf->Cell(18, 8, utf8_decode("CLAVE"), 1, 0, "C", true);
-  $pdf->Cell(18, 8, utf8_decode("SERIACIÓN"), 1, 0, "C", true);
-  $pdf->Cell(65, 8, utf8_decode("ASIGNATURA O UNIDAD DE APRENDIZAJE"), 1, 0, "C", true);
-  $pdf->Cell(20, 8, utf8_decode("TIPO"), 1, 0, "C", true);
-  $pdf->Cell(25, 8, utf8_decode("CALIFICACIÓN"), 1, 0, "C", true);
-  $pdf->Cell(30, 8, utf8_decode("FECHA DE EXÁMEN"), 1, 0, "C", true);
+  $pdf->Cell(17, 8, utf8_decode("CLAVE"), 1, 0, "C", true);
+  $pdf->Cell(17, 8, utf8_decode("SERIACIÓN"), 1, 0, "C", true);
+  $pdf->Cell(63, 8, utf8_decode("ASIGNATURA O UNIDAD DE APRENDIZAJE"), 1, 0, "C", true);
+  $pdf->Cell(19, 8, utf8_decode("TIPO"), 1, 0, "C", true);
+  $pdf->Cell(12, 8, utf8_decode("CALI."), 1, 0, "C", true);
+  $pdf->Cell(12, 8, utf8_decode("CRED."), 1, 0, "C", true);
+  $pdf->Cell(36, 8, utf8_decode("FECHA DE ACREDITACIÓN"), 1, 0, "C", true);
 
   $pdf->Ln(8);
 
@@ -147,12 +150,13 @@ foreach ($pdf->calificacionesAlumno as $ciclos => $ciclo) {
         "nombre_asignatura" => utf8_decode($detalle["asignatura"]["nombre"]),
         "tipo_asignaura" => utf8_decode($tipo_txt),
         "calificacion" => utf8_decode($detalle["calificacion"]),
+        "creditos" => utf8_decode($detalle["asignatura"]["creditos"]),
         "fecha_examen" => utf8_decode($detalle["fecha_examen"]),
       ]
     );
 
     //set widht for each column (6 columns)
-    $pdf->SetWidths(array(18, 18, 65, 20, 25, 30));
+    $pdf->SetWidths(array(17, 17, 63, 19, 12, 12, 36));
 
     //set line height
     $pdf->SetLineHeight(5);
@@ -168,6 +172,7 @@ foreach ($pdf->calificacionesAlumno as $ciclos => $ciclo) {
         $item['nombre_asignatura'],
         $item['tipo_asignaura'],
         $item['calificacion'],
+        $item['creditos'],
         $item['fecha_examen']
       ));
 
@@ -192,8 +197,7 @@ $pdf->Ln(15);
 // Fecha
 $fecha =  $pdf->convertirFecha(date("Y-m-d"));
 $pdf->SetFont("Nutmegbk", "", 8);
-$pdf->Cell(0, 5, utf8_decode("Sirva el presente únicamente para fines informativos"), 0, 1, "L");
-$pdf->Cell(0, 5, utf8_decode("Guadalajara, Jal. a " . $fecha), 0, 1, "L");
+$pdf->MultiCell(0, 5, utf8_decode("La información del presente cumple fines informativos y no de certificación, único para la consulta de laInstitución y la Dirección de Servicios Escolares fecha de consulta" . $fecha), 0, "C");
 $pdf->Ln(5);
 
 $pdf->Output("I", "kardex_" . $pdf->alumno["matricula"] . ".pdf");

@@ -8,6 +8,7 @@ Utileria::validarSesion(basename(__FILE__));
 require_once "../models/modelo-programa.php";
 require_once "../models/modelo-institucion.php";
 require_once "../models/modelo-vdetalles-alumno.php";
+require_once "../models/modelo-validacion.php";
 
 $programa = new Programa();
 $programa->setAttributes(array("id" => $_GET["programa_id"]));
@@ -110,10 +111,13 @@ $resultadoInstitucion = $institucion->consultarId();
               $detallesAlumnos = new VDetallesAlumno();
               $detallesAlumnos->setAttributes($parametros);
               $resultadoDetallesAlumnos = $detallesAlumnos->consultarAlumnosPrograma();
+              
 
               $max = count($resultadoDetallesAlumnos["data"]);
               for ($i = 0; $i < $max; $i++) {
                 $alumnoDetalle = $resultadoDetallesAlumnos["data"][$i];
+                $validacion = new Validacion();
+              $res_validacion = $validacion->consultarPor('validaciones', array("alumno_id" => $alumnoDetalle["id"], "deleted_at"), '*');
               ?>
                 <tr>
                   <td><?php echo $alumnoDetalle["id"]; ?></td>
@@ -134,6 +138,7 @@ $resultadoInstitucion = $institucion->consultarId();
                     <?php if (Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || (Rol::ROL_ADMIN == $_SESSION["rol_id"])) : ?>
                       <a href="ce-validacion-alumno.php?programa_id=<?php echo $resultadoPrograma["data"]["id"]; ?>&alumno_id=<?php echo $alumnoDetalle["id"]; ?>&proceso=edicion">Validar</a>
                     <?php endif; ?>
+                    <div><a href="../uploads/<?php echo $res_validacion["data"] ? "Institucion" . $resultadoInstitucion["data"]["id"] . "/PLANTEL" . $resultadoPlantel["data"]["id"] . "/validaciones/" . $res_validacion["data"][0]["archivo_validacion"] : ""; ?>" target="_blank"><?php echo isset($res_validacion["data"][0]["archivo_validacion"]) ? "Oficio de validación" : ""; ?></a></div>
                   </td>
                 </tr>
               <?php
