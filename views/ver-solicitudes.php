@@ -431,7 +431,7 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                             <input type="text" id="apellido_paterno_director" name="DIRECTOR-apellido_paterno" class="form-control revision" campo="Apellido paterno del director" ubicacion="Datos generales apartado Director" value="" placeholder="Apellido paterno del director">
                           </div>
                           <div class="col-sm-6 col-md-6">
-                            <label class="control-label" for="">Apellido paterno</label><br>
+                            <label class="control-label" for="">Apellido materno</label><br>
                             <input type="text" id="apellido_materno_director" name="DIRECTOR-apellido_materno" class="form-control" value="" placeholder="Apellido materno del director">
                           </div>
                           <div class="col-sm-6 col-md-2">
