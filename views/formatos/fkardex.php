@@ -224,37 +224,8 @@ $pdf->Ln(15);
 // Fecha
 $fecha =  $pdf->convertirFecha(date("Y-m-d"));
 $pdf->SetFont("Nutmegbk", "", 8);
-$pdf->MultiCell(150, 3, utf8_decode("La información del presente cumple fines informativos y no de certificación, único para la consulta de laInstitución y la Dirección de Servicios Escolares fecha de consulta " . $fecha), 0, "L");
+$pdf->MultiCell(176, 3, utf8_decode("El presente historial consigna las calificaciones que hasta la fecha han sido registradas en el  Sistema Integral de Información para la Gestión de la Educación Superior (SIIGES), el cumplimiento parcial o total del plan de estudios y la calificación total o parcial serán acreditados solamente por un certificado autorizado.
+La información del presente cumple fines informativos, único para la consulta de la Institución y la Dirección de Servicios Escolares, fecha de consulta " . $fecha), 0, "J");
 $pdf->Ln(5);
 
 $pdf->Output("I", "kardex_" . $pdf->alumno["matricula"] . ".pdf");
-
-/*
-$pdf->Ln(10);
-$pdf->SetFont("Nutmegb", "", 9);
-$pdf->SetFillColor(191, 191, 191);
-$pdf->Cell(50, 5, utf8_decode("CRÉDITOS OBTENIDOS"), 1, 1, "C", true);
-$pdf->SetFont("Nutmeg", "", 11);
-$pdf->Cell(50, 5, utf8_decode($total_creditos . " de " .  $pdf->programa["creditos"]), 1, 1, "C");
-
-$pdf->Ln(10);
-$pdf->SetFont("Nutmegb", "", 9);
-$pdf->SetFillColor(191, 191, 191);
-$pdf->Cell(50, 5, utf8_decode("PROMEDIO"), 1, 1, "C", true);
-$pdf->SetFont("Nutmeg", "", 11);
-$pdf->Cell(50, 5, utf8_decode(round($res_total, 2)), 1, 1, "C");
-
-$pdf->Ln(10);
-$pdf->SetFont("Nutmegb", "", 9);
-$pdf->SetFillColor(191, 191, 191);
-$pdf->Cell(50, 5, utf8_decode("SUMA CALIFICACION"), 1, 1, "C", true);
-$pdf->SetFont("Nutmeg", "", 11);
-$pdf->Cell(50, 5, utf8_decode($total_calificaciones), 1, 1, "C");
-
-$pdf->Ln(10);
-$pdf->SetFont("Nutmegb", "", 9);
-$pdf->SetFillColor(191, 191, 191);
-$pdf->Cell(50, 5, utf8_decode("NUMERO DE MATERIAS"), 1, 1, "C", true);
-$pdf->SetFont("Nutmeg", "", 11);
-$pdf->Cell(50, 5, utf8_decode($total_materias), 1, 1, "C");
-*/
