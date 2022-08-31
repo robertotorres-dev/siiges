@@ -444,6 +444,7 @@ $pdf->Cell(0, 5, "BAJO PROTESTA DE DECIR VERDAD", 0, 0, "C");
 $pdf->Ln(5);
 $pdf->SetFont("Nutmeg", "", 11);
 $pdf->Cell(0, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 0, "C");
+$pdf->Ln();
 
 $domicilio1 = $pdf->domicilioPlantel["calle"] . " "
       . $pdf->domicilioPlantel["numero_exterior"] . " "
