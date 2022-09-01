@@ -127,13 +127,13 @@ foreach ($pdf->calificacionesAlumno as $ciclos => $ciclo) {
   $pdf->SetFont("Nutmegb", "", 7);
 
   $pdf->SetFillColor(191, 191, 191);
-  $pdf->Cell(17, 8, utf8_decode("CLAVE"), 1, 0, "C", true);
+  $pdf->Cell(16, 8, utf8_decode("CLAVE"), 1, 0, "C", true);
   $pdf->Cell(17, 8, utf8_decode("SERIACIÓN"), 1, 0, "C", true);
   $pdf->Cell(65, 8, utf8_decode("ASIGNATURA O UNIDAD DE APRENDIZAJE"), 1, 0, "C", true);
-  $pdf->Cell(23, 8, utf8_decode("TIPO"), 1, 0, "C", true);
-  $pdf->Cell(13, 8, utf8_decode("CALI."), 1, 0, "C", true);
+  $pdf->Cell(22, 8, utf8_decode("TIPO"), 1, 0, "C", true);
+  $pdf->Cell(16, 8, utf8_decode("CALI."), 1, 0, "C", true);
   $pdf->Cell(13, 8, utf8_decode("CRED."), 1, 0, "C", true);
-  $pdf->MultiCell(28, 4, utf8_decode("FECHA DE ACREDITACIÓN"), 1, "C", true);
+  $pdf->MultiCell(27, 4, utf8_decode("FECHA DE ACREDITACIÓN"), 1, "C", true);
 
   $pdf->Ln(0);
 
@@ -166,7 +166,7 @@ foreach ($pdf->calificacionesAlumno as $ciclos => $ciclo) {
      
 
     //set widht for each column (6 columns)
-    $pdf->SetWidths(array(17, 17, 65, 23, 13, 13, 28));
+    $pdf->SetWidths(array(16, 17, 65, 22, 16, 13, 27));
 
     //set line height
     $pdf->SetLineHeight(5);
@@ -224,7 +224,8 @@ $pdf->Ln(15);
 // Fecha
 $fecha =  $pdf->convertirFecha(date("Y-m-d"));
 $pdf->SetFont("Nutmegbk", "", 8);
-$pdf->MultiCell(176, 3, utf8_decode("El presente historial consigna las calificaciones que hasta la fecha han sido registradas en el  Sistema Integral de Información para la Gestión de la Educación Superior (SIIGES), el cumplimiento parcial o total del plan de estudios y la calificación total o parcial serán acreditados solamente por un certificado autorizado.
+$pdf->MultiCell(176, 3, utf8_decode("El presente historial consigna las calificaciones que hasta la fecha han sido registradas en el  Sistema Integral de Información para la Gestión de la Educación Superior (SIIGES), el cumplimiento parcial o total del plan de estudios, los créditos obtenidos y la calificación total o parcial serán acreditados solamente por un certificado autorizado.
+
 La información del presente cumple fines informativos, único para la consulta de la Institución y la Dirección de Servicios Escolares, fecha de consulta " . $fecha), 0, "J");
 $pdf->Ln(5);
 
