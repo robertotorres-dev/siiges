@@ -349,10 +349,6 @@ if ($pdf->checkNewPage()) {
   $pdf->Ln(15);
 }
 
-$pdf->Ln();
-
-
-
 // Higiene
 // Higiene del plantel
 $pdf->SetFillColor(166, 166, 166);
@@ -389,7 +385,6 @@ foreach ($pdf->higienes as $key => $higiene) {
     ));
   }
 }
-
 
 if ($pdf->checkNewPage()) {
   $pdf->Ln(15);
@@ -485,7 +480,6 @@ foreach ($pdf->tiposInstalacion as $key => $instalacion) {
   }
 }
 
-
 if ($pdf->checkNewPage()) {
   $pdf->Ln(15);
   $pdf->SetFont("Nutmegb", "", 11);
@@ -506,6 +500,18 @@ $pdf->SetFillColor(166, 166, 166);
 $pdf->SetFont("Nutmegb", "", 9);
 $pdf->MultiCell(174, 5, utf8_decode("6. RELACIÓN DE INSTITUCIONES DE SALUD ALEDAÑAS, SERVICIOS DE AMBULANCIA U OTROS SERVICIOS DE EMERGENCIA A LOS CUALES RECURRIRÁ LA INSTITUCIÓN EN CASO DE ALGUNA CONTINGENCIA"), 1, "C", true);
 
+if ($pdf->checkNewPage()) {
+  // Nombre del formato
+  $pdf->SetFont("Nutmegb", "", 9);
+  $pdf->Ln(10);
+  $pdf->SetTextColor(255, 255, 255);
+  $pdf->SetFillColor(0, 127, 204);
+  $pdf->Cell(140, 5, "", 0, 0, "L");
+  $pdf->Cell(35, 6, "FDA04", 0, 0, "R", true);
+  $pdf->Ln(10);
+  $pdf->SetTextColor(0, 0, 0);
+}
+
 $y = $pdf->GetY();
 $x = $pdf->GetX();
 $pdf->SetFillColor(191, 191, 191);
@@ -521,6 +527,17 @@ foreach ($pdf->salud as $key => $salud) {
       "tiempo_salud" => utf8_decode(mb_strtoupper($salud["tiempo"])),
     ]
   );
+  if ($pdf->checkNewPage()) {
+    // Nombre del formato
+    $pdf->SetFont("Nutmegb", "", 11);
+    $pdf->Ln(10);
+    $pdf->SetTextColor(255, 255, 255);
+    $pdf->SetFillColor(0, 127, 204);
+    $pdf->Cell(140, 5, "", 0, 0, "L");
+    $pdf->Cell(35, 6, "FDA04", 0, 0, "R", true);
+    $pdf->Ln(10);
+    $pdf->SetTextColor(0, 0, 0);
+  }
 
   //set widht for each column (6 columns)
   $pdf->SetWidths(array(96, 78));
@@ -536,7 +553,7 @@ foreach ($pdf->salud as $key => $salud) {
       $item['nombre_salud'],
       $item['tiempo_salud'],
     ));
-
+    
     if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
       $pdf->SetFont("Nutmegb", "", 11);
@@ -549,6 +566,7 @@ foreach ($pdf->salud as $key => $salud) {
     }
   }
 }
+$pdf->Ln(5);
 
 
 if ($pdf->programa["modalidad_id"] > Modalidad::ESCOLARIZADA && $pdf->programa["modalidad_id"] < Modalidad::DUAL) {
