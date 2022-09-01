@@ -186,10 +186,10 @@ if ($resultadoPrograma["data"]["nivel_id"] >= 4 && $resultadoPrograma["data"]["n
 							<div class="form-group">
 								<label class="control-label" for="estatus_certificado"><?php echo $titulo_certificado2; ?></label>
 								<input type="checkbox" id="estatus_certificado" name="estatus_certificado" value="1" class="form-control" <?php if ($resultadoAlumno["data"]["estatus_certificado"] == "1") {
-																																																														echo "checked";
-																																																													} ?> <?php if ($_SESSION["rol_id"] != 13) {
-																																																																	echo "disabled";
-																																																																} ?> />
+																																				echo "checked";
+																																			} ?> <?php if ($_SESSION["rol_id"] != 13) {
+																																						echo "disabled";
+																																					} ?> />
 							</div>
 						</div>
 					</div>
@@ -207,11 +207,10 @@ if ($resultadoPrograma["data"]["nivel_id"] >= 4 && $resultadoPrograma["data"]["n
 						<div class="col-sm-4">
 							<div class="form-group">
 								<label class="control-label" for="estatus_nacimiento">Acreditaci&oacute;n Acta de Nacimiento</label>
-								<input type="checkbox" id="estatus_nacimiento" name="estatus_nacimiento" value="1" class="form-control" <?php if ($resultadoAlumno["data"]["estatus_nacimiento"] == "1") {
-																																																													echo "checked";
-																																																												} ?> <?php if ($_SESSION["rol_id"] != 13) {
-																																																																echo "disabled";
-																																																															} ?> />
+								<input type="checkbox" id="estatus_nacimiento" name="estatus_nacimiento" value="1" class="form-control" 
+									<?php if ($resultadoAlumno["data"]["estatus_nacimiento"] == "1") {	echo "checked";} ?> 
+									<?php if ($_SESSION["rol_id"] != 13) {echo "disabled"; } ?> 
+								/>
 							</div>
 						</div>
 					</div>
@@ -230,10 +229,10 @@ if ($resultadoPrograma["data"]["nivel_id"] >= 4 && $resultadoPrograma["data"]["n
 							<div class="form-group">
 								<label class="control-label" for="estatus_curp">Acreditaci&oacute;n CURP</label>
 								<input type="checkbox" id="estatus_curp" name="estatus_curp" value="1" class="form-control" <?php if ($resultadoAlumno["data"]["estatus_curp"] == "1") {
-																																																							echo "checked";
-																																																						} ?> <?php if ($_SESSION["rol_id"] != 13) {
-																																																										echo "disabled";
-																																																									} ?> />
+																																echo "checked";
+																															} ?> <?php if ($_SESSION["rol_id"] != 13) {
+																																		echo "disabled";
+																																	} ?> />
 							</div>
 						</div>
 					</div>
@@ -242,8 +241,8 @@ if ($resultadoPrograma["data"]["nivel_id"] >= 4 && $resultadoPrograma["data"]["n
 							<div class="form-group">
 								<label class="control-label" for="observaciones1">Observaciones IESI</label>
 								<textarea id="observaciones1" name="observaciones1" rows="6" class="form-control" <?php if ($_SESSION["rol_id"] == 13) {
-																																																		echo "disabled";
-																																																	} ?>><?php echo $resultadoAlumno["data"]["observaciones1"]; ?></textarea>
+																														echo "disabled";
+																													} ?>><?php echo $resultadoAlumno["data"]["observaciones1"]; ?></textarea>
 							</div>
 						</div>
 					</div>
@@ -252,8 +251,8 @@ if ($resultadoPrograma["data"]["nivel_id"] >= 4 && $resultadoPrograma["data"]["n
 							<div class="form-group">
 								<label class="control-label" for="observaciones2">Observaciones SICYT</label>
 								<textarea id="observaciones2" name="observaciones2" rows="6" class="form-control" <?php if ($_SESSION["rol_id"] != 13) {
-																																																		echo "disabled";
-																																																	} ?>><?php echo $resultadoAlumno["data"]["observaciones2"]; ?></textarea>
+																														echo "disabled";
+																													} ?>><?php echo $resultadoAlumno["data"]["observaciones2"]; ?></textarea>
 							</div>
 						</div>
 					</div>

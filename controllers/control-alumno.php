@@ -222,6 +222,11 @@ if ($_POST["webService"] == "guardarAlumnoCertificado") {
 	}
 
 	$parametros = array();
+	if (($_POST["estatus_certificado"] == 1) && ($_POST["estatus_nacimiento"] == 1) && ($_POST["estatus_curp"] == 1)) {
+		$parametros["situacion_id"] = 1;
+	} else {
+		$parametros["situacion_id"] = 2;
+	}
 	$parametros["id"] = $_POST["id"];
 	if ($_FILES["archivo_certificado"]["name"] != null) {
 		$parametros["archivo_certificado"] = "documento1_" . $_POST["id"] . ".pdf";
@@ -236,7 +241,7 @@ if ($_POST["webService"] == "guardarAlumnoCertificado") {
 	$parametros["estatus_nacimiento"] = $_POST["estatus_nacimiento"];
 	$parametros["estatus_curp"] = $_POST["estatus_curp"];
 	$parametros["observaciones1"] = $_POST["observaciones1"];
-	$parametros["observaciones2"] = $_POST["observaciones2"];
+	$parametros["observaciones2"] = $_POST["observaciones2"]; 
 
 	$alumno = new Alumno();
 	$alumno->setAttributes($parametros);
