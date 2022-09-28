@@ -80,7 +80,7 @@ $resultadoInstitucion = $institucion->consultarId();
             <p class="text-muted small">
               <strong>¡Nota importante! </strong>
               <br>
-              Para registrar insformación en los RVOE'S autorizados, las IES deberán cumplir con los siguientes requisitos
+              Para registrar información en los RVOE'S autorizados, las IES deberán cumplir con los siguientes requisitos
               autorizados.
             <div class="col-sm-12 col-md-12">
               <ul>

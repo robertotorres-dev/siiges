@@ -54,6 +54,24 @@
 				<!-- TÍTULO -->
 				<h2 id="txtNombre">Programas de Estudios</h2>
 				<hr class="red">
+        <div class="row">
+          <div class="col-sm-12 col-md-12">
+            <p class="text-muted small">
+              <strong>¡Nota importante! </strong>
+              <br>
+              Para registrar información en los RVOE'S autorizados, las IES deberán cumplir con los siguientes requisitos
+              autorizados.
+            <div class="col-sm-12 col-md-12">
+              <ul>
+                <li class="text-muted small">Nombramiento de Director</li>
+                <li class="text-muted small">Clave de Centro de Trabajo</li>
+                <li class="text-muted small">Registro de Sellos y Firmas(DGP)</li>
+                <li class="text-muted small">Reglamento</li>
+              </ul>
+            </div>
+            </p>
+          </div>
+        </div>
 				<div class="row">
           <div class="col-sm-12">
 						<legend>Programas de estudios acreditados con RVOE</legend>
