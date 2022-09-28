@@ -91,7 +91,6 @@ $resultadoInstitucion = $institucion->consultarId();
               </ul>
             </div>
             </p>
-            <!-- <a href="plantillas/FDP01.docx">(Descargar plantilla). </a> -->
           </div>
         </div>
         <div class="row">
