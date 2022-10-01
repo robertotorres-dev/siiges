@@ -17,7 +17,7 @@ function changeFunc(datos) {
 Alumno.confirmarBaja = function (datos) {
   Alumno.alumnoId = datos.id;
   Alumno.nombre = datos.nombre;
-  $("#modalConfirmacion").modal();
+  $("#modalConfirmacion").modal({backdrop: 'static', keyboard: false});
   $("#tamanoModales").attr("style", "margin-top:20px;");
   $("#textoConfirmacion").html(
     "Está por dar de baja al alumno " +
@@ -25,6 +25,12 @@ Alumno.confirmarBaja = function (datos) {
       ", la baja deberá estar fundamentada con reglamento. ¿Está usted seguro?"
   );
 };
+
+// Cancelar baja
+Alumno.cancelarBaja = function() {
+  location.href = "ce-alumnos.php?programa_id=" + $("#programa_id").val();
+}
+
 //Baja de alumnos
 Alumno.baja = function () {
   if ($("#fecha_baja").val() != "") {
