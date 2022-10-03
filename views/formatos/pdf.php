@@ -40,6 +40,7 @@ require_once "../../models/modelo-calificacion.php";
 require_once "../../models/modelo-grupo.php";
 require_once "../../models/modelo-ciclo-escolar.php";
 require_once "../../models/modelo-alumno.php";
+require_once "../../models/modelo-situacion.php";
 
 
 class PDF extends PDF_MC_Table
@@ -945,11 +946,19 @@ class PDF extends PDF_MC_Table
     $res_alumno = $res_alumno["data"];
     $this->alumno = $res_alumno;
 
+    $situacion_alumno = new Situacion;
+    $situacion_alumno->setAttributes(array("id" => $res_alumno["situacion_id"]));
+    $res_situacion_alumno = $situacion_alumno->consultarId();
+    $res_situacion_alumno = $res_situacion_alumno["data"];
+    $this->alumno["situacion"]= $res_situacion_alumno;
+
     $persona = new Persona;
     $persona->setAttributes(array("id" => $res_alumno["persona_id"]));
     $res_persona = $persona->consultarId();
     $res_persona = $res_persona["data"];
     $this->alumno["persona"] = $res_persona;
+
+   
   }
 
   function getCalificaciones($alumno_id = null)

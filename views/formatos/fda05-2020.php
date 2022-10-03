@@ -446,6 +446,7 @@ $pdf->SetFont("Nutmeg", "", 11);
 $pdf->Cell(0, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 0, "C");
 $pdf->Ln();
 
+$pdf->Ln(5);
 $domicilio1 = $pdf->domicilioPlantel["calle"] . " "
       . $pdf->domicilioPlantel["numero_exterior"] . " "
       . $pdf->domicilioPlantel["numero_interior"] . ", "
@@ -453,7 +454,7 @@ $domicilio1 = $pdf->domicilioPlantel["calle"] . " "
       . $pdf->domicilioPlantel["codigo_postal"];
 $domicilio2 = $pdf->domicilioPlantel["municipio"] . " "
       . $pdf->domicilioPlantel["estado"] . ", México";
-
+      
 $pdf->SetFont("Nutmeg", "", 10);
 $pdf->Cell(0, 5, utf8_decode(mb_strtoupper($pdf->nombreInstitucion)), 0, 1, "C");
 $pdf->Cell(0, 5, utf8_decode(mb_strtoupper($domicilio1)), 0, 1, "C");

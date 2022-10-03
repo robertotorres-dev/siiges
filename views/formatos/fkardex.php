@@ -75,20 +75,23 @@ $pdf->Cell(176, 5, utf8_decode("DATOS DEL ALUMNO"), 1, 1, "C", true);
 // add table heading using standard cells
 $pdf->SetFont("Nutmeg", "", 9);
 $pdf->SetFillColor(191, 191, 191);
-$pdf->Cell(58, 5, utf8_decode("MATRÍCULA"), 1, 0, "C", true);
+$pdf->Cell(29, 5, utf8_decode("MATRÍCULA"), 1, 0, "C", true);
 $pdf->Cell(118, 5, utf8_decode("NOMBRE DEL ALUMNO"), 1, 0, "C", true);
+$pdf->Cell(29, 5, utf8_decode("ESTATUS"), 1, 0, "C", true);
 $pdf->Ln();
 
 // Tabla de domicilio de la institucion
 $dataDetalleDomicilioInstitucion1 = array(
   [
     "matricula" => utf8_decode(mb_strtoupper($pdf->alumno["matricula"])),
-    "nombre_alumno" => utf8_decode(mb_strtoupper($pdf->alumno["persona"]["apellido_paterno"] . " " . $pdf->alumno["persona"]["apellido_materno"] . " " . $pdf->alumno["persona"]["nombre"]))
+    "nombre_alumno" => utf8_decode(mb_strtoupper($pdf->alumno["persona"]["apellido_paterno"] . " " . $pdf->alumno["persona"]["apellido_materno"] . " " . $pdf->alumno["persona"]["nombre"])),
+    "estatus" => utf8_decode(mb_strtoupper($pdf->alumno["situacion"]["nombre"])),
   ]
 );
 
+
 //set widht for each column (6 columns)
-$pdf->SetWidths(array(58, 118));
+$pdf->SetWidths(array(29, 118, 29));
 
 //set line height
 $pdf->SetLineHeight(5);
@@ -99,13 +102,16 @@ foreach ($dataDetalleDomicilioInstitucion1 as $item) {
   // write data using Row() method containing array of values
   $pdf->Row(array(
     $item['matricula'],
-    $item['nombre_alumno']
+    $item['nombre_alumno'],
+    $item['estatus']
   ));
 }
 
 $pdf->Ln(10);
 
 $total_creditos = 0;
+$total_calificaciones = 0;
+$total_materias = 0;
 foreach ($pdf->calificacionesAlumno as $ciclos => $ciclo) {
   if ($pdf->checkNewPage()) {
     $pdf->Ln(20);
@@ -121,15 +127,17 @@ foreach ($pdf->calificacionesAlumno as $ciclos => $ciclo) {
   $pdf->SetFont("Nutmegb", "", 7);
 
   $pdf->SetFillColor(191, 191, 191);
-  $pdf->Cell(17, 8, utf8_decode("CLAVE"), 1, 0, "C", true);
+  $pdf->Cell(16, 8, utf8_decode("CLAVE"), 1, 0, "C", true);
   $pdf->Cell(17, 8, utf8_decode("SERIACIÓN"), 1, 0, "C", true);
-  $pdf->Cell(63, 8, utf8_decode("ASIGNATURA O UNIDAD DE APRENDIZAJE"), 1, 0, "C", true);
-  $pdf->Cell(19, 8, utf8_decode("TIPO"), 1, 0, "C", true);
-  $pdf->Cell(12, 8, utf8_decode("CALI."), 1, 0, "C", true);
-  $pdf->Cell(12, 8, utf8_decode("CRED."), 1, 0, "C", true);
-  $pdf->Cell(36, 8, utf8_decode("FECHA DE ACREDITACIÓN"), 1, 0, "C", true);
+  $pdf->Cell(65, 8, utf8_decode("ASIGNATURA O UNIDAD DE APRENDIZAJE"), 1, 0, "C", true);
+  $pdf->Cell(22, 8, utf8_decode("TIPO"), 1, 0, "C", true);
+  $pdf->Cell(16, 8, utf8_decode("CALI."), 1, 0, "C", true);
+  $pdf->Cell(13, 8, utf8_decode("CRED."), 1, 0, "C", true);
+  $pdf->MultiCell(27, 4, utf8_decode("FECHA DE ACREDITACIÓN"), 1, "C", true);
 
-  $pdf->Ln(8);
+  $pdf->Ln(0);
+
+  
 
   foreach ($ciclo as $calificaciones => $detalle) {
 
@@ -142,7 +150,7 @@ foreach ($pdf->calificacionesAlumno as $ciclos => $ciclo) {
         $tipo_txt = "Extraordinario";
         break;
     }
-
+   
     $dataCalificacionAsignatura = array(
       [
         "clave_asignatura" => utf8_decode($detalle["asignatura"]["clave"]),
@@ -155,13 +163,17 @@ foreach ($pdf->calificacionesAlumno as $ciclos => $ciclo) {
       ]
     );
 
+     
+
     //set widht for each column (6 columns)
-    $pdf->SetWidths(array(17, 17, 63, 19, 12, 12, 36));
+    $pdf->SetWidths(array(16, 17, 65, 22, 16, 13, 27));
 
     //set line height
     $pdf->SetLineHeight(5);
     $pdf->SetColors([]);
     $pdf->SetFont("Nutmeg", "", 7);
+    
+
 
     //Imprime la fila
     foreach ($dataCalificacionAsignatura as $item) {
@@ -178,26 +190,43 @@ foreach ($pdf->calificacionesAlumno as $ciclos => $ciclo) {
 
       if ($pdf->checkNewPage()) {
         $pdf->Ln(20);
-      }
+      }      
     }
 
-    $total_creditos += $detalle["asignatura"]["creditos"];
+    if ($detalle["calificacion"] > $pdf->programa["calificacion_aprobatoria"]) { 
+      $total_creditos += $detalle["asignatura"]["creditos"];
+      $total_calificaciones += $detalle["calificacion"];
+      $total_materias += 1;
+     }
   }
-  $pdf->Ln(5);
+
+  $pdf->Ln(15);
+}
+$res_total = 0;
+if ($total_materias != 0 ){
+  $res_total = $total_calificaciones / $total_materias;
 }
 
-$pdf->Ln(10);
-$pdf->SetFont("Nutmegb", "", 9);
+$pdf->SetFont("Nutmeg", "", 9);
 $pdf->SetFillColor(191, 191, 191);
-$pdf->Cell(50, 5, utf8_decode("CRÉDITOS OBTENIDOS"), 1, 1, "C", true);
-$pdf->SetFont("Nutmeg", "", 11);
-$pdf->Cell(50, 5, utf8_decode($total_creditos), 1, 1, "C");
+$pdf->Cell(50, 5, utf8_decode("CRÉDITOS OBTENIDOS"), 1, 0, "C", true);
+$pdf->Cell(50, 5, utf8_decode("PROMEDIO"), 1, 0, "C", true);
+$pdf->Ln();
+
+$pdf->SetFont("Nutmeg", "", 9);
+$pdf->SetFillColor(255,255,255);
+$pdf->Cell(50, 5, utf8_decode($total_creditos . " de " .  $pdf->programa["creditos"]), 1, 0, "C", true);
+$pdf->Cell(50, 5, utf8_decode(round($res_total, 1)), 1, 0, "C", true);
+$pdf->Ln();
+
 
 $pdf->Ln(15);
 // Fecha
 $fecha =  $pdf->convertirFecha(date("Y-m-d"));
 $pdf->SetFont("Nutmegbk", "", 8);
-$pdf->MultiCell(0, 5, utf8_decode("La información del presente cumple fines informativos y no de certificación, único para la consulta de laInstitución y la Dirección de Servicios Escolares fecha de consulta" . $fecha), 0, "C");
+$pdf->MultiCell(176, 3, utf8_decode("El presente historial consigna las calificaciones que hasta la fecha han sido registradas en el  Sistema Integral de Información para la Gestión de la Educación Superior (SIIGES), el cumplimiento parcial o total del plan de estudios, los créditos obtenidos y la calificación total o parcial serán acreditados solamente por un certificado autorizado.
+
+La información del presente cumple fines informativos, único para la consulta de la Institución y la Dirección de Servicios Escolares, fecha de consulta " . $fecha), 0, "J");
 $pdf->Ln(5);
 
 $pdf->Output("I", "kardex_" . $pdf->alumno["matricula"] . ".pdf");
