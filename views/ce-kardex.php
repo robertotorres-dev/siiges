@@ -123,7 +123,7 @@ $resultadoPersona = $persona->consultarId();
             <legend>CALIFICACIONES</legend>
           </div>
         </div>
-        <?php if (Rol::ROL_ADMIN == $_SESSION["rol_id"]) : ?>
+        <?php if (Rol::ROL_ADMIN == $_SESSION["rol_id"] || Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"]) : ?>
           <div class="row">
             <div class="col-sm-10"></div>
             <div class="col-sm-2">
