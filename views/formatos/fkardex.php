@@ -12,7 +12,6 @@ $alumno_id = $_GET["alumno_id"];
 // make new object
 $pdf = new PDF();
 
-
 $pdf->getDataPrograma($_GET["programa_id"]);
 $pdf->AliasNbPages();
 $pdf->getCalificaciones($alumno_id);
@@ -26,7 +25,6 @@ $pdf->SetTextColor(0, 127, 204);
 $pdf->Cell(0, 5, utf8_decode("HISTORIAL ACADÉMICO"), 0, 1, "L");
 $pdf->Ln(5);
 $pdf->SetTextColor(0, 0, 0);
-
 
 // Tabla de encabezado Datos generales de la institución y programa
 $pdf->SetFont("Nutmeg", "", 9);
@@ -89,7 +87,6 @@ $dataDetalleDomicilioInstitucion1 = array(
   ]
 );
 
-
 //set widht for each column (6 columns)
 $pdf->SetWidths(array(29, 118, 29));
 
@@ -117,8 +114,6 @@ foreach ($pdf->calificacionesAlumno as $ciclos => $ciclo) {
     $pdf->Ln(20);
   }
 
-
-
   $ciclo = $pdf->array_sort($ciclo, 'consecutivo', SORT_ASC);
   $pdf->SetFillColor(166, 166, 166);
   $pdf->SetFont("Nutmeg", "", 9);
@@ -137,8 +132,6 @@ foreach ($pdf->calificacionesAlumno as $ciclos => $ciclo) {
 
   $pdf->Ln(0);
 
-  
-
   foreach ($ciclo as $calificaciones => $detalle) {
 
     $area_txt = "";
@@ -150,7 +143,7 @@ foreach ($pdf->calificacionesAlumno as $ciclos => $ciclo) {
         $tipo_txt = "Extraordinario";
         break;
     }
-   
+
     $dataCalificacionAsignatura = array(
       [
         "clave_asignatura" => utf8_decode($detalle["asignatura"]["clave"]),
@@ -163,8 +156,6 @@ foreach ($pdf->calificacionesAlumno as $ciclos => $ciclo) {
       ]
     );
 
-     
-
     //set widht for each column (6 columns)
     $pdf->SetWidths(array(16, 17, 65, 22, 16, 13, 27));
 
@@ -172,8 +163,6 @@ foreach ($pdf->calificacionesAlumno as $ciclos => $ciclo) {
     $pdf->SetLineHeight(5);
     $pdf->SetColors([]);
     $pdf->SetFont("Nutmeg", "", 7);
-    
-
 
     //Imprime la fila
     foreach ($dataCalificacionAsignatura as $item) {
@@ -190,21 +179,28 @@ foreach ($pdf->calificacionesAlumno as $ciclos => $ciclo) {
 
       if ($pdf->checkNewPage()) {
         $pdf->Ln(20);
-      }      
+      }
     }
 
-    if ($detalle["calificacion"] > $pdf->programa["calificacion_aprobatoria"]) { 
+    if ($detalle["calificacion"] > $pdf->programa["calificacion_aprobatoria"]) {
       $total_creditos += $detalle["asignatura"]["creditos"];
       $total_calificaciones += $detalle["calificacion"];
       $total_materias += 1;
-     }
+    }
   }
 
   $pdf->Ln(15);
 }
-$res_total = 0;
-if ($total_materias != 0 ){
-  $res_total = $total_calificaciones / $total_materias;
+$promedio_calificacion = 0;
+
+// print_r($pdf->programa);
+if ($total_materias != 0) {
+  $promedio_calificacion = $total_calificaciones / $total_materias;
+  if ($pdf->programa['calificacion_decimal'] == 1) :
+    $promedio_calificacion = round($promedio_calificacion, 1);
+  elseif ($pdf->programa['calificacion_decimal'] == 2) :
+    $promedio_calificacion = round($promedio_calificacion, 0);
+  endif;
 }
 
 $pdf->SetFont("Nutmeg", "", 9);
@@ -214,11 +210,10 @@ $pdf->Cell(50, 5, utf8_decode("PROMEDIO"), 1, 0, "C", true);
 $pdf->Ln();
 
 $pdf->SetFont("Nutmeg", "", 9);
-$pdf->SetFillColor(255,255,255);
+$pdf->SetFillColor(255, 255, 255);
 $pdf->Cell(50, 5, utf8_decode($total_creditos . " de " .  $pdf->programa["creditos"]), 1, 0, "C", true);
-$pdf->Cell(50, 5, utf8_decode(round($res_total, 1)), 1, 0, "C", true);
+$pdf->Cell(50, 5, utf8_decode($promedio_calificacion), 1, 0, "C", true);
 $pdf->Ln();
-
 
 $pdf->Ln(15);
 // Fecha
