@@ -107,7 +107,7 @@ if ($_GET["proceso"] == "edicion") {
             <div class="col-sm-4">
               <div class="form-group">
                 <label class="control-label" for="programa_id">Programa Id</label>
-                <input type="text" id="programa_id" name="programa_id" value="<?php echo $resultadoPrograma["data"]["id"]; ?>" maxlength="11" class="form-control" required readonly />
+                <input type="text" id="programa_id" name="programa_id" value="<?php echo $resultadoPrograma["data"]["id"]; ?>" class="form-control" required readonly disabled />
               </div>
             </div>
             <div class="col-sm-4">
@@ -121,85 +121,29 @@ if ($_GET["proceso"] == "edicion") {
           <div class="row">
             <div class="col-sm-12 col-md-3">
               <div class="form-group">
-                <label class="control-label" for="consecutivo">Grado *</label>
-                <select class="form-control" id="grado" name="grado">
-                  <option value="">Seleccione una opción</option>
-                  <optgroup label="Semestres">
-                    <option value="Primer semestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Primer semestre") ? "selected" : "";
-                                                    ?>>Primero</option>
-                    <option value="Segundo semestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Segundo semestre") ? "selected" : "";
-                                                      ?>>Segundo</option>
-                    <option value="Tercero semestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Tercero semestre") ? "selected" : "";
-                                                      ?>>Tercero</option>
-                    <option value="Cuarto semestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Cuarto semestre") ? "selected" : "";
-                                                    ?>>Cuarto</option>
-                    <option value="Quinto semestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Quinto semestre") ? "selected" : "";
-                                                    ?>>Quinto</option>
-                    <option value="Sexto semestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Sexto semestre") ? "selected" : "";
-                                                    ?>>Sexto</option>
-                    <option value="Septimo semestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Septimo semestre") ? "selected" : "";
-                                                      ?>>Septimo</option>
-                    <option value="Octavo semestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Octavo semestre") ? "selected" : "";
-                                                    ?>>Octavo</option>
-                    <option value="Noveno semestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Noveno semestre") ? "selected" : "";
-                                                    ?>>Noveno</option>
-                    <option value="Decimo semestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Decimo semestre") ? "selected" : "";
-                                                    ?>>Decimo</option>
-                  </optgroup>
-                  <optgroup label="Cuatrimestres">
-                    <option value="Primer cuatrimestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Primer cuatrimestre") ? "selected" : "";
-                                                        ?>>Primero</option>
-                    <option value="Segundo cuatrimestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Segundo cuatrimestre") ? "selected" : "";
-                                                          ?>>Segundo</option>
-                    <option value="Tercero cuatrimestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Tercero cuatrimestre") ? "selected" : "";
-                                                          ?>>Tercero</option>
-                    <option value="Cuarto cuatrimestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Cuarto cuatrimestre") ? "selected" : "";
-                                                        ?>>Cuarto</option>
-                    <option value="Quinto cuatrimestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Quinto cuatrimestre") ? "selected" : "";
-                                                        ?>>Quinto</option>
-                    <option value="Sexto cuatrimestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Sexto cuatrimestre") ? "selected" : "";
-                                                        ?>>Sexto</option>
-                    <option value="Septimo cuatrimestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Septimo cuatrimestre") ? "selected" : "";
-                                                          ?>>Septimo</option>
-                    <option value="Octavo cuatrimestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Octavo cuatrimestre") ? "selected" : "";
-                                                        ?>>Octavo</option>
-                    <option value="Noveno cuatrimestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Noveno cuatrimestre") ? "selected" : "";
-                                                        ?>>Noveno</option>
-                    <option value="Decimo cuatrimestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Decimo cuatrimestre") ? "selected" : "";
-                                                        ?>>Decimo</option>
-                    <option value="Undecimo cuatrimestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Undecimo cuatrimestre") ? "selected" : "";
-                                                          ?>>Undecimo</option>
-                    <option value="Duodecimo cuatrimestre" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Duodecimo cuatrimestre") ? "selected" : "";
-                                                            ?>>Duodecimo</option>
-                  </optgroup>
-                  <optgroup label="Curriculum Flexible">
-                    <option value="Flexible Cuatrimestral" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Flexible Cuatrimestral") ? "selected" : "";
-                                                            ?>>Listado Cuatrimestral</option>
-                    <option value="Flexible Semestral" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["grado"] == "Flexible Semestral") ? "selected" : "";
-                                                        ?>>Listado Semestral</option>
-                  </optgroup>
-                </select>
+                <label class="control-label" for="grado">Grado *</label>
+                <input type="text" class="form-control" id="grado" name="grado" value="<?php echo (isset($resultadoAsignatura)) ? $resultadoAsignatura["data"]["grado"] : ""; ?>" readonly disabled />
               </div>
             </div>
             <div class="col-sm-12 col-md-3">
               <div class="form-group">
                 <label class="control-label" for="nombre">Nombre *</label>
                 <input type="text" id="nombre" name="nombre" value="<?php echo (isset($resultadoAsignatura)) ? $resultadoAsignatura["data"]["nombre"] : "";
-                                                                    ?>" class="form-control" required />
+                                                                    ?>" class="form-control" required readonly disabled />
               </div>
             </div>
             <div class="col-sm-12 col-md-3">
               <div class="form-group">
                 <label class="control-label" for="clave">Clave *</label>
                 <input type="text" id="clave" name="clave" value="<?php echo (isset($resultadoAsignatura)) ? $resultadoAsignatura["data"]["clave"] : "";
-                                                                  ?>" class="form-control" />
+                                                                  ?>" class="form-control" readonly disabled />
               </div>
             </div>
             <div class="col-sm-12 col-md-3">
               <div class="form-group">
                 <label class="control-label" for="seriacion">Seriaci&oacute;n</label>
                 <input type="text" id="seriacion" name="seriacion" value="<?php echo (isset($resultadoAsignatura)) ? $resultadoAsignatura["data"]["seriacion"] : "";
-                                                                          ?>" class="form-control" />
+                                                                          ?>" class="form-control" readonly disabled />
               </div>
             </div>
           </div>
@@ -208,7 +152,8 @@ if ($_GET["proceso"] == "edicion") {
             <div class="col-sm-12 col-md-4">
               <div class="form-group">
                 <label class="control-label" for="tipo">Tipo *</label>
-                <select class="form-control" id="tipo" name="tipo">
+                <select class="form-control" id="tipo" name="tipo" value="<?php echo (isset($resultadoAsignatura)) ? $resultadoAsignatura["data"]["tipo"] : "";
+                                                                          ?>" readonly disabled>
                   <option value="">Seleccione una opción</option>
                   <option value="1" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["tipo"] == 1) ? "selected" : "";
                                     ?>>Asignatura</option>
@@ -220,7 +165,7 @@ if ($_GET["proceso"] == "edicion") {
             <div class="col-sm-12 col-md-4">
               <div class="form-group">
                 <label class="control-label" for="area">&Aacute;rea *</label>
-                <select class="form-control" id="area" name="area">
+                <select class="form-control" id="area" name="area" readonly disabled>
                   <option value="">Seleccione una opción</option>
                   <optgroup id="groupAsignatura" label="Asignatura">
                     <option value="1" <?php echo (isset($resultadoAsignatura) && $resultadoAsignatura["data"]["area"] == 1) ? "selected" : "";
@@ -245,7 +190,7 @@ if ($_GET["proceso"] == "edicion") {
               <div class="form-group">
                 <label class="control-label" for="academia">Academia *</label>
                 <input type="text" id="academia" name="academia" value="<?php echo (isset($resultadoAsignatura)) ? $resultadoAsignatura["data"]["academia"] : "";
-                                                                        ?>" class="form-control" />
+                                                                        ?>" class="form-control" readonly disabled />
               </div>
             </div>
           </div>
@@ -255,21 +200,21 @@ if ($_GET["proceso"] == "edicion") {
               <div class="form-group">
                 <label class="control-label" for="horas_docente">Horas docente *</label>
                 <input type="number" id="horas_docente" name="horas_docente" value="<?php echo (isset($resultadoAsignatura)) ? $resultadoAsignatura["data"]["horas_docente"] : "";
-                                                                                    ?>" maxlength="11" class="form-control" />
+                                                                                    ?>" maxlength="11" class="form-control" readonly disabled />
               </div>
             </div>
             <div class="col-sm-12 col-md-4">
               <div class="form-group">
                 <label class="control-label" for="horas_independiente">Horas independientes *</label>
                 <input type="number" id="horas_independiente" name="horas_independiente" value="<?php echo (isset($resultadoAsignatura)) ? $resultadoAsignatura["data"]["horas_independiente"] : "";
-                                                                                                ?>" maxlength="11" class="form-control" required />
+                                                                                                ?>" maxlength="11" class="form-control" required readonly disabled />
               </div>
             </div>
             <div class="col-sm-12 col-md-4">
               <div class="form-group">
                 <label class="control-label" for="creditos">Cr&eacute;ditos *</label>
                 <input type="number" id="creditos" name="creditos" value="<?php echo (isset($resultadoAsignatura)) ? $resultadoAsignatura["data"]["creditos"] : "";
-                                                                          ?>" maxlength="11" class="form-control" step="0.01" onchange="Asignaturas.dosNumerosDecimal(this)" />
+                                                                          ?>" maxlength="11" class="form-control" step="0.01" onchange="Asignaturas.dosNumerosDecimal(this)" readonly disabled />
               </div>
             </div>
           </div>

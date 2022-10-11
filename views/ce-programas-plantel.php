@@ -145,7 +145,13 @@ $resultadoInstitucion = $institucion->consultarId();
                         <a href="ce-ciclos-escolares.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Acreditaci&oacute;n</span></a>
                       <?php endif; ?>
 
-                      <?php if (Rol::ROL_ADMIN == $_SESSION["rol_id"] || Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] || Rol::ROL_SICYT_EDITAR == $_SESSION["rol_id"]) : ?>
+                      <?php if (
+                        Rol::ROL_ADMIN == $_SESSION["rol_id"] ||
+                        Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"] ||
+                        Rol::ROL_SICYT_EDITAR == $_SESSION["rol_id"] ||
+                        Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] ||
+                        Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"]
+                      ) : ?>
                         <a href="ce-catalogo-asignaturas.php?programa_id=<?php echo $resultadoPrograma["data"][$i]["id"]; ?>">Plan de Estudios</span></a>
                       <?php endif; ?>
                     </td>
