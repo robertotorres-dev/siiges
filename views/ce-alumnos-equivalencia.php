@@ -177,7 +177,7 @@ $resultadoInstitucion = $institucion->consultarId();
                         <a href="ce-validacion-alumno.php?programa_id=<?php echo $resultadoPrograma["data"]["id"]; ?>&alumno_id=<?php echo  $resultadoAlumno["data"][$i]["id"]; ?>&proceso=edicion&tramite=equiv">Validaci&oacute;n</a>
                       <?php endif; ?>
                       <br />
-                      <a href="ce-kardex.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>">Kardex</a>
+                      <a href="ce-kardex.php?programa_id=<?php echo $_GET["programa_id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"][$i]["id"]; ?>">Historial Académico</a>
                     </td>
                   </tr>
                 <?php

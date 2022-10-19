@@ -75,7 +75,7 @@ $resultadoPersona = $persona->consultarId();
             <?php } else { ?>
               <li><a href="ce-alumnos.php?programa_id=<?php echo $_GET["programa_id"]; ?>">Alumnos</a></li>
             <?php } ?>
-            <li class="active">Consulta de Kardex</li>
+            <li class="active">Consulta de Historial Académico</li>
           </ol>
         </div>
       </div>
@@ -83,7 +83,7 @@ $resultadoPersona = $persona->consultarId();
       <!-- CUERPO PRINCIPAL -->
       <div class="col-sm-12 col-md-12 col-lg-12">
         <!-- TÍTULO -->
-        <h2 id="txtNombre">Consulta de Kardex</h2>
+        <h2 id="txtNombre">Consulta de Historial Académico</h2>
         <hr class="red">
         <div class="row">
           <div class="col-sm-12">
