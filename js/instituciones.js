@@ -62,8 +62,6 @@ Institucion.getInstitucion = function(){
     dataType : "json",
     data : {webService:"consultarUsuarioInstitucion",url:"",id:$('#usuario_id').val()},
     success : function(respuesta){
-      // console.log(Object.keys(respuesta.data[0]));
-      console.log(respuesta);
       if(respuesta.data.length > 0 ){
       if(Object.keys(respuesta.data[0]).length>0){
         if($('#txtNombre').html()){
@@ -81,12 +79,10 @@ Institucion.getInstitucion = function(){
           $('#valores_institucionales').val(respuesta.data[0].valores_institucionales);
         }
         if(Object.keys(respuesta.data[0].documentos.data).length>0){
-          console.log(respuesta.data);
           $('#documento_id').val(respuesta.data[0].documentos.data[0].id);
           $('#boton_mostar').show();
           //$("#modalMensaje").modal();
           $("#acta").attr("style","margin-top:20px;height: 600px;");
-          console.log(respuesta.data[0].documentos.data[0].archivo);
           $('#acta').attr('src',respuesta.data[0].documentos.data[0].archivo);
         }
         $('#enlace_alta').attr('href','alta-plantel.php?institucion='+respuesta.data[0].id+'&usuario='+respuesta.data[0].usuario_id);
@@ -107,7 +103,6 @@ Institucion.getInstitucion = function(){
 };
 
 Institucion.datosModal = function (registro) {
-  console.log(registro);
   $('#domicilio-completo').html(
     registro.domicilio.calle+ " #"+
     registro.domicilio.numero_exterior+", "+
@@ -119,7 +114,6 @@ Institucion.datosModal = function (registro) {
 
 Institucion.borrarRegistro = function() {
   var id_eliminar = $('#eliminar').val();
-  console.log(id_eliminar);
   Institucion.promesa = $.ajax({
     type: "POST",
     url: '../controllers/control-plantel.php',
