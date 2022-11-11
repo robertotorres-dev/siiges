@@ -497,7 +497,7 @@ class PDF extends PDF_MC_Table
     }
     // Salud
     $this->salud = new SaludInstitucion();
-    $this->salud = $this->salud->consultarPor("salud_instituciones", ["plantel_id" => $id], "*");
+    $this->salud = $this->salud->consultarPor("salud_instituciones", array ("plantel_id" => $id, "deleted_at"), "*");
     $this->salud = sizeof($this->salud["data"]) > 0 ? $this->salud["data"] : [];
   }
   // Funcion para obtener la informacion de los programas con modalida mixta no escolarizada
