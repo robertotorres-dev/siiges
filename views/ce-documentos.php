@@ -166,7 +166,7 @@ if ($resultadoPrograma["data"]["nivel_id"] >= 4 && $resultadoPrograma["data"]["n
             <div class="col-sm-8">
               <p class="text-muted small">
                 <strong>¡Nota importante! </strong>
-                Los documentos que se adjunten tendrán que ser escaneados a color, con buena resolución y cuidado de que no se pierda u omita información.
+                Los documentos que se adjunten tendrán que ser escaneados a color, con buena resolución y cuidando de que no se pierda u omita información.
               </p>
             </div>
           </div>
