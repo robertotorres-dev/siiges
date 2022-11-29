@@ -497,7 +497,7 @@ class PDF extends PDF_MC_Table
     }
     // Salud
     $this->salud = new SaludInstitucion();
-    $this->salud = $this->salud->consultarPor("salud_instituciones", ["plantel_id" => $id], "*");
+    $this->salud = $this->salud->consultarPor("salud_instituciones", array ("plantel_id" => $id, "deleted_at"), "*");
     $this->salud = sizeof($this->salud["data"]) > 0 ? $this->salud["data"] : [];
   }
   // Funcion para obtener la informacion de los programas con modalida mixta no escolarizada
@@ -950,15 +950,13 @@ class PDF extends PDF_MC_Table
     $situacion_alumno->setAttributes(array("id" => $res_alumno["situacion_id"]));
     $res_situacion_alumno = $situacion_alumno->consultarId();
     $res_situacion_alumno = $res_situacion_alumno["data"];
-    $this->alumno["situacion"]= $res_situacion_alumno;
+    $this->alumno["situacion"] = $res_situacion_alumno;
 
     $persona = new Persona;
     $persona->setAttributes(array("id" => $res_alumno["persona_id"]));
     $res_persona = $persona->consultarId();
     $res_persona = $res_persona["data"];
     $this->alumno["persona"] = $res_persona;
-
-   
   }
 
   function getCalificaciones($alumno_id = null)
@@ -1006,6 +1004,18 @@ class PDF extends PDF_MC_Table
     }
 
     $this->calificacionesAlumno = $calificacionCiclo;
+  }
+
+  function getCreditosObtenidos($alumno_id = null)
+  {
+    $parametros["alumno_id"] = $alumno_id;
+
+    $creditos = new Calificacion();
+    $creditos->setAttributes($parametros);
+    $res_creditos_alumno = $creditos->consultarCreditosObtenidos();
+
+
+    $this->creditosObtenidos = $res_creditos_alumno;
   }
 
   // M�todo para orden ascendente o descendente

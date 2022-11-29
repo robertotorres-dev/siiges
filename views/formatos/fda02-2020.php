@@ -701,7 +701,7 @@ foreach ($dataRector as $item) {
   ));
 }
 
-$pdf->Ln();
+
 $pdf->SetFont("Nutmegb", "", 9);
 
 // add table heading using standard cells
@@ -726,6 +726,8 @@ foreach ($dataRector as $item) {
   ));
 }
 if ($pdf->formaciones1) {
+ 
+  $pdf->Ln();
   $pdf->SetFont("Nutmegb", "", 9);
   $pdf->SetFillColor(166, 166, 166);
   $pdf->MultiCell(174, 5, utf8_decode("FORMACIÓN ACADÉMICA"), 1, "C", true);
@@ -776,6 +778,16 @@ if ($pdf->formaciones1) {
     }
 
     // add table heading using standard cells
+    if ($pdf->checkNewPage()) {
+      $pdf->Ln(15);
+      $pdf->SetFont("Nutmegb", "", 11);
+      $pdf->SetTextColor(255, 255, 255);
+      $pdf->SetFillColor(0, 127, 204);
+      $pdf->Cell(140, 5, "", 0, 0, "L");
+      $pdf->Cell(35, 6, "FDA02", 0, 0, "R", true);
+      $pdf->SetTextColor(0, 0, 0);
+      $pdf->Ln(15);
+    }
     $pdf->SetFillColor(191, 191, 191);
     $y = $pdf->GetY();
     $x = $pdf->GetX();
@@ -808,10 +820,18 @@ if ($pdf->formaciones1) {
   }
 }
 
+if ($pdf->checkNewPage()) {
+  $pdf->Ln(15);
+  $pdf->SetFont("Nutmegb", "", 11);
+  $pdf->SetTextColor(255, 255, 255);
+  $pdf->SetFillColor(0, 127, 204);
+  $pdf->Cell(140, 5, "", 0, 0, "L");
+  $pdf->Cell(35, 6, "FDA02", 0, 0, "R", true);
+  $pdf->SetTextColor(0, 0, 0);
+  $pdf->Ln(15);
+}
 
-$pdf->Ln(30);
-
-
+$pdf->Ln(25);
 $pdf->SetFont("Nutmeg", "", 11);
 $pdf->Cell(0, 5, utf8_decode("BAJO PROTESTA DE DECIR VERDAD"), 0, 1, "C");
 $pdf->SetFont("Nutmegb", "", 11);

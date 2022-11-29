@@ -520,13 +520,13 @@ $pdf->SetXY($x + 96, $y);
 $pdf->MultiCell(78, 5, utf8_decode("TIEMPO APROXIMADO REQUERIDO PARA LLEGAR A LA ESCUELA EN MINUTOS"), 1, "C", true);
 
 foreach ($pdf->salud as $key => $salud) {
-
-  $dataAledañas = array(
-    [
-      "nombre_salud" => utf8_decode(mb_strtoupper($salud["nombre"])),
-      "tiempo_salud" => utf8_decode(mb_strtoupper($salud["tiempo"])),
-    ]
-  );
+    $dataAledanas = array(
+      [
+        "nombre_salud" => utf8_decode(mb_strtoupper($salud["nombre"])),
+        "tiempo_salud" => utf8_decode(mb_strtoupper($salud["tiempo"])),
+      ]
+    );
+ 
   if ($pdf->checkNewPage()) {
     // Nombre del formato
     $pdf->SetFont("Nutmegb", "", 11);
@@ -547,13 +547,13 @@ foreach ($pdf->salud as $key => $salud) {
   $pdf->SetColors([]);
   $pdf->SetFont("Nutmeg", "", 9);
 
-  foreach ($dataAledañas as $item) {
+  foreach ($dataAledanas as $item) {
     // write data using Row() method containing array of values
     $pdf->Row(array(
       $item['nombre_salud'],
       $item['tiempo_salud'],
     ));
-    
+
     if ($pdf->checkNewPage()) {
       $pdf->Ln(15);
       $pdf->SetFont("Nutmegb", "", 11);
