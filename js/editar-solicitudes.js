@@ -128,6 +128,14 @@ EditarSolicitud.getSolicitud = function () {
 							documentos.formato_pedagogico_01.archivo
 						);
 					}
+          if (documentos.formato_herramientas_05 != undefined) {
+						$('#fda_05-id').val(documentos.formato_herramientas_05.id);
+						$('#contendorFDA05').attr('style', 'display: block');
+						$('#enlace-fda_05').attr(
+							'href',
+							documentos.formato_herramientas_05.archivo
+						);
+					}
 					if (documentos.dictamen_impi != undefined) {
 						$('#impi-id').val(documentos.dictamen_impi.id);
 						$('#contendorimpi').attr('style', 'display: block');
