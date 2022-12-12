@@ -218,7 +218,7 @@ $pdf->SetTextColor(0, 127, 204);
 $pdf->Cell(0, 5, utf8_decode("OFICIO DE ENTREGA DE DOCUMENTACIÓN"), 0, 1, "L");
 $pdf->SetTextColor(0, 0, 0);
 $pdf->Ln(10);
-$pdf->Cell(0, 5, utf8_decode("SUBSECRETARÍA DE EDUCACIÓN SUPERIOR"), 0, 1, "L");
+$pdf->Cell(0, 5, utf8_decode("SUBSECRETARIA DE EDUCACIÓN SUPERIOR"), 0, 1, "L");
 $pdf->Ln(5);
 $pdf->Cell(0, 5, utf8_decode("AT´N: DIRECTOR GENERAL DE INCORPORACIÓN Y SERVICIOS ESCOLARES."), 0, 1, "R");
 
