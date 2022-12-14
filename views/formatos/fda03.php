@@ -42,7 +42,7 @@ $pdf->Ln(5);
 // Fecha
 $pdf->SetFont("Nutmeg", "", 9);
 $fecha =  $pdf->fecha;
-$pdf->Cell(0, 5, utf8_decode(mb_strtoupper("Guadalajara, Jal. a $fecha")), 0, 1, "R");
+$pdf->Cell(0, 5, utf8_decode(mb_strtoupper($fecha)), 0, 1, "R");
 $pdf->Ln(5);
 
 
