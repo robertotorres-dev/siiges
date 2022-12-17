@@ -82,6 +82,7 @@ if (isset($_SESSION["resultado"])) {
 							<input type="text" id="rvoe" name="" class="form-control" value="" readonly>
 						</div>
 					</div>
+					
 					<!-- Programa de estudios -->
 					<div id="programa-estudios" class="form-group">
 						<div class="col-sm-12 col-md-4">
@@ -116,6 +117,7 @@ if (isset($_SESSION["resultado"])) {
 							</select><br>
 						</div>
 					</div>
+				
 					<!-- Dirección del plantel -->
 					<div id="direccion-plantel" class="form-group">
 						<div class="col-sm-12 col-md-4">
@@ -147,6 +149,7 @@ if (isset($_SESSION["resultado"])) {
 							<input type="text" id="municipio" name="" class="form-control" value="" placeholder="Municipio" readonly><br>
 						</div>
 					</div>
+				
 					<!-- Institución -->
 					<div id="institucion" class="form-group">
 						<div class="col-sm-12 col-md-6">
@@ -170,6 +173,7 @@ if (isset($_SESSION["resultado"])) {
 							<input type="text" class="form-control" id="celular_representante" value="33-82-24-89-60" readonly>
 						</div>
 					</div>
+				
 					<!-- Progeso -->
 					<div id="progreso" class="form-group">
 						<div class="col-sm-12 col-md-12">
@@ -197,7 +201,6 @@ if (isset($_SESSION["resultado"])) {
 			</div>
 		</section>
 
-
 		<div class="container">
 			<section class="main row margin-section-formularios">
 				<div class="col-sm-12 col-md-12 col-lg-12">
@@ -223,8 +226,6 @@ if (isset($_SESSION["resultado"])) {
 						<a target="_blank" id="fdp04">FDP 04</a><br>
 						<a target="_blank" href=<?= "formatos/fdp05.php?id=" . $_GET["solicitud"] ?>>FDP 05</a><br>
 						<a target="_blank" href=<?= "formatos/fdp06.php?id=" . $_GET["solicitud"] ?>>FDP 06</a><br>
-						<a target="_blank" href=<?= "formatos/fdp07.php?id=" . $_GET["solicitud"] ?>>FDP 07</a><br>
-						<a target="_blank" id="fdp08"></a><br>
 					</div>
 					<?php if (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] || Rol::ROL_GESTOR == $_SESSION["rol_id"]) : ?>
 						<div class="form-group col-sm-6 col-md-4">
@@ -247,7 +248,6 @@ if (isset($_SESSION["resultado"])) {
 							<a target="_blank" href="oficios/acuerdo-rvoe.php" id="AcuerdoRVOE" name="<?= $_GET["solicitud"] ?>" class="get" hidden>Acuerdo de RVOE</a><br><br><br>
 
 						</div>
-
 
 						<div class="form-group col-sm-6 col-md-4">
 							<h4>Evaluación</h4>
