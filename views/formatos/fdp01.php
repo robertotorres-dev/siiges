@@ -7,7 +7,6 @@ if (!isset($_GET["id"]) && !$_GET["id"]) {
   header("../home.php");
 }
 
-
 $pdf = new PDF();
 
 $pdf->getData($_GET["id"]);
@@ -17,7 +16,6 @@ $pdf->AliasNbPages();
 $pdf->AddPage("P", "Letter");
 $pdf->SetMargins(20, 35, 20);
 $pdf->SetAutoPageBreak(true, 30);
-
 
 // Nombre del formato
 $pdf->SetFont("Nutmegb", "", 11);
@@ -134,17 +132,11 @@ $pdf->MultiCell(0, 5, utf8_decode(""), 0, "L");
 
 $pdf->ln();
 
-$pdf->SetFillColor(166, 166, 166);
-$pdf->SetFont("Nutmegb", "", 9);
-$pdf->Cell(0, 5, utf8_decode("5 POLÍTICAS DE FUNCIONAMIENTO"), 1, 1, "C", true);
-$pdf->SetFont("Nutmeg", "", 9);
-$pdf->MultiCell(0, 5, utf8_decode(""), 0, "L");
-
 $pdf->ln();
 
 $pdf->SetFillColor(166, 166, 166);
 $pdf->SetFont("Nutmegb", "", 9);
-$pdf->Cell(0, 5, utf8_decode("6 IDEARIO INSTITUCIONAL"), 1, 1, "C", true);
+$pdf->Cell(0, 5, utf8_decode("5 IDEARIO INSTITUCIONAL"), 1, 1, "C", true);
 $pdf->SetFillColor(191, 191, 191);
 $pdf->Cell(0, 5, utf8_decode("MISIÓN"), 1, 1, "L", true);
 $pdf->SetFont("Nutmeg", "", 9);
@@ -166,12 +158,10 @@ $pdf->MultiCell(0, 5, utf8_decode($pdf->institucion["valores_institucionales"]),
 
 $pdf->ln();
 
-
 $pdf->SetFont("Nutmegb", "", 9);
 $pdf->Cell(0, 5, utf8_decode("HISTORIA"), 1, 1, "L", true);
 $pdf->SetFont("Nutmeg", "", 9);
 $pdf->MultiCell(0, 5, utf8_decode($pdf->institucion["historia"]), 0, "J");
-
 
 $pdf->Ln(30);
 
@@ -180,7 +170,5 @@ $pdf->SetFont("Nutmeg", "", 11);
 $pdf->Cell(0, 5, utf8_decode("BAJO PROTESTA DE DECIR VERDAD"), 0, 1, "C");
 $pdf->SetFont("Nutmegb", "", 11);
 $pdf->Cell(0, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 1, "C");
-
-
 
 $pdf->Output("I", "PDP01.pdf");
