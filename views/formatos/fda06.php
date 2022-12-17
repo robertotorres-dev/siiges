@@ -41,7 +41,7 @@
   $pdf->getNombreFormato();
 
   $pdf->SetTextColor( 0, 127, 204 );
-  $pdf->Cell( 0, 5, utf8_decode("OBLIGACIONES ADQUIRIDAS A TRAVÉS DE LA OBTENCIÓN DEL RVOE"), 0, 1, "R");
+  $pdf->Cell( 0, 5, utf8_decode("OBLIGACIONES ADQUIRIDAS AL OBTENER UN RVOE"), 0, 1, "L");
   $pdf->SetTextColor( 0, 0, 0 );
   $pdf->Ln( 5 );
  
@@ -114,13 +114,18 @@
   $pdf->nuevaPagina();
   $pdf->Ln( 15 );
 
+  //$pdf->MultiCell( 0, 5,
+  //      utf8_decode("10.- Mantener vigente la Posesión Legal del Inmueble, el Dictamen de Seguridad Estructural, Licencia de Uso de Suelo, Dictamen de Protección Civil y Licencia Municipal.")
+  //      , 0, "J");
+  //$pdf->Ln( 5 );
+
   $pdf->MultiCell( 0, 5,
         utf8_decode("11.- Constituir el Comité de Seguridad Escolar, de conformidad con los lineamientos establecidos en el Diario Oficial de la Federación del 4 de septiembre de 1986.")
         , 0, "J");
   $pdf->Ln( 5 );
 
   $pdf->MultiCell( 0, 5,
-        utf8_decode("12.- La SICyT verificará las instalaciones para que cumplan con la normatividad vigente, higiene seguridad y pedagogía.")
+        utf8_decode("12.- La Secretaría de Innovación, Ciencia y Tecnología verificará las instalaciones para que cumplan con la normatividad vigente, higiene seguridad y pedagogía.")
         , 0, "J");
   $pdf->Ln( 5 );
 
@@ -140,7 +145,7 @@
   $pdf->Ln( 5 );
 
   $pdf->MultiCell( 0, 5,
-        utf8_decode("16.- Pagar anualmente la matrícula de alumnos por cada RVOE otorgado y alumno activo en cada ejercicio escolar, acatando los requisitos y tiempos establecidos en la convocatoria correspondiente.")
+        utf8_decode("16.- Pagar anualmente la matrícula de alumnos por cada RVOE otorgado y alumno activo en cada ejercicio escolar, acatando los requisitos y tiempos establecidos en la convocatoria correspondiente..")
         , 0, "J");
   $pdf->Ln( 5 );
 
@@ -160,7 +165,7 @@
   $pdf->Ln( 5 );
 
   $pdf->MultiCell( 0, 5,
-        utf8_decode("20.- Emitir sus propios reglamentos internos, solicitar la autorización a la Secretaría de Innovación Ciencia y Tecnología; una vez autorizados, los dará a conocer antes del trámite de inscripción o reinscripción. Deberá conservar evidencia a fin de que la Autoridad Educativa verifique el cumplimiento de esta obligación.")
+        utf8_decode("20.- Emitir sus propios reglamentos internos, solicitar la autorización a la Secretaría de Innovación Ciencia y Tecnología; una vez autorizados, los dará a conocer antes del trámite de inscripción o reinscripción. Deberá conservar evidencia a fin de que la Autoridad Educativa verifique el cumplimiento de esta obligación..")
         , 0, "J");
   $pdf->Ln( 5 );
 
@@ -187,4 +192,3 @@
   $pdf->Cell( 0, 5, utf8_decode("Acuerdo No. ".$pdf->programa["acuerdo_rvoe"]), 0, 1, "C");
 
   $pdf->Output( "I", "FDA06.pdf" );
-?>
