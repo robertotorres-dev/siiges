@@ -52,6 +52,7 @@ if (isset($_SESSION["resultado"])) {
 
 				</div>
 				<div id="mensaje"></div>
+				
 				<!-- INICIA FORMULARIO -->
 				<form class="form-horizontal" id="form-cotejamiento" action="../controllers/control-solicitud.php" enctype="multipart/form-data" method="post">
 					<!-- Tipo de trámite -->
@@ -75,6 +76,7 @@ if (isset($_SESSION["resultado"])) {
 							<input type="text" id="rvoe" name="" class="form-control" value="" readonly>
 						</div>
 					</div>
+				
 					<!-- Programa de estudios -->
 					<div id="programa-estudios" class="form-group">
 						<div class="col-sm-12 col-md-4">
@@ -109,6 +111,7 @@ if (isset($_SESSION["resultado"])) {
 							</select><br>
 						</div>
 					</div>
+				
 					<!-- Dirección del plantel -->
 					<div id="direccion-plantel" class="form-group">
 						<div class="col-sm-12 col-md-4">
@@ -140,6 +143,7 @@ if (isset($_SESSION["resultado"])) {
 							<input type="text" id="municipio" name="" class="form-control" value="" placeholder="Municipio" readonly><br>
 						</div>
 					</div>
+				
 					<!-- Institución -->
 					<div id="institucion" class="form-group">
 						<div class="col-sm-12 col-md-6">
@@ -163,6 +167,7 @@ if (isset($_SESSION["resultado"])) {
 							<input type="text" class="form-control" id="celular_representante" value="33-82-24-89-60" readonly>
 						</div>
 					</div>
+				
 					<!-- Documentos -->
 					<br>
 					<h2>Recepción de formatos Administrativos</h2>
@@ -210,6 +215,7 @@ if (isset($_SESSION["resultado"])) {
 			</div>
 
 		</section>
+		
 		<!-- Modal para mensajes -->
 		<div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-hidden="true">
 			<div id="tamanoModalMensaje" class="modal-dialog">
@@ -230,7 +236,6 @@ if (isset($_SESSION["resultado"])) {
 			</div>
 		</div>
 	</div>
-
 
 	<!-- JS GOB.MX -->
 	<script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
