@@ -211,7 +211,6 @@ if (isset($_SESSION["resultado"])) {
                         <a target="_blank" href=<?= "formatos/fda03.php?id=" . $_GET["solicitud"] ?> id="fda03">FDA 03</a><br>
                         <a target="_blank" id="fda04"></a><br>
                         <a target="_blank" id="fda05"></a><br>
-                        <a target="_blank" id="fda06"></a>
                         <a target="_blank" href=<?= "formatos/fda06.php?id=" . $_GET["solicitud"] ?> id="fda06">FDA 06</a><br>
                     </div>
 
