@@ -82,7 +82,7 @@ if (isset($_SESSION["resultado"])) {
 							<input type="text" id="rvoe" name="" class="form-control" value="" readonly>
 						</div>
 					</div>
-					
+
 					<!-- Programa de estudios -->
 					<div id="programa-estudios" class="form-group">
 						<div class="col-sm-12 col-md-4">
@@ -117,7 +117,7 @@ if (isset($_SESSION["resultado"])) {
 							</select><br>
 						</div>
 					</div>
-				
+
 					<!-- Dirección del plantel -->
 					<div id="direccion-plantel" class="form-group">
 						<div class="col-sm-12 col-md-4">
@@ -149,7 +149,7 @@ if (isset($_SESSION["resultado"])) {
 							<input type="text" id="municipio" name="" class="form-control" value="" placeholder="Municipio" readonly><br>
 						</div>
 					</div>
-				
+
 					<!-- Institución -->
 					<div id="institucion" class="form-group">
 						<div class="col-sm-12 col-md-6">
@@ -173,7 +173,7 @@ if (isset($_SESSION["resultado"])) {
 							<input type="text" class="form-control" id="celular_representante" value="33-82-24-89-60" readonly>
 						</div>
 					</div>
-				
+
 					<!-- Progeso -->
 					<div id="progreso" class="form-group">
 						<div class="col-sm-12 col-md-12">
