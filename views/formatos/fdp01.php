@@ -155,14 +155,7 @@ $pdf->Cell(0, 5, utf8_decode("VALORES INSTITUCIONALES"), 1, 1, "L", true);
 $pdf->SetFont("Nutmeg", "", 9);
 $pdf->MultiCell(0, 5, utf8_decode($pdf->institucion["valores_institucionales"]), 0, "J");
 
-$pdf->ln();
-
-$pdf->SetFont("Nutmegb", "", 9);
-$pdf->Cell(0, 5, utf8_decode("HISTORIA"), 1, 1, "L", true);
-$pdf->SetFont("Nutmeg", "", 9);
-$pdf->MultiCell(0, 5, utf8_decode($pdf->institucion["historia"]), 0, "J");
-
-$pdf->Ln(30);
+$pdf->ln(15);
 
 $pdf->SetTextColor(0, 0, 0);
 $pdf->SetFont("Nutmeg", "", 11);
