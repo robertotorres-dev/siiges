@@ -56,153 +56,154 @@ if (isset($_SESSION["resultado"])) {
                 <hr class="red">
                 <div id="cargando" class="loader">
 
-                </div>
-                <div id="mensaje"></div>
-                <!-- INICIA FORMULARIO -->
-                <form class="form-horizontal" action="" enctype="multipart/form-data" method="post">
-                    <!-- Tipo de trámite -->
-                    <div id="tipo-tramite" class="form-group">
-                        <div class="col-sm-12 col-md-3">
-                            <label class="control-label" for="">Tipo de trámite</label><br>
-                            <select id="tipo_solicitud" class="form-control" readonly>
-                                <option value="">Seleccione una opción</option>
-                            </select>
-                        </div>
-                        <input type="hidden" id="tipo_control">
-                        <div class="col-sm-12 col-md-3">
-                            <label class="control-label">Fecha de recepción</label>
-                            <input type="text" id="fecha_recepcion_documentacion" class="form-control" value="" readonly>
-                        </div>
-                        <div class="col-sm-12 col-md-3">
-                            <label class="control-label">Folio de captura</label>
-                            <input type="text" id="folio" name="" class="form-control" value="" readonly>
-                        </div>
-                        <div class="col-sm-12 col-md-3">
-                            <label class="control-label">RVOE</label>
-                            <input type="text" id="rvoe" name="" class="form-control" value="" readonly>
-                        </div>
-                    </div>
-                    <!-- Programa de estudios -->
-                    <div id="programa-estudios" class="form-group">
-                        <div class="col-sm-12 col-md-4">
-                            <label class="control-label" for="">Nivel</label><br>
-                            <select class="form-control" id="nivel_id" name="PROGRAMA-nivel_id" readonly>
-                                <option value="">Seleccione una opción</option>
-                            </select><br>
-                        </div>
-                        <div class="col-sm-12 col-md-8">
-                            <label class="control-label" for="">Nombre</label><br>
-                            <input type="text" id="nombre_programa" name="PROGRAMA-nombre" class="form-control" placeholder="Nombre del programa de estudios" readonly><br>
-                        </div>
-                        <div class="col-sm-12 col-md-4">
-                            <label class="control-label" for="">Modalidad</label><br>
-                            <select class="form-control" id="modalidad_id" name='PROGRAMA-modalidad_id' readonly>
-                                <option value="">Seleccione una opción</option>
-                            </select><br>
-                        </div>
-                        <div class="col-sm-12 col-md-4">
-                            <label class="control-label" for="">Periodo</label><br>
-                            <select class="form-control" id="ciclo_id" name="PROGRAMA-ciclo_id" readonly>
-                                <option value="">Seleccione una opción</option>
-                                <option value="1">Semestral</option>
-                                <option value="2">Cuatrimestral</option>
-                                <option value="4">Semestral curriculum flexible</option>
-                                <option value="5">Cuatrimestral curriculum flexible</option>
-                            </select><br>
-                        </div>
-                        <div class="col-sm-12 col-md-4">
-                            <label class="control-label" for="">Turno</label><br>
-                            <select class="form-control selectpicker" id="turno_programa" name="PROGRAMA-turnos[]" multiple title="Seleccione una opción" disabled>
-                            </select><br>
-                        </div>
-                    </div>
-                    <!-- Dirección del plantel -->
-                    <div id="direccion-plantel" class="form-group">
-                        <div class="col-sm-12 col-md-4">
-                            <label class="control-label" for="">Clave de centro de trabajo</label><br>
-                            <input type="text" id="cct" name="" class="form-control" value="" placeholder="Clave de centro de trabajo" readonly>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <label class="control-label" for="">Calle</label><br>
-                            <input type="text" id="calle" name="" class="form-control" value="" placeholder="Nombre de la calle" readonly>
-                        </div>
-                        <div class="col-sm-12 col-md-2">
-                            <label class="control-label" for="">Número</label><br>
-                            <input type="text" id="numero" name="" class="form-control" value="" placeholder="Número exterior" readonly>
-                        </div>
-                        <div class="col-sm-12 col-md-2">
-                            <label class="control-label" for="">Interior</label><br>
-                            <input type="text" id="interior" name="" class="form-control" value="" placeholder="Número interior" readonly>
-                        </div>
-                        <div class="col-sm-12 col-md-4">
-                            <label class="control-label" for="">Colonia</label><br>
-                            <input type="text" id="colonia" name="" class="form-control" value="" placeholder="Colonia" readonly>
-                        </div>
-                        <div class="col-sm-12 col-md-2">
-                            <label class="control-label" for="">CP</label><br>
-                            <input type="text" id="cp" name="" class="form-control" value="" placeholder="Código postal" readonly>
-                        </div>
-                        <div class="col-sm-12 col-md-4">
-                            <label class="control-label" for="">Municipio</label><br>
-                            <input type="text" id="municipio" name="" class="form-control" value="" placeholder="Municipio" readonly><br>
-                        </div>
-                    </div>
-                    <!-- Institución -->
-                    <div id="institucion" class="form-group">
-                        <div class="col-sm-12 col-md-6">
-                            <label class="control-label" for="">Institución</label><br>
-                            <input type="text" id="institucion_nombre" name="" class="form-control" value="" placeholder="Nombre completo de la Institución" readonly>
-                        </div>
-                        <div class="col-sm-12 col-md-3">
-                            <label class="control-label" for="">Fecha en que se dió de alta</label><br>
-                            <input type="text" id="alta_institucion" name="" class="form-control" value="" readonly>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <label class="control-label" for="">Representante Legal</label><br>
-                            <input type="text" id="nombre_representante" name="" class="form-control" value="" placeholder="Nombre del Representante Legal" readonly>
-                        </div>
-                        <div class="col-sm-12 col-md-3">
-                            <label for="" class="control-label">Email</label>
-                            <input type="text" class="form-control" id="email_representante" value="email@example.com" readonly>
-                        </div>
-                        <div class="col-sm-12 col-md-3">
-                            <label for="" class="control-label">Celular</label>
-                            <input type="text" class="form-control" id="celular_representante" value="33-82-24-89-60" readonly>
-                        </div>
-                    </div>
-                    <!-- Progeso -->
-                    <div id="progreso" class="form-group">
-                        <div class="col-sm-12 col-md-12">
-                            <h4>Progreso de la solicitud</h4>
-                            <div class="progress">
-                                <div id="barra-porcentaje" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
-                                    <span id="porcentaje-progreso"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-12">
-                            <h4>Observaciones del proceso</h4>
-                            <textarea id="observaciones" class="form-control" name="name" rows="8" cols="80" readonly></textarea>
-                        </div>
-                        <!-- <div class="col-sm-12 col-md-5">
-                                <label class="control-label" for="">Fecha limite para atender observaciones</label><br>
-                                <input type="text" id="" name="" class="form-control" value="" placeholder="Fecha" readonly>
-                            </div> -->
-                    </div>
-                </form>
-                <form class="form-horizontal" action="../controllers/contoller.programa" method="post">
-                    <input type="hidden" id="opcion" value="2">
-                    <input type="hidden" id="id_solicitud" value="<?= $_GET['solicitud'] ?>">
-                </form>
-            </div>
-        </section>
+				</div>
+				<div id="mensaje"></div>
+				<!-- INICIA FORMULARIO -->
+				<form class="form-horizontal" action="" enctype="multipart/form-data" method="post">
+					<!-- Tipo de trámite -->
+					<div id="tipo-tramite" class="form-group">
+						<div class="col-sm-12 col-md-3">
+							<label class="control-label" for="">Tipo de trámite</label><br>
+							<select id="tipo_solicitud" class="form-control" readonly>
+								<option value="">Seleccione una opción</option>
+							</select>
+						</div>
+						<input type="hidden" id="tipo_control">
+						<div class="col-sm-12 col-md-3">
+							<label class="control-label">Fecha de recepción</label>
+							<input type="text" id="fecha_recepcion_documentacion" class="form-control" value="" readonly>
+						</div>
+						<div class="col-sm-12 col-md-3">
+							<label class="control-label">Folio de captura</label>
+							<input type="text" id="folio" name="" class="form-control" value="" readonly>
+						</div>
+						<div class="col-sm-12 col-md-3">
+							<label class="control-label">RVOE</label>
+							<input type="text" id="rvoe" name="" class="form-control" value="" readonly>
+						</div>
+					</div>
 
-        <div class="container">
-            <section class="main row margin-section-formularios">
-                <div class="col-sm-12 col-md-12 col-lg-12">
+					<!-- Programa de estudios -->
+					<div id="programa-estudios" class="form-group">
+						<div class="col-sm-12 col-md-4">
+							<label class="control-label" for="">Nivel</label><br>
+							<select class="form-control" id="nivel_id" name="PROGRAMA-nivel_id" readonly>
+								<option value="">Seleccione una opción</option>
+							</select><br>
+						</div>
+						<div class="col-sm-12 col-md-8">
+							<label class="control-label" for="">Nombre</label><br>
+							<input type="text" id="nombre_programa" name="PROGRAMA-nombre" class="form-control" placeholder="Nombre del programa de estudios" readonly><br>
+						</div>
+						<div class="col-sm-12 col-md-4">
+							<label class="control-label" for="">Modalidad</label><br>
+							<select class="form-control" id="modalidad_id" name='PROGRAMA-modalidad_id' readonly>
+								<option value="">Seleccione una opción</option>
+							</select><br>
+						</div>
+						<div class="col-sm-12 col-md-4">
+							<label class="control-label" for="">Periodo</label><br>
+							<select class="form-control" id="ciclo_id" name="PROGRAMA-ciclo_id" readonly>
+								<option value="">Seleccione una opción</option>
+								<option value="1">Semestral</option>
+								<option value="2">Cuatrimestral</option>
+								<option value="4">Semestral curriculum flexible</option>
+								<option value="5">Cuatrimestral curriculum flexible</option>
+							</select><br>
+						</div>
+						<div class="col-sm-12 col-md-4">
+							<label class="control-label" for="">Turno</label><br>
+							<select class="form-control selectpicker" id="turno_programa" name="PROGRAMA-turnos[]" multiple title="Seleccione una opción" disabled>
+							</select><br>
+						</div>
+					</div>
 
-                    <h2>Descarga de documentos</h2>
-                    <hr class="red">
+					<!-- Dirección del plantel -->
+					<div id="direccion-plantel" class="form-group">
+						<div class="col-sm-12 col-md-4">
+							<label class="control-label" for="">Clave de centro de trabajo</label><br>
+							<input type="text" id="cct" name="" class="form-control" value="" placeholder="Clave de centro de trabajo" readonly>
+						</div>
+						<div class="col-sm-12 col-md-6">
+							<label class="control-label" for="">Calle</label><br>
+							<input type="text" id="calle" name="" class="form-control" value="" placeholder="Nombre de la calle" readonly>
+						</div>
+						<div class="col-sm-12 col-md-2">
+							<label class="control-label" for="">Número</label><br>
+							<input type="text" id="numero" name="" class="form-control" value="" placeholder="Número exterior" readonly>
+						</div>
+						<div class="col-sm-12 col-md-2">
+							<label class="control-label" for="">Interior</label><br>
+							<input type="text" id="interior" name="" class="form-control" value="" placeholder="Número interior" readonly>
+						</div>
+						<div class="col-sm-12 col-md-4">
+							<label class="control-label" for="">Colonia</label><br>
+							<input type="text" id="colonia" name="" class="form-control" value="" placeholder="Colonia" readonly>
+						</div>
+						<div class="col-sm-12 col-md-2">
+							<label class="control-label" for="">CP</label><br>
+							<input type="text" id="cp" name="" class="form-control" value="" placeholder="Código postal" readonly>
+						</div>
+						<div class="col-sm-12 col-md-4">
+							<label class="control-label" for="">Municipio</label><br>
+							<input type="text" id="municipio" name="" class="form-control" value="" placeholder="Municipio" readonly><br>
+						</div>
+					</div>
+
+					<!-- Institución -->
+					<div id="institucion" class="form-group">
+						<div class="col-sm-12 col-md-6">
+							<label class="control-label" for="">Institución</label><br>
+							<input type="text" id="institucion_nombre" name="" class="form-control" value="" placeholder="Nombre completo de la Institución" readonly>
+						</div>
+						<div class="col-sm-12 col-md-3">
+							<label class="control-label" for="">Fecha en que se dió de alta</label><br>
+							<input type="text" id="alta_institucion" name="" class="form-control" value="" readonly>
+						</div>
+						<div class="col-sm-12 col-md-6">
+							<label class="control-label" for="">Representante Legal</label><br>
+							<input type="text" id="nombre_representante" name="" class="form-control" value="" placeholder="Nombre del Representante Legal" readonly>
+						</div>
+						<div class="col-sm-12 col-md-3">
+							<label for="" class="control-label">Email</label>
+							<input type="text" class="form-control" id="email_representante" value="email@example.com" readonly>
+						</div>
+						<div class="col-sm-12 col-md-3">
+							<label for="" class="control-label">Celular</label>
+							<input type="text" class="form-control" id="celular_representante" value="33-82-24-89-60" readonly>
+						</div>
+					</div>
+
+					<!-- Progeso -->
+					<div id="progreso" class="form-group">
+						<div class="col-sm-12 col-md-12">
+							<h4>Progreso de la solicitud</h4>
+							<div class="progress">
+								<div id="barra-porcentaje" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+									<span id="porcentaje-progreso"></span>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-12">
+							<h4>Observaciones del proceso</h4>
+							<textarea id="observaciones" class="form-control" name="name" rows="8" cols="80" readonly></textarea>
+						</div>
+						<!-- <div class="col-sm-12 col-md-5">
+								<label class="control-label" for="">Fecha limite para atender observaciones</label><br>
+								<input type="text" id="" name="" class="form-control" value="" placeholder="Fecha" readonly>
+							</div> -->
+					</div>
+				</form>
+				<form class="form-horizontal" action="../controllers/contoller.programa" method="post">
+					<input type="hidden" id="opcion" value="2">
+					<input type="hidden" id="id_solicitud" value="<?= $_GET['solicitud'] ?>">
+				</form>
+			</div>
+		</section>
+
+		<div class="container">
+			<section class="main row margin-section-formularios">
+				<div class="col-sm-12 col-md-12 col-lg-12">
 
                     <div class="form-group col-sm-6 col-md-4">
                         <h4>Formatos Administrativos</h4>
@@ -232,10 +233,23 @@ if (isset($_SESSION["resultado"])) {
                         </div>
                     <?php endif; ?>
 
-                    <?php if (Rol::ROL_ADMIN == $_SESSION["rol_id"] || Rol::ROL_SICYT_EDITAR == $_SESSION["rol_id"]) : ?>
-                        <div class="form-group col-sm-6 col-md-4" id="rvoe">
-                            <h4>RVOE</h4>
-                            <a target="_blank" href="oficios/acuerdo-cambio-domicilio.php" id="AcuerdoCambioDomicilio" name="<?= $_GET["solicitud"] ?>" class="get" hidden>Acuerdo de Cambio de Domicilio</a><br>
+					<div class="form-group col-sm-6 col-md-4">
+						<h4>Formatos Pedagógicos</h4>
+						<a target="_blank" href=<?= "formatos/fdp01.php?id=" . $_GET["solicitud"] ?>>FDP 01</a><br>
+						<a target="_blank" id="fdp02"></a><br>
+						<a target="_blank" id="fdp03">FDP 03</a><br>
+						<a target="_blank" id="fdp04">FDP 04</a><br>
+						<a target="_blank" href=<?= "formatos/fdp05.php?id=" . $_GET["solicitud"] ?>>FDP 05</a><br>
+						<a target="_blank" href=<?= "formatos/fdp06.php?id=" . $_GET["solicitud"] ?>>FDP 06</a><br>
+					</div>
+					<?php if (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"] || Rol::ROL_GESTOR == $_SESSION["rol_id"]) : ?>
+						<div class="form-group col-sm-6 col-md-4">
+							<h4>Documentos</h4>
+							<a target="_blank" href=<?= "oficios/orden-inspeccion.php?id=" . $_GET["solicitud"] ?> id="OrdenInspección" name="<?= $_GET["solicitud"] ?>">Orden de Inspección</a><br>
+							<!-- <a target="_blank" href="oficios/orden-inspeccion.php" id="OrdenInspección" name="<?= $_GET["solicitud"] ?>" class="get">Orden de Inspección</a><br> -->
+							<!-- <a target="_blank" href="oficios/observaciones.php" id="Observaciones" name="<?= $_GET["solicitud"] ?>" class="get">Observaciones</a><br> -->
+						</div>
+					<?php endif; ?>
 
                             <a target="_blank" href="oficios/acuerdo-cambio-representante-legal.php" id="AcuerdoCambioRepresentanteLegal" name="<?= $_GET["solicitud"] ?>" class="post" hidden>Acuerdo de Cambio de Representante Legal</a><br>
 
@@ -252,17 +266,12 @@ if (isset($_SESSION["resultado"])) {
                             <a target="_blank" href=<?= "dictamenes/carta-imp-con.php?id=" . $_GET["solicitud"] ?> id="CartaImpCon">Carta de Imparcialidad y Confidencialidad</a><br>
                         </div>
 
-                        <div class="form-group col-sm-6 col-md-4">
-                            <h4>Inspección</h4>
-                            <a target="_blank" href=<?= "oficios/orden-inspeccion.php?id=" . $_GET["solicitud"] ?> id="OrdenInspección" name="<?= $_GET["solicitud"] ?>">Orden de Inspección</a><br>
-                            <a target="_blank" href="oficios/acta-inspeccion.php" id="ActaDeInspeccion" name="<?= $_GET["solicitud"] ?>" class="post">Acta de Inspección</a><br>
-                            <a target="_blank" href="oficios/acta-cierre.php" id="ActaDeCierre" name="<?= $_GET["solicitud"] ?>" class="post">Acta de Cierre</a><br>
-                        </div>
-
-                        <div class="form-group col-sm-6 col-md-4">
-                            <h4>Otros</h4>
-                            <a target="_blank" href=<?= "oficios/admisorio.php?id=" . $_GET["solicitud"] ?> id="Admisorio" name="<?= $_GET["solicitud"] ?>" class="post">Oficio Admisorio</a><br>
-                            <a target="_blank" href="oficios/desistimiento.php" id="Desistimiento" name="<?= $_GET["solicitud"] ?>" class="post">Desistimiento</a><br>
+						<div class="form-group col-sm-6 col-md-4">
+							<h4>Evaluación</h4>
+							<a target="_blank" href=<?= "dictamenes/carta-aceptacion.php?id=" . $_GET["solicitud"] ?> id="CartaAceptacion">Carta de Aceptación</a><br>
+							<a target="_blank" href=<?= "dictamenes/carta-asignacion-evaluador.php?id=" . $_GET["solicitud"] ?> id="CartaAsignacion">Carta de Asignación de Evaluador</a><br>
+							<a target="_blank" href=<?= "dictamenes/carta-imp-con.php?id=" . $_GET["solicitud"] ?> id="CartaImpCon">Carta de Imparcialidad y Confidencialidad</a><br>
+						</div>
 
                         </div>
                     <?php endif; ?>
