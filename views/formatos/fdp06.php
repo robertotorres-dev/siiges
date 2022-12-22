@@ -18,7 +18,7 @@ $tituloTipoSolicitud = [
 $pdf = new PDF();
 //header('Content-Type: text/html; charset=UTF-8');
 $pdf->getData($_GET["id"]);
-$pdf->getDocentes(Docente::DOCENTE_ASIGNATURA);
+$pdf->getDocentes(Docente::DOCENTE_ASIGNATURA) && getDocentes(Docente::DOCENTE_TIMEPO_COMPLETO);
 
 $pdf->AddPage("P", "Letter");
 
