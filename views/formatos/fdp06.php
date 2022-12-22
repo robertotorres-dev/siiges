@@ -3,7 +3,6 @@ require("pdf.php");
 require_once "../../models/modelo-solicitud.php";
 require_once "../../models/modelo-docente.php";
 
-
 session_start();
 
 if (!isset($_GET["id"]) && !$_GET["id"]) {
@@ -42,7 +41,7 @@ $pdf->Ln(15);
 
 $pdf->SetTextColor(0, 127, 204);
 
-$pdf->Cell(0, 5, utf8_decode("FORMATO PLANTILLA DE DOCENTES DE ASIGNATURA"), 0, 1, "L");
+$pdf->Cell(0, 5, utf8_decode("FORMATO PLANTILLA DE DOCENTES ( ASIGNATURA O TIEMPO COMPLETO)"), 0, 1, "L");
 $pdf->SetTextColor(0, 0, 0);
 $pdf->Ln(10);
 $pdf->SetFont("Nutmeg", "", 9);
