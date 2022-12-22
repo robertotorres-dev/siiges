@@ -126,6 +126,8 @@ foreach ($pdf->AsigPorGrado as $grado => $asignaturas) {
   $pdf->MultiCell(15, 10, utf8_decode("SE ACEPTA"), 1, "C", true);
   $pdf->SetXY($x + 15, $y);
   $pdf->Cell(20, 10, utf8_decode("OBSERVACIONES"), 1, 0, "C", true);
+  $pdf->SetXY($x + 15, $y);
+  $pdf->Cell(20, 10, utf8_decode("TIPO DOCENTE"), 1, 0, "C", true);
   $pdf->Ln(10);
 
   foreach ($asignaturas as $asignatura => $detalle) {
@@ -183,7 +185,7 @@ if ($pdf->programa["acuerdo_rvoe"]) {
     $pdf->MultiCell(60, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), "T", "C");
     $pdf->SetXY($x + 60, $y);
     $pdf->Cell(50, 5, mb_strtoupper(Solicitud::convertirFecha(date("d-m-y"))), 0, 0, "C");
-    $pdf->MultiCell(65, 5, utf8_decode("MTRA. MARGARITA FLORES MARQUEZ\nDIRECTORA DE INCORPORACIÓN"), "T", "C");
+    $pdf->MultiCell(65, 5, utf8_decode("ING. MARCO ARTURO CASTRO AGUILERA\nDIRECTOR GENERAL DE INCORPORACIÓN Y SERVICIOS ESCOLARES"), "T", "C");
   } else {
     $pdf->Cell(0, 5, "BAJO PROTESTA DE DECIR VERDAD", 0, 0, "C");
     $pdf->Ln(5);
