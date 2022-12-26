@@ -29,11 +29,6 @@
   $pdf->Cell( 0, 5, utf8_decode("UBICACIÓN DEL PLANTEL"), 0, 1, "R");
   $pdf->SetTextColor( 0, 0, 0 );
   $pdf->Ln( 10 );
-  // Fecha
-  // $pdf->SetFont( "Arial", "", 10 );
-  // $fecha =  $pdf->fecha;
-  // $pdf->Cell( 0, 5, utf8_decode($fecha), 0, 1, "R");
-  // $pdf->Ln( 10 );
 
   // Representante legal
   $pdf->SetFillColor( 166, 166, 166 );
@@ -91,9 +86,7 @@
   $pdf->Cell( 60, 5, utf8_decode($pdf->domicilioPlantel["estado"]), 1, 1, "L", true );
 
   $pdf->SetFillColor( 191, 191, 191 );
-  //print_r($pdf->plantel);
-  //echo "<br>";
-  //print_r($pdf->plantel["redes_sociales"]);
+
   $headers = ["correo"=>"CORREO ELECTRÓNICO","telefono"=>"TELÉFONO","redes_sociales"=>"REDES SOCIALES"];
   $data = [
         [
@@ -116,13 +109,6 @@
   $pdf->SetFont( "Arial", "", 9 );
   $pdf->Cell( 58, 5, utf8_decode($pdf->plantel["paginaweb"]), 1, 0, "L", true );
   $pdf->Cell( 118, 5, utf8_decode("lat: ".$pdf->domicilioPlantel["latitud"].", long: ".$pdf->domicilioPlantel["longitud"]), 1, 1, "L", true );
-  // Mapa
-  // $pdf->Ln( 10 );
-  // $pdf->SetFillColor( 166, 166, 166 );
-  // $pdf->SetFont( "Arial", "B", 9 );
-  // $pdf->Cell( 0, 5, utf8_decode("ANEXAR MAPA GOOGLE"), 1, 1, "L", true );
-  // $pdf->MultiCell( 0, 50, "", 1, "L");
-
 
 // Especificaciones
 $pdf->Ln( 10 );
@@ -136,7 +122,6 @@ $pdf->SetFont( "Arial", "", 11 );
 $pdf->Cell(0,5, utf8_decode("BAJO PROTESTA DE DECIR VERDAD"), 0, 1, "C");
 $pdf->SetFont( "Arial", "B", 11 );
 $pdf->Cell( 0, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 1, "C");
-
 
   $pdf->Output( "I", "FDA04.pdf" );
 ?>
