@@ -575,7 +575,7 @@ if ($pdf->programa["modalidad_id"] > Modalidad::ESCOLARIZADA && $pdf->programa["
   $pdf->SetTextColor(0, 0, 0);
   $pdf->SetFillColor(166, 166, 166);
   $pdf->SetFont("Nutmegb", "", 9);
-  $pdf->Cell(0, 5, utf8_decode("7.	SÓLO PARA LA MODALIDAD MIXTA Y NO ESCOLARIZADA"), 1, 1, "L", true);
+  $pdf->Cell(0, 5, utf8_decode("7. SÓLO PARA LA MODALIDAD MIXTA Y NO ESCOLARIZADA"), 1, 1, "L", true);
   $pdf->SetFillColor(191, 191, 191);
   $pdf->Cell(0, 5, utf8_decode("LICENCIAS DE SOFTWARE "), 1, 1, "C", true);
   $pdf->SetFont("Nutmeg", "", 9);
@@ -738,6 +738,8 @@ if ($pdf->programa["modalidad_id"] > Modalidad::ESCOLARIZADA && $pdf->programa["
     $pdf->SetTextColor(0, 0, 0);
   }
 
+  if (isset($pdf->espejo)) {
+
   $pdf->SetFillColor(191, 191, 191);
   $headersR = [
     "descripcion" => "DESCRIPCIÓN DEL SERVICIO DE DATOS RESPALDADOS", "proceso" => "PROCESO DE RESPALDO",
@@ -780,31 +782,32 @@ if ($pdf->programa["modalidad_id"] > Modalidad::ESCOLARIZADA && $pdf->programa["
     $pdf->SetTextColor(0, 0, 0);
   }
 
-  $pdf->SetFont("Nutmegb", "", 9);
-  $pdf->SetFillColor(166, 166, 166);
-  $pdf->Cell(0, 5, utf8_decode("SITIO DE RESPALDO DESCENTRALIZADO PARA CONTIGENCIAS (ESPEJO)"), 1, 1, "C", true);
-  $pdf->Cell(76, 5, utf8_decode("Proveedor"), 1, 0, "L");
-  $pdf->SetFont("Nutmeg", "", 9);
-  $pdf->Cell(100, 5, utf8_decode($pdf->espejos["proveedor"]), 1, 1, "L");
-
-  $pdf->SetFont("Nutmegb", "", 9);
-  $pdf->Cell(76, 5, utf8_decode("Ancho de banda de la ubicación espejo"), 1, 0, "L");
-  $pdf->SetFont("Nutmeg", "", 9);
-  $pdf->Cell(100, 5, utf8_decode($pdf->espejos["ancho_banda"]), 1, 1, "L");
-
-  $pdf->SetFont("Nutmegb", "", 9);
-  $pdf->Cell(76, 5, utf8_decode("Ubicacón física de las instalaciones del espejo"), 1, 0, "L");
-  $pdf->SetFont("Nutmeg", "", 9);
-  $pdf->Cell(100, 5, utf8_decode($pdf->espejos["ubicacion"]), 1, 1, "L");
-
-  $pdf->SetFont("Nutmegb", "", 9);
-  $pdf->Cell(76, 5, utf8_decode("URL (sólo si tiene)"), 1, 0, "L");
-  $pdf->SetFont("Nutmeg", "", 9);
-  $pdf->Cell(100, 5, utf8_decode($pdf->espejos["url_espejo"]), 1, 1, "L");
-  $pdf->SetFont("Nutmegb", "", 9);
-  $pdf->Cell(76, 5, utf8_decode("Periodicidad"), 1, 0, "L");
-  $pdf->SetFont("Nutmeg", "", 9);
-  $pdf->Cell(100, 5, utf8_decode($pdf->espejos["periodicidad"]), 1, 1, "L");
+    $pdf->SetFont("Nutmegb", "", 9);
+    $pdf->SetFillColor(166, 166, 166);
+    $pdf->Cell(0, 5, utf8_decode("SITIO DE RESPALDO DESCENTRALIZADO PARA CONTIGENCIAS (ESPEJO)"), 1, 1, "C", true);
+    $pdf->Cell(76, 5, utf8_decode("Proveedor"), 1, 0, "L");
+    $pdf->SetFont("Nutmeg", "", 9);
+    $pdf->Cell(100, 5, utf8_decode($pdf->espejos["proveedor"]), 1, 1, "L");
+  
+    $pdf->SetFont("Nutmegb", "", 9);
+    $pdf->Cell(76, 5, utf8_decode("Ancho de banda de la ubicación espejo"), 1, 0, "L");
+    $pdf->SetFont("Nutmeg", "", 9);
+    $pdf->Cell(100, 5, utf8_decode($pdf->espejos["ancho_banda"]), 1, 1, "L");
+  
+    $pdf->SetFont("Nutmegb", "", 9);
+    $pdf->Cell(76, 5, utf8_decode("Ubicacón física de las instalaciones del espejo"), 1, 0, "L");
+    $pdf->SetFont("Nutmeg", "", 9);
+    $pdf->Cell(100, 5, utf8_decode($pdf->espejos["ubicacion"]), 1, 1, "L");
+  
+    $pdf->SetFont("Nutmegb", "", 9);
+    $pdf->Cell(76, 5, utf8_decode("URL (sólo si tiene)"), 1, 0, "L");
+    $pdf->SetFont("Nutmeg", "", 9);
+    $pdf->Cell(100, 5, utf8_decode($pdf->espejos["url_espejo"]), 1, 1, "L");
+    $pdf->SetFont("Nutmegb", "", 9);
+    $pdf->Cell(76, 5, utf8_decode("Periodicidad"), 1, 0, "L");
+    $pdf->SetFont("Nutmeg", "", 9);
+    $pdf->Cell(100, 5, utf8_decode($pdf->espejos["periodicidad"]), 1, 1, "L");
+  }
 }
 
 $pdf->Ln(30);
