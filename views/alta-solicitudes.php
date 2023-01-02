@@ -790,7 +790,7 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                           </div>
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label" for="">Apellido materno del coordinador</label><br>
-                            <input type="text" id="apellido_materno_coordinador_programa" name="COORDINADOR-apellido_materno" class="form-control revision" value="" placeholder="Apellido materno del coordinador del programa"><br>
+                            <input type="text" id="apellido_materno_coordinador_programa" name="COORDINADOR-apellido_materno" class="form-control revision" campo="Apellido materno del coordinador" value="" placeholder="Apellido materno del coordinador del programa"><br>
                           </div>
                           <div class="col-sm-12 col-md-6">
                             <label class="control-label" for="">Perfil académico del coordinador</label><br>

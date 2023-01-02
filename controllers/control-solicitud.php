@@ -588,7 +588,7 @@ if ($_POST["webService"] == "guardarSolicitud") {
               if (isset($_POST["PROGRAMA-nivel_id"]) && !empty($_POST["PROGRAMA-nivel_id"])) {
                 //$numeroConsecutivo2021 = $entidadesIds["SOLICITUD"] - 584;
                 //$numeroConsecutivo2022 = $entidadesIds["SOLICITUD"] - 1413;
-                $numeroConsecutivo2023 = $entidadesIds["SOLICITUD"] - 1773;
+                $numeroConsecutivo2023 = $entidadesIds["SOLICITUD"] - 1822;
                 $parametrosConsecutivo["folio"] = Nivel::$niveles[$_POST["PROGRAMA-nivel_id"]] . date("Y") . str_pad($numeroConsecutivo2023, 3, "0", STR_PAD_LEFT);
               }
 
