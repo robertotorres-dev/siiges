@@ -62,7 +62,7 @@ if(isset($_SESSION["resultado"])){
 			<form name="form1" method="post" action="../controllers/control-validacion.php" enctype="multipart/form-data">
 				<div class="col-sm-12 col-md-12 col-lg-12">
 					<!-- TÍTULO -->
-					<h2 id="txtNombre">Tipo de documento para validaci&oacute;n</h2>
+					<h2 id="txtNombre">Validaci&oacute;n de Documentos</h2>
 					<hr class="red">
 
 					<!-- CONTENIDO -->
