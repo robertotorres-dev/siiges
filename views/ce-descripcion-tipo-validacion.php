@@ -68,7 +68,7 @@ if(isset($_SESSION["resultado"])){
 					<!-- CONTENIDO -->
 					<div class="row">
 						<div class="col-sm-12">
-							<h4>Carta de validaci&oacute;n</h4>
+							<h4>Constancia de validaci&oacute;n</h4>
 							<p>Esta carta es por alumno con firma de directivos en original o firma electr&oacute;nica con los siguientes requisitos.</p>
 							<ul>
 								<li>Hoja membretada</li>
@@ -147,10 +147,58 @@ if(isset($_SESSION["resultado"])){
 					</div>
 					<div class="row" >
 							<div class="image-wrap">
-								<div id="codigo_qr" class="image"></div>
+								<div id="codigo-qr" class="image"></div>
 							</div>
 					</div>
 				</div>
+				<div class="row">
+						<div class="col-sm-12">
+							<h4>CONSULTA DE REGISTRO UDG</h4>
+							<p>El Registro deber&aacute; coincidir con la informaci&oacute;n del alumno y tener los siguientes requisitos.</p>
+							<ul>
+								<li>Fotograf&iacute;a del alumno</li>
+								<li>Datos generales de la escuela de procedencia</li>
+								<ul>
+									<li>Nombre completo del alumno</li>
+									<li>Carrera</li>
+									<li>Generaci&oacute;n</li>
+									<li>Firmas</li>
+								</ul>
+							</ul>
+						</div>
+					</div>
+					<div class="row" >
+							<div class="image-wrap">
+								<div id="validacion-udg" class="image"></div>
+							</div>
+					</div>
+				</div>
+				<div class="row">
+						<div class="col-sm-12">
+							<h4>Legalizaci&oacute;n o Certificaci&oacute;n</h4>
+							<p>El Registro deber&aacute; coincidir con la informaci&oacute;n del alumno y tener los siguientes requisitos.</p>
+							<ul>
+								<li>Datos generales de la escuela de procedencia</li>
+								<ul>
+										<li>Nombre completo del alumno</li>
+										<li>Carrera</li>
+										<li>Sellos</li>
+										<li>Fecha</li>
+										<li>Firmas</li>
+								</ul>
+							</ul>
+						</div>
+					</div>
+					<div class="row" >
+							<div class="image-wrap">
+								<div id="legalizacion" class="image"></div>
+							</div>
+					</div>
+				</div>
+
+
+
+				
 			</form>
 
 		</section>
