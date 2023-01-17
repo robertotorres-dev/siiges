@@ -85,7 +85,7 @@ if(isset($_SESSION["resultado"])){
 					</div>
 					<div class="row" >
 						<div class="image-wrap">
-							<div id="carta-validacion" class="image"></div>
+							<div id="carta" class="image"></div>
 						</div>
 					</div>
 					<br><br>
@@ -110,7 +110,7 @@ if(isset($_SESSION["resultado"])){
 					</div>
 					<div class="row" >
 							<div class="image-wrap">
-								<div id="oficio-validacion" class="image"></div>
+								<div id="oficio" class="image"></div>
 							</div>
 					</div>
 					<div class="row">
@@ -125,7 +125,7 @@ if(isset($_SESSION["resultado"])){
 					</div>
 					<div class="row" >
 							<div class="image-wrap">
-								<div id="cedula" class="image"></div>
+								<div id="cedula-pr" class="image"></div>
 							</div>
 					</div>
 					<div class="row">
@@ -149,6 +149,27 @@ if(isset($_SESSION["resultado"])){
 							<div class="image-wrap">
 								<div id="codigo-qr" class="image"></div>
 							</div>
+							<div class="row">
+						<div class="col-sm-12">
+							<h4>Legalizaci&oacute;n o Certificaci&oacute;n</h4>
+							<p>El Registro deber&aacute; coincidir con la informaci&oacute;n del alumno y tener los siguientes requisitos.</p>
+							<ul>
+								<li>Datos generales de la escuela de procedencia</li>
+								<ul>
+										<li>Nombre completo del alumno</li>
+										<li>Carrera</li>
+										<li>Sellos</li>
+										<li>Fecha</li>
+										<li>Firmas</li>
+								</ul>
+							</ul>
+						</div>
+					</div>
+					<div class="row" >
+							<div class="image-wrap">
+								<div id="legalizacion" class="image"></div>
+							</div>
+					</div>
 					</div>
 				</div>
 				<div class="row">
@@ -173,27 +194,7 @@ if(isset($_SESSION["resultado"])){
 							</div>
 					</div>
 				</div>
-				<div class="row">
-						<div class="col-sm-12">
-							<h4>Legalizaci&oacute;n o Certificaci&oacute;n</h4>
-							<p>El Registro deber&aacute; coincidir con la informaci&oacute;n del alumno y tener los siguientes requisitos.</p>
-							<ul>
-								<li>Datos generales de la escuela de procedencia</li>
-								<ul>
-										<li>Nombre completo del alumno</li>
-										<li>Carrera</li>
-										<li>Sellos</li>
-										<li>Fecha</li>
-										<li>Firmas</li>
-								</ul>
-							</ul>
-						</div>
-					</div>
-					<div class="row" >
-							<div class="image-wrap">
-								<div id="legalizacion" class="image"></div>
-							</div>
-					</div>
+				
 				</div>
 
 

@@ -132,20 +132,13 @@ table > tbody > tr > td > a {
   color: black !important;
 }
 
-#carta-validacion {
-  background-image: url("../images/carta_validacion.jpg");
-}
 
-#oficio-validacion {
-  background-image: url("../images/oficio_validacion.jpg");
+#oficio {
+  background-image: url("../images/oficio.png");
 }
 
 #cedula {
   background-image: url("../images/cedula_profesional.jpg");
-}
-
-#codigo_qr {
-  background-image: url("../images/codigo_qr.jpg");
 }
 
 #cedula_1 {
@@ -164,8 +157,8 @@ table > tbody > tr > td > a {
   background-image: url("../images/cedula_profesional_4.jpg");
 }
 
-#cedula_5 {
-  background-image: url("../images/cedula_profesional_5.jpg");
+#cedula-pr {
+  background-image: url("../images/cedula-pr.png");
 }
 
 #titulo_fisico {
@@ -182,6 +175,22 @@ table > tbody > tr > td > a {
 
 #carta_aceptacion {
   background-image: url("../images/carta_aceptacion.jpg");
+}
+
+#validacion-udg {
+  background-image: url("../images/validacion-udg.png");
+}
+
+#legalizacion {
+  background-image: url("../images/legalizacion.png");
+}
+
+#codigo-qr {
+  background-image: url("../images/codigo-qr.png");
+}
+
+#carta {
+  background-image: url("../images/carta.png");
 }
 
 .image:hover {
