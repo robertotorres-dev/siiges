@@ -85,7 +85,7 @@ if(isset($_SESSION["resultado"])){
 					</div>
 					<div class="row" >
 						<div class="image-wrap">
-							<div id="carta" class="image"></div>
+							<div id="carta_validacion" class="image"></div>
 						</div>
 					</div>
 					<br><br>
@@ -110,7 +110,7 @@ if(isset($_SESSION["resultado"])){
 					</div>
 					<div class="row" >
 							<div class="image-wrap">
-								<div id="oficio" class="image"></div>
+								<div id="oficio_validacion" class="image"></div>
 							</div>
 					</div>
 					<div class="row">
@@ -125,7 +125,7 @@ if(isset($_SESSION["resultado"])){
 					</div>
 					<div class="row" >
 							<div class="image-wrap">
-								<div id="cedula-pr" class="image"></div>
+								<div id="cedula_profesional" class="image"></div>
 							</div>
 					</div>
 					<div class="row">
@@ -147,7 +147,7 @@ if(isset($_SESSION["resultado"])){
 					</div>
 					<div class="row" >
 							<div class="image-wrap">
-								<div id="codigo-qr" class="image"></div>
+								<div id="codigo_qr" class="image"></div>
 							</div>
 							<div class="row">
 						<div class="col-sm-12">
@@ -174,7 +174,7 @@ if(isset($_SESSION["resultado"])){
 				</div>
 				<div class="row">
 						<div class="col-sm-12">
-							<h4>CONSULTA DE REGISTRO UDG</h4>
+							<h4>Consulta de registro UDG</h4>
 							<p>El Registro deber&aacute; coincidir con la informaci&oacute;n del alumno y tener los siguientes requisitos.</p>
 							<ul>
 								<li>Fotograf&iacute;a del alumno</li>
@@ -190,7 +190,7 @@ if(isset($_SESSION["resultado"])){
 					</div>
 					<div class="row" >
 							<div class="image-wrap">
-								<div id="validacion-udg" class="image"></div>
+								<div id="validacion_udg" class="image"></div>
 							</div>
 					</div>
 				</div>
