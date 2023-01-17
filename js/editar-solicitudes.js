@@ -472,7 +472,8 @@ EditarSolicitud.getSolicitud = function () {
 					$('#nacionalidad_rector').val(rector.nacionalidad);
 					$('#curp_rector').val(rector.curp);
 					$('#sexo_rector').val(rector.sexo);
-					$('#correo_rector').val(rector.correo);
+					$('#correo_rector_institucional').val(rector.correo);
+					$('#correo_rector_personal').val(rector.correo_secundario);
 					$('#celular_rector').val(rector.celular);
 					//Formaciones de rector
 					if (rector.formaciones != undefined) {
@@ -541,7 +542,8 @@ EditarSolicitud.getSolicitud = function () {
 					$('#nacionalidad_director').val(director.nacionalidad);
 					$('#curp_director').val(director.curp);
 					$('#sexo_director').val(director.sexo);
-					$('#correo_director').val(director.correo);
+					$('#correo_director_institucional').val(director.correo);
+					$('#correo_director_personal').val(director.correo_secundario);
 					$('#celular_director').val(director.celular);
 					//Formaciones de director
 					if (director.formaciones != undefined) {
