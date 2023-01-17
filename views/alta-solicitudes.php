@@ -357,8 +357,16 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                             <br>
                           </div>
                           <div class="col-sm-6 col-md-3">
-                            <label class="control-label" for="">Correo Electrónico</label><br>
-                            <input type="text" id="correo_rector" name="RECTOR-correo" class="form-control" campo="Correo del rector" ubicacion="Datos generales apartado Rector" value="" placeholder="correo@mail.com">
+                            <label class="control-label" for="">Teléfono celular</label><br>
+                            <input type="text" id="celular_rector" name="RECTOR-celular" class="form-control" campo="Celular del rector" ubicacion="Datos generales apartado Rector" value="" placeholder="(33) 00 00 00 00">
+                          </div>
+                          <div class="col-sm-6 col-md-3">
+                            <label class="control-label" for="">Correo institucional</label><br>
+                            <input type="text" id="correo_rector_institucional" name="RECTOR-correo" class="form-control" campo="Correo institucional del rector" ubicacion="Datos generales apartado Rector" value="" placeholder="correo@mail.com">
+                          </div>
+                          <div class="col-sm-6 col-md-3">
+                            <label class="control-label" for="">Correo personal</label><br>
+                            <input type="text" id="correo_rector_personal" name="RECTOR-correo_secundario" class="form-control" campo="Correo personal del rector" ubicacion="Datos generales apartado Rector" value="" placeholder="correo@mail.com">
                           </div>
                         </div>
                         <!-- Formación del rector -->
@@ -462,7 +470,6 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                           <div class="col-sm-6 col-md-4">
                             <label class="control-label" for="">Clave CURP</label><br>
                             <input type="text" id="curp_director" name="DIRECTOR-curp" class="form-control" value="" placeholder="CURP del director">
-
                           </div>
                           <div class="col-sm-6 col-md-3">
                             <label class="control-label" for="">Género</label><br>
@@ -472,6 +479,18 @@ if (!isset($_GET['tipo']) || $_GET['tipo'] == null || $_GET['tipo'] > 6 || is_st
                               <option value="Femenino">Femenino</option>
                             </select>
                             <br>
+                          </div>
+                          <div class="col-sm-6 col-md-3">
+                            <label class="control-label" for="">Teléfono celular</label><br>
+                            <input type="text" id="celular_director" name="DIRECTOR-celular" class="form-control" campo="Celular del director" ubicacion="Datos generales apartado Director" value="" placeholder="(33) 00 00 00 00">
+                          </div>
+                          <div class="col-sm-6 col-md-3">
+                            <label class="control-label" for="">Correo institucional</label><br>
+                            <input type="text" id="correo_director_institucional" name="DIRECTOR-correo" class="form-control" campo="Correo institucional del director" ubicacion="Datos generales apartado Director" value="" placeholder="correo@mail.com">
+                          </div>
+                          <div class="col-sm-6 col-md-3">
+                            <label class="control-label" for="">Correo personal</label><br>
+                            <input type="text" id="correo_director_personal" name="DIRECTOR-correo_secundario" class="form-control" campo="Correo personal del director" ubicacion="Datos generales apartado Director" value="" placeholder="correo@mail.com">
                           </div>
                         </div>
                         <!-- Formación del director -->
