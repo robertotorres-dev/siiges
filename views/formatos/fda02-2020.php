@@ -507,7 +507,8 @@ $dataRector = array(
     "nombre_rector" => utf8_decode(mb_strtoupper($pdf->rector["nombre"])),
     "apellido_paterno_rector" => utf8_decode(mb_strtoupper($pdf->rector["apellido_paterno"])),
     "apellido_materno_rector" => utf8_decode(mb_strtoupper($pdf->rector["apellido_materno"])),
-    "correo_rector" => utf8_decode(($pdf->rector["correo"])),
+    "correo_rector_institucional" => utf8_decode(($pdf->rector["correo"])),
+    "correo_rector_personal" => utf8_decode(($pdf->rector["correo_secundario"])),
     "celular_rector" => utf8_decode(mb_strtoupper($pdf->rector["celular"])),
   ]
 );
@@ -542,12 +543,13 @@ $pdf->SetFont("Nutmegb", "", 9);
 
 // add table heading using standard cells
 $pdf->SetFillColor(191, 191, 191);
-$pdf->Cell(116, 5, utf8_decode("CORREO ELECTRÓNICO"), 1, 0, "C", true);
+$pdf->Cell(58, 5, utf8_decode("CORREO INSTITUCIONAL"), 1, 0, "C", true);
+$pdf->Cell(58, 5, utf8_decode("CORREO PERSONAL"), 1, 0, "C", true);
 $pdf->Cell(58, 5, utf8_decode("NÚMERO DE TELÉFONO CELULAR"), 1, 0, "C", true);
 $pdf->Ln();
 
 //set widht for each column (6 columns)
-$pdf->SetWidths(array(116, 58));
+$pdf->SetWidths(array(58, 58, 58));
 
 //set line height
 $pdf->SetLineHeight(5);
@@ -557,7 +559,8 @@ $pdf->SetFont("Nutmeg", "", 9);
 foreach ($dataRector as $item) {
   // write data using Row() method containing array of values
   $pdf->Row(array(
-    $item['correo_rector'],
+    $item['correo_rector_institucional'],
+    $item['correo_rector_personal'],
     $item['celular_rector'],
   ));
 }
@@ -681,7 +684,8 @@ $dataDirector = array(
     "nombre_director" => utf8_decode(mb_strtoupper($pdf->director["nombre"])),
     "apellido_paterno_director" => utf8_decode(mb_strtoupper($pdf->director["apellido_paterno"])),
     "apellido_materno_director" => utf8_decode(mb_strtoupper($pdf->director["apellido_materno"])),
-    "correo_director" => utf8_decode(($pdf->director["correo"])),
+    "correo_director_institucional" => utf8_decode(($pdf->director["correo"])),
+    "correo_director_personal" => utf8_decode(($pdf->director["correo_secundario"])),
     "celular_director" => utf8_decode(mb_strtoupper($pdf->director["celular"])),
   ]
 );
@@ -716,12 +720,13 @@ $pdf->SetFont("Nutmegb", "", 9);
 
 // add table heading using standard cells
 $pdf->SetFillColor(191, 191, 191);
-$pdf->Cell(116, 5, utf8_decode("CORREO ELECTRÓNICO"), 1, 0, "C", true);
+$pdf->Cell(58, 5, utf8_decode("CORREO INSTITUCIONAL"), 1, 0, "C", true);
+$pdf->Cell(58, 5, utf8_decode("CORREO PERSONAL"), 1, 0, "C", true);
 $pdf->Cell(58, 5, utf8_decode("NÚMERO DE TELÉFONO CELULAR"), 1, 0, "C", true);
 $pdf->Ln();
 
 //set widht for each column (6 columns)
-$pdf->SetWidths(array(116, 58));
+$pdf->SetWidths(array(58, 58, 58));
 
 //set line height
 $pdf->SetLineHeight(5);
@@ -731,7 +736,8 @@ $pdf->SetFont("Nutmeg", "", 9);
 foreach ($dataDirector as $item) {
   // write data using Row() method containing array of values
   $pdf->Row(array(
-    $item['correo_director'],
+    $item['correo_director_institucional'],
+    $item['correo_director_personal'],
     $item['celular_director'],
   ));
 }
