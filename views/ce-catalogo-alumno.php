@@ -289,12 +289,13 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
                 <input type="text" id="matricula" name="matricula" value="<?php echo (isset($resultadoPersona)) ? $resultadoAlumno["data"]["matricula"] : ""; ?>" maxlength="255" class="form-control" required />
               </div>
             </div>
-            
+
+      
             <div class="row">
             <div class="col-sm-4">
               <div class="form-group">
                 <label class="control-label" for="created_at">Fecha de Registro </label>
-                <input type="text" id="created_at" name="created_at" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["created_at"] : ""; ?>" maxlength="10" class="form-control" required readonly />
+                <input type="text" id="created_at" name="created_at" value="<?php echo (isset($resultadoalumno)) ? $resultadoalumno["data"]["created_at"] : ""; ?>" maxlength="10" class="form-control" readonly />
               </div>
             </div>
             <div class="col-sm-4">
@@ -553,14 +554,14 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
       });
     });
 
-    $(document).ready(function() {
-      $("#created_at").datepicker({
-        firstDay: 1,
-        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-        dateFormat: 'yy-mm-dd'
-      });
-    });
+   // $(document).ready(function() {
+   //   $("#created_at").datepicker({
+   //     firstDay: 1,
+   //     monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+   //     dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+   //     dateFormat: 'yy-mm-dd'
+   //   });
+   // });
 
   </script>
   <!-- JS PROPIOS -->
