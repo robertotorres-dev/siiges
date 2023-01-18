@@ -293,11 +293,10 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
             <div class="row">
             <div class="col-sm-4">
               <div class="form-group">
-                <label class="control-label" for="created_at">Fecha de Captura* </label>
-                <input type="text" id="created_at" name="created_at" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["created_at"] : ""; ?>" maxlength="10" class="form-control" required />
+                <label class="control-label" for="created_at">Fecha de Registro </label>
+                <input type="text" id="created_at" name="created_at" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["created_at"] : ""; ?>" maxlength="10" class="form-control" required readonly />
               </div>
             </div>
-
             <div class="col-sm-4">
               <div class="form-group">
                 <?php if (
