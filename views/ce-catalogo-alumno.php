@@ -340,10 +340,10 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
                 <div class="form-group">
                   <label class="txt-label1" for="situacion_id">Situaci&oacute;n</label>
                   <select onchange="changeFunc(
-              <?php
-              echo (isset($json) ? htmlentities($json) : '');
-              ?>
-               );" id="situacion_id" name="situacion_id" class="selectpicker" data-live-search="true" data-width="100%" required>
+                    <?php
+                    echo (isset($json) ? htmlentities($json) : '');
+                    ?>
+                  );" id="situacion_id" name="situacion_id" class="selectpicker" data-live-search="true" data-width="100%" required>
                     <option value=""> </option>
                     <?php
                     $situacion = new Situacion();
@@ -364,7 +364,6 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
                 </div>
               </div>
               <?php if (isset($resultadoAlumno["data"]["situacion_id"]) && $resultadoAlumno["data"]["situacion_id"] == "4") : ?>
-
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label class="control-label" for="">Fecha de baja</label><br>
@@ -388,34 +387,45 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
                 <div class="form-group">
                   <label class="txt-label1" for="situacion_id">Situaci&oacute;n</label>
                   <select onchange="changeFunc(
-              <?php
-              echo (isset($json) ? htmlentities($json) : '');
-              ?>
-               );" id="situacion_id" name="situacion_id" class="selectpicker" data-live-search="true" <?php $resultadoAlumno["data"]["situacion_id"] != 2 ?> data-width="100%" required>
-                    <option value=""> </option>
+                    <?php
+                    echo (isset($json) ? htmlentities($json) : '');
+                    ?>
+                  );" id="situacion_id" name="situacion_id" class="selectpicker" data-live-search="true" data-width="100%"
+                  <?php !isset($resultadoAlumno["data"]["situacion_id"]) ?>  required
+                  >
                     <?php
                     $situacion = new Situacion();
                     $situacion->setAttributes(array());
                     $resultadoSituacion = $situacion->consultarTodos();
 
                     $max = count($resultadoSituacion["data"]);
-
-                    if (isset($resultadoAlumno["data"]["id"]) && $resultadoAlumno["data"]["situacion_id"] == 1) {
-                      for ($i = 0; $i < $max; $i++) {
-                        if ($resultadoSituacion["data"][$i]["id"] == 1 || $resultadoSituacion["data"][$i]["id"] == 4) {
-                          if ($resultadoSituacion["data"][$i]["id"] == $resultadoAlumno["data"]["situacion_id"]) {
-                            echo "<option value='" . $resultadoSituacion["data"][$i]["id"] . "' selected>" . $resultadoSituacion["data"][$i]["nombre"] . "</option>";
-                          } else {
-                            echo "<option value='" . $resultadoSituacion["data"][$i]["id"] . "'>" . $resultadoSituacion["data"][$i]["nombre"] . "</option>";
+                    if (isset($resultadoAlumno["data"]["id"])) {
+                      switch ($resultadoAlumno["data"]["situacion_id"]) {
+                        case 1:
+                          for ($i = 0; $i < $max; $i++) {
+                            if ($resultadoSituacion["data"][$i]["id"] == 1 || $resultadoSituacion["data"][$i]["id"] == 4) {
+                              if ($resultadoSituacion["data"][$i]["id"] == $resultadoAlumno["data"]["situacion_id"]) {
+                                echo "<option value='" . $resultadoSituacion["data"][$i]["id"] . "' selected>" . $resultadoSituacion["data"][$i]["nombre"] . "</option>";
+                              } else {
+                                echo "<option value='" . $resultadoSituacion["data"][$i]["id"] . "'>" . $resultadoSituacion["data"][$i]["nombre"] . "</option>";
+                              }
+                            }
                           }
-                        }
+                          break;
+                        case 2:
+                          echo "<option value='2' selected>" . "Inactivo" . "</option>";
+                          break;
+                        case 3:
+                          echo "<option value='3' selected>" . "Egresado" . "</option>";
+                          break;
+                        case 4:
+                          echo "<option value='4' selected>" . "Baja" . "</option>";
+                        default:
+                          # code...
+                          break;
                       }
-                    } else if (isset($resultadoAlumno["data"]["id"]) &&  $resultadoAlumno["data"]["situacion_id"] == 2) {
+                    } else {
                       echo "<option value='2' selected>" . "Inactivo" . "</option>";
-                    } else if (isset($resultadoAlumno["data"]["id"]) &&  $resultadoAlumno["data"]["situacion_id"] == 3) {
-                      echo "<option value='3' selected>" . "Egresado" . "</option>";
-                    } else if (isset($resultadoAlumno["data"]["id"]) &&  $resultadoAlumno["data"]["situacion_id"] == 4) {
-                      echo "<option value='4' selected>" . "Baja" . "</option>";
                     }
                     ?>
                   </select>
