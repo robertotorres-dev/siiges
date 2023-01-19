@@ -400,29 +400,29 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
 
                     $max = count($resultadoSituacion["data"]);
                     if (isset($resultadoAlumno["data"]["id"])) {
-                    switch ($resultadoAlumno["data"]["situacion_id"]) {
-                      case 1:
-                        for ($i = 0; $i < $max; $i++) {
-                          if ($resultadoSituacion["data"][$i]["id"] == 1 || $resultadoSituacion["data"][$i]["id"] == 4) {
-                            if ($resultadoSituacion["data"][$i]["id"] == $resultadoAlumno["data"]["situacion_id"]) {
-                              echo "<option value='" . $resultadoSituacion["data"][$i]["id"] . "' selected>" . $resultadoSituacion["data"][$i]["nombre"] . "</option>";
-                            } else {
-                              echo "<option value='" . $resultadoSituacion["data"][$i]["id"] . "'>" . $resultadoSituacion["data"][$i]["nombre"] . "</option>";
+                      switch ($resultadoAlumno["data"]["situacion_id"]) {
+                        case 1:
+                          for ($i = 0; $i < $max; $i++) {
+                            if ($resultadoSituacion["data"][$i]["id"] == 1 || $resultadoSituacion["data"][$i]["id"] == 4) {
+                              if ($resultadoSituacion["data"][$i]["id"] == $resultadoAlumno["data"]["situacion_id"]) {
+                                echo "<option value='" . $resultadoSituacion["data"][$i]["id"] . "' selected>" . $resultadoSituacion["data"][$i]["nombre"] . "</option>";
+                              } else {
+                                echo "<option value='" . $resultadoSituacion["data"][$i]["id"] . "'>" . $resultadoSituacion["data"][$i]["nombre"] . "</option>";
+                              }
                             }
                           }
-                        }
-                        break;
-                      case 2:
-                        echo "<option value='2' selected>" . "Inactivo" . "</option>";
-                        break;
-                      case 3:
-                        echo "<option value='3' selected>" . "Egresado" . "</option>";
-                        break;
-                      case 4:
-                        echo "<option value='4' selected>" . "Baja" . "</option>";
-                      default:
-                        # code...
-                        break;
+                          break;
+                        case 2:
+                          echo "<option value='2' selected>" . "Inactivo" . "</option>";
+                          break;
+                        case 3:
+                          echo "<option value='3' selected>" . "Egresado" . "</option>";
+                          break;
+                        case 4:
+                          echo "<option value='4' selected>" . "Baja" . "</option>";
+                        default:
+                          # code...
+                          break;
                       }
                     } else {
                       echo "<option value='2' selected>" . "Inactivo" . "</option>";
