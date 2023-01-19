@@ -88,7 +88,6 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html>
 
@@ -290,6 +289,15 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
                 <input type="text" id="matricula" name="matricula" value="<?php echo (isset($resultadoPersona)) ? $resultadoAlumno["data"]["matricula"] : ""; ?>" maxlength="255" class="form-control" required />
               </div>
             </div>
+
+      
+            <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="created_at">Fecha de Registro </label>
+                <input type="text" id="created_at" name="created_at" value="<?php echo (isset($resultadoalumno)) ? $resultadoalumno["data"]["created_at"] : ""; ?>" maxlength="10" class="form-control" readonly />
+              </div>
+            </div>
             <div class="col-sm-4">
               <div class="form-group">
                 <?php if (
@@ -300,10 +308,10 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
 
                   <label class="control-label" for="revalidacion_equivalencia">Tipo de tr&aacute;mite</label>
                   <select onchange="changeFunc(
-							<?php
+              <?php
                   echo (isset($json) ? htmlentities($json) : '');
               ?>
-							 );" id="tipo_tramite_id" name="tipo_tramite_id" class="selectpicker" data-live-search="true" data-width="100%" required>
+               );" id="tipo_tramite_id" name="tipo_tramite_id" class="selectpicker" data-live-search="true" data-width="100%" required>
                     <option value=""> </option>
                     <?php
                     $tipoTramite = new TipoTramite();
@@ -333,10 +341,10 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
                 <div class="form-group">
                   <label class="txt-label1" for="situacion_id">Situaci&oacute;n</label>
                   <select onchange="changeFunc(
-							<?php
+              <?php
               echo (isset($json) ? htmlentities($json) : '');
               ?>
-							 );" id="situacion_id" name="situacion_id" class="selectpicker" data-live-search="true" data-width="100%" required>
+               );" id="situacion_id" name="situacion_id" class="selectpicker" data-live-search="true" data-width="100%" required>
                     <option value=""> </option>
                     <?php
                     $situacion = new Situacion();
@@ -381,10 +389,10 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
                 <div class="form-group">
                   <label class="txt-label1" for="situacion_id">Situaci&oacute;n</label>
                   <select onchange="changeFunc(
-							<?php
+              <?php
               echo (isset($json) ? htmlentities($json) : '');
               ?>
-							 );" id="situacion_id" name="situacion_id" class="selectpicker" data-live-search="true" <?php $resultadoAlumno["data"]["situacion_id"] != 2 ?> data-width="100%" required>
+               );" id="situacion_id" name="situacion_id" class="selectpicker" data-live-search="true" <?php $resultadoAlumno["data"]["situacion_id"] != 2 ?> data-width="100%" required>
                     <option value=""> </option>
                     <?php
                     $situacion = new Situacion();
@@ -457,7 +465,6 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
           ?>
         </div>
       </form>
-
     </section>
 
     <!-- Modal para confirmación -->
@@ -538,7 +545,6 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
       }
     }
 
-
     $(document).ready(function() {
       $("#fecha_nacimiento").datepicker({
         firstDay: 1,
@@ -547,6 +553,16 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
         dateFormat: 'yy-mm-dd'
       });
     });
+
+   // $(document).ready(function() {
+   //   $("#created_at").datepicker({
+   //     firstDay: 1,
+   //     monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+   //     dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+   //     dateFormat: 'yy-mm-dd'
+   //   });
+   // });
+
   </script>
   <!-- JS PROPIOS -->
   <script src="../js/alumnos.js"></script>
