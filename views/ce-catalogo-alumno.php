@@ -210,7 +210,7 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
           <div class="row">
             <div class="col-sm-4">
               <div class="form-group">
-                <label class="control-label" for="fecha_nacimiento">Fecha de Nacimiento* </label>
+                <label class="control-label" for="fecha_nacimiento">Fecha de nacimiento* </label>
                 <input type="text" id="fecha_nacimiento" name="fecha_nacimiento" value="<?php echo (isset($resultadoPersona)) ? $resultadoPersona["data"]["fecha_nacimiento"] : ""; ?>" maxlength="10" class="form-control" required />
               </div>
             </div>
@@ -286,18 +286,17 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
               <div class="form-group">
                 <label class="control-label" for="matricula">Matr&iacute;cula* </label>
                 <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top" title="La matrícula deberá ser generada por la Institución Educativa, considerando que debe ser única para cada alumno"></span>
-                <input type="text" id="matricula" name="matricula" value="<?php echo (isset($resultadoPersona)) ? $resultadoAlumno["data"]["matricula"] : ""; ?>" maxlength="255" class="form-control" required />
+                <input type="text" id="matricula" name="matricula" value="<?php echo (isset($resultadoAlumno)) ? $resultadoAlumno["data"]["matricula"] : ""; ?>" maxlength="255" class="form-control" required />
               </div>
             </div>
-
-      
-            <div class="row">
             <div class="col-sm-4">
               <div class="form-group">
-                <label class="control-label" for="created_at">Fecha de Registro </label>
-                <input type="text" id="created_at" name="created_at" value="<?php echo (isset($resultadoalumno)) ? $resultadoalumno["data"]["created_at"] : ""; ?>" maxlength="10" class="form-control" readonly />
+                <label class="control-label" for="">Fecha de registro </label>
+                <input type="text" id="" name="" value="<?php echo (isset($resultadoAlumno)) ? date_format(date_create($resultadoAlumno["data"]["created_at"]), 'Y-m-d') : ""; ?>" maxlength="10" class="form-control" readonly />
               </div>
             </div>
+          </div>
+          <div class="row">
             <div class="col-sm-4">
               <div class="form-group">
                 <?php if (
@@ -553,15 +552,6 @@ if (Rol::ROL_REVALIDACION_EQUIVALENCIA == $_SESSION["rol_id"]) {
         dateFormat: 'yy-mm-dd'
       });
     });
-
-   // $(document).ready(function() {
-   //   $("#created_at").datepicker({
-   //     firstDay: 1,
-   //     monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-   //     dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-   //     dateFormat: 'yy-mm-dd'
-   //   });
-   // });
 
   </script>
   <!-- JS PROPIOS -->
