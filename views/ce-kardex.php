@@ -101,7 +101,13 @@ $resultadoPersona = $persona->consultarId();
                   <th width="20%">Apellido Paterno</th>
                   <th width="20%">Apellido Materno</th>
                   <th width="20%">Nombre</th>
+                  <?php
+                    if (Rol::ROL_ADMIN == $_SESSION["rol_id"] || (Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"])) :
+                  ?>
                   <th width="20%">Acciones</th>
+                  <?php
+                    endif;
+                  ?>
                 </tr>
               </thead>
               <tbody>
@@ -110,16 +116,16 @@ $resultadoPersona = $persona->consultarId();
                   <td><?php echo $resultadoPersona["data"]["apellido_paterno"]; ?></td>
                   <td><?php echo $resultadoPersona["data"]["apellido_materno"]; ?></td>
                   <td><?php echo $resultadoPersona["data"]["nombre"]; ?></td>
-                  <td>
                   <?php
-											if (Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"])) :
-											?>
-                      <a href="ce-catalogo-alumno.php?programa_id=<?php echo $resultadoPrograma["data"]["id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"]["id"]; ?>&proceso=consulta"><span id="" title="Abrir" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
-												<a href="ce-catalogo-alumno.php?programa_id=<?php echo $resultadoPrograma["data"]["id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"]["id"]; ?>&proceso=edicion"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a>
-											<?php
-											endif;
-                      ?>
+                    if (Rol::ROL_ADMIN == $_SESSION["rol_id"] || (Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"])) :
+                  ?>
+                  <td>
+                    <a href="ce-catalogo-alumno.php?programa_id=<?php echo $resultadoPrograma["data"]["id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"]["id"]; ?>&proceso=consulta"><span id="" title="Abrir" class="glyphicon glyphicon-eye-open col-sm-1 size_icon"></span></a>
+                    <a href="ce-catalogo-alumno.php?programa_id=<?php echo $resultadoPrograma["data"]["id"]; ?>&alumno_id=<?php echo $resultadoAlumno["data"]["id"]; ?>&proceso=edicion"><span id="" title="Editar" class="glyphicon glyphicon-edit col-sm-1 size_icon"></span></a>
                   </td>
+                  <?php
+                    endif;
+                  ?>
                 </tr>
               </tbody>
             </table>
