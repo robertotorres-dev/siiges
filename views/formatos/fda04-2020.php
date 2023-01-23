@@ -63,7 +63,7 @@ $pdf->SetFont( "Arial", "B", 9 );
 $pdf->Cell( 70, 5, utf8_decode("DURACIÓN DEL PROGRAMA "), 1, 0, "L", true );
 $pdf->SetFillColor( 255, 255, 255 );
 $pdf->SetFont( "Arial", "", 9 );
-$pdf->Cell( 105, 5, utf8_decode($pdf->programa["duracion"]), 1, 1, "L", true );
+$pdf->Cell( 105, 5, utf8_decode($pdf->programa["duracion_periodos"]), 1, 1, "L", true );
 $pdf->SetFillColor( 191, 191, 191 );
 $pdf->SetFont( "Arial", "B", 9 );
 $pdf->MultiCell( 70, 5, utf8_decode("NOMBRE COMPLETO DE LA PERSONA FÍSICA O JURIDICA"), 1, "L", true );
