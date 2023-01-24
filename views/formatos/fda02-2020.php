@@ -18,7 +18,7 @@ $tituloTipoSolicitud = [
   "SOLICITUD DE CAMBIO DE REPRESENTANTE LEGAL"
 ];
 
-$cicloEscolarTxt = [
+$cicloTxt = [
   "SEMESTRALES",
   "CUATRIMESTRALES",
   "ANUALES",
@@ -70,7 +70,7 @@ $dataPrograma = array(
   ],
   [
     "name" => utf8_decode("DURACIÓN DEL PROGRAMA"),
-    "description" => utf8_decode(mb_strtoupper($pdf->programa["duracion_periodos"] . ' PERIODOS ' . utf8_decode($cicloEscolarTxt[$pdf->ciclo["id"] - 1])))
+    "description" => utf8_decode(mb_strtoupper($pdf->programa["duracion_periodos"] . ' PERIODOS ' . utf8_decode($cicloTxt[$pdf->ciclo["id"] - 1])))
   ],
   [
     "name" => utf8_decode("NOMBRE COMPLETO DE LA RAZÓN SOCIAL"),
