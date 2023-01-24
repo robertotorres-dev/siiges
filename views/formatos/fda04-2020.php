@@ -155,7 +155,7 @@ $pdf->SetFillColor( 191, 191, 191 );
   foreach ($pdf->edificioNiveles as $nivel) {
     $pdf->Cell( 85, 5, utf8_decode($nivel["nivel"]), 1, 1, "L", true );
   }
-  $pdf->Ln(5);
+  $pdf->Ln(40);
   
 // Higienes
 $pdf->SetFillColor( 166, 166, 166 );
@@ -174,7 +174,7 @@ foreach ($pdf->higienes as $higiene) {
   $pdf->Cell( 74, 5, utf8_decode($higiene["cantidad"]), 1, 1, "L", true );
 }
 
-$pdf->Ln( 40 );
+$pdf->Ln( 10 );
 
 // Infraestructura
 $pdf->SetFillColor( 166, 166, 166 );

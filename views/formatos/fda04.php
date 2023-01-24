@@ -63,7 +63,7 @@ $pdf->SetFont( "Arial", "B", 9 );
 $pdf->Cell( 70, 5, utf8_decode("DURACIÓN DEL PROGRAMA "), 1, 0, "L", true );
 $pdf->SetFillColor( 255, 255, 255 );
 $pdf->SetFont( "Arial", "", 9 );
-$pdf->Cell( 105, 5, utf8_decode($pdf->programa["duracion_periodos"]), 1, 1, "L", true );
+$pdf->Cell( 105, 5, utf8_decode($pdf->programa["duracion"]), 1, 1, "L", true );
 $pdf->SetFillColor( 191, 191, 191 );
 $pdf->SetFont( "Arial", "B", 9 );
 $pdf->MultiCell( 70, 5, utf8_decode("NOMBRE COMPLETO DE LA PERSONA FÍSICA O JURIDICA"), 1, "L", true );
@@ -155,7 +155,7 @@ $pdf->SetFillColor( 191, 191, 191 );
   foreach ($pdf->edificioNiveles as $nivel) {
     $pdf->Cell( 85, 5, utf8_decode($nivel["nivel"]), 1, 1, "L", true );
   }
-  $pdf->Ln(5);
+  $pdf->Ln(40);
   
 // Higienes
 $pdf->SetFillColor( 166, 166, 166 );
@@ -174,7 +174,7 @@ foreach ($pdf->higienes as $higiene) {
   $pdf->Cell( 74, 5, utf8_decode($higiene["cantidad"]), 1, 1, "L", true );
 }
 
-$pdf->Ln( 40 );
+$pdf->Ln( 10 );
 
 // Infraestructura
 $pdf->SetFillColor( 166, 166, 166 );
@@ -214,13 +214,13 @@ $pdf->Tabla($headersI,$dataI,$widthsI,0,$lengthI,false);
 $pdf->Ln( 15 );
 
   // Instituciones de salud aledañas
-  $pdf->SetFillColor( 166, 166, 166 );
-  $pdf->SetTextColor( 0, 0, 00 );
-  $pdf->SetFont( "Arial", "B", 9 );
-  $pdf->MultiCell( 0, 5, utf8_decode("6.  RELACIÓN DE INSTITUCIONES DE SALUD ALEDAÑAS, SERVICIOS DE AMBULANCIA U OTROS SERVICIOS DE EMERGENCIA A LOS CUALES RECURRIRÁ LA INSTITUCIÓN EN CASO DE ALGUNA CONTINGENCIA "), 1, "L", true );
-  $pdf->SetFillColor( 191, 191, 191);
-  $pdf->Cell( 88, 10, utf8_decode("NOMBRE DE LA INSTITUCIÓN"), 1, 0, "C", true );
-  $pdf->MultiCell( 88, 5, utf8_decode("TIEMPO APROXIMADO REQUERIDO PARA LLEGAR A LA ESCUELA (EN MINUTOS)"), 1, 1, "C", true );
+$pdf->SetFillColor( 166, 166, 166 );
+$pdf->SetTextColor( 0, 0, 00 );
+$pdf->SetFont( "Arial", "B", 9 );
+$pdf->MultiCell( 0, 5, utf8_decode("6.  RELACIÓN DE INSTITUCIONES DE SALUD ALEDAÑAS, SERVICIOS DE AMBULANCIA U OTROS SERVICIOS DE EMERGENCIA A LOS CUALES RECURRIRÁ LA INSTITUCIÓN EN CASO DE ALGUNA CONTINGENCIA "), 1, "L", true );
+$pdf->SetFillColor( 191, 191, 191);
+$pdf->Cell( 88, 10, utf8_decode("NOMBRE DE LA INSTITUCIÓN"), 1, 0, "C", true );
+$pdf->MultiCell( 88, 5, utf8_decode("TIEMPO APROXIMADO REQUERIDO PARA LLEGAR A LA ESCUELA (EN MINUTOS)"), 1, 1, "C", true );
 $pdf->SetFont( "Arial", "", 9 );
   foreach ($pdf->salud as $salud) {
     $pdf->SetFillColor( 255, 255, 255);
@@ -229,10 +229,10 @@ $pdf->SetFont( "Arial", "", 9 );
 
   }
   $pdf->Ln( 10 );
-  $pdf->SetFont( "Arial", "", 11 );
-  $pdf->Cell(0,5, utf8_decode("BAJO PROTESTA DE DECIR VERDAD"), 0, 1, "C");
-  $pdf->SetFont( "Arial", "B", 11 );
-  $pdf->Cell( 0, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 1, "C");
+$pdf->SetFont( "Arial", "", 11 );
+$pdf->Cell(0,5, utf8_decode("BAJO PROTESTA DE DECIR VERDAD"), 0, 1, "C");
+$pdf->SetFont( "Arial", "B", 11 );
+$pdf->Cell( 0, 5, utf8_decode(mb_strtoupper($pdf->nombreRepresentante)), 0, 1, "C");
 
   if($pdf->checkNewPage()){
     // Nombre del formato
