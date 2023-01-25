@@ -228,15 +228,11 @@ Solicitudes.getDetalles = function () {
 
         if (convocatoria < 2020 || convocatoria == 0) {
           const fda02 = document.getElementById("fda02");
-          const fda05 = document.getElementById("fda05");
           const fda06 = document.getElementById("fda06");
           const fdp08 = document.getElementById("fdp08");
 
           fda02.setAttribute("href", `formatos/fda02.php?id=${solicitud.id}`);
           fda02.innerHTML = "FDA 02";
-          
-          fda05.setAttribute("href", `formatos/fda05.php?id=${solicitud.id}`);
-          fda05.innerHTML = "FDA 05";
 
           fda06.setAttribute("href", `formatos/fda06.php?id=${solicitud.id}`);
           fda06.innerHTML = "FDA 06";
@@ -248,7 +244,6 @@ Solicitudes.getDetalles = function () {
 
         } else {
           const fda02 = document.getElementById("fda02");
-          const fda05 = document.getElementById("fda05");
           const fda06 = document.getElementById("fda06");
           const fda06Checkbox = document.getElementById("fda06Checkbox");
           const fdp08 = document.getElementById("fdp08");
@@ -258,12 +253,6 @@ Solicitudes.getDetalles = function () {
             `formatos/fda02-2020.php?id=${solicitud.id}`
           );
           fda02.innerHTML = "FDA 02";
-
-          fda05.setAttribute(
-            "href",
-            `formatos/fda05-2020.php?id=${solicitud.id}`
-          );
-          fda05.innerHTML = "FDA 05";
 
           fda06.remove();
           if (fda06Checkbox) {
