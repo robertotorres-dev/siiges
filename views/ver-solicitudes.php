@@ -1406,9 +1406,7 @@ if (!isset($_GET['tps']) || $_GET['tps'] == null || $_GET['tps'] > 6 || is_strin
                             <p class="text-muted small">
                               <strong>¡Nota importante! </strong>
                               <br>
-                              Adjuntar archivo que describa el estudio de pertinencia y factibilidad así como el estudio de oferta y demanda
-                              con las especificaciones señaladas en el Instructivo para la Obtención del Reconocimiento de Validez Oficial de Estudios de Educación Superior
-                              del Estado de Jalisco. <a href="plantillas/FDA05.docx">(Descargar plantilla). </a>
+                              Este formato solamente aplica para modalidad mixta y no escolarizada <a href="plantillas/FDA05.docx">(Descargar plantilla). </a>
                           </div>
                         </div>
                       </div>

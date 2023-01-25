@@ -216,73 +216,42 @@ Solicitudes.getDetalles = function () {
         //Comprobamos que tenga formato correcto
         const convocatoria = Number(solicitud.convocatoria);
 
-        const fda02 = document.getElementById("fda02");
-        
-        fda02.setAttribute(
-          "href",
-          `formatos/fda02.php?id=${solicitud.id}`
-        );
+        const fdp02 = document.getElementById("fdp02");
+        if (fdp02) {
+          fdp02.setAttribute("href", `formatos/fdp02.php?id=${solicitud.id}`);
+          fdp02.innerHTML = "FDP 02";
+        }
 
-        fda02.innerHTML = "FDA 02";
+        const fda04 = document.getElementById("fda04");
+        fda04.setAttribute("href", `formatos/fda04.php?id=${solicitud.id}`);
+        fda04.innerHTML = "FDA 04";
+        
+        const fda06 = document.getElementById("fda06");
+        fda06.setAttribute("href", `formatos/fda06.php?id=${solicitud.id}`);
+        fda06.innerHTML = "FDA 06";
 
         if (convocatoria < 2020 || convocatoria == 0) {
-          const fda04 = document.getElementById("fda04");
-          const fda05 = document.getElementById("fda05");
-          const fda06 = document.getElementById("fda06");
-          const fdp02 = document.getElementById("fdp02");
+          const fda02 = document.getElementById("fda02");
           const fdp08 = document.getElementById("fdp08");
 
-          fda04.setAttribute("href", `formatos/fda04.php?id=${solicitud.id}`);
-          fda04.innerHTML = "FDA 04";
-
-          fda05.setAttribute("href", `formatos/fda05.php?id=${solicitud.id}`);
-          fda05.innerHTML = "FDA 05";
-
-          fda06.setAttribute("href", `formatos/fda06.php?id=${solicitud.id}`);
-          fda06.innerHTML = "FDA 06";
-
-          if (fdp02) {
-            fdp02.setAttribute("href", `formatos/fdp02.php?id=${solicitud.id}`);
-            fdp02.innerHTML = "FDP 02";
-          }
+          fda02.setAttribute("href", `formatos/fda02.php?id=${solicitud.id}`);
+          fda02.innerHTML = "FDA 02";
 
           if (fdp08) {
             fdp08.setAttribute("href", `formatos/fdp08.php?id=${solicitud.id}`);
             fdp08.innerHTML = "FDP 08";
           }
+
         } else {
-          const fda04 = document.getElementById("fda04");
-          const fda05 = document.getElementById("fda05");
-          const fda06 = document.getElementById("fda06");
-          const fda06Checkbox = document.getElementById("fda06Checkbox");
-          const fdp02 = document.getElementById("fdp02");
+          const fda02 = document.getElementById("fda02");
           const fdp08 = document.getElementById("fdp08");
 
-          
-          fda04.setAttribute(
+          fda02.setAttribute(
             "href",
-            `formatos/fda04-2020.php?id=${solicitud.id}`
+            `formatos/fda02-2020.php?id=${solicitud.id}`
           );
-          fda04.innerHTML = "FDA 04";
+          fda02.innerHTML = "FDA 02";
 
-          fda05.setAttribute(
-            "href",
-            `formatos/fda05-2020.php?id=${solicitud.id}`
-          );
-          fda05.innerHTML = "FDA 05";
-
-          fda06.remove();
-          if (fda06Checkbox) {
-            fda06Checkbox.remove();
-          }
-
-          if (fdp02) {
-            fdp02.setAttribute(
-              "href",
-              `formatos/fdp02-2020.php?id=${solicitud.id}`
-            );
-            fdp02.innerHTML = "FDP 02";
-          }
         }
 
         if (solicitud != undefined) {
