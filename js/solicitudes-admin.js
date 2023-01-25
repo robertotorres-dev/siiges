@@ -222,19 +222,19 @@ Solicitudes.getDetalles = function () {
           fdp02.innerHTML = "FDP 02";
         }
 
+        const fda04 = document.getElementById("fda04");
+        fda04.setAttribute("href", `formatos/fda04.php?id=${solicitud.id}`);
+        fda04.innerHTML = "FDA 04";
+
         if (convocatoria < 2020 || convocatoria == 0) {
           const fda02 = document.getElementById("fda02");
-          const fda04 = document.getElementById("fda04");
           const fda05 = document.getElementById("fda05");
           const fda06 = document.getElementById("fda06");
           const fdp08 = document.getElementById("fdp08");
 
           fda02.setAttribute("href", `formatos/fda02.php?id=${solicitud.id}`);
           fda02.innerHTML = "FDA 02";
-
-          fda04.setAttribute("href", `formatos/fda04.php?id=${solicitud.id}`);
-          fda04.innerHTML = "FDA 04";
-
+          
           fda05.setAttribute("href", `formatos/fda05.php?id=${solicitud.id}`);
           fda05.innerHTML = "FDA 05";
 
@@ -246,10 +246,8 @@ Solicitudes.getDetalles = function () {
             fdp08.innerHTML = "FDP 08";
           }
 
-          console.log("Migacion");
         } else {
           const fda02 = document.getElementById("fda02");
-          const fda04 = document.getElementById("fda04");
           const fda05 = document.getElementById("fda05");
           const fda06 = document.getElementById("fda06");
           const fda06Checkbox = document.getElementById("fda06Checkbox");
@@ -260,12 +258,6 @@ Solicitudes.getDetalles = function () {
             `formatos/fda02-2020.php?id=${solicitud.id}`
           );
           fda02.innerHTML = "FDA 02";
-
-          fda04.setAttribute(
-            "href",
-            `formatos/fda04-2020.php?id=${solicitud.id}`
-          );
-          fda04.innerHTML = "FDA 04";
 
           fda05.setAttribute(
             "href",
