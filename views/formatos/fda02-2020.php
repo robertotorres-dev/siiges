@@ -749,6 +749,101 @@ foreach ($dataDirector as $item) {
   ));
 }
 
+if ($pdf->formaciones2) {
+
+  $pdf->Ln();
+  $pdf->SetFont("Nutmegb", "", 9);
+  $pdf->SetFillColor(166, 166, 166);
+  $pdf->MultiCell(174, 5, utf8_decode("FORMACIÓN ACADÉMICA"), 1, "C", true);
+
+  foreach ($pdf->formaciones2 as $key => $formacion) {
+
+    if ($pdf->checkNewPage()) {
+      $pdf->Ln(15);
+      $pdf->SetFont("Nutmegb", "", 11);
+      $pdf->SetTextColor(255, 255, 255);
+      $pdf->SetFillColor(0, 127, 204);
+      $pdf->Cell(140, 5, "", 0, 0, "L");
+      $pdf->Cell(35, 6, "FDA02", 0, 0, "R", true);
+      $pdf->SetTextColor(0, 0, 0);
+      $pdf->Ln(15);
+    }
+
+    $dataFormacionesDirector = array(
+      [
+        "nivel_formacion" => utf8_decode(mb_strtoupper($formacion["nivel"])),
+        "nombre_formacion" => utf8_decode(mb_strtoupper($formacion["nombre"])),
+        "institucion_formacion" => utf8_decode(mb_strtoupper($formacion["institucion"])),
+        "documento_formacion" => utf8_decode(mb_strtoupper($formacion["descripcion"])),
+      ]
+    );
+
+    // add table heading using standard cells
+    $pdf->SetFont("Nutmegb", "", 9);
+    $pdf->SetFillColor(191, 191, 191);
+    $pdf->Cell(87, 5, utf8_decode("GRADO EDUCATIVO"), 1, 0, "C", true);
+    $pdf->Cell(87, 5, utf8_decode("NOMBRE DE LOS ESTUDIOS"), 1, 0, "C", true);
+    $pdf->Ln();
+
+    //set widht for each column (6 columns)
+    $pdf->SetWidths(array(87, 87));
+
+    //set line height
+    $pdf->SetLineHeight(5);
+    $pdf->SetColors([]);
+    $pdf->SetFont("Nutmeg", "", 9);
+
+    foreach ($dataFormacionesDirector as $item) {
+      // write data using Row() method containing array of values
+      $pdf->Row(array(
+        $item['nivel_formacion'],
+        $item['nombre_formacion'],
+      ));
+    }
+
+    // add table heading using standard cells
+    if ($pdf->checkNewPage()) {
+      $pdf->Ln(15);
+      $pdf->SetFont("Nutmegb", "", 11);
+      $pdf->SetTextColor(255, 255, 255);
+      $pdf->SetFillColor(0, 127, 204);
+      $pdf->Cell(140, 5, "", 0, 0, "L");
+      $pdf->Cell(35, 6, "FDA02", 0, 0, "R", true);
+      $pdf->SetTextColor(0, 0, 0);
+      $pdf->Ln(15);
+    }
+    $pdf->SetFillColor(191, 191, 191);
+    $y = $pdf->GetY();
+    $x = $pdf->GetX();
+    $pdf->SetFont("Nutmegb", "", 9);
+    $pdf->MultiCell(87, 5, utf8_decode("NOMBRE DE LA INSTITUCIÓN EDUCATIVA DE PROCEDENCIA"), 1, "C", true);
+    $pdf->SetXY($x + 87, $y);
+    $pdf->MultiCell(87, 10, utf8_decode("DOCUMENTO QUE ACREDITA SUS ESTUDIOS"), 1, "C", true);
+
+    //set widht for each column (6 columns)
+    $pdf->SetWidths(array(87, 87));
+
+    //set line height
+    $pdf->SetLineHeight(5);
+    $pdf->SetColors([]);
+    $pdf->SetFont("Nutmeg", "", 9);
+
+    foreach ($dataFormacionesDirector as $item) {
+      // write data using Row() method containing array of values
+      $pdf->Row(array(
+        $item['institucion_formacion'],
+        $item['documento_formacion'],
+      ));
+    }
+
+
+    if (sizeof($pdf->formaciones2) > $key + 1) {
+      $pdf->SetFillColor(166, 166, 166);
+      $pdf->Cell(174, 5, "", 1, 1, "C", true);
+    }
+  }
+}
+
 $pdf->Ln(10);
 
 if ($pdf->checkNewPage()) {
