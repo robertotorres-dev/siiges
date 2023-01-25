@@ -225,17 +225,17 @@ Solicitudes.getDetalles = function () {
         const fda04 = document.getElementById("fda04");
         fda04.setAttribute("href", `formatos/fda04.php?id=${solicitud.id}`);
         fda04.innerHTML = "FDA 04";
+        
+        const fda06 = document.getElementById("fda06");
+        fda06.setAttribute("href", `formatos/fda06.php?id=${solicitud.id}`);
+        fda06.innerHTML = "FDA 06";
 
         if (convocatoria < 2020 || convocatoria == 0) {
           const fda02 = document.getElementById("fda02");
-          const fda06 = document.getElementById("fda06");
           const fdp08 = document.getElementById("fdp08");
 
           fda02.setAttribute("href", `formatos/fda02.php?id=${solicitud.id}`);
           fda02.innerHTML = "FDA 02";
-
-          fda06.setAttribute("href", `formatos/fda06.php?id=${solicitud.id}`);
-          fda06.innerHTML = "FDA 06";
 
           if (fdp08) {
             fdp08.setAttribute("href", `formatos/fdp08.php?id=${solicitud.id}`);
@@ -244,8 +244,6 @@ Solicitudes.getDetalles = function () {
 
         } else {
           const fda02 = document.getElementById("fda02");
-          const fda06 = document.getElementById("fda06");
-          const fda06Checkbox = document.getElementById("fda06Checkbox");
           const fdp08 = document.getElementById("fdp08");
 
           fda02.setAttribute(
@@ -254,12 +252,6 @@ Solicitudes.getDetalles = function () {
           );
           fda02.innerHTML = "FDA 02";
 
-          fda06.remove();
-          if (fda06Checkbox) {
-            fda06Checkbox.remove();
-          }
-
-          console.log("Convocatoria actual");
         }
 
         if (solicitud != undefined) {
