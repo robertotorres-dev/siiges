@@ -11,12 +11,19 @@ if (!isset($_GET["id"]) && !$_GET["id"]) {
   header("../home.php");
 }
 
-//print_r($_GET["id"]);
 $tituloTipoSolicitud = [
   "SOLICITUD DE RECONOCIMIENTO DE VALIDEZ OFICIAL DE ESTUDIOS",
   "SOLICITUD DE REFRENDO A PLAN Y PROGRAMA DE ESTUDIO",
   "SOLICITUD DE CAMBIO DE DOMICILIO",
   "SOLICITUD DE CAMBIO DE REPRESENTANTE LEGAL"
+];
+
+$cicloTxt = [
+  "SEMESTRALES",
+  "CUATRIMESTRALES",
+  "ANUALES",
+  "SEMESTRALES",
+  "CUATRIMESTRALES"
 ];
 
 // make new object
@@ -63,7 +70,7 @@ $dataPrograma = array(
   ],
   [
     "name" => utf8_decode("DURACIÓN DEL PROGRAMA"),
-    "description" => utf8_decode(mb_strtoupper($pdf->programa["duracion"]))
+    "description" => utf8_decode(mb_strtoupper($pdf->programa["duracion_periodos"] . ' PERIODOS ' . $cicloTxt[$pdf->ciclo["id"] - 1]))
   ],
   [
     "name" => utf8_decode("NOMBRE COMPLETO DE LA RAZÓN SOCIAL"),
@@ -741,6 +748,7 @@ foreach ($dataDirector as $item) {
     $item['celular_director'],
   ));
 }
+
 if ($pdf->formaciones2) {
 
   $pdf->Ln();
