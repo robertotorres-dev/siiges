@@ -128,6 +128,14 @@ EditarSolicitud.getSolicitud = function () {
 							documentos.formato_pedagogico_01.archivo
 						);
 					}
+          if (documentos.formato_herramientas_05 != undefined) {
+						$('#fda_05-id').val(documentos.formato_herramientas_05.id);
+						$('#contendorFDA05').attr('style', 'display: block');
+						$('#enlace-fda_05').attr(
+							'href',
+							documentos.formato_herramientas_05.archivo
+						);
+					}
 					if (documentos.dictamen_impi != undefined) {
 						$('#impi-id').val(documentos.dictamen_impi.id);
 						$('#contendorimpi').attr('style', 'display: block');
@@ -464,7 +472,8 @@ EditarSolicitud.getSolicitud = function () {
 					$('#nacionalidad_rector').val(rector.nacionalidad);
 					$('#curp_rector').val(rector.curp);
 					$('#sexo_rector').val(rector.sexo);
-					$('#correo_rector').val(rector.correo);
+					$('#correo_rector_institucional').val(rector.correo);
+					$('#correo_rector_personal').val(rector.correo_secundario);
 					$('#celular_rector').val(rector.celular);
 					//Formaciones de rector
 					if (rector.formaciones != undefined) {
@@ -533,7 +542,8 @@ EditarSolicitud.getSolicitud = function () {
 					$('#nacionalidad_director').val(director.nacionalidad);
 					$('#curp_director').val(director.curp);
 					$('#sexo_director').val(director.sexo);
-					$('#correo_director').val(director.correo);
+					$('#correo_director_institucional').val(director.correo);
+					$('#correo_director_personal').val(director.correo_secundario);
 					$('#celular_director').val(director.celular);
 					//Formaciones de director
 					if (director.formaciones != undefined) {
