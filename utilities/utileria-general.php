@@ -88,9 +88,9 @@ class Utileria extends General
 				$salida[$var] = $this->limpiarEntrada($val);
 			}
 		} else {
-			if (get_magic_quotes_gpc()) {
-				$entrada = stripslashes($entrada);
-			}
+			if(!function_exists("get_magic_quotes_gpc")) {
+                function get_magic_quotes_gpc() { return 0; }
+          }
 			$entrada  = $this->limpiarTexto($entrada);
 			$salida = mysqli_real_escape_string($this->mysqli, $entrada);
 		}

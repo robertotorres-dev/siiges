@@ -120,7 +120,7 @@ $gmx(document).ready(function () {
     dateFormat: 'yy-mm-dd'
   })
 
-  const images = [document.querySelector('#carta-validacion'), document.querySelector('#oficio-validacion'), document.querySelector('#cedula'), document.querySelector('#codigo_qr')];
+  const images = [document.querySelector('#carta_validacion'), document.querySelector('#oficio_validacion'), document.querySelector('#cedula_profesional'), document.querySelector('#codigo_qr'), document.querySelector('#validacion_udg'), document.querySelector('#legalizacion')];
   if (images[0]) {
     images.forEach(image => {
       image.addEventListener('mousemove', function (e) {
