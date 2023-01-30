@@ -25,23 +25,21 @@ $pdf->SetTextColor(255, 255, 255);
 $pdf->SetFillColor(0, 127, 204);
 $pdf->Cell(140, 5, "", 0, 0, "L");
 
-$pdf->Cell(35, 6, "FDA05", 0, 0, "R", true);
+$pdf->Cell(35, 6, "FDA06", 0, 0, "R", true);
 $pdf->Ln(10);
 
 $pdf->SetTextColor(0, 127, 204);
 $pdf->Cell(0, 5, utf8_decode("OBLIGACIONES ADQUIRIDAS A TRAVÉS DE LA OBTENCIÓN DEL RVOE"), 0, 1, "L");
 $pdf->Ln(5);
 $pdf->SetTextColor(0, 0, 0);
-// echo "REPRESENTANTE: ";var_dump($pdf->usuarioR);
-// echo "<br>SOLICITUD: ";var_dump($pdf->solicitud);
-// exit();
+
 if ("Masculino" == $pdf->usuarioR["persona"]["sexo"]) {
       $prefijo = "El";
 } else {
       $prefijo = "La";
 }
 $folio = $pdf->solicitud["folio"];
-$programa = $pdf->nivel["descripcion"] . "en " . $pdf->programa["nombre"];
+$programa = $pdf->nivel["descripcion"] . " en " . $pdf->programa["nombre"];
 $modalidad = $pdf->modalidad["nombre"];
 $periodo = $pdf->ciclo["nombre"];
 
@@ -52,7 +50,7 @@ $pdf->SetTextColor(0, 0, 0);
 $pdf->MultiCell(
       0,
       5,
-      utf8_decode("$prefijo" . mb_strtoupper(" C. $pdf->nombreRepresentante") . " de " . mb_strtoupper("$pdf->nombreInstitucion") . "declara, bajo protesta de decir verdad, que los datos proporcionados en la Solicitud $folio cuenta con un inmueble con las condiciones de seguridad, higiénicas necesarias para impartir el plan de estudios para el programa " . mb_strtoupper("$programa") . ", modalidad " . mb_strtoupper("$modalidad") . ", en periodos " . mb_strtoupper("$periodo") . ", asimismo ACEPTA cumplir y se compromete con las siguientes obligaciones derivadas del otorgamiento del Reconocimiento de Validez Oficial de Estudios."),
+      utf8_decode("$prefijo" . mb_strtoupper(" C. $pdf->nombreRepresentante") . " de " . mb_strtoupper("$pdf->nombreInstitucion") . "declara, bajo protesta de decir verdad, que los datos proporcionados en la solicitud $folio cuenta con un inmueble con las condiciones de seguridad, higiénicas necesarias para impartir el plan de estudios para el programa " . mb_strtoupper("$programa") . ", modalidad " . mb_strtoupper("$modalidad") . ", en periodos " . mb_strtoupper("$periodo") . ", asimismo ACEPTA cumplir y se compromete con las siguientes obligaciones derivadas del otorgamiento del Reconocimiento de Validez Oficial de Estudios."),
       0,
       "J"
 );
@@ -98,7 +96,7 @@ $pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
-      utf8_decode("5.- Los planes y programas de estudio validados por la Autoridad Educativa, no podrán ser modificados, cualquier modificación a estos documentos no tendrán validez oficial."),
+      utf8_decode("5.- Los planes y programas de estudio validados por la Autoridad Educativa, una vez que son aprobados no podrán modificarse hasta su vencimiento, de lo contrario no tendrá validez para cualquier trámite ante cualquier autoridad competente."),
       0,
       "J"
 );
@@ -118,7 +116,7 @@ $pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
-      utf8_decode("6.- La institución se compromete a mantener actualizados los planes y programas de estudio de acuerdo a los avances de la materia y renovarlos al término del periodo establecido por la autoridad educativa."),
+      utf8_decode("6.- La Institución se compromete a mantener actualizados los planes y programas de estudio de acuerdo a los avances de la materia y someterlos a refrendo al término del periodo establecido por la Autoridad Educativa."),
       0,
       "J"
 );
@@ -160,7 +158,7 @@ $pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
-      utf8_decode("8.-  Facilitar  y  colaborar  en  las  actividades  de  evaluación,  inspección  y  vigilancia  que  las  autoridades competentes realicen u ordenen."),
+      utf8_decode("8.- Facilitar y colaborar en las actividades de evaluación, inspección y vigilancia que las autoridades competentes realicen u ordenen."),
       0,
       "J"
 );
@@ -180,7 +178,7 @@ $pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
-      utf8_decode("9.- Conservar en el domicilio en el que se autorizó el RVOE, todos los documentos administrativos y de control escolar que se generen."),
+      utf8_decode("9.- Conservar de manera física en el domicilio en el que se autorizó el RVOE, todos los documentos administrativos y de control escolar que se generen, de conformidad a la Ley General de Educación en su artículo 151."),
       0,
       "J"
 );
@@ -241,7 +239,7 @@ $pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
-      utf8_decode("12.- Verificar las instalaciones para que cumplan con la normatividad vigente, higiene seguridad y pedagogía."),
+      utf8_decode("12.- La SICyT verificará las instalaciones para que cumplan con la normatividad vigente, higiene seguridad y pedagogía."),
       0,
       "J"
 );
@@ -261,7 +259,7 @@ $pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
-      utf8_decode("13.- Guardar una relación armónica y complementaria entre las funciones de docencia, investigación y difusión de la cultura."),
+      utf8_decode("13.- Cumplir con el perfil de personal docente, tanto de nuevo ingreso como los propuestos a una asignatura diferente. Cualquier modificación deberá presentarse a la autoridad educativa para su autorización."),
       0,
       "J"
 );
@@ -281,7 +279,7 @@ $pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
-      utf8_decode("14.- Cumplir con el perfil de personal docente, tanto de nuevo ingreso como los propuestos a una asignatura diferente. Cualquier modificación deberá presentarse a la autoridad educativa para su autorización."),
+      utf8_decode("14.- Contar con el acervo bibliográfico y los recursos didácticos requeridos para el desarrollo del plan de estudios y sus respectivos programas."),
       0,
       "J"
 );
@@ -301,7 +299,7 @@ $pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
-      utf8_decode("15.- Contar con el acervo bibliográfico y los recursos didácticos requeridos para el desarrollo del plan de estudios y sus respectivos programas."),
+      utf8_decode("15.- Proporcionar un mínimo de becas del 5% del total de población estudiantil, establecidas en la Ley y los lineamientos en la materia. Generar documentación que lo acredite y tenerla en físico dado a que la SICyT puede solicitarla en alguna visita de vigilancia."),
       0,
       "J"
 );
@@ -321,7 +319,7 @@ $pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
-      utf8_decode("16.- Proporcionar un mínimo de becas del 5% del total de población estudiantil, establecidas en la Ley y los lineamientos en la materia."),
+      utf8_decode("16.- Pagar anualmente la matrícula de alumnos por cada RVOE otorgado y alumno activo en cada ejercicio escolar, acatando los requisitos y tiempos establecidos en la convocatoria correspondiente."),
       0,
       "J"
 );
@@ -341,7 +339,7 @@ $pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
-      utf8_decode("17.- Pagar anualmente la matrícula de alumnos por cada RVOE otorgado y alumno activo en cada ejercicio escolar, con base al artículo 27 de la Ley de Ingresos del año vigente."),
+      utf8_decode("17.- Dar el seguimiento académico y reportar a la Dirección de Servicios Escolares los avances académicos de los alumnos a partir de su inscripción, acreditación, regularización, reinscripción, certificación y titulación."),
       0,
       "J"
 );
@@ -361,7 +359,7 @@ $pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
-      utf8_decode("18.- Dar el seguimiento académico de los alumnos a partir de su inscripción, acreditación, regularización, reinscripción, certificación y titulación."),
+      utf8_decode("18.- Una vez recibido el Acuerdo de Incorporación, el particular deberá realizar los registros ante las autoridades correspondientes, los trámites para la asignación de la clave de centro de trabajo ante la Secretaría de Educación Jalisco, su registro ante la Dirección de Profesiones del Estado de Jalisco y la Dirección General de Profesiones de la Secretaría de Educación Pública y aquellos que correspondan."),
       0,
       "J"
 );
@@ -381,7 +379,7 @@ $pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
-      utf8_decode("19.- Entregar en tiempo y forma la documentación correspondiente a cada proceso de la Dirección General de Incorporación y Servicios Escolares, la Dirección de Incorporación y la Dirección de Servicios Escolares, según lo establezca el calendario que para tal efecto emita la Autoridad Educativa."),
+      utf8_decode("19.- Es obligación de la Institución Educativa, que la documentación que presenta sea auténtica."),
       0,
       "J"
 );
@@ -401,27 +399,7 @@ $pdf->SetFont("Nutmeg", "", 10);
 $pdf->MultiCell(
       0,
       5,
-      utf8_decode("20.- Verificar la autenticidad de todos los documentos que exhiba a la autoridad educativa."),
-      0,
-      "J"
-);
-$pdf->Ln();
-if ($pdf->checkNewPage()) {
-      $pdf->Ln(15);
-      $pdf->SetFont("Nutmegb", "", 11);
-      $pdf->SetTextColor(255, 255, 255);
-      $pdf->SetFillColor(0, 127, 204);
-      $pdf->Cell(140, 5, "", 0, 0, "L");
-      $pdf->Cell(35, 6, "FDA05", 0, 0, "R", true);
-      $pdf->SetTextColor(0, 0, 0);
-      $pdf->Ln(15);
-}
-
-$pdf->SetFont("Nutmeg", "", 10);
-$pdf->MultiCell(
-      0,
-      5,
-      utf8_decode("21.- Emitir sus propios reglamentos internos, solicitar la autorización a la Secretaría de Innovación Ciencia y Tecnología; una vez autorizados, los dará a conocer antes del trámite de inscripción o reinscripción. Deberá conservar evidencia a fin de que la autoridad educativa verifique el cumplimiento de esta obligación."),
+      utf8_decode("20.- Emitir sus propios reglamentos internos, solicitar la autorización a la Secretaría de Innovación Ciencia y Tecnología; una vez autorizados, los dará a conocer antes del trámite de inscripción o reinscripción. Deberá conservar evidencia a fin de que la autoridad educativa verifique el cumplimiento de esta obligación."),
       0,
       "J"
 );
