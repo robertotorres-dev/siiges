@@ -142,7 +142,7 @@ $datosInstitucion = $resultadoInstitucion["data"];
 											<?php
 											echo $alumnoDetalle["situacion"];
 
-											if (Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"])) :
+											if (Rol::ROL_CONTROL_ESCOLAR_IES == $_SESSION["rol_id"] || (Rol::ROL_REPRESENTANTE_LEGAL == $_SESSION["rol_id"]) || (Rol::ROL_CONTROL_ESCOLAR_SICYT == $_SESSION["rol_id"])) :
 												echo "<br>";
 												echo isset($alumnoDetalle["situacion_validacion"]) ? $alumnoDetalle["situacion_validacion"] : "Sin validar";
 											endif;
