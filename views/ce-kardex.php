@@ -95,20 +95,20 @@ $resultadoPersona = $persona->consultarId();
         </div>
         <!-- CONTENIDO -->
         <div class="row">
-          <div class="col-sm-12 col-md-6">
+          <div class="col-sm-12 col-md-12">
             <table id="tabla-reporte1" class="table table-striped table-bordered" cellspacing="0" width="100%">
               <thead>
                 <tr>
-                  <th width="50%">Matr&iacute;cula</th>
-                  <th width="50%">Situaci&oacute;n</th>
+                  <th width="25%">Matr&iacute;cula</th>
+                  <th width="25%">Situaci&oacute;n</th>
+                  <th width="50%">Cr&eacute;ditos obtenidos</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><?php echo $resultadoAlumno["data"]["matricula"]; ?></td>
-                  <td><?php 
-                  echo $situaciones[$resultadoAlumno["data"]["situacion_id"]]; 
-                  ?></td>
+                  <td><?php echo $situaciones[$resultadoAlumno["data"]["situacion_id"]]; ?></td>
+                  <td id="creditos_obtenidos"></td>
                 </tr>
               </tbody>
             </table>
@@ -203,8 +203,9 @@ $resultadoPersona = $persona->consultarId();
       </div>
 
     </section>
-    <!-- alumno_id -->
+    <!-- inputs hidden -->
     <input id="alumno_id" type="hidden" value="<?= $_GET["alumno_id"] ?>">
+    <input id="programa_id" type="hidden" value="<?= $_GET["programa_id"] ?>">
   </div>
 
   <!-- JS GOB.MX -->

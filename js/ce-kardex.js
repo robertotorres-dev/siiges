@@ -1,6 +1,27 @@
 const Calificacion = {};
 
-Calificacion.getCalificacionPorCiclo = function () {
+const getPrograma = async (programaId) => {
+  try {
+    return await $.ajax({
+      type: 'POST',
+      url: '../controllers/control-programa.php',
+      dataType: 'json',
+      data: {
+        webService: 'consultarId',
+        url: '',
+        id: programaId,
+      }
+    })
+  } catch (error) {
+    console.log(error);
+  }
+
+} 
+
+Calificacion.getCalificacionPorCiclo = async function () {
+  const programaId =  document.getElementById('programa_id'); 
+  const programa = await getPrograma(programaId.value);
+
 	Calificacion.calificacionPromesa = $.ajax({
 		type: 'POST',
 		url: '../controllers/control-calificacion.php',
@@ -9,27 +30,29 @@ Calificacion.getCalificacionPorCiclo = function () {
 			webService: 'consultarCalificacionPorAlumno',
 			url: '',
 			alumno_id: $('#alumno_id').val(),
+      calificacion_aprobatoria: programa.data.calificacion_aprobatoria
 		},
 		success: function (data) {
 
-      const calificaciones = data;
+      const creditosObtenidos = document.getElementById('creditos_obtenidos')
+      creditosObtenidos.innerHTML = `${data.totalCreditos} de ${programa.data.creditos}`;
 
+      const calificaciones = data.calificacionCiclo;
+      
       let todasCalificaciones = [];
 
       for (const ciclo_escolar in calificaciones) {
 
-        if (Object.hasOwnProperty.call(data, ciclo_escolar)) {
+        if (Object.hasOwnProperty.call(calificaciones, ciclo_escolar)) {
 
-          const materias_ciclo = data[ciclo_escolar];
+          const materias_ciclo = calificaciones[ciclo_escolar];
 
           materias_ciclo.sort((a, b) => {
             return a.consecutivo - b.consecutivo;
           })
-
-          todasCalificaciones = todasCalificaciones.concat(materias_ciclo);    
+          todasCalificaciones = todasCalificaciones.concat(materias_ciclo);
         }
       }
-      console.log(todasCalificaciones);
 
       Calificacion.tabla = $("#calificacionesKardex").DataTable({
         bDeferRender: true,
