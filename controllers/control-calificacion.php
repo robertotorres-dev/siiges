@@ -202,10 +202,11 @@ if ($_POST["webService"] == "consultarCalificacionPorAlumno") {
 	$res_calificacion_alumno = $res_calificacion_alumno["data"];
 
 	$calificacionCiclo = [];
+  $totalCreditos = 0;
 
 	foreach ($res_calificacion_alumno as $key => $calificacion) {
 
-		$asignatura = new Asignatura;
+    $asignatura = new Asignatura;
 		$asignatura->setAttributes(array("id" => $calificacion["asignatura_id"]));
 		$res_asignatura = $asignatura->consultarId();
 		$res_asignatura = $res_asignatura["data"];
@@ -233,12 +234,19 @@ if ($_POST["webService"] == "consultarCalificacionPorAlumno") {
 		$calificacion["asignatura"] = $res_asignatura;
 		$calificacion["ciclo_escolar"] = $res_ciclo_escolar;
 
+    // Sumar creditos aprobados
+    if (is_numeric($calificacion["calificacion"]) && $calificacion["calificacion"] >= $_POST["calificacion_aprobatoria"]) {
+      $totalCreditos += $calificacion["asignatura"]["creditos"];
+    }
+
 		if (!isset($calificacionCiclo[$calificacion["ciclo_escolar"]["nombre"]])) {
 			$calificacionCiclo[$calificacion["ciclo_escolar"]["nombre"]] = [];
 		}
 		array_push($calificacionCiclo[$calificacion["ciclo_escolar"]["nombre"]], $calificacion);
 	}
-	$resultado = $calificacionCiclo;
+
+	$resultado['calificacionCiclo'] = $calificacionCiclo;
+  $resultado['totalCreditos'] = $totalCreditos;
 
 	retornarWebService($_POST["url"], $resultado);
 }
